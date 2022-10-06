@@ -1,13 +1,15 @@
-package Main.BodyLogic;
+package Main.BodyLogic.Torso;
 
-public class GrievousWound extends BodyPart
+import Main.BodyLogic.BodyPart;
+
+public class HumanTorso extends BodyPart
 {
-    final int standardBloodGeneration = -10;
+    final int standardOrganCapacity = 12;
 
     @Override
     public void instantiateBodyPart(float bias, float randomness)
     {
-        bloodGeneration = Math.round(-standardBloodGeneration +((bias/100)*(standardBloodGeneration)));
+        organCapacity = Math.round(standardOrganCapacity +((bias/100)*(standardOrganCapacity)));
     }
 
     @Override

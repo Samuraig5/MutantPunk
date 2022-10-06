@@ -74,6 +74,11 @@ public abstract class BodyPart
      */
     public int size;
 
+    /**
+     * This function calculates how many organs fit inside this bodyPart
+     */
+    public int organCapacity;
+
 
     /**
      * This is used to instantiate the bodyPart.
@@ -84,14 +89,14 @@ public abstract class BodyPart
      * @param randomness changes the stats of the bodyPart by a random amount (both positive and negative).
      *                   The greater the value, the stronger the random drift.
      */
-    abstract void instantiateBodyPart(float bias, float randomness);
+    abstract public void instantiateBodyPart(float bias, float randomness);
 
     /**
      * This function will deal a certain amount of damage to a bodyPart.
      *
      * @param damage the amount of damage to be dealt to the bodyPart
      */
-    abstract void doDamage(int damage);
+    abstract public void doDamage(int damage);
 
     /**
      * This function attaches this bodyPart to the given bodyPart and updates the new parents attachedBodyPart list
@@ -99,10 +104,11 @@ public abstract class BodyPart
      *
      * @param bodyPartToAttachTo the bodyPart this bodyPart should be attached to.
      */
-    void attachTo(BodyPart bodyPartToAttachTo)
+    public void attachTo(BodyPart bodyPartToAttachTo)
     {
         this.bodyPartAttachedTo = bodyPartToAttachTo;
         this.myPerson = this.bodyPartAttachedTo.myPerson;
+        this.myPerson.myBodyParts.add(this);
         this.bodyPartAttachedTo.attachedBodyParts.add(this);
         updatePersonWhenAttached();
     }
@@ -111,25 +117,37 @@ public abstract class BodyPart
      * This function makes sure all the stats and attributes of the person this bodyPart is attached to, are updated
      * according to the bodyParts own stats.
      */
-    abstract void updatePersonWhenAttached();
+    abstract public void updatePersonWhenAttached();
 
     /**
      * This function removes this bodyPart from the person. All bodyParts attached to this bodyPart stay attached
      * to this bodyPart and are removed from the person.
      * The bodyPart is replaced with a grievous wound.
      */
-    void removeBodyPart()
+    public void removeBodyPart()
     {
         GrievousWound resultingWound = new GrievousWound();
         resultingWound.attachTo(bodyPartAttachedTo);
         this.bodyPartAttachedTo = null;
-        this.myPerson = null;
-        updatePersonWhenRemoved();
     }
 
     /**
      * This function makes sure all the stats and attributes of the person this bodyPart is removed from, are updated
      * according to the bodyParts own stats.
      */
-    abstract void updatePersonWhenRemoved();
+    abstract public void updatePersonWhenRemoved();
+
+    /**
+     * This function travels recursively through all the attached bodyParts and removes them from the old Person.
+     */
+    public void removeBodyPartFromBody()
+    {
+        this.myPerson.myBodyParts.remove(this);
+        updatePersonWhenRemoved();
+        this.myPerson = null;
+        for (BodyPart attachedBodyPart : this.attachedBodyParts)
+        {
+            attachedBodyPart.removeBodyPartFromBody();
+        }
+    }
 }
