@@ -37,6 +37,7 @@ public abstract class BodyPart
      *  misc
      *  torso
      *  leg
+     *  foot
      *  arm
      *  hand
      */

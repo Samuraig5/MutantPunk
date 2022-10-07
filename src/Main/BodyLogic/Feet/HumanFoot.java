@@ -1,26 +1,25 @@
-package Main.BodyLogic.Legs;
+package Main.BodyLogic.Feet;
 
 import Main.BodyLogic.BodyLogicHelper;
 import Main.BodyLogic.BodyPart;
-import Main.WorldLogic.Person;
 
-public class HumanLeg extends BodyPart
+public class HumanFoot extends BodyPart
 {
-    final int standardBloodCapacity = 20;
-    final int standardNeededBlood = 20;
-    final int standardHealth = 80;
+    final int standardBloodCapacity = 5;
+    final int standardNeededBlood = 5;
+    final int standardHealth = 10;
     final int standardRegenRate = 1;
-    final int standardRegenLimit = 60;
+    final int standardRegenLimit = 5;
     final int standardArmour = 10;
-    final int standardSize = 75;
-    final int standardOrganCapacity = 10;
-    final int standardSpeedModifier = 45;
+    final int standardSize = 10;
+    final int standardOrganCapacity = 5;
+    final int standardSpeedModifier = 5;
 
     @Override
     public void generateBodyPart(int bias, int randomness)
     {
         type = 1;
-        bodyPartClass = "leg";
+        bodyPartClass = "foot";
 
         bloodCapacity = BodyLogicHelper.calculateBodyPartStat(standardBloodCapacity, bias, randomness);
         neededBlood = BodyLogicHelper.calculateBodyPartStat(standardNeededBlood, -bias, randomness);

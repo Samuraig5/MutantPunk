@@ -2,6 +2,7 @@ package Main.WorldLogic;
 
 import Main.BodyLogic.Arms.HumanArm;
 import Main.BodyLogic.BodyPart;
+import Main.BodyLogic.Feet.HumanFoot;
 import Main.BodyLogic.Hands.HumanHand;
 import Main.BodyLogic.Legs.HumanLeg;
 import Main.BodyLogic.Torso.HumanTorso;
@@ -23,6 +24,14 @@ public class Human extends Person
         HumanLeg rightLeg = new HumanLeg();
         rightLeg.instantiateBodyPart(bias, randomness);
         rightLeg.attachTo(newTorso);
+
+        HumanFoot leftFoot = new HumanFoot();
+        leftFoot.instantiateBodyPart(bias, randomness);
+        leftFoot.attachTo(leftLeg);
+
+        HumanFoot rightFoot = new HumanFoot();
+        rightFoot.instantiateBodyPart(bias, randomness);
+        rightFoot.attachTo(rightLeg);
 
         HumanArm leftArm = new HumanArm();
         leftArm.instantiateBodyPart(bias, randomness);

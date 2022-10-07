@@ -21,7 +21,7 @@ public class HumanHand extends BodyPart
         bodyPartClass = "hand";
 
         bloodCapacity = BodyLogicHelper.calculateBodyPartStat(standardBloodCapacity, bias, randomness);
-        neededBlood = BodyLogicHelper.calculateBodyPartStat(standardNeededBlood, bias, randomness);
+        neededBlood = BodyLogicHelper.calculateBodyPartStat(standardNeededBlood, -bias, randomness);
         health = BodyLogicHelper.calculateBodyPartStat(standardHealth, bias, randomness);
         regenRate = BodyLogicHelper.calculateBodyPartStat(standardRegenRate, bias, randomness);
         regenLimit = BodyLogicHelper.calculateBodyPartStat(standardRegenLimit, bias, randomness);
