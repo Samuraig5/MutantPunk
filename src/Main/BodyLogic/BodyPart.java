@@ -39,6 +39,9 @@ public abstract class BodyPart
      */
     public int neededBlood;
 
+    /**
+     * Amount of blood this bodyPart generates per time unit.
+     */
     public int bloodGeneration;
 
     /**
