@@ -1,4 +1,3 @@
-
 ==== NORMAL BODYPART VARIABLES ====
 final int type;
 final String bodyPartClass;
@@ -12,3 +11,18 @@ final int standardArmour;
 final int standardSize;
 final int standardOrganCapacity;
 final int standardSpeedModifier;
+
+@Override
+public void instantiateBodyPart(int bias, int randomness)
+{
+    neededBlood = BodyLogicHelper.calculateBodyPartStat(standardNeededBlood, bias, randomness);
+    bloodGeneration = BodyLogicHelper.calculateBodyPartStat(standardBloodGeneration, bias, randomness);
+    neededEnergy = BodyLogicHelper.calculateBodyPartStat(standardNeededEnergy, bias, randomness);
+    health = BodyLogicHelper.calculateBodyPartStat(standardHealth, bias, randomness);
+    regenRate = BodyLogicHelper.calculateBodyPartStat(standardRegenRate, bias, randomness);
+    regenLimit = BodyLogicHelper.calculateBodyPartStat(standardRegenLimit, bias, randomness);
+    armour = BodyLogicHelper.calculateBodyPartStat(standardArmour, bias, randomness);
+    size = BodyLogicHelper.calculateBodyPartStat(standardSize, bias, randomness);
+    organCapacity = BodyLogicHelper.calculateBodyPartStat(standardOrganCapacity, bias, randomness);
+    speedModifier = BodyLogicHelper.calculateBodyPartStat(standardSpeedModifier, bias, randomness);
+}
