@@ -1,5 +1,7 @@
 package Main.BodyLogic;
 
+import Main.WorldLogic.Person;
+
 public class GrievousWound extends BodyPart
 {
     final int type = -1;
@@ -18,8 +20,7 @@ public class GrievousWound extends BodyPart
     final int standardOrganCapacity = 0;
     final int standardSpeedModifier = 0;
 
-    @Override
-    public void instantiateBodyPart(int bias, int randomness)
+    public void generateBodyPart(int bias, int randomness)
     {
         bloodCapacity = BodyLogicHelper.calculateBodyPartStat(standardBloodCapacity);
         bloodGeneration = BodyLogicHelper.calculateBodyPartStat(standardBloodGeneration, bias, randomness);

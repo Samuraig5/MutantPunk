@@ -2,6 +2,7 @@ package Main.BodyLogic.Torso;
 
 import Main.BodyLogic.BodyLogicHelper;
 import Main.BodyLogic.BodyPart;
+import Main.WorldLogic.Person;
 
 public class HumanTorso extends BodyPart
 {
@@ -22,7 +23,7 @@ public class HumanTorso extends BodyPart
     final int standardSpeedModifier = 0;
 
     @Override
-    public void instantiateBodyPart(int bias, int randomness)
+    public void generateBodyPart(int bias, int randomness)
     {
         bloodCapacity = BodyLogicHelper.calculateBodyPartStat(standardBloodCapacity, bias, randomness);
         bloodGeneration = BodyLogicHelper.calculateBodyPartStat(standardBloodGeneration);

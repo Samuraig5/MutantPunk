@@ -2,6 +2,7 @@ package Main.BodyLogic;
 
 import Main.WorldLogic.Person;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public abstract class BodyPart
@@ -20,7 +21,7 @@ public abstract class BodyPart
     /**
      * These are the bodyParts attacked to this bodyPart.
      */
-    public List<BodyPart> attachedBodyParts;
+    public List<BodyPart> attachedBodyParts = new ArrayList<>();
 
     /**
      * This is an index that signifies which type the body part it.
@@ -107,7 +108,7 @@ public abstract class BodyPart
     public int speedModifier;
 
     /**
-     * This is used to instantiate the bodyPart.
+     * This is used to generate the bodyPart.
      * It takes on the typical values of the bodyPart. These values are manipulated by the bias and a randomness.
      *
      * @param bias improves (if bias is positive) or worsens (if bias is negative) the stats and attribute of the body part.
@@ -115,7 +116,19 @@ public abstract class BodyPart
      * @param randomness changes the stats of the bodyPart by a random amount (both positive and negative).
      *                   The greater the value, the stronger the random drift.
      */
-    abstract public void instantiateBodyPart(int bias, int randomness);
+    abstract public void generateBodyPart(int bias, int randomness);
+    public void instantiateBodyPart(Person person, int bias, int randomness)
+    {
+        this.myPerson = person;
+        myPerson.myBodyParts.add(this);
+        generateBodyPart(bias, randomness);
+        updatePersonWhenAttached();
+    }
+    public void instantiateBodyPart(int bias, int randomness)
+    {
+        generateBodyPart(bias, randomness);
+    }
+
 
     /**
      * This function will deal a certain amount of damage to a bodyPart.
@@ -125,6 +138,10 @@ public abstract class BodyPart
     public void doDamage(int damage)
     {
         this.health = this.health-damage;
+        if (this.health <= 0)
+        {
+            removeBodyPart();
+        }
     }
 
     /**
@@ -168,6 +185,21 @@ public abstract class BodyPart
         GrievousWound resultingWound = new GrievousWound();
         resultingWound.attachTo(bodyPartAttachedTo);
         this.bodyPartAttachedTo = null;
+        removeBodyPartRecursively();
+    }
+
+    /**
+     * This function travels recursively through all the attached bodyParts and removes them from the old Person.
+     */
+    private void removeBodyPartRecursively()
+    {
+        this.myPerson.myBodyParts.remove(this);
+        updatePersonWhenRemoved();
+        this.myPerson = null;
+        for (BodyPart attachedBodyPart : this.attachedBodyParts)
+        {
+            attachedBodyPart.removeBodyPartRecursively();
+        }
     }
 
     /**
@@ -187,16 +219,25 @@ public abstract class BodyPart
     }
 
     /**
-     * This function travels recursively through all the attached bodyParts and removes them from the old Person.
+     * This function prints out the bodyPart stats for debugging;
      */
-    public void removeBodyPartFromBody()
+    public void printBodyPartToTerminal()
     {
-        this.myPerson.myBodyParts.remove(this);
-        updatePersonWhenRemoved();
-        this.myPerson = null;
-        for (BodyPart attachedBodyPart : this.attachedBodyParts)
-        {
-            attachedBodyPart.removeBodyPartFromBody();
-        }
+        System.out.println("Number of body parts attached: " + attachedBodyParts.size());
+        System.out.println("Type: " + type);
+        System.out.println("Class: " + bodyPartClass);
+        System.out.println("Blood capacity: " + bloodCapacity);
+        System.out.println("Blood generation: " + bloodGeneration);
+        System.out.println("Blood needed: " + neededBlood);
+        System.out.println("Energy capacity: " + energyCapacity);
+        System.out.println("Energy generation: " + energyGeneration);
+        System.out.println("Energy needed: " + neededEnergy);
+        System.out.println("Health: " + health);
+        System.out.println("RegenRate: " + regenRate);
+        System.out.println("RegenLimit: " + regenLimit);
+        System.out.println("Armour: " + armour);
+        System.out.println("Size: " + size);
+        System.out.println("Organ capacity: " + organCapacity);
+        System.out.println("Speed: " + speedModifier);
     }
 }

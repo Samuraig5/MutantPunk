@@ -29,7 +29,7 @@ public class BodyLogicHelper
         float s = (float)shiftStrength;
 
         float calculatedBias = ((b/100)*a)*(s/100);
-        float calculatedRandomness = (randomRange()*r*a)*(s/100);
+        float calculatedRandomness = (randomRange()*(r/100)*a)*(s/100);
         return Math.round(a + calculatedBias + calculatedRandomness);
     }
     static public int calculateBodyPartStat(int incomingStandardStat, int bias, int randomness)
