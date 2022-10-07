@@ -1,1 +1,0 @@
-typeSearchIndex = [{"l":"All Classes","url":"allclasses-index.html"},{"p":"Main.BodyLogic","l":"BodyLogicHelper"},{"p":"Main.BodyLogic","l":"BodyPart"},{"p":"Main.BodyLogic","l":"GrievousWound"},{"p":"Main.BodyLogic.Legs","l":"HumanLeg"},{"p":"Main.BodyLogic.Torso","l":"HumanTorso"},{"p":"Main","l":"Main"},{"p":"Main.WorldLogic","l":"Person"}]
