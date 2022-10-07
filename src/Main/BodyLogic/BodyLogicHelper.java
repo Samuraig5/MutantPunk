@@ -32,6 +32,10 @@ public class BodyLogicHelper
         float calculatedRandomness = (randomRange()*r*a)*(s/100);
         return Math.round(a + calculatedBias + calculatedRandomness);
     }
+    static public int calculateBodyPartStat(int incomingStandardStat, int bias, int randomness)
+    {
+        return calculateBodyPartStat(incomingStandardStat,bias,randomness,100);
+    }
 
     /**
      * Generates a number between '-1' and '1'

@@ -1,5 +1,6 @@
 package Main.BodyLogic.Torso;
 
+import Main.BodyLogic.BodyLogicHelper;
 import Main.BodyLogic.BodyPart;
 
 public class HumanTorso extends BodyPart
@@ -7,9 +8,9 @@ public class HumanTorso extends BodyPart
     final int standardOrganCapacity = 12;
 
     @Override
-    public void instantiateBodyPart(float bias, float randomness)
+    public void instantiateBodyPart(int bias, int randomness)
     {
-        organCapacity = Math.round(standardOrganCapacity +((bias/100)*(standardOrganCapacity)));
+        organCapacity = BodyLogicHelper.calculateBodyPartStat(standardOrganCapacity, bias, randomness);
     }
 
     @Override

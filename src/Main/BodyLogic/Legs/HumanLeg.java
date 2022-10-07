@@ -1,5 +1,6 @@
 package Main.BodyLogic.Legs;
 
+import Main.BodyLogic.BodyLogicHelper;
 import Main.BodyLogic.BodyPart;
 
 public class HumanLeg extends BodyPart
@@ -10,10 +11,10 @@ public class HumanLeg extends BodyPart
     int speedModifier;
 
     @Override
-    public void instantiateBodyPart(float bias, float randomness)
+    public void instantiateBodyPart(int bias, int randomness)
     {
-        speedModifier = Math.round(standardSpeedModifier +((bias/100)*(standardSpeedModifier)));
-        neededBlood = Math.round(standardNeededBlood +((bias/100)*(standardNeededBlood)));
+        speedModifier = BodyLogicHelper.calculateBodyPartStat(standardSpeedModifier,bias,randomness);
+        neededBlood = BodyLogicHelper.calculateBodyPartStat(standardSpeedModifier,bias,randomness);
     }
 
     @Override

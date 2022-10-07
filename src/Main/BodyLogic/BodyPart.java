@@ -89,7 +89,7 @@ public abstract class BodyPart
      * @param randomness changes the stats of the bodyPart by a random amount (both positive and negative).
      *                   The greater the value, the stronger the random drift.
      */
-    abstract public void instantiateBodyPart(float bias, float randomness);
+    abstract public void instantiateBodyPart(int bias, int randomness);
 
     /**
      * This function will deal a certain amount of damage to a bodyPart.

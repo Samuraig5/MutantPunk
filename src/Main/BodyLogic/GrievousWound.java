@@ -5,9 +5,9 @@ public class GrievousWound extends BodyPart
     final int standardBloodGeneration = -10;
 
     @Override
-    public void instantiateBodyPart(float bias, float randomness)
+    public void instantiateBodyPart(int bias, int randomness)
     {
-        bloodGeneration = Math.round(-standardBloodGeneration +((bias/100)*(standardBloodGeneration)));
+        bloodGeneration = BodyLogicHelper.calculateBodyPartStat(standardBloodGeneration,bias,randomness);
     }
 
     @Override
