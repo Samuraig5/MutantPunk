@@ -2,7 +2,6 @@ package Main.BodyLogic.Torso;
 
 import Main.BodyLogic.BodyLogicHelper;
 import Main.BodyLogic.BodyPart;
-import Main.WorldLogic.Person;
 
 public class HumanTorso extends BodyPart
 {
@@ -18,12 +17,13 @@ public class HumanTorso extends BodyPart
     @Override
     public void generateBodyPart(int bias, int randomness)
     {
+        name = "Human Torso";
         type = 1;
         bodyPartClass = "torso";
 
         bloodCapacity = BodyLogicHelper.calculateBodyPartStat(standardBloodCapacity, bias, randomness);
         neededBlood = BodyLogicHelper.calculateBodyPartStat(standardNeededBlood, -bias, randomness);
-        health = BodyLogicHelper.calculateBodyPartStat(standardHealth, bias, randomness);
+        maxHealth = BodyLogicHelper.calculateBodyPartStat(standardHealth, bias, randomness);
         regenRate = BodyLogicHelper.calculateBodyPartStat(standardRegenRate, bias, randomness);
         regenLimit = BodyLogicHelper.calculateBodyPartStat(standardRegenLimit, bias, randomness);
         armour = BodyLogicHelper.calculateBodyPartStat(standardArmour, bias, randomness);

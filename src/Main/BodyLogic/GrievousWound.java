@@ -1,7 +1,5 @@
 package Main.BodyLogic;
 
-import Main.WorldLogic.Person;
-
 public class GrievousWound extends BodyPart
 {
     final int standardBloodGeneration = -10;
@@ -9,10 +7,11 @@ public class GrievousWound extends BodyPart
 
     public void generateBodyPart(int bias, int randomness)
     {
+        name = "Grievous Wound";
         this.type = 1;
         this.bodyPartClass = "misc";
 
         bloodGeneration = BodyLogicHelper.calculateBodyPartStat(standardBloodGeneration, bias, randomness);
-        health = BodyLogicHelper.calculateBodyPartStat(standardHealth, bias, randomness, 0);
+        maxHealth = BodyLogicHelper.calculateBodyPartStat(standardHealth, bias, randomness, 0);
     }
 }

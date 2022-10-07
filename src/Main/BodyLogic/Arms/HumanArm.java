@@ -2,7 +2,6 @@ package Main.BodyLogic.Arms;
 
 import Main.BodyLogic.BodyLogicHelper;
 import Main.BodyLogic.BodyPart;
-import Main.BodyLogic.Hands.HumanHand;
 
 public class HumanArm extends BodyPart
 {
@@ -18,12 +17,13 @@ public class HumanArm extends BodyPart
     @Override
     public void generateBodyPart(int bias, int randomness)
     {
+        name = "Human Arm";
         type = 1;
         bodyPartClass = "arm";
 
         bloodCapacity = BodyLogicHelper.calculateBodyPartStat(standardBloodCapacity, bias, randomness);
         neededBlood = BodyLogicHelper.calculateBodyPartStat(standardNeededBlood, -bias, randomness);
-        health = BodyLogicHelper.calculateBodyPartStat(standardHealth, bias, randomness);
+        maxHealth = BodyLogicHelper.calculateBodyPartStat(standardHealth, bias, randomness);
         regenRate = BodyLogicHelper.calculateBodyPartStat(standardRegenRate, bias, randomness);
         regenLimit = BodyLogicHelper.calculateBodyPartStat(standardRegenLimit, bias, randomness);
         armour = BodyLogicHelper.calculateBodyPartStat(standardArmour, bias, randomness);

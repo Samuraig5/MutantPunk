@@ -8,6 +8,11 @@ import java.util.List;
 public abstract class BodyPart
 {
     /**
+     * The (nick-)name of this specific bodyPart.
+     */
+    public String name;
+
+    /**
      * This keeps track of the person this bodyPart is attached to.
      * If the body part is cut off, it is equal to 'null'
      */
@@ -74,9 +79,15 @@ public abstract class BodyPart
     public int neededEnergy;
 
     /**
-     * The health of the bodyPart. Determines how much damage the bodyPart can take before being destroyed.
+     * The maximum health of the bodyPart. Determines how much damage the bodyPart can take before being destroyed.
      */
-    public int health;
+    public int maxHealth;
+
+    /**
+     * The current health of the bodyPart. It can't normally be higher than maxHealth and if it's equal to 0 the bodyPart
+     * is destroyed.
+     */
+    public int currentHealth;
 
     /**
      * The amount of health this bodyPart generates per amount of time.
@@ -131,6 +142,7 @@ public abstract class BodyPart
     public void instantiateBodyPart(int bias, int randomness)
     {
         generateBodyPart(bias, randomness);
+        currentHealth = maxHealth;
     }
 
 
@@ -141,10 +153,21 @@ public abstract class BodyPart
      */
     public void doDamage(int damage)
     {
-        this.health = this.health-damage;
-        if (this.health <= 0)
+        this.currentHealth = this.currentHealth -damage;
+        if (this.currentHealth <= 0)
         {
             removeBodyPart();
+        }
+    }
+
+    /**
+     * This function will heal the bodyPart by the amount specified in the bodyPart.
+     */
+    public void healDamage()
+    {
+        if (currentHealth < maxHealth && currentHealth > regenLimit)
+        {
+            currentHealth += regenRate;
         }
     }
 
@@ -187,8 +210,11 @@ public abstract class BodyPart
     public void removeBodyPart()
     {
         GrievousWound resultingWound = new GrievousWound();
+        resultingWound.instantiateBodyPart(0,10);
         resultingWound.attachTo(bodyPartAttachedTo);
-        this.bodyPartAttachedTo = null;
+        bodyPartAttachedTo.attachedBodyParts.remove(this);
+        bodyPartAttachedTo = null;
+
         removeBodyPartRecursively();
     }
 
@@ -227,21 +253,27 @@ public abstract class BodyPart
      */
     public void printBodyPartToTerminal()
     {
-        System.out.println("Number of body parts attached: " + attachedBodyParts.size());
-        System.out.println("Type: " + type);
-        System.out.println("Class: " + bodyPartClass);
-        System.out.println("Blood capacity: " + bloodCapacity);
-        System.out.println("Blood generation: " + bloodGeneration);
-        System.out.println("Blood needed: " + neededBlood);
-        System.out.println("Energy capacity: " + energyCapacity);
-        System.out.println("Energy generation: " + energyGeneration);
-        System.out.println("Energy needed: " + neededEnergy);
-        System.out.println("Health: " + health);
-        System.out.println("RegenRate: " + regenRate);
-        System.out.println("RegenLimit: " + regenLimit);
-        System.out.println("Armour: " + armour);
-        System.out.println("Size: " + size);
-        System.out.println("Organ capacity: " + organCapacity);
-        System.out.println("Speed: " + speedModifier);
+        System.out.println("# Name: " + name);
+        System.out.println("    Number of body parts attached: " + attachedBodyParts.size());
+        System.out.println("    Type: " + type);
+        System.out.println("    Class: " + bodyPartClass);
+        System.out.println("    Blood capacity: " + bloodCapacity);
+        System.out.println("    Blood generation: " + bloodGeneration);
+        System.out.println("    Blood needed: " + neededBlood);
+        System.out.println("    Energy capacity: " + energyCapacity);
+        System.out.println("    Energy generation: " + energyGeneration);
+        System.out.println("    Energy needed: " + neededEnergy);
+        System.out.println("    Health: " + currentHealth + "/" + maxHealth);
+        System.out.println("    RegenRate: " + regenRate);
+        System.out.println("    RegenLimit: " + regenLimit);
+        System.out.println("    Armour: " + armour);
+        System.out.println("    Size: " + size);
+        System.out.println("    Organ capacity: " + organCapacity);
+        System.out.println("    Speed: " + speedModifier);
+    }
+
+    public void changeName(String newName)
+    {
+        name = newName;
     }
 }

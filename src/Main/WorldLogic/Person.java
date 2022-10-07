@@ -51,16 +51,16 @@ public abstract class Person
      */
     public void printPersonToTerminal()
     {
-        System.out.println("##################### " + this.name + " #####################");
-        System.out.println("GROSS STATS:");
-        System.out.println("Blood capacity: " + grossBloodCapacity);
-        System.out.println("Blood generation: " + grossBloodGeneration);
-        System.out.println("Blood needed: " + grossBloodNeeded);
-        System.out.println("Energy Capacity: " + grossEnergyCapacity);
-        System.out.println("Energy Capacity: " + grossEnergyGeneration);
-        System.out.println("Energy Capacity: " + grossEnergyNeeded);
-        System.out.println("Size: " + grossSize);
-        System.out.println("Speed: " + grossSpeedModifier);
+        System.out.println("> Name: " + this.name);
+        System.out.println("    GROSS STATS:");
+        System.out.println("    Blood capacity: " + grossBloodCapacity);
+        System.out.println("    Blood generation: " + grossBloodGeneration);
+        System.out.println("    Blood needed: " + grossBloodNeeded);
+        System.out.println("    Energy Capacity: " + grossEnergyCapacity);
+        System.out.println("    Energy Capacity: " + grossEnergyGeneration);
+        System.out.println("    Energy Capacity: " + grossEnergyNeeded);
+        System.out.println("    Size: " + grossSize);
+        System.out.println("    Speed: " + grossSpeedModifier);
 
     }
 }
