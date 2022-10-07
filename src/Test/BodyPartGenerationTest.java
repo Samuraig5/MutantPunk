@@ -15,6 +15,14 @@ public class BodyPartGenerationTest {
         guy.myBodyParts.get(1).printBodyPartToTerminal();
         System.out.println("==========HUMAN RIGHT LEG==========");
         guy.myBodyParts.get(2).printBodyPartToTerminal();
+        System.out.println("==========HUMAN LEFT ARM==========");
+        guy.myBodyParts.get(3).printBodyPartToTerminal();
+        System.out.println("==========HUMAN RIGHT ARM==========");
+        guy.myBodyParts.get(4).printBodyPartToTerminal();
+        System.out.println("==========HUMAN LEFT HAND==========");
+        guy.myBodyParts.get(5).printBodyPartToTerminal();
+        System.out.println("==========HUMAN RIGHT HAND==========");
+        guy.myBodyParts.get(6).printBodyPartToTerminal();
 
         guy.printPersonToTerminal();
     }

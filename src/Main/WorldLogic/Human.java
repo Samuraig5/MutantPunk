@@ -1,6 +1,8 @@
 package Main.WorldLogic;
 
+import Main.BodyLogic.Arms.HumanArm;
 import Main.BodyLogic.BodyPart;
+import Main.BodyLogic.Hands.HumanHand;
 import Main.BodyLogic.Legs.HumanLeg;
 import Main.BodyLogic.Torso.HumanTorso;
 
@@ -21,5 +23,21 @@ public class Human extends Person
         HumanLeg rightLeg = new HumanLeg();
         rightLeg.instantiateBodyPart(bias, randomness);
         rightLeg.attachTo(newTorso);
+
+        HumanArm leftArm = new HumanArm();
+        leftArm.instantiateBodyPart(bias, randomness);
+        leftArm.attachTo(newTorso);
+
+        HumanArm rightArm = new HumanArm();
+        rightArm.instantiateBodyPart(bias, randomness);
+        rightArm.attachTo(newTorso);
+
+        HumanHand leftHand = new HumanHand();
+        leftHand.instantiateBodyPart(bias, randomness);
+        leftHand.attachTo(leftArm);
+
+        HumanHand rightHand = new HumanHand();
+        rightHand.instantiateBodyPart(bias, randomness);
+        rightHand.attachTo(rightArm);
     }
 }

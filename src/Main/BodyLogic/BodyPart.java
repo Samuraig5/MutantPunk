@@ -34,8 +34,11 @@ public abstract class BodyPart
      * This is keeping track of the class of the bodyPart like 'arm', 'heart', 'skin', 'implant' and so on.
      *
      * List of classes in use:
+     *  misc
      *  torso
      *  leg
+     *  arm
+     *  hand
      */
     public String bodyPartClass;
 
