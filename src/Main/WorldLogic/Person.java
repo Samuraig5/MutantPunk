@@ -7,8 +7,14 @@ import java.util.List;
 public abstract class Person
 {
     public List<BodyPart> myBodyParts;
-    public int blood;
-    public int bloodGain;
+    public int grossBloodCapacity;
+    public int grossBloodGeneration;
+    public int grossBloodNeeded;
+    public int grossEnergyCapacity;
+    public int grossEnergyGeneration;
+    public int grossEnergyNeeded;
+    public int grossSize;
+    public int grossSpeedModifier;
 
     /**
      * This function generates a normal human person.

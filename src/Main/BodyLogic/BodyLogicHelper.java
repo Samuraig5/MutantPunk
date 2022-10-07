@@ -36,6 +36,10 @@ public class BodyLogicHelper
     {
         return calculateBodyPartStat(incomingStandardStat,bias,randomness,100);
     }
+    static public int calculateBodyPartStat(int incomingStandardStat)
+    {
+        return calculateBodyPartStat(incomingStandardStat,0,0,0);
+    }
 
     /**
      * Generates a number between '-1' and '1'

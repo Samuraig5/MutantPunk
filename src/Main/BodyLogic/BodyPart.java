@@ -32,9 +32,21 @@ public abstract class BodyPart
     /**
      * This is keeping track of the class of the bodyPart like 'arm', 'heart', 'skin', 'implant' and so on.
      *
-     * List of
+     * List of classes in use:
+     *  torso
+     *  leg
      */
     public String bodyPartClass;
+
+    /**
+     * Amount of blood that can be stored in this bodyPart
+     */
+    public int bloodCapacity;
+
+    /**
+     * Amount of blood this bodyPart generates per time unit.
+     */
+    public int bloodGeneration;
 
     /**
      * Amount of blood needed for the bodyPart to function.
@@ -42,9 +54,14 @@ public abstract class BodyPart
     public int neededBlood;
 
     /**
-     * Amount of blood this bodyPart generates per time unit.
+     * Amount of energy this bodyPart can store.
      */
-    public int bloodGeneration;
+    public int energyCapacity;
+
+    /**
+     * Amount of energy this bodyPart generates per turn.
+     */
+    public int energyGeneration;
 
     /**
      * Amount of energy needed for the bodyPart to function.
@@ -105,7 +122,10 @@ public abstract class BodyPart
      *
      * @param damage the amount of damage to be dealt to the bodyPart
      */
-    abstract public void doDamage(int damage);
+    public void doDamage(int damage)
+    {
+        this.health = this.health-damage;
+    }
 
     /**
      * This function attaches this bodyPart to the given bodyPart and updates the new parents attachedBodyPart list
@@ -126,7 +146,17 @@ public abstract class BodyPart
      * This function makes sure all the stats and attributes of the person this bodyPart is attached to, are updated
      * according to the bodyParts own stats.
      */
-    abstract public void updatePersonWhenAttached();
+    public void updatePersonWhenAttached()
+    {
+        this.myPerson.grossBloodCapacity += bloodCapacity;
+        this.myPerson.grossBloodGeneration += bloodGeneration;
+        this.myPerson.grossBloodNeeded += neededBlood;
+        this.myPerson.grossEnergyCapacity += energyCapacity;
+        this.myPerson.grossEnergyGeneration += energyGeneration;
+        this.myPerson.grossEnergyNeeded += neededEnergy;
+        this.myPerson.grossSize += size;
+        this.myPerson.grossSpeedModifier += speedModifier;
+    }
 
     /**
      * This function removes this bodyPart from the person. All bodyParts attached to this bodyPart stay attached
@@ -144,7 +174,17 @@ public abstract class BodyPart
      * This function makes sure all the stats and attributes of the person this bodyPart is removed from, are updated
      * according to the bodyParts own stats.
      */
-    abstract public void updatePersonWhenRemoved();
+    public void updatePersonWhenRemoved()
+    {
+        this.myPerson.grossBloodCapacity -= bloodCapacity;
+        this.myPerson.grossBloodGeneration -= bloodGeneration;
+        this.myPerson.grossBloodNeeded -= neededBlood;
+        this.myPerson.grossEnergyCapacity -= energyCapacity;
+        this.myPerson.grossEnergyGeneration -= energyGeneration;
+        this.myPerson.grossEnergyNeeded -= neededEnergy;
+        this.myPerson.grossSize -= size;
+        this.myPerson.grossSpeedModifier -= speedModifier;
+    }
 
     /**
      * This function travels recursively through all the attached bodyParts and removes them from the old Person.
