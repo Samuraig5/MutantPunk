@@ -14,7 +14,7 @@ public class HumanLeg extends BodyPart
     public void instantiateBodyPart(int bias, int randomness)
     {
         speedModifier = BodyLogicHelper.calculateBodyPartStat(standardSpeedModifier,bias,randomness);
-        neededBlood = BodyLogicHelper.calculateBodyPartStat(standardSpeedModifier,bias,randomness);
+        neededBlood = BodyLogicHelper.calculateBodyPartStat(standardNeededBlood,bias,randomness);
     }
 
     @Override

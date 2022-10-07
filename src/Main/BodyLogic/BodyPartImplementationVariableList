@@ -1,0 +1,14 @@
+
+==== NORMAL BODYPART VARIABLES ====
+final int type;
+final String bodyPartClass;
+final int standardNeededBlood;
+final int standardBloodGeneration;
+final int standardNeededEnergy;
+final int standardHealth;
+final int standardRegenRate;
+final int standardRegenLimit;
+final int standardArmour;
+final int standardSize;
+final int standardOrganCapacity;
+final int standardSpeedModifier;

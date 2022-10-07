@@ -78,10 +78,14 @@ public abstract class BodyPart
     public int size;
 
     /**
-     * This function calculates how many organs fit inside this bodyPart
+     * This signifies how many organs fit inside this bodyPart
      */
     public int organCapacity;
 
+    /**
+     * This calculates how much this bodyPart increases the speed of its person.
+     */
+    public int speedModifier;
 
     /**
      * This is used to instantiate the bodyPart.
