@@ -1,0 +1,16 @@
+name§Human Torso
+type§1
+bodyPartClass§torso
+bloodCapacity§50
+bloodGeneration§40
+neededBlood§100
+energyCapacity§0
+energyGeneration§0
+neededEnergy§0
+maxHealth§100
+regenRate§1
+regenLimit§80
+armour§10
+size§100
+organCapacity§100
+speedModifier§0
