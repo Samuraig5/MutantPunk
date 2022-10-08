@@ -1,6 +1,6 @@
 name§Human Torso
 type§1
-bodyPartClass§torso
+bodyPartClass§container
 bloodCapacity§50
 bloodGeneration§0
 neededBlood§40

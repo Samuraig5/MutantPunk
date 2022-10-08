@@ -1,0 +1,19 @@
+name§Human Head
+type§1
+bodyPartClass§container
+bloodCapacity§5
+bloodGeneration§0
+neededBlood§5
+energyCapacity§0
+energyGeneration§0
+neededEnergy§0
+maxHealth§10
+regenRate§1
+regenLimit§80
+armour§30
+size§30
+organCapacity§75
+speedModifier§0
+consciousness§0
+grabbingSlots§0
+sightModifier§0

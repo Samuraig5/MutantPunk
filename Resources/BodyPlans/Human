@@ -1,5 +1,5 @@
 name§Human Torso
-pathToBodyPartFile§Resources/BodyParts/Torso/HumanTorso
+pathToBodyPartFile§Resources/BodyParts/Containers/HumanTorso
 >
 >name§Human left leg
 >pathToBodyPartFile§Resources/BodyParts/Legs/HumanLeg
@@ -24,3 +24,6 @@ pathToBodyPartFile§Resources/BodyParts/Torso/HumanTorso
 >>
 >>name§Human right hand
 >>pathToBodyPartFile§Resources/BodyParts/Hands/HumanHand
+>
+>name§Human head
+>pathToBodyPartFile§Resources/BodyParts/Containers/HumanHead
