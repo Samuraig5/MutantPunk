@@ -292,6 +292,9 @@ public class BodyPart
         System.out.println("    Size: " + size);
         System.out.println("    Organ capacity: " + organCapacity);
         System.out.println("    Speed: " + speedModifier);
+        System.out.println("    Consciousness: " + consciousness);
+        System.out.println("    Grabbing slots: " + grabbingSlots);
+        System.out.println("    Sight: " + sightModifier);
     }
 
     public void changeName(String newName)
