@@ -2,8 +2,8 @@ name§Human Torso
 type§1
 bodyPartClass§torso
 bloodCapacity§50
-bloodGeneration§40
-neededBlood§100
+bloodGeneration§0
+neededBlood§40
 energyCapacity§0
 energyGeneration§0
 neededEnergy§0

@@ -1,5 +1,6 @@
 package Test;
 
+import Main.BodyLogic.BodyPart;
 import Main.WorldLogic.Human;
 
 public class BodyPartGenerationTest {
@@ -7,6 +8,7 @@ public class BodyPartGenerationTest {
     public static void main(String[] args)
     {
         Human guy = new Human();
+
         guy.instantiatePerson("Test Guy",0,0);
         System.out.println("--> Number of Body Parts: " + guy.myBodyParts.size());
         System.out.println("==========HUMAN TORSO==========");
@@ -27,7 +29,5 @@ public class BodyPartGenerationTest {
         guy.myBodyParts.get(7).printBodyPartToTerminal();
         System.out.println("==========HUMAN RIGHT HAND==========");
         guy.myBodyParts.get(8).printBodyPartToTerminal();
-
-        guy.printPersonToTerminal();
     }
 }

@@ -149,7 +149,7 @@ public class BodyPart
         armour = BodyLogicHelper.calculateBodyPartStat(Integer.parseInt(data.get(12)),bias,randomness);
         size = BodyLogicHelper.calculateBodyPartStat(Integer.parseInt(data.get(13)),bias,randomness);
         organCapacity = BodyLogicHelper.calculateBodyPartStat(Integer.parseInt(data.get(14)),bias,randomness);
-        speedModifier = BodyLogicHelper.calculateBodyPartStat(Integer.parseInt(data.get(14)),bias,randomness);
+        speedModifier = BodyLogicHelper.calculateBodyPartStat(Integer.parseInt(data.get(15)),bias,randomness);
 
         currentHealth = maxHealth;
     }

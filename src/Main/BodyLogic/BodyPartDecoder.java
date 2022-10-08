@@ -1,5 +1,7 @@
 package Main.BodyLogic;
 
+import Main.WorldLogic.Person;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
@@ -37,6 +39,13 @@ public class BodyPartDecoder
         BodyPart bp = new BodyPart();
         List<String> data = getData(filePath);
         bp.generateBodyPart(data,bias,randomness);
+        return bp;
+    }
+    static public BodyPart loadBodyPartFromFile(Person person, String filePath, int bias, int randomness)
+    {
+        BodyPart bp = loadBodyPartFromFile(filePath,bias,randomness);
+        bp.myPerson = person;
+        person.myBodyParts.add(bp);
         return bp;
     }
 }
