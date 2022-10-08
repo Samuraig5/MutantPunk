@@ -15,13 +15,13 @@ import java.util.ArrayList;
 public class Console
 {
     public JFrame frame;
-    public JTextPane console;
+    public static JTextPane console;
     public JTextField input;
     public JScrollPane scrollPane;
 
-    public StyledDocument styledDocument;
+    public static StyledDocument styledDocument;
 
-    boolean trace = false;
+    static boolean trace = false;
 
     ArrayList<String> recentUsed = new ArrayList<>();
     int recentUsedID = 0;
@@ -66,7 +66,7 @@ public class Console
                 recentUsed.add(text);
                 recentUsedID = 0;
 
-                doCommand(text);
+                ConsoleCommands.doCommand(text);
                 scrollBottom();
                 input.selectAll();
             }
@@ -123,30 +123,6 @@ public class Console
         frame.setVisible(true);
     }
 
-    public void doCommand(String s)
-    {
-        final String[] commands = s.split(" ");
-        try
-        {
-            if(commands[0].equalsIgnoreCase("help"))
-            {
-                println("'clear' -> clears all messages of the window", false, Color.PINK);
-            }
-            else if(commands[0].equalsIgnoreCase("clear"))
-            {
-                clear();
-            }
-            else
-            {
-                println(s, false, Color.lightGray);
-            }
-        }
-        catch (Exception e)
-        {
-            println("Error ->" + e.getMessage(), trace, new Color(255,155,155));
-        }
-    }
-
     public void scrollTop()
     {
         console.setCaretPosition(0);
@@ -156,7 +132,7 @@ public class Console
         console.setCaretPosition(console.getDocument().getLength());
     }
 
-    public void print(String s, boolean trace, Color c)
+    public static void print(String s, boolean trace, Color c)
     {
         Style style = console.addStyle("Style", null);
         StyleConstants.setForeground(style, c);
@@ -181,24 +157,12 @@ public class Console
         print(s, trace, Color.lightGray);
     }
 
-    public void println(String s, boolean trace, Color c)
+    public static void println(String s, boolean trace, Color c)
     {
         print(s+"\n",trace,c);
     }
     public void println(String s, boolean trace)
     {
         println(s,trace,Color.lightGray);
-    }
-
-    public void clear()
-    {
-        try
-        {
-            styledDocument.remove(0,styledDocument.getLength());
-        }
-        catch (Exception e)
-        {
-            System.out.println("Console.java cant clear styledDocument");
-        }
     }
 }
