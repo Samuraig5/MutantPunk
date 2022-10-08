@@ -5,7 +5,7 @@ import Main.WorldLogic.Person;
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class BodyPart
+public class BodyPart
 {
     /**
      * The (nick-)name of this specific bodyPart.
@@ -131,17 +131,17 @@ public abstract class BodyPart
      * @param randomness changes the stats of the bodyPart by a random amount (both positive and negative).
      *                   The greater the value, the stronger the random drift.
      */
-    abstract public void generateBodyPart(int bias, int randomness);
-    public void instantiateBodyPart(Person person, int bias, int randomness)
+    public void generateBodyPart(List<String> data, int bias, int randomness);
+    public void instantiateBodyPart(Person person, List<String> data,int bias, int randomness)
     {
         this.myPerson = person;
         myPerson.myBodyParts.add(this);
-        generateBodyPart(bias, randomness);
+        generateBodyPart(data ,bias, randomness);
         updatePersonWhenAttached();
     }
-    public void instantiateBodyPart(int bias, int randomness)
+    public void instantiateBodyPart(List<String> data, int bias, int randomness)
     {
-        generateBodyPart(bias, randomness);
+        generateBodyPart(data, bias, randomness);
         currentHealth = maxHealth;
     }
 

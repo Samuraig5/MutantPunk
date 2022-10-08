@@ -1,0 +1,16 @@
+name§Human Leg
+type§1
+bodyPartClass§leg
+bloodCapacity§20
+bloodGeneration§0
+neededBlood§20
+energyCapacity§0
+energyGeneration§0
+neededEnergy§0
+maxHealth§80
+regenRate§1
+regenLimit§60
+armour§10
+size§75
+organCapacity§10
+speedModifier§45

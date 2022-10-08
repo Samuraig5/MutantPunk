@@ -1,0 +1,16 @@
+name§Human Hand
+type§1
+bodyPartClass§hand
+bloodCapacity§5
+bloodGeneration§0
+neededBlood§5
+energyCapacity§0
+energyGeneration§0
+neededEnergy§0
+maxHealth§10
+regenRate§1
+regenLimit§5
+armour§10
+size§10
+organCapacity§2
+speedModifier§0
