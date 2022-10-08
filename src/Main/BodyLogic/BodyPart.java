@@ -121,6 +121,21 @@ public class BodyPart
     public int speedModifier;
 
     /**
+     * How much this bodyPart can "think". A person with no consciousness is considered dead.
+     */
+    public int consciousness;
+
+    /**
+     * How much this bodyPart can grab. Used for holding weapons.
+     */
+    public int grabbingSlots;
+
+    /**
+     * How much this bodyPart can see.
+     */
+    public int sightModifier;
+
+    /**
      * This is used to generate the bodyPart.
      * It takes on the typical values of the bodyPart. These values are manipulated by the bias and a randomness.
      *
@@ -147,6 +162,9 @@ public class BodyPart
         size = BodyLogicHelper.calculateBodyPartStat(Integer.parseInt(data.get(13)),bias,randomness);
         organCapacity = BodyLogicHelper.calculateBodyPartStat(Integer.parseInt(data.get(14)),bias,randomness);
         speedModifier = BodyLogicHelper.calculateBodyPartStat(Integer.parseInt(data.get(15)),bias,randomness);
+        consciousness = BodyLogicHelper.calculateBodyPartStat(Integer.parseInt(data.get(16)),bias,randomness);
+        grabbingSlots = BodyLogicHelper.calculateBodyPartStat(Integer.parseInt(data.get(17)),bias,randomness);
+        sightModifier = BodyLogicHelper.calculateBodyPartStat(Integer.parseInt(data.get(18)),bias,randomness);
 
         currentHealth = maxHealth;
     }
