@@ -1,8 +1,5 @@
 package Main.BodyLogic;
 
-import Main.WorldLogic.Person;
-
-import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -217,7 +214,7 @@ public class BodyPart
      */
     public void removeBodyPart()
     {
-        BodyPart resultingWound = BodyPartDecoder.loadBodyPartFromFile("Resources/BodyParts/Misc/GrievousWound",0,20);
+        BodyPart resultingWound = BodyFileDecoder.loadBodyPartFromFile("Resources/BodyParts/Misc/GrievousWound",0,20);
         resultingWound.attachTo(bodyPartAttachedTo);
         bodyPartAttachedTo.attachedBodyParts.remove(this);
         bodyPartAttachedTo = null;

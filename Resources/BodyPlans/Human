@@ -1,0 +1,26 @@
+name§Human Torso
+pathToBodyPartFile§Resources/BodyParts/Torso/HumanTorso
+>
+>name§Human left leg
+>pathToBodyPartFile§Resources/BodyParts/Legs/HumanLeg
+>>
+>>name§Human left foot
+>>pathToBodyPartFile§Resources/BodyParts/Feet/HumanFoot
+>
+>name§Human right leg
+>pathToBodyPartFile§Resources/BodyParts/Legs/HumanLeg
+>>
+>>name§Human left foot
+>>pathToBodyPartFile§Resources/BodyParts/Feet/HumanFoot
+>
+>name§Human left arm
+>pathToBodyPartFile§Resources/BodyParts/Arms/HumanArm
+>>
+>>name§Human left hand
+>>pathToBodyPartFile§Resources/BodyParts/Hands/HumanHand
+>
+>name§Human right arm
+>pathToBodyPartFile§Resources/BodyParts/Arms/HumanArm
+>>
+>>name§Human right hand
+>>pathToBodyPartFile§Resources/BodyParts/Hands/HumanHand

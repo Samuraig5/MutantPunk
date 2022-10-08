@@ -1,6 +1,6 @@
 package Test;
 
-import Main.BodyLogic.BodyPartDecoder;
+import Main.BodyLogic.BodyFileDecoder;
 
 import java.io.FileNotFoundException;
 import java.util.List;
@@ -15,14 +15,14 @@ public class BodyPartDecoderTest
     public static void main(String[] args) throws FileNotFoundException
     {
         System.out.println("================ PROPER FILE PATH TEST ================");
-        List<String> data = BodyPartDecoder.getData("Resources/BodyParts/Torso/HumanTorso");
+        List<String> data = BodyFileDecoder.getBodyPartData("Resources/BodyParts/Torso/HumanTorso");
         for (String d : data)
         {
             System.out.println(d);
         }
 
         System.out.println("================ GARBAGE FILE PATH TEST ================");
-        List<String> data2 = BodyPartDecoder.getData("Resources/BodyParts/Torso/GarbageFilePath");
+        List<String> data2 = BodyFileDecoder.getBodyPartData("Resources/BodyParts/Torso/GarbageFilePath");
         for (String s : data2) {
             System.out.println(s);
         }
