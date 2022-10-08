@@ -17,6 +17,8 @@ public class Person
     public int grossEnergyNeeded;
     public int grossSize;
     public int grossSpeedModifier;
+    public int grossConsciousness;
+    public int grossSight;
 
     /**
      * This function prints out the person's stats for debugging;
@@ -33,6 +35,8 @@ public class Person
         System.out.println("    Energy Capacity: " + grossEnergyNeeded);
         System.out.println("    Size: " + grossSize);
         System.out.println("    Speed: " + grossSpeedModifier);
+        System.out.println("    Consciousness: " + grossConsciousness);
+        System.out.println("    Sight: " + grossSight);
 
     }
 }

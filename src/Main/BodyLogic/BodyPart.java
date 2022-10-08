@@ -215,14 +215,16 @@ public class BodyPart
      */
     public void updatePersonWhenAttached()
     {
-        this.myPerson.grossBloodCapacity += bloodCapacity;
-        this.myPerson.grossBloodGeneration += bloodGeneration;
-        this.myPerson.grossBloodNeeded += neededBlood;
-        this.myPerson.grossEnergyCapacity += energyCapacity;
-        this.myPerson.grossEnergyGeneration += energyGeneration;
-        this.myPerson.grossEnergyNeeded += neededEnergy;
-        this.myPerson.grossSize += size;
-        this.myPerson.grossSpeedModifier += speedModifier;
+        myPerson.grossBloodCapacity += bloodCapacity;
+        myPerson.grossBloodGeneration += bloodGeneration;
+        myPerson.grossBloodNeeded += neededBlood;
+        myPerson.grossEnergyCapacity += energyCapacity;
+        myPerson.grossEnergyGeneration += energyGeneration;
+        myPerson.grossEnergyNeeded += neededEnergy;
+        myPerson.grossSize += size;
+        myPerson.grossSpeedModifier += speedModifier;
+        myPerson.grossConsciousness += consciousness;
+        myPerson.grossSight += sightModifier;
     }
 
     /**
@@ -260,14 +262,16 @@ public class BodyPart
      */
     public void updatePersonWhenRemoved()
     {
-        this.myPerson.grossBloodCapacity -= bloodCapacity;
-        this.myPerson.grossBloodGeneration -= bloodGeneration;
-        this.myPerson.grossBloodNeeded -= neededBlood;
-        this.myPerson.grossEnergyCapacity -= energyCapacity;
-        this.myPerson.grossEnergyGeneration -= energyGeneration;
-        this.myPerson.grossEnergyNeeded -= neededEnergy;
-        this.myPerson.grossSize -= size;
-        this.myPerson.grossSpeedModifier -= speedModifier;
+        myPerson.grossBloodCapacity -= bloodCapacity;
+        myPerson.grossBloodGeneration -= bloodGeneration;
+        myPerson.grossBloodNeeded -= neededBlood;
+        myPerson.grossEnergyCapacity -= energyCapacity;
+        myPerson.grossEnergyGeneration -= energyGeneration;
+        myPerson.grossEnergyNeeded -= neededEnergy;
+        myPerson.grossSize -= size;
+        myPerson.grossSpeedModifier -= speedModifier;
+        myPerson.grossConsciousness -= consciousness;
+        myPerson.grossSight -= sightModifier;
     }
 
     /**
