@@ -14,9 +14,8 @@ public class BodyPartDecoder
      *
      * @param filePath path to the desired file
      * @return ArrayList of Strings containing the values of the bodyPart in the same order as the file had them listed.
-     * @throws FileNotFoundException exception gets thrown if the file at filePath could not be found.
      */
-    static public List<String> getData(String filePath) throws FileNotFoundException
+    static public List<String> getData(String filePath)
     {
         List<String> data = new ArrayList<>();
         try
@@ -32,5 +31,12 @@ public class BodyPartDecoder
             System.out.println("!!!!! BodyPartDecoder could not find File with given FilePath !!!!!");
         }
         return data;
+    }
+    static public BodyPart loadBodyPartFromFile(String filePath,int bias, int randomness)
+    {
+        BodyPart bp = new BodyPart();
+        List<String> data = getData(filePath);
+        bp.generateBodyPart(data,bias,randomness);
+        return bp;
     }
 }

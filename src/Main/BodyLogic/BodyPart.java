@@ -2,6 +2,7 @@ package Main.BodyLogic;
 
 import Main.WorldLogic.Person;
 
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -131,20 +132,27 @@ public class BodyPart
      * @param randomness changes the stats of the bodyPart by a random amount (both positive and negative).
      *                   The greater the value, the stronger the random drift.
      */
-    public void generateBodyPart(List<String> data, int bias, int randomness);
-    public void instantiateBodyPart(Person person, List<String> data,int bias, int randomness)
+    public void generateBodyPart(List<String> data, int bias, int randomness)
     {
-        this.myPerson = person;
-        myPerson.myBodyParts.add(this);
-        generateBodyPart(data ,bias, randomness);
-        updatePersonWhenAttached();
-    }
-    public void instantiateBodyPart(List<String> data, int bias, int randomness)
-    {
-        generateBodyPart(data, bias, randomness);
+        name = data.get(0);
+        type = BodyLogicHelper.calculateBodyPartStat(Integer.parseInt(data.get(1)),bias,randomness);
+        bodyPartClass = data.get(2);
+        bloodCapacity = BodyLogicHelper.calculateBodyPartStat(Integer.parseInt(data.get(3)),bias,randomness);
+        bloodGeneration = BodyLogicHelper.calculateBodyPartStat(Integer.parseInt(data.get(4)),bias,randomness);
+        neededBlood = BodyLogicHelper.calculateBodyPartStat(Integer.parseInt(data.get(5)),bias,randomness);
+        energyCapacity = BodyLogicHelper.calculateBodyPartStat(Integer.parseInt(data.get(6)),bias,randomness);
+        energyGeneration = BodyLogicHelper.calculateBodyPartStat(Integer.parseInt(data.get(7)),bias,randomness);
+        neededEnergy = BodyLogicHelper.calculateBodyPartStat(Integer.parseInt(data.get(8)),bias,randomness);
+        maxHealth = BodyLogicHelper.calculateBodyPartStat(Integer.parseInt(data.get(9)),bias,randomness);
+        regenRate = BodyLogicHelper.calculateBodyPartStat(Integer.parseInt(data.get(10)),bias,randomness);
+        regenLimit = BodyLogicHelper.calculateBodyPartStat(Integer.parseInt(data.get(11)),bias,randomness);
+        armour = BodyLogicHelper.calculateBodyPartStat(Integer.parseInt(data.get(12)),bias,randomness);
+        size = BodyLogicHelper.calculateBodyPartStat(Integer.parseInt(data.get(13)),bias,randomness);
+        organCapacity = BodyLogicHelper.calculateBodyPartStat(Integer.parseInt(data.get(14)),bias,randomness);
+        speedModifier = BodyLogicHelper.calculateBodyPartStat(Integer.parseInt(data.get(14)),bias,randomness);
+
         currentHealth = maxHealth;
     }
-
 
     /**
      * This function will deal a certain amount of damage to a bodyPart.
@@ -209,8 +217,7 @@ public class BodyPart
      */
     public void removeBodyPart()
     {
-        GrievousWound resultingWound = new GrievousWound();
-        resultingWound.instantiateBodyPart(0,10);
+        BodyPart resultingWound = BodyPartDecoder.loadBodyPartFromFile("Resources/BodyParts/Misc/GrievousWound",0,20);
         resultingWound.attachTo(bodyPartAttachedTo);
         bodyPartAttachedTo.attachedBodyParts.remove(this);
         bodyPartAttachedTo = null;
