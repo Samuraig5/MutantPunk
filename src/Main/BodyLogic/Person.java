@@ -39,4 +39,9 @@ public class Person
         System.out.println("    Sight: " + grossSight);
 
     }
+
+    public void changeName(String newName)
+    {
+        name = newName;
+    }
 }

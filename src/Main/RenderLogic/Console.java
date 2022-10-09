@@ -14,6 +14,12 @@ import java.util.ArrayList;
 
 public class Console
 {
+    public ConsoleCommands cc = new ConsoleCommands(this);
+    public ConsoleBodyMenu cb = new ConsoleBodyMenu(this);
+    public ConsoleListRenderer clir = new ConsoleListRenderer(this);
+
+    public Color errorColour = new Color(255,155,155);
+
     public JFrame frame;
     public static JTextPane console;
     public JTextField input;
@@ -21,7 +27,7 @@ public class Console
 
     public static StyledDocument styledDocument;
 
-    static boolean trace = false;
+    boolean trace = false;
 
     ArrayList<String> recentUsed = new ArrayList<>();
     int recentUsedID = 0;
@@ -66,7 +72,7 @@ public class Console
                 recentUsed.add(text);
                 recentUsedID = 0;
 
-                ConsoleCommands.doCommand(text);
+                cc.doCommand(text);
                 scrollBottom();
                 input.selectAll();
             }
@@ -157,12 +163,20 @@ public class Console
         print(s, trace, Color.lightGray);
     }
 
-    public static void println(String s, boolean trace, Color c)
+    public  void println(String s, boolean trace, Color c)
     {
         print(s+"\n",trace,c);
     }
-    public void println(String s, boolean trace)
+    public  void println(String s, boolean trace)
     {
         println(s,trace,Color.lightGray);
+    }
+    public  void println(String s, Color c)
+    {
+        println(s,false,c);
+    }
+    public  void println(String s)
+    {
+        println(s,false,Color.lightGray);
     }
 }
