@@ -4,7 +4,6 @@ import Main.BodyLogic.BodyFileDecoder;
 import Main.BodyLogic.Person;
 
 import java.awt.*;
-import java.security.spec.ECField;
 
 public class ConsoleCommands
 {
@@ -21,19 +20,17 @@ public class ConsoleCommands
         {
             if(commands[0].equalsIgnoreCase("/help"))
             {
-                checkIfInMenu();
-                c.println("'/help'       -> lists all commands", Color.PINK);
-                c.println("'/clear'      -> clears all messages of the window", Color.PINK);
-                c.println("'/spawnHuman' -> spawns a new human with the following parameters: name, bias, randomness", Color.PINK);
+                exitMenuIfInMenu();
+                help();
             }
             else if(commands[0].equalsIgnoreCase("/clear"))
             {
-                checkIfInMenu();
-                clear();
+                exitMenuIfInMenu();
+                fullClear();
             }
             else if(commands[0].equalsIgnoreCase("/spawnHuman"))
             {
-                checkIfInMenu();
+                exitMenuIfInMenu();
                 if(commands.length < 4)
                 {
                     c.println("Too few parameters", c.errorColour);
@@ -54,31 +51,31 @@ public class ConsoleCommands
         }
     }
 
-    public void checkIfInMenu()
+    public void help()
+    {
+        c.println("'/help'       -> lists all commands", Color.PINK);
+        c.println("'/clear'      -> clears all messages of the window", Color.PINK);
+        c.println("'/spawnHuman' -> spawns a new human with the following parameters: name, bias, randomness", Color.PINK);
+    }
+    public void exitMenuIfInMenu()
     {
         if(inAMenu)
         {
             inAMenu = false;
-            clear();
+            fullClear();
         }
     }
 
     public void enteringAMenu()
     {
-        clear();
+        fullClear();
         inAMenu = true;
     }
 
-    public void clear()
+    public void fullClear()
     {
-        try
-        {
-            Console.styledDocument.remove(0, Console.styledDocument.getLength());
-        }
-        catch (Exception e)
-        {
-            System.out.println("Console.java cant clear styledDocument");
-        }
+        c.clir.reset();
+        c.clear();
     }
 
     public void spawnHuman(String name, String bias, String randomness)

@@ -1,24 +1,107 @@
 package Main.RenderLogic;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class ConsoleListRenderer
 {
     Console c;
+    private boolean currentlyRendering = false;
+    private List<String> currentlyRenderedList = new ArrayList<>();
+    private String currentlyRenderedTitle;
+    private int amountOfPages = 0;
+    private int currentPage = 0;
+
     public ConsoleListRenderer(Console console)
     {
         c = console;
     }
 
+    public void reset()
+    {
+        amountOfPages = 0;
+        currentPage = 0;
+        currentlyRendering = false;
+    }
+
     public void renderList(List<String> list, String title)
     {
-        c.cc.enteringAMenu();
-        c.println(title);
-        c.println("");
-        for(int i = 0; i < list.size(); i++)
+        if (!currentlyRendering)
         {
-            c.println(indexToLetter(i+1) + " - " + list.get(i));
+            c.cc.enteringAMenu();
+            System.out.println("Setting true");
+            currentlyRendering = true;
+            currentlyRenderedList = list;
+            currentlyRenderedTitle = title;
+            currentPage = 1;
         }
+        amountOfPages = 1;
+        int amountOfItems = list.size();
+
+        while (amountOfItems > 26)
+        {
+            amountOfPages++;
+            amountOfItems = amountOfItems - 26;
+        }
+        renderPage();
+    }
+
+    public void renderPage()
+    {
+        int finalPageSize = currentlyRenderedList.size()%26;
+
+        if (amountOfPages > 1)
+        {
+            c.println(currentlyRenderedTitle + "     (" + currentPage + "/" + amountOfPages + ")");
+        }
+        else
+        {
+            c.println(currentlyRenderedTitle);
+        }
+        c.println("");
+        if (currentPage == amountOfPages)
+        {
+            for(int i = 26*(currentPage-1); i < 26*(currentPage-1)+finalPageSize; i++)
+            {
+                c.println(indexToLetter((i%26)) + " - " + currentlyRenderedList.get(i));
+            }
+        }
+        else
+        {
+            for(int i = 26*(currentPage-1); i < 26*(currentPage); i++)
+            {
+                c.println(indexToLetter((i%26)) + " - " + currentlyRenderedList.get(i));
+            }
+        }
+    }
+
+    public void pageUp()
+    {
+        if (currentPage<amountOfPages)
+        {
+            currentPage++;
+        }
+        else
+        {
+            currentPage = 1;
+        }
+    }
+
+    public void pageDown()
+    {
+        if (currentPage>1)
+        {
+            currentPage--;
+        }
+        else
+        {
+            currentPage = amountOfPages;
+        }
+    }
+
+    public boolean isCurrentlyRendering()
+    {
+        return currentlyRendering;
     }
 
     public String indexToLetter(int n)
@@ -26,57 +109,57 @@ public class ConsoleListRenderer
         String letter;
         switch (n)
         {
-            case 1:  letter = "a";
+            case 0:  letter = "a";
                 break;
-            case 2:  letter = "b";
+            case 1:  letter = "b";
                 break;
-            case 3:  letter = "c";
+            case 2:  letter = "c";
                 break;
-            case 4:  letter = "d";
+            case 3:  letter = "d";
                 break;
-            case 5:  letter = "e";
+            case 4:  letter = "e";
                 break;
-            case 6:  letter = "f";
+            case 5:  letter = "f";
                 break;
-            case 7:  letter = "g";
+            case 6:  letter = "g";
                 break;
-            case 8:  letter = "h";
+            case 7:  letter = "h";
                 break;
-            case 9:  letter = "i";
+            case 8:  letter = "i";
                 break;
-            case 10: letter = "j";
+            case 9: letter = "j";
                 break;
-            case 11: letter = "k";
+            case 10: letter = "k";
                 break;
-            case 12: letter = "l";
+            case 11: letter = "l";
                 break;
-            case 13: letter = "m";
+            case 12: letter = "m";
                 break;
-            case 14: letter = "n";
+            case 13: letter = "n";
                 break;
-            case 15: letter = "o";
+            case 14: letter = "o";
                 break;
-            case 16: letter = "p";
+            case 15: letter = "p";
                 break;
-            case 17: letter = "q";
+            case 16: letter = "q";
                 break;
-            case 18: letter = "r";
+            case 17: letter = "r";
                 break;
-            case 19: letter = "s";
+            case 18: letter = "s";
                 break;
-            case 20: letter = "t";
+            case 19: letter = "t";
                 break;
-            case 21: letter = "u";
+            case 20: letter = "u";
                 break;
-            case 22: letter = "v";
+            case 21: letter = "v";
                 break;
-            case 23: letter = "w";
+            case 22: letter = "w";
                 break;
-            case 24: letter = "x";
+            case 23: letter = "x";
                 break;
-            case 25: letter = "y";
+            case 24: letter = "y";
                 break;
-            case 26: letter = "z";
+            case 25: letter = "z";
                 break;
             default: letter = "Invalid index";
                 break;

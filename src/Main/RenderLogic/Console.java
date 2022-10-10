@@ -104,6 +104,26 @@ public class Console
                     }
                     input.setText(recentUsed.get(recentUsed.size()-1-recentUsedID));
                 }
+                else if(e.getKeyCode() == KeyEvent.VK_PERIOD)
+                {
+                    if(clir.isCurrentlyRendering())
+                    {
+                        clear();
+                        System.out.println("Page Up");
+                        clir.pageUp();
+                        clir.renderPage();
+                    }
+                }
+                else if(e.getKeyCode() == KeyEvent.VK_COMMA)
+                {
+                    if(clir.isCurrentlyRendering())
+                    {
+                        clear();
+                        System.out.println("Page Down");
+                        clir.pageDown();
+                        clir.renderPage();
+                    }
+                }
             }
             @Override
             public void keyReleased(KeyEvent e)
@@ -127,6 +147,8 @@ public class Console
         frame.setLocationRelativeTo(null);
         frame.setResizable(false);
         frame.setVisible(true);
+
+        cc.help();
     }
 
     public void scrollTop()
@@ -178,5 +200,17 @@ public class Console
     public  void println(String s)
     {
         println(s,false,Color.lightGray);
+    }
+
+    public void clear()
+    {
+        try
+        {
+            Console.styledDocument.remove(0, Console.styledDocument.getLength());
+        }
+        catch (Exception e)
+        {
+            System.out.println("Console.java cant clear styledDocument");
+        }
     }
 }
