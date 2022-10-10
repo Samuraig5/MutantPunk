@@ -31,23 +31,31 @@ public class ConsoleCommands
             else if(commands[0].equalsIgnoreCase("/spawnHuman"))
             {
                 exitMenuIfInMenu();
-                if(commands.length < 4)
+                if(commands.length == 1)
                 {
-                    c.println("Too few parameters", c.errorColour);
+                    spawnHuman("Human", "0", "0");
                 }
-                else if(commands.length > 4)
+                else if(commands.length == 2)
                 {
-                    c.println("Too many parameters", c.errorColour);
+                    spawnHuman(commands[1], "0", "0");
+                }
+                else if(commands.length == 3)
+                {
+                    spawnHuman(commands[1], commands[2], "0");
+                }
+                else if(commands.length == 4)
+                {
+                    spawnHuman(commands[1], commands[2], commands[3]);
                 }
                 else
                 {
-                    spawnHuman(commands[1], commands[2], commands[3]);
+                    c.printWarningln("Too many Parameters!");
                 }
             }
         }
         catch (Exception e)
         {
-            c.println("Error ->" + e.getMessage(), c.trace, c.errorColour);
+            c.printWarningln("Error ->" + e.getMessage());
         }
     }
 

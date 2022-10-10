@@ -17,6 +17,7 @@ public class Console
     public ConsoleCommands cc = new ConsoleCommands(this);
     public ConsoleBodyMenu cb = new ConsoleBodyMenu(this);
     public ConsoleListRenderer clir = new ConsoleListRenderer(this);
+    public ConsoleKeyPressListener ckpl = new ConsoleKeyPressListener(this);
 
     public Color errorColour = new Color(255,155,155);
 
@@ -78,59 +79,7 @@ public class Console
             }
         });
 
-        input.addKeyListener(new KeyListener()
-        {
-            @Override
-            public void keyTyped(KeyEvent e)
-            {
-
-            }
-            @Override
-            public void keyPressed(KeyEvent e)
-            {
-                if(e.getKeyCode() == KeyEvent.VK_UP)
-                {
-                    if(recentUsedID < (recentUsedMax-1) && recentUsedID < (recentUsed.size()-1))
-                    {
-                        recentUsedID++;
-                    }
-                    input.setText(recentUsed.get(recentUsed.size()-1-recentUsedID));
-                }
-                else if(e.getKeyCode() == KeyEvent.VK_DOWN)
-                {
-                    if(recentUsedID > 0)
-                    {
-                        recentUsedID--;
-                    }
-                    input.setText(recentUsed.get(recentUsed.size()-1-recentUsedID));
-                }
-                else if(e.getKeyCode() == KeyEvent.VK_PERIOD)
-                {
-                    if(clir.isCurrentlyRendering())
-                    {
-                        clear();
-                        System.out.println("Page Up");
-                        clir.pageUp();
-                        clir.renderPage();
-                    }
-                }
-                else if(e.getKeyCode() == KeyEvent.VK_COMMA)
-                {
-                    if(clir.isCurrentlyRendering())
-                    {
-                        clear();
-                        System.out.println("Page Down");
-                        clir.pageDown();
-                        clir.renderPage();
-                    }
-                }
-            }
-            @Override
-            public void keyReleased(KeyEvent e)
-            {
-
-            }
-        });
+        ckpl.initialize();
 
         scrollPane = new JScrollPane(console);
         scrollPane.setBorder(null);
@@ -185,22 +134,23 @@ public class Console
         print(s, trace, Color.lightGray);
     }
 
-    public  void println(String s, boolean trace, Color c)
+    public void println(String s, boolean trace, Color c)
     {
         print(s+"\n",trace,c);
     }
-    public  void println(String s, boolean trace)
+    public void println(String s, boolean trace)
     {
         println(s,trace,Color.lightGray);
     }
-    public  void println(String s, Color c)
+    public void println(String s, Color c)
     {
         println(s,false,c);
     }
-    public  void println(String s)
+    public void println(String s)
     {
         println(s,false,Color.lightGray);
     }
+    public void printWarningln(String s) {println(s,errorColour);}
 
     public void clear()
     {
@@ -212,5 +162,10 @@ public class Console
         {
             System.out.println("Console.java cant clear styledDocument");
         }
+    }
+
+    public void clearInputField()
+    {
+        input.setText("");
     }
 }
