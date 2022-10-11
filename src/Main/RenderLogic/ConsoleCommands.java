@@ -102,4 +102,9 @@ public class ConsoleCommands
             c.println("WARNING: The second and third parameters of /spawnHuman must be integer numbers", c.errorColour);
         }
     }
+
+    public void displayMainMenu()
+    {
+
+    }
 }

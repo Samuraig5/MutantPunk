@@ -81,23 +81,29 @@ public class Console
 
         ckpl.initialize();
 
+        ConsoleKeyBinds ckb = new ConsoleKeyBinds(this);
+        frame.add(ckb.label);
+
         scrollPane = new JScrollPane(console);
         scrollPane.setBorder(null);
         scrollPane.setOpaque(false);
         scrollPane.getViewport().setOpaque(false);
 
-        frame.add(input, BorderLayout.SOUTH);
         frame.add(scrollPane, BorderLayout.CENTER);
+        frame.add(input, BorderLayout.SOUTH);
         frame.getContentPane().setBackground(new Color(50,50,50));
 
-        //Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-        //frame.setSize(screenSize.width, screenSize.height);
         frame.setSize(1000, 700);
         frame.setLocationRelativeTo(null);
-        frame.setResizable(false);
         frame.setVisible(true);
 
+        ckb.label.grabFocus();
         cc.help();
+
+        while (true)
+        {
+            ckb.label.grabFocus();
+        }
     }
 
     public void scrollTop()
