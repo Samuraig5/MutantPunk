@@ -1,7 +1,5 @@
 package Main.BodyLogic;
 
-import Main.BodyLogic.BodyPart;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -9,16 +7,170 @@ public class Person
 {
     public List<BodyPart> myBodyParts = new ArrayList<>();
     public String name;
-    public int grossBloodCapacity;
-    public int grossBloodGeneration;
-    public int grossBloodNeeded;
-    public int grossEnergyCapacity;
-    public int grossEnergyGeneration;
-    public int grossEnergyNeeded;
-    public int grossSize;
-    public int grossSpeedModifier;
-    public int grossConsciousness;
-    public int grossSight;
+    final private float[] bloodCapacity = {0,1,0};
+    final private float[] bloodGeneration = {0,1,0};
+    final private float[] bloodNeeded = {0,1,0};
+    final private float[] energyCapacity = {0,1,0};
+    final private float[] energyGeneration = {0,1,0};
+    final private float[] energyNeeded = {0,1,0};
+    final private float[] size = {0,1,0};
+    final private float[] speedModifier = {0,1,0};
+    final private float[] consciousness = {0,1,0};
+    final private float[] sight = {0,1,0};
+
+    /**
+     * Gross sum of the stats.
+     * @param change Amount to add or subtract to the stat.
+     */
+    public void changeGrossBloodCapacity(int change)
+    {
+        bloodCapacity[0] = bloodCapacity[0] + change;
+        changeFinalBloodCapacity();
+    }
+    public void changeGrossBloodGeneration(int change)
+    {
+        bloodGeneration[0] = bloodGeneration[0] + change;
+        changeFinalBloodGeneration();
+    }
+    public void changeGrossBloodNeeded(int change)
+    {
+        bloodNeeded[0] = bloodNeeded[0] + change;
+        changeFinalBloodNeeded();
+    }
+    public void changeGrossEnergyCapacity(int change)
+    {
+        energyCapacity[0] = energyCapacity[0] + change;
+        changeFinalEnergyCapacity();
+    }
+    public void changeGrossEnergyGeneration(int change)
+    {
+        energyGeneration[0] = energyGeneration[0] + change;
+        changeFinalEnergyGeneration();
+    }
+    public void changeGrossEnergyNeeded(int change)
+    {
+        energyNeeded[0] = energyNeeded[0] + change;
+        changeFinalEnergyNeeded();
+    }
+    public void changeGrossSize(int change)
+    {
+        size[0] = size[0] + change;
+        changeFinalSize();
+    }
+    public void changeGrossSpeed(int change)
+    {
+        speedModifier[0] = speedModifier[0] + change;
+        changeFinalSpeed();
+    }
+    public void changeGrossConsciousness(int change)
+    {
+        consciousness[0] = consciousness[0] + change;
+        changeFinalConsciousness();
+    }
+    public void changeGrossSight(int change)
+    {
+        sight[0] = sight[0] + change;
+        changeFinalSight();
+    }
+
+    /**
+     * Changes the modifiers of a stat. It is a multiplier, ie 1 = 100% of the gross stat, 2 = 200%, ...
+     * @param change change of the modifier. 0.1 is a 10% change.
+     */
+    private void changeBloodCapacityModifier(float change)
+    {
+        bloodCapacity[1] = bloodCapacity[1] + change;
+        changeFinalBloodCapacity();
+    }
+    private void changeBloodGenerationModifier(float change)
+    {
+        bloodGeneration[1] = bloodGeneration[1] + change;
+        changeFinalBloodGeneration();
+    }
+    private void changeBloodNeededModifier(float change)
+    {
+        bloodNeeded[1] = bloodNeeded[1] + change;
+        changeFinalBloodNeeded();
+    }
+    private void changeEnergyCapacityModifier(float change)
+    {
+        energyCapacity[1] = energyCapacity[1] + change;
+        changeFinalEnergyCapacity();
+    }
+    private void changeEnergyGenerationModifier(float change)
+    {
+        energyGeneration[1] = energyGeneration[1] + change;
+        changeFinalEnergyGeneration();
+    }
+    private void changeEnergyNeededModifier(float change)
+    {
+        energyNeeded[1] = energyNeeded[1] + change;
+        changeFinalEnergyNeeded();
+    }
+    private void changeSizeModifier(float change)
+    {
+        size[1] = size[1] + change;
+        changeFinalSize();
+    }
+    private void changeSpeedModifier(float change)
+    {
+        speedModifier[1] = speedModifier[1] + change;
+        changeFinalSpeed();
+    }
+    private void changeConsciousnessModifier(float change)
+    {
+        consciousness[1] = consciousness[1] + change;
+        changeFinalConsciousness();
+    }
+    private void changeSightModifier(float change)
+    {
+        sight[1] = sight[1] + change;
+        changeFinalSight();
+    }
+
+    /**
+     * This calculates the final stats based on the gross stats and the modifiers
+     */
+    private void changeFinalBloodCapacity()
+    {
+        bloodCapacity[2] = bloodCapacity[0]*bloodCapacity[1];
+    }
+    private void changeFinalBloodGeneration()
+    {
+        bloodGeneration[2] = bloodGeneration[0]*bloodGeneration[1];
+    }
+    private void changeFinalBloodNeeded()
+    {
+        bloodNeeded[2] = bloodNeeded[0]*bloodNeeded[1];
+    }
+    private void changeFinalEnergyCapacity()
+    {
+        energyCapacity[2] = energyCapacity[0]*energyCapacity[1];
+    }
+    private void changeFinalEnergyGeneration()
+    {
+        energyGeneration[2] = energyGeneration[0]*energyGeneration[1];
+    }
+    private void changeFinalEnergyNeeded()
+    {
+        energyNeeded[2] = energyNeeded[0]*energyNeeded[1];
+    }
+    private void changeFinalSize()
+    {
+        size[2] = size[0]*size[1];
+    }
+    private void changeFinalSpeed()
+    {
+        speedModifier[2] = speedModifier[0]*speedModifier[1];
+    }
+    private void changeFinalConsciousness()
+    {
+        consciousness[2] = consciousness[0]*consciousness[1];
+    }
+    private void changeFinalSight()
+    {
+        sight[2] = sight[0]*sight[1];
+    }
 
     /**
      * This function prints out the person's stats for debugging;
@@ -27,16 +179,16 @@ public class Person
     {
         System.out.println("> Name: " + this.name);
         System.out.println("    GROSS STATS:");
-        System.out.println("    Blood capacity: " + grossBloodCapacity);
-        System.out.println("    Blood generation: " + grossBloodGeneration);
-        System.out.println("    Blood needed: " + grossBloodNeeded);
-        System.out.println("    Energy Capacity: " + grossEnergyCapacity);
-        System.out.println("    Energy Capacity: " + grossEnergyGeneration);
-        System.out.println("    Energy Capacity: " + grossEnergyNeeded);
-        System.out.println("    Size: " + grossSize);
-        System.out.println("    Speed: " + grossSpeedModifier);
-        System.out.println("    Consciousness: " + grossConsciousness);
-        System.out.println("    Sight: " + grossSight);
+        System.out.println("    Blood capacity: " + bloodCapacity);
+        System.out.println("    Blood generation: " + bloodGeneration);
+        System.out.println("    Blood needed: " + bloodNeeded);
+        System.out.println("    Energy Capacity: " + energyCapacity);
+        System.out.println("    Energy Capacity: " + energyGeneration);
+        System.out.println("    Energy Capacity: " + energyNeeded);
+        System.out.println("    Size: " + size);
+        System.out.println("    Speed: " + speedModifier);
+        System.out.println("    Consciousness: " + consciousness);
+        System.out.println("    Sight: " + sight);
 
     }
 
