@@ -207,16 +207,16 @@ public class BodyPart
      */
     public void updatePersonWhenAttached()
     {
-        myPerson.grossBloodCapacity += bloodCapacity;
-        myPerson.grossBloodGeneration += bloodGeneration;
-        myPerson.grossBloodNeeded += neededBlood;
-        myPerson.grossEnergyCapacity += energyCapacity;
-        myPerson.grossEnergyGeneration += energyGeneration;
-        myPerson.grossEnergyNeeded += neededEnergy;
-        myPerson.grossSize += size;
-        myPerson.grossSpeedModifier += speedModifier;
-        myPerson.grossConsciousness += consciousness;
-        myPerson.grossSight += sightModifier;
+        myPerson.changeGrossBloodCapacity(bloodCapacity);
+        myPerson.changeGrossBloodGeneration(bloodGeneration);
+        myPerson.changeGrossBloodNeeded(neededBlood);
+        myPerson.changeGrossEnergyCapacity(energyCapacity);
+        myPerson.changeGrossEnergyGeneration(energyGeneration);
+        myPerson.changeGrossEnergyNeeded(neededEnergy);
+        myPerson.changeGrossSize(size);
+        myPerson.changeGrossSpeed(speedModifier);
+        myPerson.changeGrossConsciousness(consciousness);
+        myPerson.changeGrossSight(sightModifier);
     }
 
     /**
@@ -254,16 +254,16 @@ public class BodyPart
      */
     public void updatePersonWhenRemoved()
     {
-        myPerson.grossBloodCapacity -= bloodCapacity;
-        myPerson.grossBloodGeneration -= bloodGeneration;
-        myPerson.grossBloodNeeded -= neededBlood;
-        myPerson.grossEnergyCapacity -= energyCapacity;
-        myPerson.grossEnergyGeneration -= energyGeneration;
-        myPerson.grossEnergyNeeded -= neededEnergy;
-        myPerson.grossSize -= size;
-        myPerson.grossSpeedModifier -= speedModifier;
-        myPerson.grossConsciousness -= consciousness;
-        myPerson.grossSight -= sightModifier;
+        myPerson.changeGrossBloodCapacity(-bloodCapacity);
+        myPerson.changeGrossBloodGeneration(-bloodGeneration);
+        myPerson.changeGrossBloodNeeded(-neededBlood);
+        myPerson.changeGrossEnergyCapacity(-energyCapacity);
+        myPerson.changeGrossEnergyGeneration(-energyGeneration);
+        myPerson.changeGrossEnergyNeeded(-neededEnergy);
+        myPerson.changeGrossSize(-size);
+        myPerson.changeGrossSpeed(-speedModifier);
+        myPerson.changeGrossConsciousness(-consciousness);
+        myPerson.changeGrossSight(-sightModifier);
     }
 
     /**
