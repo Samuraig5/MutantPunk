@@ -3,6 +3,7 @@ package Main.RenderLogic;
 import Main.BodyLogic.BodyFileDecoder;
 import Main.BodyLogic.Person;
 import Main.RenderLogic.Menus.AllCharactersMenu;
+import Main.RenderLogic.Menus.PersonMenu;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
@@ -43,5 +44,50 @@ public class ConsoleBodyMenu
             allCharacterNames.add(p.name);
         }
         c.clir.renderList(allCharacterNames, "Current Characters", new AllCharactersMenu(c));
+    }
+
+    public void openPersonView(Person p)
+    {
+        c.cc.clear();
+
+        int grossPadding = 7;
+        int modPadding = 10;
+        int finalPadding = 7;
+        c.cc.println(" STATS             ¦ GROSS ¦ MODIFIER ¦ TOTAL ¦");
+        c.cc.println("Consciousness:     ¦" + generateStatLine(p.getConsciousness(),grossPadding,modPadding,finalPadding));
+        c.cc.println("Blood Capacity:    ¦" + generateStatLine(p.getBloodCapacity(),grossPadding,modPadding,finalPadding));
+        c.cc.println("Blood Generation:  ¦" + generateStatLine(p.getBloodGeneration(),grossPadding,modPadding,finalPadding));
+        c.cc.println("Blood Needed:      ¦" + generateStatLine(p.getBloodNeeded(),grossPadding,modPadding,finalPadding));
+        c.cc.println("Energy Capacity:   ¦" + generateStatLine(p.getEnergyCapacity(),grossPadding,modPadding,finalPadding));
+        c.cc.println("Energy Generation: ¦" + generateStatLine(p.getEnergyGeneration(),grossPadding,modPadding,finalPadding));
+        c.cc.println("Energy Needed:     ¦" + generateStatLine(p.getEnergyNeeded(),grossPadding,modPadding,finalPadding));
+        c.cc.println("Size:              ¦" + generateStatLine(p.getSize(),grossPadding,modPadding,finalPadding));
+        c.cc.println("Speed:             ¦" + generateStatLine(p.getSpeed(),grossPadding,modPadding,finalPadding));
+        c.cc.println("Sight:             ¦" + generateStatLine(p.getSight(),grossPadding,modPadding,finalPadding));
+        c.cc.println("");
+
+
+        List<String> list = new ArrayList<>();
+        list.add("View Body");
+        c.clir.appendList(list, p.name, new PersonMenu(c));
+    }
+    private String rightpad(int text, int length) {
+        return String.format("%-" + length + "." + length + "s", text);
+    }
+    private String rightpad(String text, int length) {
+        return String.format("%-" + length + "." + length + "s", text);
+    }
+    private String expressInPercent(int f)
+    {
+        return f*100 + "%";
+    }
+    private String generateStatLine(float[] stat, int grossPadding, int modPadding, int finalPadding)
+    {
+        return rightpad((int)stat[0],grossPadding) + "¦" + rightpad(expressInPercent((int)stat[1]),modPadding) + "¦" + rightpad((int)stat[2],finalPadding) + "¦";
+    }
+
+    public List<Person> getAllCharactersList()
+    {
+        return allCharacters;
     }
 }

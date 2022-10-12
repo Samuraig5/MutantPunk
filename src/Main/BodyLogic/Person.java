@@ -172,6 +172,47 @@ public class Person
         sight[2] = sight[0]*sight[1];
     }
 
+    public float[] getBloodCapacity()
+    {
+        return bloodCapacity;
+    }
+    public float[] getBloodGeneration()
+    {
+        return bloodGeneration;
+    }
+    public float[] getBloodNeeded()
+    {
+        return bloodNeeded;
+    }
+    public float[] getEnergyCapacity()
+    {
+        return energyCapacity;
+    }
+    public float[] getEnergyGeneration()
+    {
+        return energyGeneration;
+    }
+    public float[] getEnergyNeeded()
+    {
+        return energyNeeded;
+    }
+    public float[] getSize()
+    {
+        return size;
+    }
+    public float[] getSpeed()
+    {
+        return speedModifier;
+    }
+    public float[] getConsciousness()
+    {
+        return consciousness;
+    }
+    public float[] getSight()
+    {
+        return sight;
+    }
+
     /**
      * This function prints out the person's stats for debugging;
      */

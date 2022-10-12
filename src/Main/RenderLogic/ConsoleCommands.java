@@ -44,6 +44,10 @@ public class ConsoleCommands
     {
         print(s, trace, Color.lightGray);
     }
+    public void print(String s)
+    {
+        print(s, false, Color.lightGray);
+    }
     public void println(String s, boolean trace, Color c)
     {
         print(s+"\n",trace,c);
@@ -86,6 +90,7 @@ public class ConsoleCommands
         mainMenuOptions.add("Spawn a Human");
         mainMenuOptions.add("Spawn 10 Humans");
         mainMenuOptions.add("Spawn 100 Humans");
+        mainMenuOptions.add("Spawn a Minor Mutant");
         c.clir.renderList(mainMenuOptions, "MainMenu", new MainMenu(c));
     }
 }
