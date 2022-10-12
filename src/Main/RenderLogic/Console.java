@@ -3,7 +3,6 @@ package Main.RenderLogic;
 import Main.RenderLogic.Menus.MainMenu;
 
 import javax.swing.*;
-import javax.swing.border.LineBorder;
 import javax.swing.text.Style;
 import javax.swing.text.StyleConstants;
 import javax.swing.text.StyledDocument;
@@ -15,7 +14,6 @@ public class Console
     public ConsoleCommands cc = new ConsoleCommands(this);
     public ConsoleBodyMenu cb = new ConsoleBodyMenu(this);
     public ConsoleListRenderer clir = new ConsoleListRenderer(this);
-    public ConsoleKeyPressListener ckpl = new ConsoleKeyPressListener(this);
     public ConsoleKeyBinds ckb;
 
     public Color errorColour = new Color(255,155,155);
@@ -26,12 +24,6 @@ public class Console
     public JScrollPane scrollPane;
 
     public static StyledDocument styledDocument;
-
-    boolean trace = false;
-
-    ArrayList<String> recentUsed = new ArrayList<>();
-    int recentUsedID = 0;
-    int recentUsedMax = 10;
 
     public Console()
     {
@@ -55,31 +47,6 @@ public class Console
 
         styledDocument = console.getStyledDocument();
 
-        input = new JTextField();
-        input.setEditable(true);
-        input.setPreferredSize(new Dimension(100,20));
-        input.setFont(new Font("Courier New", Font.PLAIN, 12));
-        input.setBorder(new LineBorder(Color.gray,1));
-        input.setForeground(Color.lightGray);
-        input.setCaretColor(Color.lightGray);
-        input.setOpaque(false);
-
-        input.addActionListener(e ->
-        {
-            String text = input.getText();
-            if(text.length() > 0)
-            {
-                recentUsed.add(text);
-                recentUsedID = 0;
-
-                cc.doCommand(text);
-                scrollBottom();
-                input.selectAll();
-            }
-        });
-
-        ckpl.initialize();
-
         ckb = new ConsoleKeyBinds(this);
         ckb.setCurrentMenu(new MainMenu(this));
         frame.add(ckb.label);
@@ -90,7 +57,6 @@ public class Console
         scrollPane.getViewport().setOpaque(false);
 
         frame.add(scrollPane, BorderLayout.CENTER);
-        frame.add(input, BorderLayout.SOUTH);
         frame.getContentPane().setBackground(new Color(50,50,50));
 
         frame.setSize(1000, 700);
@@ -105,16 +71,6 @@ public class Console
             ckb.label.grabFocus();
         }
     }
-
-    public void scrollTop()
-    {
-        console.setCaretPosition(0);
-    }
-    public void scrollBottom()
-    {
-        console.setCaretPosition(console.getDocument().getLength());
-    }
-
     public static void print(String s, boolean trace, Color c)
     {
         Style style = console.addStyle("Style", null);
@@ -168,10 +124,5 @@ public class Console
         {
             System.out.println("Console.java cant clear styledDocument");
         }
-    }
-
-    public void clearInputField()
-    {
-        input.setText("");
     }
 }
