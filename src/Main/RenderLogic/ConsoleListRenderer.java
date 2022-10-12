@@ -1,5 +1,7 @@
 package Main.RenderLogic;
 
+import Main.RenderLogic.Menus.MenuLogic;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,16 +26,22 @@ public class ConsoleListRenderer
         currentlyRendering = false;
     }
 
-    public void renderList(List<String> list, String title)
+    public void renderList(List<String> list, String title, MenuLogic newMenuLogic)
     {
+        c.ckb.setCurrentMenu(newMenuLogic);
+        reset();
         if (!currentlyRendering)
         {
             c.cc.enteringAMenu();
-            System.out.println("Setting true");
             currentlyRendering = true;
             currentlyRenderedList = list;
             currentlyRenderedTitle = title;
             currentPage = 1;
+        }
+        else
+        {
+            c.printWarningln("Reset List Renderer before rendering new list");
+            System.out.println("Reset List Renderer before rendering new list");
         }
         amountOfPages = 1;
         int amountOfItems = list.size();
@@ -48,6 +56,7 @@ public class ConsoleListRenderer
 
     public void renderPage()
     {
+        c.clear();
         int finalPageSize = currentlyRenderedList.size()%26;
 
         if (amountOfPages > 1)
@@ -85,6 +94,7 @@ public class ConsoleListRenderer
         {
             currentPage = 1;
         }
+        renderPage();
     }
 
     public void pageDown()
@@ -97,6 +107,7 @@ public class ConsoleListRenderer
         {
             currentPage = amountOfPages;
         }
+        renderPage();
     }
 
     public boolean isCurrentlyRendering()

@@ -1,6 +1,7 @@
 package Main.RenderLogic;
 
 import Main.BodyLogic.Person;
+import Main.RenderLogic.Menus.AllCharactersMenu;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
@@ -30,6 +31,6 @@ public class ConsoleBodyMenu
         {
             allCharacterNames.add(p.name);
         }
-        c.clir.renderList(allCharacterNames, "Current Characters");
+        c.clir.renderList(allCharacterNames, "Current Characters", new AllCharactersMenu(c));
     }
 }

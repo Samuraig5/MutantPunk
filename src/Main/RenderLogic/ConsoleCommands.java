@@ -2,8 +2,11 @@ package Main.RenderLogic;
 
 import Main.BodyLogic.BodyFileDecoder;
 import Main.BodyLogic.Person;
+import Main.RenderLogic.Menus.MainMenu;
 
 import java.awt.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class ConsoleCommands
 {
@@ -95,7 +98,6 @@ public class ConsoleCommands
             Person guy = BodyFileDecoder.getBodyPlanData("Resources/BodyPlans/Human", b, r);
             guy.changeName(name);
             c.cb.allCharacters.add(guy);
-            c.cb.listAllPersons();
         }
         catch (Exception e)
         {
@@ -103,8 +105,12 @@ public class ConsoleCommands
         }
     }
 
-    public void displayMainMenu()
+    public void openMainMenu()
     {
-
+        List<String> mainMenuOptions = new ArrayList<>();
+        mainMenuOptions.add("Spawn a Human");
+        mainMenuOptions.add("Spawn 10 Humans");
+        mainMenuOptions.add("Spawn 100 Humans");
+        c.clir.renderList(mainMenuOptions, "MainMenu", new MainMenu(c));
     }
 }

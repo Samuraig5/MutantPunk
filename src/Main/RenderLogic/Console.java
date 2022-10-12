@@ -1,15 +1,13 @@
 package Main.RenderLogic;
 
+import Main.RenderLogic.Menus.MainMenu;
+
 import javax.swing.*;
 import javax.swing.border.LineBorder;
 import javax.swing.text.Style;
 import javax.swing.text.StyleConstants;
 import javax.swing.text.StyledDocument;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 import java.util.ArrayList;
 
 public class Console
@@ -18,6 +16,7 @@ public class Console
     public ConsoleBodyMenu cb = new ConsoleBodyMenu(this);
     public ConsoleListRenderer clir = new ConsoleListRenderer(this);
     public ConsoleKeyPressListener ckpl = new ConsoleKeyPressListener(this);
+    public ConsoleKeyBinds ckb;
 
     public Color errorColour = new Color(255,155,155);
 
@@ -81,7 +80,8 @@ public class Console
 
         ckpl.initialize();
 
-        ConsoleKeyBinds ckb = new ConsoleKeyBinds(this);
+        ckb = new ConsoleKeyBinds(this);
+        ckb.setCurrentMenu(new MainMenu(this));
         frame.add(ckb.label);
 
         scrollPane = new JScrollPane(console);
@@ -98,7 +98,7 @@ public class Console
         frame.setVisible(true);
 
         ckb.label.grabFocus();
-        cc.help();
+        cc.openMainMenu();
 
         while (true)
         {
