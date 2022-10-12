@@ -27,7 +27,6 @@ class ConsoleKeyBinds
     ConsoleKeyBinds(Console console)
     {
         c = console;
-        frame = c.frame;
 
         label = new JLabel();
         label.setOpaque(false);

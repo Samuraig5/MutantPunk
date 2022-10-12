@@ -12,7 +12,7 @@ import java.util.List;
 public class ConsoleBodyMenu
 {
     Console c;
-    List<Person> allCharacters = new ArrayList<>();
+    private final List<Person> allCharacters = new ArrayList<>();
 
     public ConsoleBodyMenu(Console console)
     {

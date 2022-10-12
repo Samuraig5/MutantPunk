@@ -20,7 +20,7 @@ public class ConsoleCommands
     {
         c = console;
     }
-    private void print(String s, boolean trace, Color c)
+    public void print(String s, boolean trace, Color c)
     {
         Style style = console.addStyle("Style", null);
         StyleConstants.setForeground(style, c);
@@ -60,7 +60,7 @@ public class ConsoleCommands
     {
         println(s,false,Color.lightGray);
     }
-    public void printWarningln(String s) {println(s,c.errorColour);}
+    public void printErrorln(String s) {println(s,true,c.errorColour);}
 
     public void clear()
     {

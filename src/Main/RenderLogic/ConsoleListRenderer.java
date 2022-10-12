@@ -19,30 +19,16 @@ public class ConsoleListRenderer
         c = console;
     }
 
-    public void reset()
-    {
-        amountOfPages = 0;
-        currentPage = 0;
-        currentlyRendering = false;
-    }
-
     public void renderList(List<String> list, String title, MenuLogic newMenuLogic)
     {
         c.ckb.setCurrentMenu(newMenuLogic);
         reset();
-        if (!currentlyRendering)
-        {
-            currentlyRendering = true;
-            currentlyRenderedList = list;
-            currentlyRenderedTitle = title;
-            currentPage = 1;
-        }
-        else
-        {
-            c.cc.printWarningln("Reset List Renderer before rendering new list");
-            System.out.println("Reset List Renderer before rendering new list");
-        }
+        currentlyRendering = true;
+        currentlyRenderedList = list;
+        currentlyRenderedTitle = title;
+        currentPage = 1;
         amountOfPages = 1;
+
         int amountOfItems = list.size();
 
         while (amountOfItems > 26)
@@ -83,6 +69,13 @@ public class ConsoleListRenderer
         }
     }
 
+    public void reset()
+    {
+        amountOfPages = 0;
+        currentPage = 0;
+        currentlyRendering = false;
+    }
+
     public void pageUp()
     {
         if (currentPage<amountOfPages)
@@ -114,7 +107,7 @@ public class ConsoleListRenderer
         return currentlyRendering;
     }
 
-    public String indexToLetter(int n)
+    private String indexToLetter(int n)
     {
         String letter;
         switch (n)

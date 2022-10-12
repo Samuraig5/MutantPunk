@@ -15,14 +15,13 @@ public class Console
     public ConsoleListRenderer clir = new ConsoleListRenderer(this);
     public ConsoleKeyBinds ckb;
 
-    public Color errorColour = new Color(255,155,155);
+    public final Color errorColour = new Color(255,155,155);
 
-    public JFrame frame;
+    private final JFrame frame;
     public static JTextPane console;
-    public JTextField input;
-    public JScrollPane scrollPane;
-
     public static StyledDocument styledDocument;
+    private final JTextField input;
+    private final JScrollPane scrollPane;
 
     public Console()
     {
