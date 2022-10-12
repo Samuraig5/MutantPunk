@@ -77,52 +77,52 @@ public class Person
      * Changes the modifiers of a stat. It is a multiplier, ie 1 = 100% of the gross stat, 2 = 200%, ...
      * @param change change of the modifier. 0.1 is a 10% change.
      */
-    private void changeBloodCapacityModifier(float change)
+    public void changeBloodCapacityModifier(float change)
     {
         bloodCapacity[1] = bloodCapacity[1] + change;
         changeFinalBloodCapacity();
     }
-    private void changeBloodGenerationModifier(float change)
+    public void changeBloodGenerationModifier(float change)
     {
         bloodGeneration[1] = bloodGeneration[1] + change;
         changeFinalBloodGeneration();
     }
-    private void changeBloodNeededModifier(float change)
+    public void changeBloodNeededModifier(float change)
     {
         bloodNeeded[1] = bloodNeeded[1] + change;
         changeFinalBloodNeeded();
     }
-    private void changeEnergyCapacityModifier(float change)
+    public void changeEnergyCapacityModifier(float change)
     {
         energyCapacity[1] = energyCapacity[1] + change;
         changeFinalEnergyCapacity();
     }
-    private void changeEnergyGenerationModifier(float change)
+    public void changeEnergyGenerationModifier(float change)
     {
         energyGeneration[1] = energyGeneration[1] + change;
         changeFinalEnergyGeneration();
     }
-    private void changeEnergyNeededModifier(float change)
+    public void changeEnergyNeededModifier(float change)
     {
         energyNeeded[1] = energyNeeded[1] + change;
         changeFinalEnergyNeeded();
     }
-    private void changeSizeModifier(float change)
+    public void changeSizeModifier(float change)
     {
         size[1] = size[1] + change;
         changeFinalSize();
     }
-    private void changeSpeedModifier(float change)
+    public void changeSpeedModifier(float change)
     {
         speedModifier[1] = speedModifier[1] + change;
         changeFinalSpeed();
     }
-    private void changeConsciousnessModifier(float change)
+    public void changeConsciousnessModifier(float change)
     {
         consciousness[1] = consciousness[1] + change;
         changeFinalConsciousness();
     }
-    private void changeSightModifier(float change)
+    public void changeSightModifier(float change)
     {
         sight[1] = sight[1] + change;
         changeFinalSight();
@@ -179,16 +179,16 @@ public class Person
     {
         System.out.println("> Name: " + this.name);
         System.out.println("    GROSS STATS:");
-        System.out.println("    Blood capacity: " + bloodCapacity);
-        System.out.println("    Blood generation: " + bloodGeneration);
-        System.out.println("    Blood needed: " + bloodNeeded);
-        System.out.println("    Energy Capacity: " + energyCapacity);
-        System.out.println("    Energy Capacity: " + energyGeneration);
-        System.out.println("    Energy Capacity: " + energyNeeded);
-        System.out.println("    Size: " + size);
-        System.out.println("    Speed: " + speedModifier);
-        System.out.println("    Consciousness: " + consciousness);
-        System.out.println("    Sight: " + sight);
+        System.out.println("    Blood capacity: " + bloodCapacity[2]);
+        System.out.println("    Blood generation: " + bloodGeneration[2]);
+        System.out.println("    Blood needed: " + bloodNeeded[2]);
+        System.out.println("    Energy Capacity: " + energyCapacity[2]);
+        System.out.println("    Energy Capacity: " + energyGeneration[2]);
+        System.out.println("    Energy Capacity: " + energyNeeded[2]);
+        System.out.println("    Size: " + size[2]);
+        System.out.println("    Speed: " + speedModifier[2]);
+        System.out.println("    Consciousness: " + consciousness[2]);
+        System.out.println("    Sight: " + sight[2]);
 
     }
 
