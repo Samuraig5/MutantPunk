@@ -14,7 +14,7 @@ public class MainMenu implements MenuLogic
     @Override
     public void aElement()
     {
-        c.cc.spawnHuman("Greg","0","0");
+        c.cb.spawnHuman("Greg","0","0");
         c.cb.listAllPersons();
     }
 
@@ -23,7 +23,7 @@ public class MainMenu implements MenuLogic
     {
         for (int i = 0; i < 10; i++)
         {
-            c.cc.spawnHuman("Bob","0","0");
+            c.cb.spawnHuman("Bob","0","0");
         }
         c.cb.listAllPersons();
     }
@@ -33,7 +33,7 @@ public class MainMenu implements MenuLogic
     {
         for (int i = 0; i < 100; i++)
         {
-            c.cc.spawnHuman("Crow","0","0");
+            c.cb.spawnHuman("Crow","0","0");
         }
         c.cb.listAllPersons();
     }

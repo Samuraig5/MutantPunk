@@ -32,7 +32,6 @@ public class ConsoleListRenderer
         reset();
         if (!currentlyRendering)
         {
-            c.cc.enteringAMenu();
             currentlyRendering = true;
             currentlyRenderedList = list;
             currentlyRenderedTitle = title;
@@ -40,7 +39,7 @@ public class ConsoleListRenderer
         }
         else
         {
-            c.printWarningln("Reset List Renderer before rendering new list");
+            c.cc.printWarningln("Reset List Renderer before rendering new list");
             System.out.println("Reset List Renderer before rendering new list");
         }
         amountOfPages = 1;
@@ -56,30 +55,30 @@ public class ConsoleListRenderer
 
     public void renderPage()
     {
-        c.clear();
+        c.cc.clear();
         int finalPageSize = currentlyRenderedList.size()%26;
 
         if (amountOfPages > 1)
         {
-            c.println(currentlyRenderedTitle + "     (" + currentPage + "/" + amountOfPages + ")");
+            c.cc.println(currentlyRenderedTitle + "     (" + currentPage + "/" + amountOfPages + ")");
         }
         else
         {
-            c.println(currentlyRenderedTitle);
+            c.cc.println(currentlyRenderedTitle);
         }
-        c.println("");
+        c.cc.println("");
         if (currentPage == amountOfPages)
         {
             for(int i = 26*(currentPage-1); i < 26*(currentPage-1)+finalPageSize; i++)
             {
-                c.println(indexToLetter((i%26)) + " - " + currentlyRenderedList.get(i));
+                c.cc.println(indexToLetter((i%26)) + " - " + currentlyRenderedList.get(i));
             }
         }
         else
         {
             for(int i = 26*(currentPage-1); i < 26*(currentPage); i++)
             {
-                c.println(indexToLetter((i%26)) + " - " + currentlyRenderedList.get(i));
+                c.cc.println(indexToLetter((i%26)) + " - " + currentlyRenderedList.get(i));
             }
         }
     }

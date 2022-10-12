@@ -7,7 +7,6 @@ import javax.swing.text.Style;
 import javax.swing.text.StyleConstants;
 import javax.swing.text.StyledDocument;
 import java.awt.*;
-import java.util.ArrayList;
 
 public class Console
 {
@@ -69,60 +68,6 @@ public class Console
         while (true)
         {
             ckb.label.grabFocus();
-        }
-    }
-    public static void print(String s, boolean trace, Color c)
-    {
-        Style style = console.addStyle("Style", null);
-        StyleConstants.setForeground(style, c);
-        if (trace)
-        {
-            Throwable t = new Throwable();
-            StackTraceElement[] elements = t.getStackTrace();
-            String caller = elements[0].getClassName();
-            s = caller + " -> " + s;
-        }
-        try
-        {
-            styledDocument.insertString(styledDocument.getLength(), s, style);
-        }
-        catch (Exception e)
-        {
-            System.out.println("Console.java cant insert String int styledDocument");
-        }
-    }
-    public void print(String s, boolean trace)
-    {
-        print(s, trace, Color.lightGray);
-    }
-
-    public void println(String s, boolean trace, Color c)
-    {
-        print(s+"\n",trace,c);
-    }
-    public void println(String s, boolean trace)
-    {
-        println(s,trace,Color.lightGray);
-    }
-    public void println(String s, Color c)
-    {
-        println(s,false,c);
-    }
-    public void println(String s)
-    {
-        println(s,false,Color.lightGray);
-    }
-    public void printWarningln(String s) {println(s,errorColour);}
-
-    public void clear()
-    {
-        try
-        {
-            Console.styledDocument.remove(0, Console.styledDocument.getLength());
-        }
-        catch (Exception e)
-        {
-            System.out.println("Console.java cant clear styledDocument");
         }
     }
 }

@@ -4,105 +4,80 @@ import Main.BodyLogic.BodyFileDecoder;
 import Main.BodyLogic.Person;
 import Main.RenderLogic.Menus.MainMenu;
 
+import javax.swing.text.Style;
+import javax.swing.text.StyleConstants;
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
+import static Main.RenderLogic.Console.console;
+import static Main.RenderLogic.Console.styledDocument;
+
 public class ConsoleCommands
 {
     Console c;
-    private boolean inAMenu = false;
     public ConsoleCommands(Console console)
     {
         c = console;
     }
-    public void doCommand(String s)
+    private void print(String s, boolean trace, Color c)
     {
-        final String[] commands = s.split(" ");
+        Style style = console.addStyle("Style", null);
+        StyleConstants.setForeground(style, c);
+        if (trace)
+        {
+            Throwable t = new Throwable();
+            StackTraceElement[] elements = t.getStackTrace();
+            String caller = elements[0].getClassName();
+            s = caller + " -> " + s;
+        }
         try
         {
-            if(commands[0].equalsIgnoreCase("/help"))
-            {
-                exitMenuIfInMenu();
-                help();
-            }
-            else if(commands[0].equalsIgnoreCase("/clear"))
-            {
-                exitMenuIfInMenu();
-                fullClear();
-            }
-            else if(commands[0].equalsIgnoreCase("/spawnHuman"))
-            {
-                exitMenuIfInMenu();
-                if(commands.length == 1)
-                {
-                    spawnHuman("Human", "0", "0");
-                }
-                else if(commands.length == 2)
-                {
-                    spawnHuman(commands[1], "0", "0");
-                }
-                else if(commands.length == 3)
-                {
-                    spawnHuman(commands[1], commands[2], "0");
-                }
-                else if(commands.length == 4)
-                {
-                    spawnHuman(commands[1], commands[2], commands[3]);
-                }
-                else
-                {
-                    c.printWarningln("Too many Parameters!");
-                }
-            }
+            styledDocument.insertString(styledDocument.getLength(), s, style);
         }
         catch (Exception e)
         {
-            c.printWarningln("Error ->" + e.getMessage());
+            System.out.println("Console.java cant insert String int styledDocument");
         }
     }
-
-    public void help()
+    public void print(String s, boolean trace)
     {
-        c.println("'/help'       -> lists all commands", Color.PINK);
-        c.println("'/clear'      -> clears all messages of the window", Color.PINK);
-        c.println("'/spawnHuman' -> spawns a new human with the following parameters: name, bias, randomness", Color.PINK);
+        print(s, trace, Color.lightGray);
     }
-    public void exitMenuIfInMenu()
+    public void println(String s, boolean trace, Color c)
     {
-        if(inAMenu)
+        print(s+"\n",trace,c);
+    }
+    public void println(String s, boolean trace)
+    {
+        println(s,trace,Color.lightGray);
+    }
+    public void println(String s, Color c)
+    {
+        println(s,false,c);
+    }
+    public void println(String s)
+    {
+        println(s,false,Color.lightGray);
+    }
+    public void printWarningln(String s) {println(s,c.errorColour);}
+
+    public void clear()
+    {
+        try
         {
-            inAMenu = false;
-            fullClear();
+            styledDocument.remove(0, styledDocument.getLength());
         }
-    }
-
-    public void enteringAMenu()
-    {
-        fullClear();
-        inAMenu = true;
+        catch (Exception e)
+        {
+            System.out.println("Console.java cant clear styledDocument");
+        }
     }
 
     public void fullClear()
     {
         c.clir.reset();
-        c.clear();
-    }
-
-    public void spawnHuman(String name, String bias, String randomness)
-    {
-        try
-        {
-            int b = Integer.parseInt(bias);
-            int r = Integer.parseInt(randomness);
-            Person guy = BodyFileDecoder.getBodyPlanData("Resources/BodyPlans/Human", b, r);
-            guy.changeName(name);
-            c.cb.allCharacters.add(guy);
-        }
-        catch (Exception e)
-        {
-            c.println("WARNING: The second and third parameters of /spawnHuman must be integer numbers", c.errorColour);
-        }
+        clear();
     }
 
     public void openMainMenu()

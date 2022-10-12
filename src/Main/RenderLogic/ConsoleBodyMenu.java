@@ -1,5 +1,6 @@
 package Main.RenderLogic;
 
+import Main.BodyLogic.BodyFileDecoder;
 import Main.BodyLogic.Person;
 import Main.RenderLogic.Menus.AllCharactersMenu;
 
@@ -18,10 +19,20 @@ public class ConsoleBodyMenu
         c = console;
     }
 
-    public void drawPersonMenu(Person p)
+    public void spawnHuman(String name, String bias, String randomness)
     {
-        c.println("> " + p.name);
-        c.println("Number of body parts: " + p.myBodyParts.size());
+        try
+        {
+            int b = Integer.parseInt(bias);
+            int r = Integer.parseInt(randomness);
+            Person guy = BodyFileDecoder.getBodyPlanData("Resources/BodyPlans/Human", b, r);
+            guy.changeName(name);
+            c.cb.allCharacters.add(guy);
+        }
+        catch (Exception e)
+        {
+            c.cc.println("WARNING: The second and third parameters of /spawnHuman must be integer numbers", c.errorColour);
+        }
     }
 
     public void listAllPersons()
