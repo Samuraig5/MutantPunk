@@ -1,7 +1,6 @@
 package Main.RenderLogic.Menus;
 
 import Main.RenderLogic.Console;
-import Test.Main;
 
 public class MainMenu implements MenuLogic
 {
@@ -14,7 +13,7 @@ public class MainMenu implements MenuLogic
     @Override
     public void aElement()
     {
-        c.cb.spawnHuman("Greg","0","0");
+        c.cb.spawnPerson("Greg","0","0", "Resources/BodyPlans/Human");
         c.cb.listAllPersons();
     }
 
@@ -23,7 +22,7 @@ public class MainMenu implements MenuLogic
     {
         for (int i = 0; i < 10; i++)
         {
-            c.cb.spawnHuman("Bob","0","0");
+            c.cb.spawnPerson("Bob","0","0", "Resources/BodyPlans/Human");
         }
         c.cb.listAllPersons();
     }
@@ -33,20 +32,21 @@ public class MainMenu implements MenuLogic
     {
         for (int i = 0; i < 100; i++)
         {
-            c.cb.spawnHuman(i+"th Clone","0","0");
+            c.cb.spawnPerson(i+"th Clone","0","0", "Resources/BodyPlans/Human");
         }
         c.cb.listAllPersons();
     }
 
     @Override
     public void dElement() {
-        c.cb.spawnHuman("Minor Mutant","0","50");
+        c.cb.spawnPerson("Minor Mutant","0","50", "Resources/BodyPlans/Human");
         c.cb.listAllPersons();
     }
 
     @Override
     public void eElement() {
-
+        c.cb.spawnPerson("Human Spider","0","0", "Resources/BodyPlans/HumanSpider");
+        c.cb.listAllPersons();
     }
 
     @Override
@@ -156,13 +156,11 @@ public class MainMenu implements MenuLogic
 
     @Override
     public void periodElement() {
-        System.out.println("pageUp");
         c.clir.pageUp();
     }
 
     @Override
     public void commaElement() {
-        System.out.println("pageDown");
         c.clir.pageDown();
     }
 

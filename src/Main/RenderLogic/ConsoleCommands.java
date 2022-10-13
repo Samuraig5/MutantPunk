@@ -91,6 +91,7 @@ public class ConsoleCommands
         mainMenuOptions.add("Spawn 10 Humans");
         mainMenuOptions.add("Spawn 100 Humans");
         mainMenuOptions.add("Spawn a Minor Mutant");
+        mainMenuOptions.add("Spawn a Human Spider");
         c.clir.renderList(mainMenuOptions, "MainMenu", new MainMenu(c));
     }
 }

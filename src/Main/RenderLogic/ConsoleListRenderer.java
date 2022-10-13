@@ -53,6 +53,10 @@ public class ConsoleListRenderer
     public void appendPage()
     {
         int finalPageSize = currentlyRenderedList.size()%26;
+        if (finalPageSize == 0 && currentlyRenderedList.size() != 0)
+        {
+            finalPageSize = 26;
+        }
 
         try
         {

@@ -20,19 +20,19 @@ public class ConsoleBodyInterface
         c = console;
     }
 
-    public void spawnHuman(String name, String bias, String randomness)
+    public void spawnPerson(String name, String bias, String randomness, String filePath)
     {
         try
         {
             int b = Integer.parseInt(bias);
             int r = Integer.parseInt(randomness);
-            Person guy = BodyFileDecoder.getBodyPlanData("Resources/BodyPlans/Human", b, r);
-            guy.changeName(name);
-            c.cb.allCharacters.add(guy);
+            Person newCharacter = BodyFileDecoder.getBodyPlanData(filePath, b, r);
+            newCharacter.changeName(name);
+            c.cb.allCharacters.add(newCharacter);
         }
         catch (Exception e)
         {
-            c.cc.println("WARNING: The second and third parameters of /spawnHuman must be integer numbers", c.errorColour);
+            c.cc.println("WARNING: The second and third parameters of spawnPerson must be integer numbers", c.errorColour);
         }
     }
 
@@ -104,7 +104,7 @@ public class ConsoleBodyInterface
         list.add(depth + "↳" + bp.name);
         for (BodyPart nextbp:bp.attachedBodyParts)
         {
-            addChildrenBodyPartsToList(nextbp, list, depth+" ");
+            addChildrenBodyPartsToList(nextbp, list, depth+"¦ ");
         }
     }
 }

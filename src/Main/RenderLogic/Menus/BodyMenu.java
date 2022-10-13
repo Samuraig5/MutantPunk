@@ -145,12 +145,12 @@ public class BodyMenu implements MenuLogic
 
     @Override
     public void periodElement() {
-
+        c.clir.pageUp();
     }
 
     @Override
     public void commaElement() {
-
+        c.clir.pageDown();
     }
 
     @Override
