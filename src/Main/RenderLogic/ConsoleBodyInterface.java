@@ -1,21 +1,21 @@
 package Main.RenderLogic;
 
 import Main.BodyLogic.BodyFileDecoder;
+import Main.BodyLogic.BodyPart;
 import Main.BodyLogic.Person;
 import Main.RenderLogic.Menus.AllCharactersMenu;
+import Main.RenderLogic.Menus.BodyMenu;
 import Main.RenderLogic.Menus.PersonMenu;
 
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ConsoleBodyMenu
+public class ConsoleBodyInterface
 {
     Console c;
     private final List<Person> allCharacters = new ArrayList<>();
 
-    public ConsoleBodyMenu(Console console)
+    public ConsoleBodyInterface(Console console)
     {
         c = console;
     }
@@ -69,7 +69,7 @@ public class ConsoleBodyMenu
 
         List<String> list = new ArrayList<>();
         list.add("View Body");
-        c.clir.appendList(list, p.name, new PersonMenu(c));
+        c.clir.appendList(list, p.name, new PersonMenu(c,p));
     }
     private String rightpad(int text, int length) {
         return String.format("%-" + length + "." + length + "s", text);
@@ -89,5 +89,22 @@ public class ConsoleBodyMenu
     public List<Person> getAllCharactersList()
     {
         return allCharacters;
+    }
+
+    public void openBodyView(Person p)
+    {
+        c.cc.clear();
+
+        List<String> list = new ArrayList<>();
+        addChildrenBodyPartsToList(p.myBodyParts.get(0), list, "");
+        c.clir.renderList(list, p.name+"'s Body", new BodyMenu(c,p));
+    }
+    private void addChildrenBodyPartsToList(BodyPart bp, List<String> list, String depth)
+    {
+        list.add(depth + "↳" + bp.name);
+        for (BodyPart nextbp:bp.attachedBodyParts)
+        {
+            addChildrenBodyPartsToList(nextbp, list, depth+" ");
+        }
     }
 }

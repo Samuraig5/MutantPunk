@@ -3,11 +3,11 @@ package Main.RenderLogic.Menus;
 import Main.BodyLogic.Person;
 import Main.RenderLogic.Console;
 
-public class PersonMenu implements MenuLogic
+public class BodyMenu implements MenuLogic
 {
     Console c;
     Person p;
-    public PersonMenu(Console console, Person person)
+    public BodyMenu(Console console, Person person)
     {
         c = console;
         p = person;
@@ -15,7 +15,7 @@ public class PersonMenu implements MenuLogic
 
     @Override
     public void aElement() {
-        c.cb.openBodyView(p);
+
     }
 
     @Override
@@ -155,6 +155,6 @@ public class PersonMenu implements MenuLogic
 
     @Override
     public void escapeElement() {
-        c.cb.listAllPersons();
+        c.cb.openPersonView(p);
     }
 }

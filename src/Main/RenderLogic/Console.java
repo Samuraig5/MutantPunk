@@ -3,15 +3,13 @@ package Main.RenderLogic;
 import Main.RenderLogic.Menus.MainMenu;
 
 import javax.swing.*;
-import javax.swing.text.Style;
-import javax.swing.text.StyleConstants;
 import javax.swing.text.StyledDocument;
 import java.awt.*;
 
 public class Console
 {
     public ConsoleCommands cc = new ConsoleCommands(this);
-    public ConsoleBodyMenu cb = new ConsoleBodyMenu(this);
+    public ConsoleBodyInterface cb = new ConsoleBodyInterface(this);
     public ConsoleListRenderer clir = new ConsoleListRenderer(this);
     public ConsoleKeyBinds ckb;
 
