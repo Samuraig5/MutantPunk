@@ -33,7 +33,7 @@ public class MainMenu implements MenuLogic
     {
         for (int i = 0; i < 100; i++)
         {
-            c.cb.spawnHuman("Crow","0","0");
+            c.cb.spawnHuman(i+"th Clone","0","0");
         }
         c.cb.listAllPersons();
     }
