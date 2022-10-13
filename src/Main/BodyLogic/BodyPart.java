@@ -8,124 +8,124 @@ public class BodyPart
     /**
      * The (nick-)name of this specific bodyPart.
      */
-    public String name;
+    private String name;
 
     /**
      * This keeps track of the person this bodyPart is attached to.
      * If the body part is cut off, it is equal to 'null'
      */
-    public Person myPerson;
+    private Person myPerson;
 
     /**
      * This is the bodyPart this bodyPart is attached to.
      */
-    public BodyPart bodyPartAttachedTo;
+    private BodyPart bodyPartAttachedTo;
 
     /**
      * These are the bodyParts attacked to this bodyPart.
      */
-    public List<BodyPart> attachedBodyParts = new ArrayList<>();
+    private final List<BodyPart> attachedBodyParts = new ArrayList<>();
 
     /**
      * This is an index that signifies which type the body part it.
      *  1-Organic
      *  2-Cybernetic
      */
-    public int type;
+    private int type;
 
     /**
      * This is keeping track of the class of the bodyPart like 'arm', 'heart', 'skin', 'implant' and so on.
      */
-    public String bodyPartClass;
+    private String bodyPartClass;
 
     /**
      * Amount of blood that can be stored in this bodyPart
      */
-    public int bloodCapacity;
+    private final int[] bloodCapacity = {0,1,0};
 
     /**
      * Amount of blood this bodyPart generates per time unit.
      */
-    public int bloodGeneration;
+    private final int[] bloodGeneration = {0,1,0};
 
     /**
      * Amount of blood needed for the bodyPart to function.
      */
-    public int neededBlood;
+    private final int[] neededBlood = {0,1,0};
 
     /**
      * Amount of energy this bodyPart can store.
      */
-    public int energyCapacity;
+    private final int[] energyCapacity = {0,1,0};
 
     /**
      * Amount of energy this bodyPart generates per turn.
      */
-    public int energyGeneration;
+    private final int[] energyGeneration = {0,1,0};
 
     /**
      * Amount of energy needed for the bodyPart to function.
      */
-    public int neededEnergy;
+    private final int[] neededEnergy = {0,1,0};
 
     /**
      * The maximum health of the bodyPart. Determines how much damage the bodyPart can take before being destroyed.
      */
-    public int maxHealth;
+    private final int[] maxHealth = {0,1,0};
 
     /**
      * The current health of the bodyPart. It can't normally be higher than maxHealth and if it's equal to 0 the bodyPart
      * is destroyed.
      */
-    public int currentHealth;
+    private int currentHealth;
 
     /**
      * The amount of health this bodyPart generates per amount of time.
      */
-    public int regenRate;
+    private final int[] regenRate = {0,1,0};
 
     /**
      * The amount of health this bodyPart can regenerate from. If health is lower than this amount,
      * it can usually not regenerate without help.
      */
-    public int regenLimit;
+    private final int[] regenLimit = {0,1,0};
 
     /**
      * The armour or resilience of the bodyPart. A higher armour rating makes incoming hits less likely to deal full
      * or any damage.
      */
-    public int armour;
+    private final int[] armour = {0,1,0};
 
     /**
      * The size of the bodyPart. The bigger the size, the more likely a bodyPart is going to be hit compared to a
      * smaller one.
      */
-    public int size;
+    private final int[] size = {0,1,0};
 
     /**
      * This signifies how many organs fit inside this bodyPart
      */
-    public int organCapacity;
+    private final int[] organCapacity = {0,1,0};
 
     /**
      * This calculates how much this bodyPart increases the speed of its person.
      */
-    public int speedModifier;
+    private final int[] speedModifier = {0,1,0};
 
     /**
      * How much this bodyPart can "think". A person with no consciousness is considered dead.
      */
-    public int consciousness;
+    private final int[] consciousness = {0,1,0};
 
     /**
      * How much this bodyPart can grab. Used for holding weapons.
      */
-    public int grabbingSlots;
+    private final int[] grabbingSlots = {0,1,0};
 
     /**
      * How much this bodyPart can see.
      */
-    public int sightModifier;
+    private final int[] sightModifier = {0,1,0};
 
     /**
      * This is used to generate the bodyPart.
@@ -141,24 +141,24 @@ public class BodyPart
         name = data.get(0);
         type = BodyLogicHelper.calculateBodyPartStat(Integer.parseInt(data.get(1)),bias,randomness);
         bodyPartClass = data.get(2);
-        bloodCapacity = BodyLogicHelper.calculateBodyPartStat(Integer.parseInt(data.get(3)),bias,randomness);
-        bloodGeneration = BodyLogicHelper.calculateBodyPartStat(Integer.parseInt(data.get(4)),bias,randomness);
-        neededBlood = BodyLogicHelper.calculateBodyPartStat(Integer.parseInt(data.get(5)),bias,randomness);
-        energyCapacity = BodyLogicHelper.calculateBodyPartStat(Integer.parseInt(data.get(6)),bias,randomness);
-        energyGeneration = BodyLogicHelper.calculateBodyPartStat(Integer.parseInt(data.get(7)),bias,randomness);
-        neededEnergy = BodyLogicHelper.calculateBodyPartStat(Integer.parseInt(data.get(8)),bias,randomness);
-        maxHealth = BodyLogicHelper.calculateBodyPartStat(Integer.parseInt(data.get(9)),bias,randomness);
-        regenRate = BodyLogicHelper.calculateBodyPartStat(Integer.parseInt(data.get(10)),bias,randomness);
-        regenLimit = BodyLogicHelper.calculateBodyPartStat(Integer.parseInt(data.get(11)),bias,randomness);
-        armour = BodyLogicHelper.calculateBodyPartStat(Integer.parseInt(data.get(12)),bias,randomness);
-        size = BodyLogicHelper.calculateBodyPartStat(Integer.parseInt(data.get(13)),bias,randomness);
-        organCapacity = BodyLogicHelper.calculateBodyPartStat(Integer.parseInt(data.get(14)),bias,randomness);
-        speedModifier = BodyLogicHelper.calculateBodyPartStat(Integer.parseInt(data.get(15)),bias,randomness);
-        consciousness = BodyLogicHelper.calculateBodyPartStat(Integer.parseInt(data.get(16)),bias,randomness);
-        grabbingSlots = BodyLogicHelper.calculateBodyPartStat(Integer.parseInt(data.get(17)),bias,randomness);
-        sightModifier = BodyLogicHelper.calculateBodyPartStat(Integer.parseInt(data.get(18)),bias,randomness);
+        bloodCapacity[0] = BodyLogicHelper.calculateBodyPartStat(Integer.parseInt(data.get(3)),bias,randomness);
+        bloodGeneration[0] = BodyLogicHelper.calculateBodyPartStat(Integer.parseInt(data.get(4)),bias,randomness);
+        neededBlood[0] = BodyLogicHelper.calculateBodyPartStat(Integer.parseInt(data.get(5)),bias,randomness);
+        energyCapacity[0] = BodyLogicHelper.calculateBodyPartStat(Integer.parseInt(data.get(6)),bias,randomness);
+        energyGeneration[0] = BodyLogicHelper.calculateBodyPartStat(Integer.parseInt(data.get(7)),bias,randomness);
+        neededEnergy[0] = BodyLogicHelper.calculateBodyPartStat(Integer.parseInt(data.get(8)),bias,randomness);
+        maxHealth[0] = BodyLogicHelper.calculateBodyPartStat(Integer.parseInt(data.get(9)),bias,randomness);
+        regenRate[0] = BodyLogicHelper.calculateBodyPartStat(Integer.parseInt(data.get(10)),bias,randomness);
+        regenLimit[0] = BodyLogicHelper.calculateBodyPartStat(Integer.parseInt(data.get(11)),bias,randomness);
+        armour[0] = BodyLogicHelper.calculateBodyPartStat(Integer.parseInt(data.get(12)),bias,randomness);
+        size[0] = BodyLogicHelper.calculateBodyPartStat(Integer.parseInt(data.get(13)),bias,randomness);
+        organCapacity[0] = BodyLogicHelper.calculateBodyPartStat(Integer.parseInt(data.get(14)),bias,randomness);
+        speedModifier[0] = BodyLogicHelper.calculateBodyPartStat(Integer.parseInt(data.get(15)),bias,randomness);
+        consciousness[0] = BodyLogicHelper.calculateBodyPartStat(Integer.parseInt(data.get(16)),bias,randomness);
+        grabbingSlots[0] = BodyLogicHelper.calculateBodyPartStat(Integer.parseInt(data.get(17)),bias,randomness);
+        sightModifier[0] = BodyLogicHelper.calculateBodyPartStat(Integer.parseInt(data.get(18)),bias,randomness);
 
-        currentHealth = maxHealth;
+        currentHealth = maxHealth[2];
     }
 
     /**
@@ -180,9 +180,9 @@ public class BodyPart
      */
     public void healDamage()
     {
-        if (currentHealth < maxHealth && currentHealth > regenLimit)
+        if (currentHealth < maxHealth[2] && currentHealth > regenLimit[2])
         {
-            currentHealth += regenRate;
+            currentHealth += regenRate[2];
         }
     }
 
@@ -207,16 +207,16 @@ public class BodyPart
      */
     public void updatePersonWhenAttached()
     {
-        myPerson.changeGrossBloodCapacity(bloodCapacity);
-        myPerson.changeGrossBloodGeneration(bloodGeneration);
-        myPerson.changeGrossBloodNeeded(neededBlood);
-        myPerson.changeGrossEnergyCapacity(energyCapacity);
-        myPerson.changeGrossEnergyGeneration(energyGeneration);
-        myPerson.changeGrossEnergyNeeded(neededEnergy);
-        myPerson.changeGrossSize(size);
-        myPerson.changeGrossSpeed(speedModifier);
-        myPerson.changeGrossConsciousness(consciousness);
-        myPerson.changeGrossSight(sightModifier);
+        myPerson.changeGrossBloodCapacity(bloodCapacity[0]);
+        myPerson.changeGrossBloodGeneration(bloodGeneration[0]);
+        myPerson.changeGrossBloodNeeded(neededBlood[0]);
+        myPerson.changeGrossEnergyCapacity(energyCapacity[0]);
+        myPerson.changeGrossEnergyGeneration(energyGeneration[0]);
+        myPerson.changeGrossEnergyNeeded(neededEnergy[0]);
+        myPerson.changeGrossSize(size[0]);
+        myPerson.changeGrossSpeed(speedModifier[0]);
+        myPerson.changeGrossConsciousness(consciousness[0]);
+        myPerson.changeGrossSight(sightModifier[0]);
     }
 
     /**
@@ -254,16 +254,16 @@ public class BodyPart
      */
     public void updatePersonWhenRemoved()
     {
-        myPerson.changeGrossBloodCapacity(-bloodCapacity);
-        myPerson.changeGrossBloodGeneration(-bloodGeneration);
-        myPerson.changeGrossBloodNeeded(-neededBlood);
-        myPerson.changeGrossEnergyCapacity(-energyCapacity);
-        myPerson.changeGrossEnergyGeneration(-energyGeneration);
-        myPerson.changeGrossEnergyNeeded(-neededEnergy);
-        myPerson.changeGrossSize(-size);
-        myPerson.changeGrossSpeed(-speedModifier);
-        myPerson.changeGrossConsciousness(-consciousness);
-        myPerson.changeGrossSight(-sightModifier);
+        myPerson.changeGrossBloodCapacity(-bloodCapacity[0]);
+        myPerson.changeGrossBloodGeneration(-bloodGeneration[0]);
+        myPerson.changeGrossBloodNeeded(-neededBlood[0]);
+        myPerson.changeGrossEnergyCapacity(-energyCapacity[0]);
+        myPerson.changeGrossEnergyGeneration(-energyGeneration[0]);
+        myPerson.changeGrossEnergyNeeded(-neededEnergy[0]);
+        myPerson.changeGrossSize(-size[0]);
+        myPerson.changeGrossSpeed(-speedModifier[0]);
+        myPerson.changeGrossConsciousness(-consciousness[0]);
+        myPerson.changeGrossSight(-sightModifier[0]);
     }
 
     /**
@@ -275,26 +275,36 @@ public class BodyPart
         System.out.println("    Number of body parts attached: " + attachedBodyParts.size());
         System.out.println("    Type: " + type);
         System.out.println("    Class: " + bodyPartClass);
-        System.out.println("    Blood capacity: " + bloodCapacity);
-        System.out.println("    Blood generation: " + bloodGeneration);
-        System.out.println("    Blood needed: " + neededBlood);
-        System.out.println("    Energy capacity: " + energyCapacity);
-        System.out.println("    Energy generation: " + energyGeneration);
-        System.out.println("    Energy needed: " + neededEnergy);
-        System.out.println("    Health: " + currentHealth + "/" + maxHealth);
-        System.out.println("    RegenRate: " + regenRate);
-        System.out.println("    RegenLimit: " + regenLimit);
-        System.out.println("    Armour: " + armour);
-        System.out.println("    Size: " + size);
-        System.out.println("    Organ capacity: " + organCapacity);
-        System.out.println("    Speed: " + speedModifier);
-        System.out.println("    Consciousness: " + consciousness);
-        System.out.println("    Grabbing slots: " + grabbingSlots);
-        System.out.println("    Sight: " + sightModifier);
+        System.out.println("    Blood capacity: " + bloodCapacity[0]);
+        System.out.println("    Blood generation: " + bloodGeneration[0]);
+        System.out.println("    Blood needed: " + neededBlood[0]);
+        System.out.println("    Energy capacity: " + energyCapacity[0]);
+        System.out.println("    Energy generation: " + energyGeneration[0]);
+        System.out.println("    Energy needed: " + neededEnergy[0]);
+        System.out.println("    Health: " + currentHealth + "/" + maxHealth[0]);
+        System.out.println("    RegenRate: " + regenRate[0]);
+        System.out.println("    RegenLimit: " + regenLimit[0]);
+        System.out.println("    Armour: " + armour[0]);
+        System.out.println("    Size: " + size[0]);
+        System.out.println("    Organ capacity: " + organCapacity[0]);
+        System.out.println("    Speed: " + speedModifier[0]);
+        System.out.println("    Consciousness: " + consciousness[0]);
+        System.out.println("    Grabbing slots: " + grabbingSlots[0]);
+        System.out.println("    Sight: " + sightModifier[0]);
     }
 
     public void changeName(String newName)
     {
         name = newName;
     }
+    public String getName()
+    {
+         return name;
+    }
+    public List<BodyPart> getAttachedBodyParts(){return attachedBodyParts;}
+    public Person getMyPerson(){return myPerson;}
+    public void setMyPerson(Person newPerson){myPerson = newPerson;}
+
+    public int[] getMaxHealth(){return maxHealth;}
+    public int getCurrentHealth(){return currentHealth;}
 }

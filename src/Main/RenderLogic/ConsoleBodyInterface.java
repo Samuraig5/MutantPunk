@@ -101,8 +101,8 @@ public class ConsoleBodyInterface
     }
     private void addChildrenBodyPartsToList(BodyPart bp, List<String> list, String depth)
     {
-        list.add(depth + "↳" + bp.name);
-        for (BodyPart nextbp:bp.attachedBodyParts)
+        list.add(depth + "↳" + bp.getName());
+        for (BodyPart nextbp:bp.getAttachedBodyParts())
         {
             addChildrenBodyPartsToList(nextbp, list, depth+"¦ ");
         }

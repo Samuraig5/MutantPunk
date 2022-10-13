@@ -53,7 +53,7 @@ public class BodyPartDestructionTest
 
     static void printNameAndHealth(BodyPart bp)
     {
-        System.out.println("# Name: " + bp.name);
-        System.out.println("    Health: " + bp.currentHealth + "/" + bp.maxHealth);
+        System.out.println("# Name: " + bp.getName());
+        System.out.println("    Health: " + bp.getCurrentHealth() + "/" + bp.getMaxHealth()[2]);
     }
 }

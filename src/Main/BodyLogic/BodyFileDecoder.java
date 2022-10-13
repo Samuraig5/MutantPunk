@@ -64,8 +64,8 @@ public class BodyFileDecoder
             name = fileIn.nextLine().split("§")[1];
             path = fileIn.nextLine().split("§")[1];
             p.myBodyParts.add(loadBodyPartFromFile(path, bias, randomness));
-            p.myBodyParts.get(0).name = name;
-            p.myBodyParts.get(0).myPerson = p;
+            p.myBodyParts.get(0).changeName(name);
+            p.myBodyParts.get(0).setMyPerson(p);
             currentTargetsToAttach.add(p.myBodyParts.get(0));
 
             while(fileIn.hasNextLine())
@@ -74,7 +74,7 @@ public class BodyFileDecoder
                 name = fileIn.nextLine().split("§")[1];
                 path = fileIn.nextLine().split("§")[1];
                 BodyPart bp = loadBodyPartFromFile(path, bias, randomness);
-                bp.name = name;
+                bp.changeName(name);
                 if(depth > currentTargetsToAttach.size()-1)
                 {
                     currentTargetsToAttach.add(bp);
