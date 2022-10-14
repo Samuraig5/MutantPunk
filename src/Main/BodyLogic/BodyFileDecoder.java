@@ -14,15 +14,16 @@ public class BodyFileDecoder
      * @param filePath path to the desired file
      * @return ArrayList of Strings containing the values of the bodyPart in the same order as the file had them listed.
      */
-    static public List<String> getBodyPartData(String filePath)
+    static public List<String[]> getBodyPartData(String filePath)
     {
-        List<String> data = new ArrayList<>();
+        List<String[]> data = new ArrayList<>();
         try
         {
             Scanner fileIn = new Scanner(new File(filePath));
             while(fileIn.hasNextLine())
             {
-                data.add(fileIn.nextLine().split("§")[1]);
+                String[] a = fileIn.nextLine().split("§")[1].split("#");
+                data.add(a);
             }
         }
         catch (Exception e)
@@ -45,7 +46,7 @@ public class BodyFileDecoder
     static public BodyPart loadBodyPartFromFile(String filePath,int bias, int randomness)
     {
         BodyPart bp = new BodyPart();
-        List<String> data = getBodyPartData(filePath);
+        List<String[]> data = getBodyPartData(filePath);
         bp.generateBodyPart(data,bias,randomness);
         return bp;
     }

@@ -21,22 +21,27 @@ public class BodyLogicHelper
      *                      '200' means doubling the magnitude of the calculated shifts.
      * @return the final calculated Stat.
      */
-    static public int calculateBodyPartStat(int incomingStandardStat, int bias, int randomness, int shiftStrength)
+    static public int[] calculateBodyPartStat(String[] incomingStandardStat, int bias, int randomness, int shiftStrength)
     {
-        float a = (float)incomingStandardStat;
-        float b = (float)bias;
-        float r = (float)randomness;
-        float s = (float)shiftStrength;
+        int[] sol = new int[2];
+        for (int i = 0; i < 2; i++)
+        {
+            float a = Float.parseFloat(incomingStandardStat[i]);
+            float b = (float)bias;
+            float r = (float)randomness;
+            float s = (float)shiftStrength;
 
-        float calculatedBias = ((b/100)*a)*(s/100);
-        float calculatedRandomness = (randomRange()*(r/100)*a)*(s/100);
-        return Math.round(a + calculatedBias + calculatedRandomness);
+            float calculatedBias = ((b/100)*a)*(s/100);
+            float calculatedRandomness = (randomRange()*(r/100)*a)*(s/100);
+            sol[i] = Math.round(a + calculatedBias + calculatedRandomness);
+        }
+        return sol;
     }
-    static public int calculateBodyPartStat(int incomingStandardStat, int bias, int randomness)
+    static public int[] calculateBodyPartStat(String[] incomingStandardStat, int bias, int randomness)
     {
         return calculateBodyPartStat(incomingStandardStat,bias,randomness,100);
     }
-    static public int calculateBodyPartStat(int incomingStandardStat)
+    static public int[] calculateBodyPartStat(String[] incomingStandardStat)
     {
         return calculateBodyPartStat(incomingStandardStat,0,0,0);
     }

@@ -136,27 +136,44 @@ public class BodyPart
      * @param randomness changes the stats of the bodyPart by a random amount (both positive and negative).
      *                   The greater the value, the stronger the random drift.
      */
-    public void generateBodyPart(List<String> data, int bias, int randomness)
+    public void generateBodyPart(List<String[]> data, int bias, int randomness)
     {
-        name = data.get(0);
-        type = BodyLogicHelper.calculateBodyPartStat(Integer.parseInt(data.get(1)),bias,randomness);
-        bodyPartClass = data.get(2);
-        bloodCapacity[0] = BodyLogicHelper.calculateBodyPartStat(Integer.parseInt(data.get(3)),bias,randomness);
-        bloodGeneration[0] = BodyLogicHelper.calculateBodyPartStat(Integer.parseInt(data.get(4)),bias,randomness);
-        neededBlood[0] = BodyLogicHelper.calculateBodyPartStat(Integer.parseInt(data.get(5)),bias,randomness);
-        energyCapacity[0] = BodyLogicHelper.calculateBodyPartStat(Integer.parseInt(data.get(6)),bias,randomness);
-        energyGeneration[0] = BodyLogicHelper.calculateBodyPartStat(Integer.parseInt(data.get(7)),bias,randomness);
-        neededEnergy[0] = BodyLogicHelper.calculateBodyPartStat(Integer.parseInt(data.get(8)),bias,randomness);
-        maxHealth[0] = BodyLogicHelper.calculateBodyPartStat(Integer.parseInt(data.get(9)),bias,randomness);
-        regenRate[0] = BodyLogicHelper.calculateBodyPartStat(Integer.parseInt(data.get(10)),bias,randomness);
-        regenLimit[0] = BodyLogicHelper.calculateBodyPartStat(Integer.parseInt(data.get(11)),bias,randomness);
-        armour[0] = BodyLogicHelper.calculateBodyPartStat(Integer.parseInt(data.get(12)),bias,randomness);
-        size[0] = BodyLogicHelper.calculateBodyPartStat(Integer.parseInt(data.get(13)),bias,randomness);
-        organCapacity[0] = BodyLogicHelper.calculateBodyPartStat(Integer.parseInt(data.get(14)),bias,randomness);
-        speedModifier[0] = BodyLogicHelper.calculateBodyPartStat(Integer.parseInt(data.get(15)),bias,randomness);
-        consciousness[0] = BodyLogicHelper.calculateBodyPartStat(Integer.parseInt(data.get(16)),bias,randomness);
-        grabbingSlots[0] = BodyLogicHelper.calculateBodyPartStat(Integer.parseInt(data.get(17)),bias,randomness);
-        sightModifier[0] = BodyLogicHelper.calculateBodyPartStat(Integer.parseInt(data.get(18)),bias,randomness);
+        name = data.get(0)[0];
+        type = Integer.parseInt(data.get(1)[0]);
+        bodyPartClass = data.get(2)[0];
+
+        int[] standardBloodCapacity = BodyLogicHelper.calculateBodyPartStat(data.get(3),bias,randomness);
+        AddToBloodCapacity(standardBloodCapacity[0], standardBloodCapacity[1]);
+        int[] standardBloodGeneration = BodyLogicHelper.calculateBodyPartStat(data.get(4),bias,randomness);
+        AddToBloodGeneration(standardBloodGeneration[0], standardBloodGeneration[1]);
+        int[] standardBloodNeed = BodyLogicHelper.calculateBodyPartStat(data.get(5),bias,randomness);
+        AddToBloodNeeded(standardBloodNeed[0], standardBloodNeed[1]);
+        int[] standardEnergyCapacity = BodyLogicHelper.calculateBodyPartStat(data.get(6),bias,randomness);
+        AddToEnergyCapacity(standardEnergyCapacity[0], standardEnergyCapacity[1]);
+        int[] standardEnergyGeneration = BodyLogicHelper.calculateBodyPartStat(data.get(7),bias,randomness);
+        AddToEnergyGeneration(standardEnergyGeneration[0], standardEnergyGeneration[1]);
+        int[] standardEnergyNeed = BodyLogicHelper.calculateBodyPartStat(data.get(8),bias,randomness);
+        AddToEnergyNeeded(standardEnergyNeed[0], standardEnergyNeed[1]);
+        int[] standardHealth = BodyLogicHelper.calculateBodyPartStat(data.get(9),bias,randomness);
+        AddToMaxHealth(standardHealth[0], standardHealth[1]);
+        int[] standardRegenRate = BodyLogicHelper.calculateBodyPartStat(data.get(10),bias,randomness);
+        AddToRegenRate(standardRegenRate[0], standardRegenRate[1]);
+        int[] standardRegenLimit = BodyLogicHelper.calculateBodyPartStat(data.get(11),bias,randomness);
+        AddToRegenLimit(standardRegenLimit[0], standardRegenLimit[1]);
+        int[] standardArmour = BodyLogicHelper.calculateBodyPartStat(data.get(12),bias,randomness);
+        AddToArmour(standardArmour[0], standardArmour[1]);
+        int[] standardSize = BodyLogicHelper.calculateBodyPartStat(data.get(13),bias,randomness);
+        AddToSize(standardSize[0], standardSize[1]);
+        int[] standardOrganCapacity = BodyLogicHelper.calculateBodyPartStat(data.get(14),bias,randomness);
+        AddToOrganCapacity(standardOrganCapacity[0], standardOrganCapacity[1]);
+        int[] standardSpeed = BodyLogicHelper.calculateBodyPartStat(data.get(15),bias,randomness);
+        AddToSpeed(standardSpeed[0], standardSpeed[1]);
+        int[] standardConsciousness = BodyLogicHelper.calculateBodyPartStat(data.get(16),bias,randomness);
+        AddToConsciousness(standardConsciousness[0], standardConsciousness[1]);
+        int[] standardGrabbingSlots = BodyLogicHelper.calculateBodyPartStat(data.get(17),bias,randomness);
+        AddToGrabbingSlots(standardGrabbingSlots[0], standardGrabbingSlots[1]);
+        int[] standardSight = BodyLogicHelper.calculateBodyPartStat(data.get(18),bias,randomness);
+        AddToSight(standardSight[0], standardSight[1]);
 
         currentHealth = maxHealth[2];
     }
@@ -178,11 +195,18 @@ public class BodyPart
     /**
      * This function will heal the bodyPart by the amount specified in the bodyPart.
      */
-    public void healDamage()
+    public void regenerateDamage()
     {
         if (currentHealth < maxHealth[2] && currentHealth > regenLimit[2])
         {
-            currentHealth += regenRate[2];
+            if((maxHealth[2]-currentHealth)<regenRate[2])
+            {
+                currentHealth = maxHealth[2];
+            }
+            else
+            {
+                currentHealth += regenRate[2];
+            }
         }
     }
 
@@ -305,6 +329,117 @@ public class BodyPart
     public Person getMyPerson(){return myPerson;}
     public void setMyPerson(Person newPerson){myPerson = newPerson;}
 
+    public int[] getBloodCapacity() {return bloodCapacity;}
+    public int[] getBloodGeneration() {return bloodGeneration;}
+    public int[] getBloodNeeded() {return neededBlood;}
+    public int[] getEnergyCapacity() {return energyCapacity;}
+    public int[] getEnergyGeneration() {return energyGeneration;}
+    public int[] getEnergyNeeded() {return neededEnergy;}
     public int[] getMaxHealth(){return maxHealth;}
     public int getCurrentHealth(){return currentHealth;}
+    public int[] getRegenLimit(){return regenLimit;}
+    public int[] getRegenRate(){return regenRate;}
+    public int[] getArmour() {return armour;}
+    public int[] getSize() {return size;}
+    public int[] getConsciousness() {return consciousness;}
+    public int[] getSpeed() {return speedModifier;}
+    public int[] getSight() {return sightModifier;}
+    public int[] getGrabbingSlots() {return grabbingSlots;}
+
+    public void AddToBloodCapacity(int grossChange, int modifierChange)
+    {
+        bloodCapacity[0] = bloodCapacity[0] + grossChange;
+        bloodCapacity[1] = bloodCapacity[1] + modifierChange;
+        bloodCapacity[2] = bloodCapacity[0] * bloodCapacity[1];
+    }
+    public void AddToBloodGeneration(int grossChange, int modifierChange)
+    {
+        bloodGeneration[0] = bloodGeneration[0] + grossChange;
+        bloodGeneration[1] = bloodGeneration[1] + modifierChange;
+        bloodGeneration[2] = bloodGeneration[0] * bloodGeneration[1];
+    }
+    public void AddToBloodNeeded(int grossChange, int modifierChange)
+    {
+        neededBlood[0] = neededBlood[0] + grossChange;
+        neededBlood[1] = neededBlood[1] + modifierChange;
+        neededBlood[2] = neededBlood[0] * neededBlood[1];
+    }
+    public void AddToEnergyCapacity(int grossChange, int modifierChange)
+    {
+        energyCapacity[0] = energyCapacity[0] + grossChange;
+        energyCapacity[1] = energyCapacity[1] + modifierChange;
+        energyCapacity[2] = energyCapacity[0] * energyCapacity[1];
+    }
+    public void AddToEnergyGeneration(int grossChange, int modifierChange)
+    {
+        energyGeneration[0] = energyGeneration[0] + grossChange;
+        energyGeneration[1] = energyGeneration[1] + modifierChange;
+        energyGeneration[2] = energyGeneration[0] * energyGeneration[1];
+    }
+    public void AddToEnergyNeeded(int grossChange, int modifierChange)
+    {
+        neededEnergy[0] = neededEnergy[0] + grossChange;
+        neededEnergy[1] = neededEnergy[1] + modifierChange;
+        neededEnergy[2] = neededEnergy[0] * neededEnergy[1];
+    }
+    public void AddToMaxHealth(int grossChange, int modifierChange)
+    {
+        maxHealth[0] = maxHealth[0] + grossChange;
+        maxHealth[1] = maxHealth[1] + modifierChange;
+        maxHealth[2] = maxHealth[0] * maxHealth[1];
+    }
+    public void AddToRegenLimit(int grossChange, int modifierChange)
+    {
+        regenLimit[0] = regenLimit[0] + grossChange;
+        regenLimit[1] = regenLimit[1] + modifierChange;
+        regenLimit[2] = regenLimit[0] * regenLimit[1];
+    }
+    public void AddToRegenRate(int grossChange, int modifierChange)
+    {
+        regenRate[0] = regenRate[0] + grossChange;
+        regenRate[1] = regenRate[1] + modifierChange;
+        regenRate[2] = regenRate[0] * regenRate[1];
+    }
+    public void AddToArmour(int grossChange, int modifierChange)
+    {
+        armour[0] = armour[0] + grossChange;
+        armour[1] = armour[1] + modifierChange;
+        armour[2] = armour[0] * armour[1];
+    }
+    public void AddToSize(int grossChange, int modifierChange)
+    {
+        size[0] = size[0] + grossChange;
+        size[1] = size[1] + modifierChange;
+        size[2] = size[0] * size[1];
+    }
+    public void AddToOrganCapacity(int grossChange, int modifierChange)
+    {
+        organCapacity[0] = organCapacity[0] + grossChange;
+        organCapacity[1] = organCapacity[1] + modifierChange;
+        organCapacity[2] = organCapacity[0] * organCapacity[1];
+    }
+    public void AddToSpeed(int grossChange, int modifierChange)
+    {
+        speedModifier[0] = speedModifier[0] + grossChange;
+        speedModifier[1] = speedModifier[1] + modifierChange;
+        speedModifier[2] = speedModifier[0] * speedModifier[1];
+    }
+    public void AddToConsciousness(int grossChange, int modifierChange)
+    {
+        consciousness[0] = consciousness[0] + grossChange;
+        consciousness[1] = consciousness[1] + modifierChange;
+        consciousness[2] = consciousness[0] * consciousness[1];
+    }
+    public void AddToGrabbingSlots(int grossChange, int modifierChange)
+    {
+        grabbingSlots[0] = grabbingSlots[0] + grossChange;
+        grabbingSlots[1] = grabbingSlots[1] + modifierChange;
+        grabbingSlots[2] = grabbingSlots[0] * grabbingSlots[1];
+    }
+    public void AddToSight(int grossChange, int modifierChange)
+    {
+        sightModifier[0] = sightModifier[0] + grossChange;
+        sightModifier[1] = sightModifier[1] + modifierChange;
+        sightModifier[2] = sightModifier[0] * sightModifier[1];
+    }
 }
