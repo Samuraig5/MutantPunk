@@ -89,7 +89,7 @@ public class BodyFileDecoder
                     currentTargetsToAttach.remove(depth+1);
                     currentTargetsToAttach.set(depth, bp);
                 }
-                bp.attachTo(currentTargetsToAttach.get(depth-1));
+                bp.TryToAttachTo(currentTargetsToAttach.get(depth-1));
             }
         }
         catch (Exception e)

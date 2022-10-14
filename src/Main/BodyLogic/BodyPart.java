@@ -108,6 +108,12 @@ public class BodyPart
     private final float[] organCapacity = {0,1,0};
 
     /**
+     * How much space the bodyPart still has for internal bodyParts. If this value is less than the internal's size,
+     * the internal can't be attached to it.
+     */
+    private float currentOrganCapacity;
+
+    /**
      * This calculates how much this bodyPart increases the speed of its person.
      */
     private final float[] speedModifier = {0,1,0};
@@ -176,6 +182,7 @@ public class BodyPart
         AddToSight(standardSight[0], standardSight[1]);
 
         currentHealth = maxHealth[2];
+        currentOrganCapacity = organCapacity[2];
     }
 
     /**
@@ -215,14 +222,68 @@ public class BodyPart
      * and updates the myPerson.
      *
      * @param bodyPartToAttachTo the bodyPart this bodyPart should be attached to.
+     * @return weather or not attaching the bodyPart was successful.
      */
-    public void attachTo(BodyPart bodyPartToAttachTo)
+    public boolean TryToAttachTo(BodyPart bodyPartToAttachTo)
+    {
+        if(this.bodyPartClass.equalsIgnoreCase("internal"))
+        {
+            if(bodyPartToAttachTo.getCurrentOrganCapacity() >= this.getSize()[2])
+            {
+                bodyPartToAttachTo.AddToCurrentOrganCapacity(this.getSize()[2]);
+                return attach(bodyPartToAttachTo);
+            }
+            else
+            {
+                System.out.println("BodyPart -> Failed to attach internal because it's too big!");
+                return false;
+            }
+        }
+        else
+        {
+            return attach(bodyPartToAttachTo);
+        }
+    }
+    private boolean attach(BodyPart bodyPartToAttachTo)
     {
         this.bodyPartAttachedTo = bodyPartToAttachTo;
         this.myPerson = this.bodyPartAttachedTo.myPerson;
         this.myPerson.myBodyParts.add(this);
         this.bodyPartAttachedTo.attachedBodyParts.add(this);
         updatePersonWhenAttached();
+        return true;
+    }
+
+    /**
+     * This function removes this bodyPart from the person. All bodyParts attached to this bodyPart stay attached
+     * to this bodyPart and are removed from the person.
+     * The bodyPart is replaced with a grievous wound.
+     */
+    public void removeBodyPart()
+    {
+        if(this.bodyPartClass.equalsIgnoreCase("internal"))
+        {
+            this.bodyPartAttachedTo.AddToCurrentOrganCapacity(this.getSize()[2]);
+        }
+        removeBodyPartRecursively();
+        BodyPart resultingWound = BodyFileDecoder.loadBodyPartFromFile("Resources/BodyParts/Misc/GrievousWound",0,20);
+        resultingWound.TryToAttachTo(bodyPartAttachedTo);
+        bodyPartAttachedTo.attachedBodyParts.remove(this);
+        bodyPartAttachedTo = null;
+    }
+
+    /**
+     * This function travels recursively through all the attached bodyParts and removes them from the old Person.
+     */
+    private void removeBodyPartRecursively()
+    {
+        for (BodyPart attachedBodyPart : this.attachedBodyParts)
+        {
+            attachedBodyPart.removeBodyPartRecursively();
+        }
+        this.myPerson.myBodyParts.remove(this);
+        updatePersonWhenRemoved();
+        this.myPerson = null;
     }
 
     /**
@@ -241,35 +302,6 @@ public class BodyPart
         myPerson.changeGrossSpeed(speedModifier[0]);
         myPerson.changeGrossConsciousness(consciousness[0]);
         myPerson.changeGrossSight(sightModifier[0]);
-    }
-
-    /**
-     * This function removes this bodyPart from the person. All bodyParts attached to this bodyPart stay attached
-     * to this bodyPart and are removed from the person.
-     * The bodyPart is replaced with a grievous wound.
-     */
-    public void removeBodyPart()
-    {
-        BodyPart resultingWound = BodyFileDecoder.loadBodyPartFromFile("Resources/BodyParts/Misc/GrievousWound",0,20);
-        resultingWound.attachTo(bodyPartAttachedTo);
-        bodyPartAttachedTo.attachedBodyParts.remove(this);
-        bodyPartAttachedTo = null;
-
-        removeBodyPartRecursively();
-    }
-
-    /**
-     * This function travels recursively through all the attached bodyParts and removes them from the old Person.
-     */
-    private void removeBodyPartRecursively()
-    {
-        this.myPerson.myBodyParts.remove(this);
-        updatePersonWhenRemoved();
-        this.myPerson = null;
-        for (BodyPart attachedBodyPart : this.attachedBodyParts)
-        {
-            attachedBodyPart.removeBodyPartRecursively();
-        }
     }
 
     /**
@@ -343,9 +375,12 @@ public class BodyPart
     public float[] getSize() {return size;}
     public float[] getConsciousness() {return consciousness;}
     public float[] getOrganCapacity() {return organCapacity;}
+    public float getCurrentOrganCapacity() {return currentOrganCapacity;}
     public float[] getSpeed() {return speedModifier;}
     public float[] getSight() {return sightModifier;}
     public float[] getGrabbingSlots() {return grabbingSlots;}
+
+    public void AddToCurrentOrganCapacity(float change) {currentOrganCapacity = currentOrganCapacity + change;}
 
     public void AddToBloodCapacity(float grossChange, float modifierChange)
     {
