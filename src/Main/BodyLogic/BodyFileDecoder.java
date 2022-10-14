@@ -1,5 +1,7 @@
 package Main.BodyLogic;
 
+import Main.ErrorHandler;
+
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
@@ -28,7 +30,7 @@ public class BodyFileDecoder
         }
         catch (Exception e)
         {
-            System.out.println("!!!!! BodyPartDecoder could not find File with given FilePath !!!!!");
+            ErrorHandler.PrintAndTraceError(e);
         }
         return data;
     }
@@ -94,7 +96,7 @@ public class BodyFileDecoder
         }
         catch (Exception e)
         {
-            System.out.println("!!!!! BodyFileDecoder could not find File with given FilePath !!!!!");
+            ErrorHandler.PrintAndTraceError(e);
         }
         return p;
     }
