@@ -22,52 +22,52 @@ public class Person
      * Gross sum of the stats.
      * @param change Amount to add or subtract to the stat.
      */
-    public void changeGrossBloodCapacity(int change)
+    public void changeGrossBloodCapacity(float change)
     {
         bloodCapacity[0] = bloodCapacity[0] + change;
         changeFinalBloodCapacity();
     }
-    public void changeGrossBloodGeneration(int change)
+    public void changeGrossBloodGeneration(float change)
     {
         bloodGeneration[0] = bloodGeneration[0] + change;
         changeFinalBloodGeneration();
     }
-    public void changeGrossBloodNeeded(int change)
+    public void changeGrossBloodNeeded(float change)
     {
         bloodNeeded[0] = bloodNeeded[0] + change;
         changeFinalBloodNeeded();
     }
-    public void changeGrossEnergyCapacity(int change)
+    public void changeGrossEnergyCapacity(float change)
     {
         energyCapacity[0] = energyCapacity[0] + change;
         changeFinalEnergyCapacity();
     }
-    public void changeGrossEnergyGeneration(int change)
+    public void changeGrossEnergyGeneration(float change)
     {
         energyGeneration[0] = energyGeneration[0] + change;
         changeFinalEnergyGeneration();
     }
-    public void changeGrossEnergyNeeded(int change)
+    public void changeGrossEnergyNeeded(float change)
     {
         energyNeeded[0] = energyNeeded[0] + change;
         changeFinalEnergyNeeded();
     }
-    public void changeGrossSize(int change)
+    public void changeGrossSize(float change)
     {
         size[0] = size[0] + change;
         changeFinalSize();
     }
-    public void changeGrossSpeed(int change)
+    public void changeGrossSpeed(float change)
     {
         speedModifier[0] = speedModifier[0] + change;
         changeFinalSpeed();
     }
-    public void changeGrossConsciousness(int change)
+    public void changeGrossConsciousness(float change)
     {
         consciousness[0] = consciousness[0] + change;
         changeFinalConsciousness();
     }
-    public void changeGrossSight(int change)
+    public void changeGrossSight(float change)
     {
         sight[0] = sight[0] + change;
         changeFinalSight();

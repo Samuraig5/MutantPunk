@@ -41,91 +41,91 @@ public class BodyPart
     /**
      * Amount of blood that can be stored in this bodyPart
      */
-    private final int[] bloodCapacity = {0,1,0};
+    private final float[] bloodCapacity = {0,1,0};
 
     /**
      * Amount of blood this bodyPart generates per time unit.
      */
-    private final int[] bloodGeneration = {0,1,0};
+    private final float[] bloodGeneration = {0,1,0};
 
     /**
      * Amount of blood needed for the bodyPart to function.
      */
-    private final int[] neededBlood = {0,1,0};
+    private final float[] neededBlood = {0,1,0};
 
     /**
      * Amount of energy this bodyPart can store.
      */
-    private final int[] energyCapacity = {0,1,0};
+    private final float[] energyCapacity = {0,1,0};
 
     /**
      * Amount of energy this bodyPart generates per turn.
      */
-    private final int[] energyGeneration = {0,1,0};
+    private final float[] energyGeneration = {0,1,0};
 
     /**
      * Amount of energy needed for the bodyPart to function.
      */
-    private final int[] neededEnergy = {0,1,0};
+    private final float[] neededEnergy = {0,1,0};
 
     /**
      * The maximum health of the bodyPart. Determines how much damage the bodyPart can take before being destroyed.
      */
-    private final int[] maxHealth = {0,1,0};
+    private final float[] maxHealth = {0,1,0};
 
     /**
      * The current health of the bodyPart. It can't normally be higher than maxHealth and if it's equal to 0 the bodyPart
      * is destroyed.
      */
-    private int currentHealth;
+    private float currentHealth;
 
     /**
      * The amount of health this bodyPart generates per amount of time.
      */
-    private final int[] regenRate = {0,1,0};
+    private final float[] regenRate = {0,1,0};
 
     /**
      * The amount of health this bodyPart can regenerate from. If health is lower than this amount,
      * it can usually not regenerate without help.
      */
-    private final int[] regenLimit = {0,1,0};
+    private final float[] regenLimit = {0,1,0};
 
     /**
      * The armour or resilience of the bodyPart. A higher armour rating makes incoming hits less likely to deal full
      * or any damage.
      */
-    private final int[] armour = {0,1,0};
+    private final float[] armour = {0,1,0};
 
     /**
      * The size of the bodyPart. The bigger the size, the more likely a bodyPart is going to be hit compared to a
      * smaller one.
      */
-    private final int[] size = {0,1,0};
+    private final float[] size = {0,1,0};
 
     /**
      * This signifies how many organs fit inside this bodyPart
      */
-    private final int[] organCapacity = {0,1,0};
+    private final float[] organCapacity = {0,1,0};
 
     /**
      * This calculates how much this bodyPart increases the speed of its person.
      */
-    private final int[] speedModifier = {0,1,0};
+    private final float[] speedModifier = {0,1,0};
 
     /**
      * How much this bodyPart can "think". A person with no consciousness is considered dead.
      */
-    private final int[] consciousness = {0,1,0};
+    private final float[] consciousness = {0,1,0};
 
     /**
      * How much this bodyPart can grab. Used for holding weapons.
      */
-    private final int[] grabbingSlots = {0,1,0};
+    private final float[] grabbingSlots = {0,1,0};
 
     /**
      * How much this bodyPart can see.
      */
-    private final int[] sightModifier = {0,1,0};
+    private final float[] sightModifier = {0,1,0};
 
     /**
      * This is used to generate the bodyPart.
@@ -142,37 +142,37 @@ public class BodyPart
         type = Integer.parseInt(data.get(1)[0]);
         bodyPartClass = data.get(2)[0];
 
-        int[] standardBloodCapacity = BodyLogicHelper.calculateBodyPartStat(data.get(3),bias,randomness);
+        float[] standardBloodCapacity = BodyLogicHelper.calculateBodyPartStat(data.get(3),bias,randomness);
         AddToBloodCapacity(standardBloodCapacity[0], standardBloodCapacity[1]);
-        int[] standardBloodGeneration = BodyLogicHelper.calculateBodyPartStat(data.get(4),bias,randomness);
+        float[] standardBloodGeneration = BodyLogicHelper.calculateBodyPartStat(data.get(4),bias,randomness);
         AddToBloodGeneration(standardBloodGeneration[0], standardBloodGeneration[1]);
-        int[] standardBloodNeed = BodyLogicHelper.calculateBodyPartStat(data.get(5),bias,randomness);
+        float[] standardBloodNeed = BodyLogicHelper.calculateBodyPartStat(data.get(5),bias,randomness);
         AddToBloodNeeded(standardBloodNeed[0], standardBloodNeed[1]);
-        int[] standardEnergyCapacity = BodyLogicHelper.calculateBodyPartStat(data.get(6),bias,randomness);
+        float[] standardEnergyCapacity = BodyLogicHelper.calculateBodyPartStat(data.get(6),bias,randomness);
         AddToEnergyCapacity(standardEnergyCapacity[0], standardEnergyCapacity[1]);
-        int[] standardEnergyGeneration = BodyLogicHelper.calculateBodyPartStat(data.get(7),bias,randomness);
+        float[] standardEnergyGeneration = BodyLogicHelper.calculateBodyPartStat(data.get(7),bias,randomness);
         AddToEnergyGeneration(standardEnergyGeneration[0], standardEnergyGeneration[1]);
-        int[] standardEnergyNeed = BodyLogicHelper.calculateBodyPartStat(data.get(8),bias,randomness);
+        float[] standardEnergyNeed = BodyLogicHelper.calculateBodyPartStat(data.get(8),bias,randomness);
         AddToEnergyNeeded(standardEnergyNeed[0], standardEnergyNeed[1]);
-        int[] standardHealth = BodyLogicHelper.calculateBodyPartStat(data.get(9),bias,randomness);
+        float[] standardHealth = BodyLogicHelper.calculateBodyPartStat(data.get(9),bias,randomness);
         AddToMaxHealth(standardHealth[0], standardHealth[1]);
-        int[] standardRegenRate = BodyLogicHelper.calculateBodyPartStat(data.get(10),bias,randomness);
+        float[] standardRegenRate = BodyLogicHelper.calculateBodyPartStat(data.get(10),bias,randomness);
         AddToRegenRate(standardRegenRate[0], standardRegenRate[1]);
-        int[] standardRegenLimit = BodyLogicHelper.calculateBodyPartStat(data.get(11),bias,randomness);
+        float[] standardRegenLimit = BodyLogicHelper.calculateBodyPartStat(data.get(11),bias,randomness);
         AddToRegenLimit(standardRegenLimit[0], standardRegenLimit[1]);
-        int[] standardArmour = BodyLogicHelper.calculateBodyPartStat(data.get(12),bias,randomness);
+        float[] standardArmour = BodyLogicHelper.calculateBodyPartStat(data.get(12),bias,randomness);
         AddToArmour(standardArmour[0], standardArmour[1]);
-        int[] standardSize = BodyLogicHelper.calculateBodyPartStat(data.get(13),bias,randomness);
+        float[] standardSize = BodyLogicHelper.calculateBodyPartStat(data.get(13),bias,randomness);
         AddToSize(standardSize[0], standardSize[1]);
-        int[] standardOrganCapacity = BodyLogicHelper.calculateBodyPartStat(data.get(14),bias,randomness);
+        float[] standardOrganCapacity = BodyLogicHelper.calculateBodyPartStat(data.get(14),bias,randomness);
         AddToOrganCapacity(standardOrganCapacity[0], standardOrganCapacity[1]);
-        int[] standardSpeed = BodyLogicHelper.calculateBodyPartStat(data.get(15),bias,randomness);
+        float[] standardSpeed = BodyLogicHelper.calculateBodyPartStat(data.get(15),bias,randomness);
         AddToSpeed(standardSpeed[0], standardSpeed[1]);
-        int[] standardConsciousness = BodyLogicHelper.calculateBodyPartStat(data.get(16),bias,randomness);
+        float[] standardConsciousness = BodyLogicHelper.calculateBodyPartStat(data.get(16),bias,randomness);
         AddToConsciousness(standardConsciousness[0], standardConsciousness[1]);
-        int[] standardGrabbingSlots = BodyLogicHelper.calculateBodyPartStat(data.get(17),bias,randomness);
+        float[] standardGrabbingSlots = BodyLogicHelper.calculateBodyPartStat(data.get(17),bias,randomness);
         AddToGrabbingSlots(standardGrabbingSlots[0], standardGrabbingSlots[1]);
-        int[] standardSight = BodyLogicHelper.calculateBodyPartStat(data.get(18),bias,randomness);
+        float[] standardSight = BodyLogicHelper.calculateBodyPartStat(data.get(18),bias,randomness);
         AddToSight(standardSight[0], standardSight[1]);
 
         currentHealth = maxHealth[2];
@@ -183,7 +183,7 @@ public class BodyPart
      *
      * @param damage the amount of damage to be dealt to the bodyPart
      */
-    public void doDamage(int damage)
+    public void doDamage(float damage)
     {
         this.currentHealth = this.currentHealth -damage;
         if (this.currentHealth <= 0)
@@ -329,115 +329,115 @@ public class BodyPart
     public Person getMyPerson(){return myPerson;}
     public void setMyPerson(Person newPerson){myPerson = newPerson;}
 
-    public int[] getBloodCapacity() {return bloodCapacity;}
-    public int[] getBloodGeneration() {return bloodGeneration;}
-    public int[] getBloodNeeded() {return neededBlood;}
-    public int[] getEnergyCapacity() {return energyCapacity;}
-    public int[] getEnergyGeneration() {return energyGeneration;}
-    public int[] getEnergyNeeded() {return neededEnergy;}
-    public int[] getMaxHealth(){return maxHealth;}
-    public int getCurrentHealth(){return currentHealth;}
-    public int[] getRegenLimit(){return regenLimit;}
-    public int[] getRegenRate(){return regenRate;}
-    public int[] getArmour() {return armour;}
-    public int[] getSize() {return size;}
-    public int[] getConsciousness() {return consciousness;}
-    public int[] getOrganCapacity() {return organCapacity;}
-    public int[] getSpeed() {return speedModifier;}
-    public int[] getSight() {return sightModifier;}
-    public int[] getGrabbingSlots() {return grabbingSlots;}
+    public float[] getBloodCapacity() {return bloodCapacity;}
+    public float[] getBloodGeneration() {return bloodGeneration;}
+    public float[] getBloodNeeded() {return neededBlood;}
+    public float[] getEnergyCapacity() {return energyCapacity;}
+    public float[] getEnergyGeneration() {return energyGeneration;}
+    public float[] getEnergyNeeded() {return neededEnergy;}
+    public float[] getMaxHealth(){return maxHealth;}
+    public float getCurrentHealth(){return currentHealth;}
+    public float[] getRegenLimit(){return regenLimit;}
+    public float[] getRegenRate(){return regenRate;}
+    public float[] getArmour() {return armour;}
+    public float[] getSize() {return size;}
+    public float[] getConsciousness() {return consciousness;}
+    public float[] getOrganCapacity() {return organCapacity;}
+    public float[] getSpeed() {return speedModifier;}
+    public float[] getSight() {return sightModifier;}
+    public float[] getGrabbingSlots() {return grabbingSlots;}
 
-    public void AddToBloodCapacity(int grossChange, int modifierChange)
+    public void AddToBloodCapacity(float grossChange, float modifierChange)
     {
         bloodCapacity[0] = bloodCapacity[0] + grossChange;
         bloodCapacity[1] = bloodCapacity[1] + modifierChange;
         bloodCapacity[2] = bloodCapacity[0] * bloodCapacity[1];
     }
-    public void AddToBloodGeneration(int grossChange, int modifierChange)
+    public void AddToBloodGeneration(float grossChange, float modifierChange)
     {
         bloodGeneration[0] = bloodGeneration[0] + grossChange;
         bloodGeneration[1] = bloodGeneration[1] + modifierChange;
         bloodGeneration[2] = bloodGeneration[0] * bloodGeneration[1];
     }
-    public void AddToBloodNeeded(int grossChange, int modifierChange)
+    public void AddToBloodNeeded(float grossChange, float modifierChange)
     {
         neededBlood[0] = neededBlood[0] + grossChange;
         neededBlood[1] = neededBlood[1] + modifierChange;
         neededBlood[2] = neededBlood[0] * neededBlood[1];
     }
-    public void AddToEnergyCapacity(int grossChange, int modifierChange)
+    public void AddToEnergyCapacity(float grossChange, float modifierChange)
     {
         energyCapacity[0] = energyCapacity[0] + grossChange;
         energyCapacity[1] = energyCapacity[1] + modifierChange;
         energyCapacity[2] = energyCapacity[0] * energyCapacity[1];
     }
-    public void AddToEnergyGeneration(int grossChange, int modifierChange)
+    public void AddToEnergyGeneration(float grossChange, float modifierChange)
     {
         energyGeneration[0] = energyGeneration[0] + grossChange;
         energyGeneration[1] = energyGeneration[1] + modifierChange;
         energyGeneration[2] = energyGeneration[0] * energyGeneration[1];
     }
-    public void AddToEnergyNeeded(int grossChange, int modifierChange)
+    public void AddToEnergyNeeded(float grossChange, float modifierChange)
     {
         neededEnergy[0] = neededEnergy[0] + grossChange;
         neededEnergy[1] = neededEnergy[1] + modifierChange;
         neededEnergy[2] = neededEnergy[0] * neededEnergy[1];
     }
-    public void AddToMaxHealth(int grossChange, int modifierChange)
+    public void AddToMaxHealth(float grossChange, float modifierChange)
     {
         maxHealth[0] = maxHealth[0] + grossChange;
         maxHealth[1] = maxHealth[1] + modifierChange;
         maxHealth[2] = maxHealth[0] * maxHealth[1];
     }
-    public void AddToRegenLimit(int grossChange, int modifierChange)
+    public void AddToRegenLimit(float grossChange, float modifierChange)
     {
         regenLimit[0] = regenLimit[0] + grossChange;
         regenLimit[1] = regenLimit[1] + modifierChange;
         regenLimit[2] = regenLimit[0] * regenLimit[1];
     }
-    public void AddToRegenRate(int grossChange, int modifierChange)
+    public void AddToRegenRate(float grossChange, float modifierChange)
     {
         regenRate[0] = regenRate[0] + grossChange;
         regenRate[1] = regenRate[1] + modifierChange;
         regenRate[2] = regenRate[0] * regenRate[1];
     }
-    public void AddToArmour(int grossChange, int modifierChange)
+    public void AddToArmour(float grossChange, float modifierChange)
     {
         armour[0] = armour[0] + grossChange;
         armour[1] = armour[1] + modifierChange;
         armour[2] = armour[0] * armour[1];
     }
-    public void AddToSize(int grossChange, int modifierChange)
+    public void AddToSize(float grossChange, float modifierChange)
     {
         size[0] = size[0] + grossChange;
         size[1] = size[1] + modifierChange;
         size[2] = size[0] * size[1];
     }
-    public void AddToOrganCapacity(int grossChange, int modifierChange)
+    public void AddToOrganCapacity(float grossChange, float modifierChange)
     {
         organCapacity[0] = organCapacity[0] + grossChange;
         organCapacity[1] = organCapacity[1] + modifierChange;
         organCapacity[2] = organCapacity[0] * organCapacity[1];
     }
-    public void AddToSpeed(int grossChange, int modifierChange)
+    public void AddToSpeed(float grossChange, float modifierChange)
     {
         speedModifier[0] = speedModifier[0] + grossChange;
         speedModifier[1] = speedModifier[1] + modifierChange;
         speedModifier[2] = speedModifier[0] * speedModifier[1];
     }
-    public void AddToConsciousness(int grossChange, int modifierChange)
+    public void AddToConsciousness(float grossChange, float modifierChange)
     {
         consciousness[0] = consciousness[0] + grossChange;
         consciousness[1] = consciousness[1] + modifierChange;
         consciousness[2] = consciousness[0] * consciousness[1];
     }
-    public void AddToGrabbingSlots(int grossChange, int modifierChange)
+    public void AddToGrabbingSlots(float grossChange, float modifierChange)
     {
         grabbingSlots[0] = grabbingSlots[0] + grossChange;
         grabbingSlots[1] = grabbingSlots[1] + modifierChange;
         grabbingSlots[2] = grabbingSlots[0] * grabbingSlots[1];
     }
-    public void AddToSight(int grossChange, int modifierChange)
+    public void AddToSight(float grossChange, float modifierChange)
     {
         sightModifier[0] = sightModifier[0] + grossChange;
         sightModifier[1] = sightModifier[1] + modifierChange;

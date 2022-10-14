@@ -22,8 +22,8 @@ class BodyPartTest {
 
     @org.junit.jupiter.api.Test
     void doDamage() {
-        int damageAmount = 10;
-        int initialHealth = bp.getCurrentHealth();
+        float damageAmount = 10;
+        float initialHealth = bp.getCurrentHealth();
         bp.doDamage(damageAmount);
         assertEquals(initialHealth-damageAmount,bp.getCurrentHealth());
     }
@@ -38,7 +38,7 @@ class BodyPartTest {
     void regenerateWhenNotAtMaxHealth()
     {
         bp.AddToMaxHealth(100,0); //This is just to make sure the bodyPart doesn't accidentally die
-        int initialHealth = bp.getCurrentHealth();
+        float initialHealth = bp.getCurrentHealth();
         for(int i = 0; i < (bp.getMaxHealth()[2] - initialHealth); i++)
         {
             bp.regenerateDamage();
@@ -51,7 +51,7 @@ class BodyPartTest {
         bp.AddToRegenLimit(-bp.getRegenLimit()[0],0);
         bp.AddToRegenLimit(bp.getMaxHealth()[2],0);
         bp.doDamage(1);
-        int initialHealth = bp.getCurrentHealth();
+        float initialHealth = bp.getCurrentHealth();
         bp.regenerateDamage();
         assertEquals(initialHealth,bp.getCurrentHealth());
     }
@@ -60,7 +60,7 @@ class BodyPartTest {
     {
         bp.AddToRegenRate(-bp.getRegenRate()[0],0);
         bp.doDamage(1);
-        int initialHealth = bp.getCurrentHealth();
+        float initialHealth = bp.getCurrentHealth();
         bp.regenerateDamage();
         assertEquals(initialHealth,bp.getCurrentHealth());
     }
@@ -89,10 +89,6 @@ class BodyPartTest {
     }
 
     @org.junit.jupiter.api.Test
-    void printBodyPartToTerminal() {
-    }
-
-    @org.junit.jupiter.api.Test
     void changeName() {
         bp.changeName("NewName");
         assertEquals("NewName",bp.getName());
@@ -111,9 +107,9 @@ class BodyPartTest {
 
     @org.junit.jupiter.api.Test
     void addToBloodCapacity() {
-        int[] initial = {bp.getBloodCapacity()[0], bp.getBloodCapacity()[1],bp.getBloodCapacity()[2]};
-        int grossChange = 100;
-        int modChange = 1;
+        float[] initial = {bp.getBloodCapacity()[0], bp.getBloodCapacity()[1],bp.getBloodCapacity()[2]};
+        float grossChange = 50;
+        float modChange = 0.5f;
 
         //Change the Gross Stats
         bp.AddToBloodCapacity(grossChange,0);
@@ -154,9 +150,9 @@ class BodyPartTest {
 
     @org.junit.jupiter.api.Test
     void addToBloodGeneration() {
-        int[] initial = {bp.getBloodGeneration()[0], bp.getBloodGeneration()[1],bp.getBloodGeneration()[2]};
-        int grossChange = 100;
-        int modChange = 1;
+        float[] initial = {bp.getBloodGeneration()[0], bp.getBloodGeneration()[1],bp.getBloodGeneration()[2]};
+        float grossChange = 50;
+        float modChange = 0.5f;
 
         //Change the Gross Stats
         bp.AddToBloodGeneration(grossChange,0);
@@ -197,9 +193,9 @@ class BodyPartTest {
 
     @org.junit.jupiter.api.Test
     void addToBloodNeeded() {
-        int[] initial = {bp.getBloodNeeded()[0], bp.getBloodNeeded()[1],bp.getBloodNeeded()[2]};
-        int grossChange = 100;
-        int modChange = 1;
+        float[] initial = {bp.getBloodNeeded()[0], bp.getBloodNeeded()[1],bp.getBloodNeeded()[2]};
+        float grossChange = 50;
+        float modChange = 0.5f;
 
         //Change the Gross Stats
         bp.AddToBloodNeeded(grossChange,0);
@@ -240,9 +236,9 @@ class BodyPartTest {
 
     @org.junit.jupiter.api.Test
     void addToEnergyCapacity() {
-        int[] initial = {bp.getEnergyCapacity()[0], bp.getEnergyCapacity()[1],bp.getEnergyCapacity()[2]};
-        int grossChange = 100;
-        int modChange = 1;
+        float[] initial = {bp.getEnergyCapacity()[0], bp.getEnergyCapacity()[1],bp.getEnergyCapacity()[2]};
+        float grossChange = 50;
+        float modChange = 0.5f;
 
         //Change the Gross Stats
         bp.AddToEnergyCapacity(grossChange,0);
@@ -283,9 +279,9 @@ class BodyPartTest {
 
     @org.junit.jupiter.api.Test
     void addToEnergyGeneration() {
-        int[] initial = {bp.getEnergyGeneration()[0], bp.getEnergyGeneration()[1],bp.getEnergyGeneration()[2]};
-        int grossChange = 100;
-        int modChange = 1;
+        float[] initial = {bp.getEnergyGeneration()[0], bp.getEnergyGeneration()[1],bp.getEnergyGeneration()[2]};
+        float grossChange = 50;
+        float modChange = 0.5f;
 
         //Change the Gross Stats
         bp.AddToEnergyGeneration(grossChange,0);
@@ -326,9 +322,9 @@ class BodyPartTest {
 
     @org.junit.jupiter.api.Test
     void addToEnergyNeeded() {
-        int[] initial = {bp.getEnergyNeeded()[0], bp.getEnergyNeeded()[1],bp.getEnergyNeeded()[2]};
-        int grossChange = 100;
-        int modChange = 1;
+        float[] initial = {bp.getEnergyNeeded()[0], bp.getEnergyNeeded()[1],bp.getEnergyNeeded()[2]};
+        float grossChange = 50;
+        float modChange = 0.5f;
 
         //Change the Gross Stats
         bp.AddToEnergyNeeded(grossChange,0);
@@ -369,9 +365,9 @@ class BodyPartTest {
 
     @org.junit.jupiter.api.Test
     void addToMaxHealth() {
-        int[] initial = {bp.getMaxHealth()[0], bp.getMaxHealth()[1],bp.getMaxHealth()[2]};
-        int grossChange = 100;
-        int modChange = 1;
+        float[] initial = {bp.getMaxHealth()[0], bp.getMaxHealth()[1],bp.getMaxHealth()[2]};
+        float grossChange = 50;
+        float modChange = 0.5f;
 
         //Change the Gross Stats
         bp.AddToMaxHealth(grossChange,0);
@@ -412,9 +408,9 @@ class BodyPartTest {
 
     @org.junit.jupiter.api.Test
     void addToRegenLimit() {
-        int[] initial = {bp.getRegenLimit()[0], bp.getRegenLimit()[1],bp.getRegenLimit()[2]};
-        int grossChange = 100;
-        int modChange = 1;
+        float[] initial = {bp.getRegenLimit()[0], bp.getRegenLimit()[1],bp.getRegenLimit()[2]};
+        float grossChange = 50;
+        float modChange = 0.5f;
 
         //Change the Gross Stats
         bp.AddToRegenLimit(grossChange,0);
@@ -455,9 +451,9 @@ class BodyPartTest {
 
     @org.junit.jupiter.api.Test
     void addToRegenRate() {
-        int[] initial = {bp.getRegenRate()[0], bp.getRegenRate()[1],bp.getRegenRate()[2]};
-        int grossChange = 100;
-        int modChange = 1;
+        float[] initial = {bp.getRegenRate()[0], bp.getRegenRate()[1],bp.getRegenRate()[2]};
+        float grossChange = 50;
+        float modChange = 0.5f;
 
         //Change the Gross Stats
         bp.AddToRegenRate(grossChange,0);
@@ -498,9 +494,9 @@ class BodyPartTest {
 
     @org.junit.jupiter.api.Test
     void addToArmour() {
-        int[] initial = {bp.getArmour()[0], bp.getArmour()[1],bp.getArmour()[2]};
-        int grossChange = 100;
-        int modChange = 1;
+        float[] initial = {bp.getArmour()[0], bp.getArmour()[1],bp.getArmour()[2]};
+        float grossChange = 50;
+        float modChange = 0.5f;
 
         //Change the Gross Stats
         bp.AddToArmour(grossChange,0);
@@ -541,9 +537,9 @@ class BodyPartTest {
 
     @org.junit.jupiter.api.Test
     void addToSize() {
-        int[] initial = {bp.getSize()[0], bp.getSize()[1],bp.getSize()[2]};
-        int grossChange = 100;
-        int modChange = 1;
+        float[] initial = {bp.getSize()[0], bp.getSize()[1],bp.getSize()[2]};
+        float grossChange = 50;
+        float modChange = 0.5f;
 
         //Change the Gross Stats
         bp.AddToSize(grossChange,0);
@@ -584,9 +580,9 @@ class BodyPartTest {
 
     @org.junit.jupiter.api.Test
     void addToOrganCapacity() {
-        int[] initial = {bp.getOrganCapacity()[0], bp.getOrganCapacity()[1],bp.getOrganCapacity()[2]};
-        int grossChange = 100;
-        int modChange = 1;
+        float[] initial = {bp.getOrganCapacity()[0], bp.getOrganCapacity()[1],bp.getOrganCapacity()[2]};
+        float grossChange = 50;
+        float modChange = 0.5f;
 
         //Change the Gross Stats
         bp.AddToOrganCapacity(grossChange,0);
@@ -627,9 +623,9 @@ class BodyPartTest {
 
     @org.junit.jupiter.api.Test
     void addToSpeed() {
-        int[] initial = {bp.getSpeed()[0], bp.getSpeed()[1],bp.getSpeed()[2]};
-        int grossChange = 100;
-        int modChange = 1;
+        float[] initial = {bp.getSpeed()[0], bp.getSpeed()[1],bp.getSpeed()[2]};
+        float grossChange = 50;
+        float modChange = 0.5f;
 
         //Change the Gross Stats
         bp.AddToSpeed(grossChange,0);
@@ -670,9 +666,9 @@ class BodyPartTest {
 
     @org.junit.jupiter.api.Test
     void addToConsciousness() {
-        int[] initial = {bp.getConsciousness()[0], bp.getConsciousness()[1],bp.getConsciousness()[2]};
-        int grossChange = 100;
-        int modChange = 1;
+        float[] initial = {bp.getConsciousness()[0], bp.getConsciousness()[1],bp.getConsciousness()[2]};
+        float grossChange = 50;
+        float modChange = 0.5f;
 
         //Change the Gross Stats
         bp.AddToConsciousness(grossChange,0);
@@ -713,9 +709,9 @@ class BodyPartTest {
 
     @org.junit.jupiter.api.Test
     void addToGrabbingSlots() {
-        int[] initial = {bp.getGrabbingSlots()[0], bp.getGrabbingSlots()[1],bp.getGrabbingSlots()[2]};
-        int grossChange = 100;
-        int modChange = 1;
+        float[] initial = {bp.getGrabbingSlots()[0], bp.getGrabbingSlots()[1],bp.getGrabbingSlots()[2]};
+        float grossChange = 50;
+        float modChange = 0.5f;
 
         //Change the Gross Stats
         bp.AddToGrabbingSlots(grossChange,0);
@@ -756,9 +752,9 @@ class BodyPartTest {
 
     @org.junit.jupiter.api.Test
     void addToSight() {
-        int[] initial = {bp.getSight()[0], bp.getSight()[1],bp.getSight()[2]};
-        int grossChange = 100;
-        int modChange = 1;
+        float[] initial = {bp.getSight()[0], bp.getSight()[1],bp.getSight()[2]};
+        float grossChange = 50;
+        float modChange = 0.5f;
 
         //Change the Gross Stats
         bp.AddToSight(grossChange,0);
