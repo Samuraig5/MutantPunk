@@ -342,6 +342,7 @@ public class BodyPart
     public int[] getArmour() {return armour;}
     public int[] getSize() {return size;}
     public int[] getConsciousness() {return consciousness;}
+    public int[] getOrganCapacity() {return organCapacity;}
     public int[] getSpeed() {return speedModifier;}
     public int[] getSight() {return sightModifier;}
     public int[] getGrabbingSlots() {return grabbingSlots;}
