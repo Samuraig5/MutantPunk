@@ -26,7 +26,7 @@ public class BodyPartDestructionTest
         printNameAndHealth(bp);
 
         System.out.println("> ALLOWING THE LEFT LEG TO HEAL <");
-        bp.healDamage();
+        bp.regenerateDamage();
         printNameAndHealth(bp);
 
         System.out.println("> DEALING 40 DAMAGE TO LEFT LEG <");
@@ -34,7 +34,7 @@ public class BodyPartDestructionTest
         printNameAndHealth(bp);
 
         System.out.println("> ALLOWING THE LEFT LEG TO HEAL, BUT IT IS UNABLE TO DUE TO DAMAGE <");
-        bp.healDamage();
+        bp.regenerateDamage();
         printNameAndHealth(bp);
 
         System.out.println("> DESTROYING LEFT LEG <");

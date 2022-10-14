@@ -15,16 +15,33 @@ public class BodyPartDecoderTest
     public static void main(String[] args) throws FileNotFoundException
     {
         System.out.println("================ PROPER FILE PATH TEST ================");
-        List<String> data = BodyFileDecoder.getBodyPartData("Resources/BodyParts/Torso/HumanTorso");
-        for (String d : data)
+        List<String[]> data = BodyFileDecoder.getBodyPartData("resources/BodyParts/Containers/HumanTorso");
+        for (String[] d : data)
         {
-            System.out.println(d);
+            if(d.length == 1)
+            {
+                System.out.println(d[0]);
+            }
+            else
+            {
+                System.out.println(d[0] + " ¦ " + d[1]);
+            }
         }
 
         System.out.println("================ GARBAGE FILE PATH TEST ================");
-        List<String> data2 = BodyFileDecoder.getBodyPartData("Resources/BodyParts/Torso/GarbageFilePath");
-        for (String s : data2) {
-            System.out.println(s);
+        List<String[]> data2 = BodyFileDecoder.getBodyPartData("Resources/BodyParts/Torso/GarbageFilePath");
+        for (String[] s : data2) {
+            for (String[] d : data)
+            {
+                if(d.length == 1)
+                {
+                    System.out.println(d[0]);
+                }
+                else
+                {
+                    System.out.println(d[0] + " ¦ " + d[1]);
+                }
+            }
         }
     }
 }
