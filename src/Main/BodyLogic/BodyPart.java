@@ -49,7 +49,7 @@ public class BodyPart
      * [1]: Modifier to the "higher" bodyPart
      * [2]: Modifier to the person
      */
-    private final float[] upstreamBloodCapacity = {0,0,0};
+    private float[] upstreamBloodCapacity = {0,0,0};
 
     /**
      * Amount of blood this bodyPart generates per time unit.
@@ -62,7 +62,7 @@ public class BodyPart
      * [1]: Modifier to the "higher" bodyPart
      * [2]: Modifier to the person
      */
-    private final float[] upstreamBloodGeneration = {0,0,0};
+    private float[] upstreamBloodGeneration = {0,0,0};
 
     /**
      * Amount of blood needed for the bodyPart to function.
@@ -75,7 +75,7 @@ public class BodyPart
      * [1]: Modifier to the "higher" bodyPart
      * [2]: Modifier to the person
      */
-    private final float[] upstreamBloodNeeded = {0,0,0};
+    private float[] upstreamBloodNeeded = {0,0,0};
 
     /**
      * Amount of energy this bodyPart can store.
@@ -88,7 +88,7 @@ public class BodyPart
      * [1]: Modifier to the "higher" bodyPart
      * [2]: Modifier to the person
      */
-    private final float[] upstreamEnergyCapacity = {0,0,0};
+    private float[] upstreamEnergyCapacity = {0,0,0};
 
     /**
      * Amount of energy this bodyPart generates per turn.
@@ -101,7 +101,7 @@ public class BodyPart
      * [1]: Modifier to the "higher" bodyPart
      * [2]: Modifier to the person
      */
-    private final float[] upstreamEnergyGeneration = {0,0,0};
+    private float[] upstreamEnergyGeneration = {0,0,0};
 
     /**
      * Amount of energy needed for the bodyPart to function.
@@ -114,7 +114,7 @@ public class BodyPart
      * [1]: Modifier to the "higher" bodyPart
      * [2]: Modifier to the person
      */
-    private final float[] upstreamEnergyNeeded = {0,0,0};
+    private float[] upstreamEnergyNeeded = {0,0,0};
 
     /**
      * The maximum health of the bodyPart. Determines how much damage the bodyPart can take before being destroyed.
@@ -127,7 +127,7 @@ public class BodyPart
      * [1]: Modifier to the "higher" bodyPart
      * [2]: Modifier to the person
      */
-    private final float[] upstreamMaxHealthModifier = {0,0,0};
+    private float[] upstreamMaxHealthModifier = {0,0,0};
 
     /**
      * The current health of the bodyPart. It can't normally be higher than maxHealth and if it's equal to 0 the bodyPart
@@ -146,7 +146,7 @@ public class BodyPart
      * [1]: Modifier to the "higher" bodyPart
      * [2]: Modifier to the person
      */
-    private final float[] upstreamRegenRate = {0,0,0};
+    private float[] upstreamRegenRate = {0,0,0};
 
     /**
      * The amount of health this bodyPart can regenerate from. If health is lower than this amount,
@@ -160,7 +160,7 @@ public class BodyPart
      * [1]: Modifier to the "higher" bodyPart
      * [2]: Modifier to the person
      */
-    private final float[] upstreamRegenLimit = {0,0,0};
+    private float[] upstreamRegenLimit = {0,0,0};
 
     /**
      * The armour or resilience of the bodyPart. A higher armour rating makes incoming hits less likely to deal full
@@ -174,7 +174,7 @@ public class BodyPart
      * [1]: Modifier to the "higher" bodyPart
      * [2]: Modifier to the person
      */
-    private final float[] upstreamArmour = {0,0,0};
+    private float[] upstreamArmour = {0,0,0};
 
     /**
      * The size of the bodyPart. The bigger the size, the more likely a bodyPart is going to be hit compared to a
@@ -188,7 +188,7 @@ public class BodyPart
      * [1]: Modifier to the "higher" bodyPart
      * [2]: Modifier to the person
      */
-    private final float[] upstreamSize = {0,0,0};
+    private float[] upstreamSize = {0,0,0};
 
     /**
      * This signifies how many organs fit inside this bodyPart
@@ -201,7 +201,7 @@ public class BodyPart
      * [1]: Modifier to the "higher" bodyPart
      * [2]: Modifier to the person
      */
-    private final float[] upstreamOrganCapacity = {0,0,0};
+    private float[] upstreamOrganCapacity = {0,0,0};
 
     /**
      * How much space the bodyPart still has for internal bodyParts. If this value is less than the internal's size,
@@ -220,7 +220,7 @@ public class BodyPart
      * [1]: Modifier to the "higher" bodyPart
      * [2]: Modifier to the person
      */
-    private final float[] upstreamSpeed = {0,0,0};
+    private float[] upstreamSpeed = {0,0,0};
 
     /**
      * How much this bodyPart can "think". A person with no consciousness is considered dead.
@@ -233,7 +233,7 @@ public class BodyPart
      * [1]: Modifier to the "higher" bodyPart
      * [2]: Modifier to the person
      */
-    private final float[] upstreamConsciousness = {0,0,0};
+    private float[] upstreamConsciousness = {0,0,0};
 
     /**
      * How much this bodyPart can grab. Used for holding weapons.
@@ -246,7 +246,7 @@ public class BodyPart
      * [1]: Modifier to the "higher" bodyPart
      * [2]: Modifier to the person
      */
-    private final float[] upstreamGrabbingSlots = {0,0,0};
+    private float[] upstreamGrabbingSlots = {0,0,0};
 
     /**
      * How much this bodyPart can see.
@@ -259,7 +259,7 @@ public class BodyPart
      * [1]: Modifier to the "higher" bodyPart
      * [2]: Modifier to the person
      */
-    private final float[] upstreamSight = {0,0,0};
+    private float[] upstreamSight = {0,0,0};
 
     /**
      * This is used to generate the bodyPart.
@@ -309,8 +309,35 @@ public class BodyPart
         float[] standardSight = BodyLogicHelper.calculateBodyPartStat(data.get(18),bias,randomness);
         AddToSight(standardSight[0], standardSight[1]);
 
+        upstreamBloodCapacity = convertStringArrayIntoFloat(data.get(19));
+        upstreamBloodGeneration = convertStringArrayIntoFloat(data.get(20));
+        upstreamBloodNeeded = convertStringArrayIntoFloat(data.get(21));
+        upstreamEnergyCapacity = convertStringArrayIntoFloat(data.get(22));
+        upstreamEnergyGeneration = convertStringArrayIntoFloat(data.get(23));
+        upstreamEnergyNeeded = convertStringArrayIntoFloat(data.get(24));
+        upstreamMaxHealthModifier = convertStringArrayIntoFloat(data.get(25));
+        upstreamRegenRate = convertStringArrayIntoFloat(data.get(26));
+        upstreamRegenLimit = convertStringArrayIntoFloat(data.get(27));
+        upstreamArmour = convertStringArrayIntoFloat(data.get(28));
+        upstreamSize = convertStringArrayIntoFloat(data.get(29));
+        upstreamOrganCapacity = convertStringArrayIntoFloat(data.get(30));
+        upstreamSpeed = convertStringArrayIntoFloat(data.get(31));
+        upstreamConsciousness = convertStringArrayIntoFloat(data.get(32));
+        upstreamGrabbingSlots = convertStringArrayIntoFloat(data.get(33));
+        upstreamSight = convertStringArrayIntoFloat(data.get(34));
+
+
         currentHealth = maxHealth[2];
         currentOrganCapacity = organCapacity[2];
+    }
+    private float[] convertStringArrayIntoFloat(String[] a)
+    {
+        float[] f = new float[a.length];
+        for (int i = 0; i < a.length; i++)
+        {
+            f[i] = Float.parseFloat(a[i]);
+        }
+        return f;
     }
 
     /**
