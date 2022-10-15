@@ -150,19 +150,16 @@ public class AllCharactersMenu implements MenuLogic
 
     @Override
     public void periodElement() {
-        System.out.println("pageUp");
         c.clir.pageUp();
     }
 
     @Override
     public void commaElement() {
-        System.out.println("pageDown");
         c.clir.pageDown();
     }
 
     @Override
     public void escapeElement() {
         c.cc.openMainMenu();
-        System.out.println("escape to main menu");
     }
 }

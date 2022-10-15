@@ -12,11 +12,14 @@ public class ErrorHandler
         System.out.println(errorMessage);
     }
 
-    static public void LogData(String s)
+    static public void LogData(boolean log, String s)
     {
-        Throwable t = new Throwable();
-        StackTraceElement[] elements = t.getStackTrace();
-        String caller = elements[1].getClassName();
-        System.out.println(caller + " -> " + s);
+        if(log)
+        {
+            Throwable t = new Throwable();
+            StackTraceElement[] elements = t.getStackTrace();
+            String caller = elements[1].getClassName();
+            System.out.println(caller + " -> " + s);
+        }
     }
 }

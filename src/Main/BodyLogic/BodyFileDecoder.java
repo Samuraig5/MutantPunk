@@ -70,6 +70,7 @@ public class BodyFileDecoder
             p.myBodyParts.add(loadBodyPartFromFile(p,path, bias, randomness));
             p.myBodyParts.get(0).changeName(name);
             p.myBodyParts.get(0).setMyPerson(p);
+            currentTargetsToAttach.add(p.myBodyParts.get(0));
 
             while(fileIn.hasNextLine())
             {

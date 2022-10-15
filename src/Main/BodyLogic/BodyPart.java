@@ -1,5 +1,7 @@
 package Main.BodyLogic;
 
+import Main.ErrorHandler;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -390,7 +392,7 @@ public class BodyPart
             }
             else
             {
-                System.out.println("BodyPart -> Failed to attach internal because it's too big!");
+                ErrorHandler.LogData(true,"Failed to attach internal because it's too big!");
                 return false;
             }
         }
@@ -405,6 +407,7 @@ public class BodyPart
         this.myPerson = this.bodyPartAttachedTo.myPerson;
         this.myPerson.myBodyParts.add(this);
         this.bodyPartAttachedTo.attachedBodyParts.add(this);
+        ErrorHandler.LogData(true,"Successfully added " + this.name + " to " + bodyPartAttachedTo.name + ". The parent now has: " + bodyPartAttachedTo.attachedBodyParts.size() + " attached bodyParts");
         return true;
     }
 

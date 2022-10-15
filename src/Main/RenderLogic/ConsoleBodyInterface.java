@@ -102,7 +102,7 @@ public class ConsoleBodyInterface
     }
     private void addChildrenBodyPartsToList(BodyPart bp, List<String> list, String depth)
     {
-        ErrorHandler.LogData("Number of attached BodyParts: " + bp.getAttachedBodyParts().size());
+        ErrorHandler.LogData(false,"Number of attached BodyParts: " + bp.getAttachedBodyParts().size());
         list.add(depth + "↳" + bp.getName());
         for (BodyPart nextbp:bp.getAttachedBodyParts())
         {

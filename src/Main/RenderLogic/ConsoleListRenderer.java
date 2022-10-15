@@ -1,5 +1,6 @@
 package Main.RenderLogic;
 
+import Main.ErrorHandler;
 import Main.RenderLogic.Menus.MenuLogic;
 
 import java.util.ArrayList;
@@ -92,7 +93,7 @@ public class ConsoleListRenderer
         }
         catch (Exception e)
         {
-            c.cc.printErrorln("Was unable to copy the content on screen");
+            ErrorHandler.LogData(true,"Was unable to copy the content on screen");
         }
     }
     public void renderPage()
