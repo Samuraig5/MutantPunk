@@ -3,6 +3,7 @@ package Main.RenderLogic;
 import Main.BodyLogic.BodyFileDecoder;
 import Main.BodyLogic.BodyPart;
 import Main.BodyLogic.Person;
+import Main.ErrorHandler;
 import Main.RenderLogic.Menus.AllCharactersMenu;
 import Main.RenderLogic.Menus.BodyMenu;
 import Main.RenderLogic.Menus.PersonMenu;
@@ -101,6 +102,7 @@ public class ConsoleBodyInterface
     }
     private void addChildrenBodyPartsToList(BodyPart bp, List<String> list, String depth)
     {
+        ErrorHandler.LogData("Number of attached BodyParts: " + bp.getAttachedBodyParts().size());
         list.add(depth + "↳" + bp.getName());
         for (BodyPart nextbp:bp.getAttachedBodyParts())
         {
