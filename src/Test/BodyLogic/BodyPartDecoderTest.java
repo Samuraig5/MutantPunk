@@ -15,7 +15,7 @@ public class BodyPartDecoderTest
     public static void main(String[] args) throws FileNotFoundException
     {
         System.out.println("================ PROPER FILE PATH TEST ================");
-        List<String[]> data = BodyFileDecoder.getBodyPartData("resources/BodyParts/Containers/HumanTorso");
+        List<String[]> data = BodyFileDecoder.getBodyPartData("resources/BodyParts/Internals/SoftScales");
         for (String[] d : data)
         {
             if(d.length == 1)

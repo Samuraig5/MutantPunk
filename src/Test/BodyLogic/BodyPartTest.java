@@ -3,6 +3,7 @@ package Test.BodyLogic;
 import Main.BodyLogic.BodyFileDecoder;
 import Main.BodyLogic.BodyPart;
 import Main.BodyLogic.Person;
+import Main.ErrorHandler;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -81,7 +82,25 @@ class BodyPartTest {
     }
 
     @org.junit.jupiter.api.Test
-    void updatePersonWhenAttached() {
+    void updateParentAndPerson()
+    {
+        float[] initial = {bp.getBloodGeneration()[0], bp.getBloodGeneration()[1],bp.getBloodGeneration()[2]};
+        BodyPart child = BodyFileDecoder.loadBodyPartFromFile(p,"resources/BodyParts/Misc/TestingBodyPart",0,0);
+        ErrorHandler.LogData(true, "p: " + p.getBloodGeneration()[0]);
+        //child.TryToAttachTo(bp);
+        ErrorHandler.LogData(true, "p: " + p.getBloodGeneration()[0]);
+        child.updateParentAndPerson(1);
+        ErrorHandler.LogData(true, "child: " + child.getBloodGeneration()[2]);
+        ErrorHandler.LogData(true, "bp: " + bp.getBloodGeneration()[2]);
+        ErrorHandler.LogData(true, "p: " + p.getBloodGeneration()[0]);
+        assertEquals(initial[0]+10,bp.getBloodGeneration()[0]);
+        assertEquals(initial[1]+0.5,bp.getBloodGeneration()[1]);
+        float expectedResult = (bp.getBloodGeneration()[2]+child.getBloodGeneration()[2])*p.getBloodGeneration()[1];
+        assertEquals(expectedResult, p.getBloodGeneration()[2]);
+        child.updateParentAndPerson(-1);
+        assertEquals(initial[0],bp.getBloodGeneration()[0]);
+        assertEquals(initial[1],bp.getBloodGeneration()[1]);
+        assertEquals((bp.getBloodGeneration()[2]+child.getBloodGeneration()[2])*child.getUpstreamBloodGeneration()[2],p.getBloodGeneration()[2]);
     }
 
     @org.junit.jupiter.api.Test

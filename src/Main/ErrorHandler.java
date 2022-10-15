@@ -14,12 +14,23 @@ public class ErrorHandler
 
     static public void LogData(boolean log, String s)
     {
+        LogData(log,s,1);
+    }
+    static public void LogData(boolean log, String s, int depth)
+    {
         if(log)
         {
             Throwable t = new Throwable();
             StackTraceElement[] elements = t.getStackTrace();
-            String caller = elements[1].getClassName();
-            System.out.println(caller + " -> " + s);
+            for (int i = 0; i < depth; i++)
+            {
+                String caller = elements[i+1].getClassName();
+                s = caller + " -> " + s;
+            }
+            System.out.println(s);
         }
+    }
+
+    public static void LogData(String s) {
     }
 }

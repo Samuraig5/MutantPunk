@@ -1,5 +1,7 @@
 package Main.BodyLogic;
 
+import Main.ErrorHandler;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -29,6 +31,7 @@ public class Person
     }
     public void changeGrossBloodGeneration(float change)
     {
+        ErrorHandler.LogData(true,name + " changed gross bloodGeneration from " + bloodGeneration[0] + " to " + (bloodGeneration[0]+change));
         bloodGeneration[0] = bloodGeneration[0] + change;
         changeFinalBloodGeneration();
     }

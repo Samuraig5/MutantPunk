@@ -403,11 +403,13 @@ public class BodyPart
     }
     private boolean attach(BodyPart bodyPartToAttachTo)
     {
-        this.bodyPartAttachedTo = bodyPartToAttachTo;
-        this.myPerson = this.bodyPartAttachedTo.myPerson;
-        this.myPerson.myBodyParts.add(this);
-        this.bodyPartAttachedTo.attachedBodyParts.add(this);
-        ErrorHandler.LogData(true,"Successfully added " + this.name + " to " + bodyPartAttachedTo.name + ". The parent now has: " + bodyPartAttachedTo.attachedBodyParts.size() + " attached bodyParts");
+        bodyPartAttachedTo = bodyPartToAttachTo;
+        myPerson = this.bodyPartAttachedTo.myPerson;
+        myPerson.myBodyParts.add(this);
+        bodyPartAttachedTo.attachedBodyParts.add(this);
+        ErrorHandler.LogData(true,"Successfully added " + this.name + " to " + bodyPartAttachedTo.name +
+                ". The parent now has: " + bodyPartAttachedTo.attachedBodyParts.size() + " attached bodyParts and the " +
+                "child is attached to: " + bodyPartToAttachTo.name);
         return true;
     }
 
@@ -451,8 +453,37 @@ public class BodyPart
      */
     public void updateParentAndPerson(int i)
     {
-        if (i >= 0) {i = 1;}
-        else {i=-1;}
+        if (i >= 0)
+        {
+            i = 1;
+            ErrorHandler.LogData(false, name + " removed their stats");
+        }
+        else
+        {
+            i=-1;
+            ErrorHandler.LogData(false, name + " added their stats");
+        }
+
+        if(bodyPartAttachedTo != null)
+        {
+            ErrorHandler.LogData(true,"Updating parent bodyPart " + bodyPartAttachedTo.name + " according to the upstream stats");
+            bodyPartAttachedTo.AddToBloodCapacity(upstreamBloodCapacity[0]*i,upstreamBloodCapacity[1]*i);
+            bodyPartAttachedTo.AddToBloodGeneration(upstreamBloodGeneration[0]*i,upstreamBloodGeneration[1]*i);
+            bodyPartAttachedTo.AddToBloodNeeded(upstreamBloodNeeded[0]*i,upstreamBloodNeeded[1]*i);
+            bodyPartAttachedTo.AddToEnergyCapacity(upstreamEnergyCapacity[0]*i,upstreamEnergyCapacity[1]*i);
+            bodyPartAttachedTo.AddToEnergyGeneration(upstreamEnergyGeneration[0]*i,upstreamEnergyGeneration[1]*i);
+            bodyPartAttachedTo.AddToEnergyNeeded(upstreamEnergyNeeded[0]*i,upstreamEnergyNeeded[1]*i);
+            bodyPartAttachedTo.AddToSize(upstreamSize[0]*i,upstreamSize[1]*i);
+            bodyPartAttachedTo.AddToSpeed(upstreamSpeed[0]*i,upstreamSpeed[1]*i);
+            bodyPartAttachedTo.AddToConsciousness(upstreamConsciousness[0]*i,upstreamConsciousness[1]*i);
+            bodyPartAttachedTo.AddToSight(upstreamSight[0]*i,upstreamSight[1]*i);
+            ErrorHandler.LogData(true," Done Updating parent bodyPart " + bodyPartAttachedTo.name);
+        }
+        else
+        {
+            ErrorHandler.LogData(false,name + " has no parent bodyPart: " + bodyPartAttachedTo);
+        }
+
         myPerson.changeGrossBloodCapacity(bloodCapacity[2]*i);
         myPerson.changeBloodCapacityModifier(upstreamBloodCapacity[2]*i);
 
@@ -482,20 +513,6 @@ public class BodyPart
 
         myPerson.changeGrossSight(sight[2]*i);
         myPerson.changeSightModifier(upstreamSight[2]*i);
-
-        if(bodyPartAttachedTo != null)
-        {
-            bodyPartAttachedTo.AddToBloodCapacity(upstreamBloodCapacity[0]*i,upstreamBloodCapacity[1]*i);
-            bodyPartAttachedTo.AddToBloodGeneration(upstreamBloodGeneration[0]*i,upstreamBloodGeneration[1]*i);
-            bodyPartAttachedTo.AddToBloodNeeded(upstreamBloodNeeded[0]*i,upstreamBloodNeeded[1]*i);
-            bodyPartAttachedTo.AddToEnergyCapacity(upstreamEnergyCapacity[0]*i,upstreamEnergyCapacity[1]*i);
-            bodyPartAttachedTo.AddToEnergyGeneration(upstreamEnergyGeneration[0]*i,upstreamEnergyGeneration[1]*i);
-            bodyPartAttachedTo.AddToEnergyNeeded(upstreamEnergyNeeded[0]*i,upstreamEnergyNeeded[1]*i);
-            bodyPartAttachedTo.AddToSize(upstreamSize[0]*i,upstreamSize[1]*i);
-            bodyPartAttachedTo.AddToSpeed(upstreamSpeed[0]*i,upstreamSpeed[1]*i);
-            bodyPartAttachedTo.AddToConsciousness(upstreamConsciousness[0]*i,upstreamConsciousness[1]*i);
-            bodyPartAttachedTo.AddToSight(upstreamSight[0]*i,upstreamSight[1]*i);
-        }
     }
 
     /**

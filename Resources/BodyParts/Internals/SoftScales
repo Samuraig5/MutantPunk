@@ -19,7 +19,7 @@ grabbingSlots.............§0#1
 sightModifier.............§0#1
 UpStream-bloodCapacity....§0#0#0
 UpStream-bloodGeneration..§0#0#0
-UpStream-neededBlood......§0#0.1#0
+UpStream-neededBlood......§10#10#0
 UpStream-energyCapacity...§0#0#0
 UpStream-energyGeneration.§0#0#0
 UpStream-neededEnergy.....§0#0#0
@@ -27,7 +27,7 @@ UpStream-maxHealth........§0#0#0
 UpStream-regenRate........§0#0#0
 UpStream-regenLimit.......§0#0#0
 UpStream-armour...........§2#0#0
-UpStream-size.............§1#0#0
+UpStream-size.............§0#0#0
 UpStream-organCapacity....§0#0#0
 UpStream-speedModifier....§0#0#0
 UpStream-consciousness....§0#0#0
