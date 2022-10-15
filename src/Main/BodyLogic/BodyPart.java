@@ -41,7 +41,7 @@ public class BodyPart
     /**
      * Amount of blood that can be stored in this bodyPart
      */
-    private final float[] bloodCapacity = {0,1,0};
+    private final float[] bloodCapacity = {0,0,0};
 
     /**
      * Modifiers that are to be pushed to the Person and bodyPart this bodyPart is attached to.
@@ -54,7 +54,7 @@ public class BodyPart
     /**
      * Amount of blood this bodyPart generates per time unit.
      */
-    private final float[] bloodGeneration = {0,1,0};
+    private final float[] bloodGeneration = {0,0,0};
 
     /**
      * Modifiers that are to be pushed to the Person and bodyPart this bodyPart is attached to.
@@ -67,7 +67,7 @@ public class BodyPart
     /**
      * Amount of blood needed for the bodyPart to function.
      */
-    private final float[] bloodNeeded = {0,1,0};
+    private final float[] bloodNeeded = {0,0,0};
 
     /**
      * Modifiers that are to be pushed to the Person and bodyPart this bodyPart is attached to.
@@ -80,7 +80,7 @@ public class BodyPart
     /**
      * Amount of energy this bodyPart can store.
      */
-    private final float[] energyCapacity = {0,1,0};
+    private final float[] energyCapacity = {0,0,0};
 
     /**
      * Modifiers that are to be pushed to the Person and bodyPart this bodyPart is attached to.
@@ -93,7 +93,7 @@ public class BodyPart
     /**
      * Amount of energy this bodyPart generates per turn.
      */
-    private final float[] energyGeneration = {0,1,0};
+    private final float[] energyGeneration = {0,0,0};
 
     /**
      * Modifiers that are to be pushed to the Person and bodyPart this bodyPart is attached to.
@@ -106,7 +106,7 @@ public class BodyPart
     /**
      * Amount of energy needed for the bodyPart to function.
      */
-    private final float[] energyNeeded = {0,1,0};
+    private final float[] energyNeeded = {0,0,0};
 
     /**
      * Modifiers that are to be pushed to the Person and bodyPart this bodyPart is attached to.
@@ -119,7 +119,7 @@ public class BodyPart
     /**
      * The maximum health of the bodyPart. Determines how much damage the bodyPart can take before being destroyed.
      */
-    private final float[] maxHealth = {0,1,0};
+    private final float[] maxHealth = {0,0,0};
 
     /**
      * Modifiers that are to be pushed to the Person and bodyPart this bodyPart is attached to.
@@ -138,7 +138,7 @@ public class BodyPart
     /**
      * The amount of health this bodyPart generates per amount of time.
      */
-    private final float[] regenRate = {0,1,0};
+    private final float[] regenRate = {0,0,0};
 
     /**
      * Modifiers that are to be pushed to the Person and bodyPart this bodyPart is attached to.
@@ -152,7 +152,7 @@ public class BodyPart
      * The amount of health this bodyPart can regenerate from. If health is lower than this amount,
      * it can usually not regenerate without help.
      */
-    private final float[] regenLimit = {0,1,0};
+    private final float[] regenLimit = {0,0,0};
 
     /**
      * Modifiers that are to be pushed to the Person and bodyPart this bodyPart is attached to.
@@ -166,7 +166,7 @@ public class BodyPart
      * The armour or resilience of the bodyPart. A higher armour rating makes incoming hits less likely to deal full
      * or any damage.
      */
-    private final float[] armour = {0,1,0};
+    private final float[] armour = {0,0,0};
 
     /**
      * Modifiers that are to be pushed to the Person and bodyPart this bodyPart is attached to.
@@ -180,7 +180,7 @@ public class BodyPart
      * The size of the bodyPart. The bigger the size, the more likely a bodyPart is going to be hit compared to a
      * smaller one.
      */
-    private final float[] size = {0,1,0};
+    private final float[] size = {0,0,0};
 
     /**
      * Modifiers that are to be pushed to the Person and bodyPart this bodyPart is attached to.
@@ -193,7 +193,7 @@ public class BodyPart
     /**
      * This signifies how many organs fit inside this bodyPart
      */
-    private final float[] organCapacity = {0,1,0};
+    private final float[] organCapacity = {0,0,0};
 
     /**
      * Modifiers that are to be pushed to the Person and bodyPart this bodyPart is attached to.
@@ -212,7 +212,7 @@ public class BodyPart
     /**
      * This calculates how much this bodyPart increases the speed of its person.
      */
-    private final float[] speed = {0,1,0};
+    private final float[] speed = {0,0,0};
 
     /**
      * Modifiers that are to be pushed to the Person and bodyPart this bodyPart is attached to.
@@ -225,7 +225,7 @@ public class BodyPart
     /**
      * How much this bodyPart can "think". A person with no consciousness is considered dead.
      */
-    private final float[] consciousness = {0,1,0};
+    private final float[] consciousness = {0,0,0};
 
     /**
      * Modifiers that are to be pushed to the Person and bodyPart this bodyPart is attached to.
@@ -238,7 +238,7 @@ public class BodyPart
     /**
      * How much this bodyPart can grab. Used for holding weapons.
      */
-    private final float[] grabbingSlots = {0,1,0};
+    private final float[] grabbingSlots = {0,0,0};
 
     /**
      * Modifiers that are to be pushed to the Person and bodyPart this bodyPart is attached to.
@@ -251,7 +251,7 @@ public class BodyPart
     /**
      * How much this bodyPart can see.
      */
-    private final float[] sight = {0,1,0};
+    private final float[] sight = {0,0,0};
 
     /**
      * Modifiers that are to be pushed to the Person and bodyPart this bodyPart is attached to.
@@ -373,8 +373,8 @@ public class BodyPart
     }
 
     /**
-     * This function attaches this bodyPart to the given bodyPart and updates the new parents attachedBodyPart list
-     * and updates the myPerson.
+     * This function attaches this bodyPart to the given bodyPart and updates the new parents attachedBodyPart list.
+     * THIS FUNCTION DOES NOT UPDATE THE PERSON. THE BodyFileDecoder DOES THAT WHEN LOADING A bodyPart!
      *
      * @param bodyPartToAttachTo the bodyPart this bodyPart should be attached to.
      * @return weather or not attaching the bodyPart was successful.
@@ -405,7 +405,6 @@ public class BodyPart
         this.myPerson = this.bodyPartAttachedTo.myPerson;
         this.myPerson.myBodyParts.add(this);
         this.bodyPartAttachedTo.attachedBodyParts.add(this);
-        updatePersonWhenAttached();
         return true;
     }
 
@@ -421,7 +420,7 @@ public class BodyPart
             this.bodyPartAttachedTo.AddToCurrentOrganCapacity(this.getSize()[2]);
         }
         removeBodyPartRecursively();
-        BodyPart resultingWound = BodyFileDecoder.loadBodyPartFromFile("Resources/BodyParts/Misc/GrievousWound",0,20);
+        BodyPart resultingWound = BodyFileDecoder.loadBodyPartFromFile(myPerson,"Resources/BodyParts/Misc/GrievousWound",0,20);
         resultingWound.TryToAttachTo(bodyPartAttachedTo);
         bodyPartAttachedTo.attachedBodyParts.remove(this);
         bodyPartAttachedTo = null;
@@ -437,44 +436,49 @@ public class BodyPart
             attachedBodyPart.removeBodyPartRecursively();
         }
         this.myPerson.myBodyParts.remove(this);
-        updatePersonWhenRemoved();
+        updateParentAndPerson(-1);
         this.myPerson = null;
     }
 
     /**
-     * This function makes sure all the stats and attributes of the person this bodyPart is attached to, are updated
-     * according to the bodyParts own stats.
+     * This function makes sure all the stats and modifiers of the person the parent bodyPart are updated when needed.
+     * @param i This is the sign.
+     *          If it is >= 0 the bodyPart will add its stats and modifiers
+     *          If it is < 0 the bodyPart will remove its stats and modifiers
      */
-    public void updatePersonWhenAttached()
+    public void updateParentAndPerson(int i)
     {
-        myPerson.changeGrossBloodCapacity(bloodCapacity[0]);
-        myPerson.changeGrossBloodGeneration(bloodGeneration[0]);
-        myPerson.changeGrossBloodNeeded(bloodNeeded[0]);
-        myPerson.changeGrossEnergyCapacity(energyCapacity[0]);
-        myPerson.changeGrossEnergyGeneration(energyGeneration[0]);
-        myPerson.changeGrossEnergyNeeded(energyNeeded[0]);
-        myPerson.changeGrossSize(size[0]);
-        myPerson.changeGrossSpeed(speed[0]);
-        myPerson.changeGrossConsciousness(consciousness[0]);
-        myPerson.changeGrossSight(sight[0]);
-    }
+        if (i >= 0) {i = 1;}
+        else {i=-1;}
+        myPerson.changeGrossBloodCapacity(bloodCapacity[2]*i);
+        myPerson.changeBloodCapacityModifier(upstreamBloodCapacity[2]*i);
 
-    /**
-     * This function makes sure all the stats and attributes of the person this bodyPart is removed from, are updated
-     * according to the bodyParts own stats.
-     */
-    public void updatePersonWhenRemoved()
-    {
-        myPerson.changeGrossBloodCapacity(-bloodCapacity[0]);
-        myPerson.changeGrossBloodGeneration(-bloodGeneration[0]);
-        myPerson.changeGrossBloodNeeded(-bloodNeeded[0]);
-        myPerson.changeGrossEnergyCapacity(-energyCapacity[0]);
-        myPerson.changeGrossEnergyGeneration(-energyGeneration[0]);
-        myPerson.changeGrossEnergyNeeded(-energyNeeded[0]);
-        myPerson.changeGrossSize(-size[0]);
-        myPerson.changeGrossSpeed(-speed[0]);
-        myPerson.changeGrossConsciousness(-consciousness[0]);
-        myPerson.changeGrossSight(-sight[0]);
+        myPerson.changeGrossBloodGeneration(bloodGeneration[2]*i);
+        myPerson.changeBloodGenerationModifier(upstreamBloodGeneration[2]*i);
+
+        myPerson.changeGrossBloodNeeded(bloodNeeded[2]*i);
+        myPerson.changeBloodNeededModifier(upstreamBloodNeeded[2]*i);
+
+        myPerson.changeGrossEnergyCapacity(energyCapacity[2]*i);
+        myPerson.changeEnergyCapacityModifier(upstreamEnergyCapacity[2]*i);
+
+        myPerson.changeGrossEnergyGeneration(energyGeneration[2]*i);
+        myPerson.changeEnergyGenerationModifier(upstreamEnergyGeneration[2]*i);
+
+        myPerson.changeGrossEnergyNeeded(energyNeeded[2]*i);
+        myPerson.changeEnergyNeededModifier(upstreamEnergyNeeded[2]*i);
+
+        myPerson.changeGrossSize(size[2]*i);
+        myPerson.changeSizeModifier(upstreamSize[2]*i);
+
+        myPerson.changeGrossSpeed(speed[2]*i);
+        myPerson.changeSpeedModifier(upstreamSpeed[2]*i);
+
+        myPerson.changeGrossConsciousness(consciousness[2]*i);
+        myPerson.changeConsciousnessModifier(upstreamConsciousness[2]*i);
+
+        myPerson.changeGrossSight(sight[2]*i);
+        myPerson.changeSightModifier(upstreamSight[2]*i);
     }
 
     /**
@@ -555,98 +559,130 @@ public class BodyPart
 
     public void AddToBloodCapacity(float grossChange, float modifierChange)
     {
+        updateParentAndPerson(-1);
         bloodCapacity[0] = bloodCapacity[0] + grossChange;
         bloodCapacity[1] = bloodCapacity[1] + modifierChange;
         bloodCapacity[2] = bloodCapacity[0] * bloodCapacity[1];
+        updateParentAndPerson(1);
     }
     public void AddToBloodGeneration(float grossChange, float modifierChange)
     {
+        updateParentAndPerson(-1);
         bloodGeneration[0] = bloodGeneration[0] + grossChange;
         bloodGeneration[1] = bloodGeneration[1] + modifierChange;
         bloodGeneration[2] = bloodGeneration[0] * bloodGeneration[1];
+        updateParentAndPerson(1);
     }
     public void AddToBloodNeeded(float grossChange, float modifierChange)
     {
+        updateParentAndPerson(-1);
         bloodNeeded[0] = bloodNeeded[0] + grossChange;
         bloodNeeded[1] = bloodNeeded[1] + modifierChange;
         bloodNeeded[2] = bloodNeeded[0] * bloodNeeded[1];
+        updateParentAndPerson(1);
     }
     public void AddToEnergyCapacity(float grossChange, float modifierChange)
     {
+        updateParentAndPerson(-1);
         energyCapacity[0] = energyCapacity[0] + grossChange;
         energyCapacity[1] = energyCapacity[1] + modifierChange;
         energyCapacity[2] = energyCapacity[0] * energyCapacity[1];
+        updateParentAndPerson(1);
     }
     public void AddToEnergyGeneration(float grossChange, float modifierChange)
     {
+        updateParentAndPerson(-1);
         energyGeneration[0] = energyGeneration[0] + grossChange;
         energyGeneration[1] = energyGeneration[1] + modifierChange;
         energyGeneration[2] = energyGeneration[0] * energyGeneration[1];
+        updateParentAndPerson(1);
     }
     public void AddToEnergyNeeded(float grossChange, float modifierChange)
     {
+        updateParentAndPerson(-1);
         energyNeeded[0] = energyNeeded[0] + grossChange;
         energyNeeded[1] = energyNeeded[1] + modifierChange;
         energyNeeded[2] = energyNeeded[0] * energyNeeded[1];
+        updateParentAndPerson(1);
     }
     public void AddToMaxHealth(float grossChange, float modifierChange)
     {
+        updateParentAndPerson(-1);
         maxHealth[0] = maxHealth[0] + grossChange;
         maxHealth[1] = maxHealth[1] + modifierChange;
         maxHealth[2] = maxHealth[0] * maxHealth[1];
+        updateParentAndPerson(1);
     }
     public void AddToRegenLimit(float grossChange, float modifierChange)
     {
+        updateParentAndPerson(-1);
         regenLimit[0] = regenLimit[0] + grossChange;
         regenLimit[1] = regenLimit[1] + modifierChange;
         regenLimit[2] = regenLimit[0] * regenLimit[1];
+        updateParentAndPerson(1);
     }
     public void AddToRegenRate(float grossChange, float modifierChange)
     {
+        updateParentAndPerson(-1);
         regenRate[0] = regenRate[0] + grossChange;
         regenRate[1] = regenRate[1] + modifierChange;
         regenRate[2] = regenRate[0] * regenRate[1];
+        updateParentAndPerson(1);
     }
     public void AddToArmour(float grossChange, float modifierChange)
     {
+        updateParentAndPerson(-1);
         armour[0] = armour[0] + grossChange;
         armour[1] = armour[1] + modifierChange;
         armour[2] = armour[0] * armour[1];
+        updateParentAndPerson(1);
     }
     public void AddToSize(float grossChange, float modifierChange)
     {
+        updateParentAndPerson(-1);
         size[0] = size[0] + grossChange;
         size[1] = size[1] + modifierChange;
         size[2] = size[0] * size[1];
+        updateParentAndPerson(1);
     }
     public void AddToOrganCapacity(float grossChange, float modifierChange)
     {
+        updateParentAndPerson(-1);
         organCapacity[0] = organCapacity[0] + grossChange;
         organCapacity[1] = organCapacity[1] + modifierChange;
         organCapacity[2] = organCapacity[0] * organCapacity[1];
+        updateParentAndPerson(1);
     }
     public void AddToSpeed(float grossChange, float modifierChange)
     {
+        updateParentAndPerson(-1);
         speed[0] = speed[0] + grossChange;
         speed[1] = speed[1] + modifierChange;
         speed[2] = speed[0] * speed[1];
+        updateParentAndPerson(1);
     }
     public void AddToConsciousness(float grossChange, float modifierChange)
     {
+        updateParentAndPerson(-1);
         consciousness[0] = consciousness[0] + grossChange;
         consciousness[1] = consciousness[1] + modifierChange;
         consciousness[2] = consciousness[0] * consciousness[1];
+        updateParentAndPerson(1);
     }
     public void AddToGrabbingSlots(float grossChange, float modifierChange)
     {
+        updateParentAndPerson(-1);
         grabbingSlots[0] = grabbingSlots[0] + grossChange;
         grabbingSlots[1] = grabbingSlots[1] + modifierChange;
         grabbingSlots[2] = grabbingSlots[0] * grabbingSlots[1];
+        updateParentAndPerson(1);
     }
     public void AddToSight(float grossChange, float modifierChange)
     {
+        updateParentAndPerson(-1);
         sight[0] = sight[0] + grossChange;
         sight[1] = sight[1] + modifierChange;
         sight[2] = sight[0] * sight[1];
+        updateParentAndPerson(1);
     }
 }

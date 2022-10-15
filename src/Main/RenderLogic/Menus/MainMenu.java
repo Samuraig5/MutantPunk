@@ -51,7 +51,8 @@ public class MainMenu implements MenuLogic
 
     @Override
     public void fElement() {
-
+        c.cb.spawnPerson("Slime","0","0", "Resources/BodyPlans/Slime");
+        c.cb.listAllPersons();
     }
 
     @Override

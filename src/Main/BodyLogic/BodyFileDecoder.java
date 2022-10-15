@@ -45,9 +45,10 @@ public class BodyFileDecoder
      *                   The greater the value, the stronger the random drift.
      * @return the finished BodyPart with generated stats.
      */
-    static public BodyPart loadBodyPartFromFile(String filePath,int bias, int randomness)
+    static public BodyPart loadBodyPartFromFile(Person p,String filePath,int bias, int randomness)
     {
         BodyPart bp = new BodyPart();
+        bp.setMyPerson(p);
         List<String[]> data = getBodyPartData(filePath);
         bp.generateBodyPart(data,bias,randomness);
         return bp;
@@ -66,17 +67,16 @@ public class BodyFileDecoder
 
             name = fileIn.nextLine().split("§")[1];
             path = fileIn.nextLine().split("§")[1];
-            p.myBodyParts.add(loadBodyPartFromFile(path, bias, randomness));
+            p.myBodyParts.add(loadBodyPartFromFile(p,path, bias, randomness));
             p.myBodyParts.get(0).changeName(name);
             p.myBodyParts.get(0).setMyPerson(p);
-            currentTargetsToAttach.add(p.myBodyParts.get(0));
 
             while(fileIn.hasNextLine())
             {
                 depth = fileIn.nextLine().length();
                 name = fileIn.nextLine().split("§")[1];
                 path = fileIn.nextLine().split("§")[1];
-                BodyPart bp = loadBodyPartFromFile(path, bias, randomness);
+                BodyPart bp = loadBodyPartFromFile(p,path, bias, randomness);
                 bp.changeName(name);
                 if(depth > currentTargetsToAttach.size()-1)
                 {
