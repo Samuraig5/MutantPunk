@@ -479,6 +479,20 @@ public class BodyPart
 
         myPerson.changeGrossSight(sight[2]*i);
         myPerson.changeSightModifier(upstreamSight[2]*i);
+
+        if(bodyPartAttachedTo != null)
+        {
+            bodyPartAttachedTo.AddToBloodCapacity(upstreamBloodCapacity[0]*i,upstreamBloodCapacity[1]*i);
+            bodyPartAttachedTo.AddToBloodGeneration(upstreamBloodGeneration[0]*i,upstreamBloodGeneration[1]*i);
+            bodyPartAttachedTo.AddToBloodNeeded(upstreamBloodNeeded[0]*i,upstreamBloodNeeded[1]*i);
+            bodyPartAttachedTo.AddToEnergyCapacity(upstreamEnergyCapacity[0]*i,upstreamEnergyCapacity[1]*i);
+            bodyPartAttachedTo.AddToEnergyGeneration(upstreamEnergyGeneration[0]*i,upstreamEnergyGeneration[1]*i);
+            bodyPartAttachedTo.AddToEnergyNeeded(upstreamEnergyNeeded[0]*i,upstreamEnergyNeeded[1]*i);
+            bodyPartAttachedTo.AddToSize(upstreamSize[0]*i,upstreamSize[1]*i);
+            bodyPartAttachedTo.AddToSpeed(upstreamSpeed[0]*i,upstreamSpeed[1]*i);
+            bodyPartAttachedTo.AddToConsciousness(upstreamConsciousness[0]*i,upstreamConsciousness[1]*i);
+            bodyPartAttachedTo.AddToSight(upstreamSight[0]*i,upstreamSight[1]*i);
+        }
     }
 
     /**
