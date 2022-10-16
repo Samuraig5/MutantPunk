@@ -21,7 +21,7 @@ public class BodyPart
     /**
      * This is the bodyPart this bodyPart is attached to.
      */
-    private BodyPart bodyPartAttachedTo;
+    private BodyPart parentBodyPart;
 
     /**
      * These are the bodyParts attacked to this bodyPart.
@@ -61,6 +61,7 @@ public class BodyPart
      */
     final private List<List<float[]>> myStats = new ArrayList<>();
     final private float[][] myTotalStats = new float[16][6];
+    final private List<float[]> personStats = new ArrayList<>();
     private float currentHealth = 0;
     final private List<float[]> currentOrganSizes = new ArrayList<>();
     private float currentOrganCapacity = 0;
@@ -68,7 +69,7 @@ public class BodyPart
     public BodyPart()
     {
         for (int i = 0; i < 16; i++) {
-            myStats.add(new ArrayList<float[]>());
+            myStats.add(new ArrayList<>());
             myTotalStats[i] = new float[]{0, 0, 0, 0, 0, 0};
         }
     }
@@ -129,7 +130,7 @@ public class BodyPart
     {
         if (currentHealth < myTotalStats[6][2] && currentHealth > myTotalStats[8][2])
         {
-            if((myTotalStats[6][2]-currentHealth)<myTotalStats[7][2] || currentHealth>myTotalStats[6][2])
+            if((myTotalStats[6][2]-currentHealth)<myTotalStats[7][2])
             {
                 currentHealth = myTotalStats[6][2];
             }
@@ -170,12 +171,17 @@ public class BodyPart
     }
     private boolean attach(BodyPart bodyPartToAttachTo)
     {
-        bodyPartAttachedTo = bodyPartToAttachTo;
-        myPerson = this.bodyPartAttachedTo.myPerson;
-        myPerson.myBodyParts.add(this);
-        bodyPartAttachedTo.attachedBodyParts.add(this);
-        ErrorHandler.LogData(false,"Successfully added " + this.name + " to " + bodyPartAttachedTo.name +
-                ". The parent now has: " + bodyPartAttachedTo.attachedBodyParts.size() + " attached bodyParts and the " +
+        parentBodyPart = bodyPartToAttachTo;
+        parentBodyPart.attachedBodyParts.add(this);
+
+        if(this.parentBodyPart.myPerson != null)
+        {
+            myPerson = this.parentBodyPart.myPerson;
+            myPerson.myBodyParts.add(this);
+        }
+
+        ErrorHandler.LogData(false,"Successfully added " + this.name + " to " + parentBodyPart.name +
+                ". The parent now has: " + parentBodyPart.attachedBodyParts.size() + " attached bodyParts and the " +
                 "child is attached to: " + bodyPartToAttachTo.name);
         updateParentAndPerson();
         return true;
@@ -190,13 +196,13 @@ public class BodyPart
     {
         if(this.bodyPartClass.equalsIgnoreCase("internal"))
         {
-            this.bodyPartAttachedTo.removeOrgansSize(myTotalStats[10]);
+            this.parentBodyPart.removeOrgansSize(myTotalStats[10]);
         }
         removeBodyPartRecursively();
         BodyPart resultingWound = BodyFileDecoder.loadBodyPartFromFile("Resources/BodyParts/Misc/GrievousWound",0,20);
-        resultingWound.TryToAttachTo(bodyPartAttachedTo);
-        bodyPartAttachedTo.attachedBodyParts.remove(this);
-        bodyPartAttachedTo = null;
+        resultingWound.TryToAttachTo(parentBodyPart);
+        parentBodyPart.attachedBodyParts.remove(this);
+        parentBodyPart = null;
     }
 
     /**
@@ -216,22 +222,26 @@ public class BodyPart
     /**
      * This function makes sure all the stats and modifiers of the person the parent bodyPart are updated when needed.
      */
+    List<float[]> pre = personStats;
     public void updateParentAndPerson()
     {
-        if(bodyPartAttachedTo != null)
+        updateStats();
+        if(parentBodyPart != null)
         {
-            ErrorHandler.LogData(false,"Updating parent bodyPart " + bodyPartAttachedTo.name + " according to the upstream stats");
-            bodyPartAttachedTo.AddToStat(myTotalStats);
-            ErrorHandler.LogData(false," Done Updating parent bodyPart " + bodyPartAttachedTo.name);
+            ErrorHandler.LogData(false,"Updating parent bodyPart " + parentBodyPart.name + " according to the upstream stats");
+            parentBodyPart.AddToStat(myTotalStats);
+            ErrorHandler.LogData(false," Done Updating parent bodyPart " + parentBodyPart.name);
+            parentBodyPart.updateParentAndPerson();
         }
         else
         {
-            ErrorHandler.LogData(false,name + " has no parent bodyPart: " + bodyPartAttachedTo);
+            ErrorHandler.LogData(false,name + " has no parent bodyPart: " + parentBodyPart);
         }
         if(myPerson != null)
         {
-            ErrorHandler.LogData(false,"Updating person: " + myPerson.name);
-            List<float[]> personStats = new ArrayList<>();
+            myPerson.RemoveFromStat(personStats);
+            ErrorHandler.LogData(false,name + " is Updating person: " + myPerson.name);
+            personStats.removeAll(personStats);
             personStats.add(myTotalStats[0]); //Blood Capacity
             personStats.add(myTotalStats[1]); //Blood Generation
             personStats.add(myTotalStats[2]); //Blood Needed
@@ -259,6 +269,8 @@ public class BodyPart
          return name;
     }
     public List<BodyPart> getAttachedBodyParts(){return attachedBodyParts;}
+    public BodyPart getParentBodyPart(){return parentBodyPart;}
+    public List<float[]> getStatsToPerson(){return personStats;}
     public Person getMyPerson(){return myPerson;}
     public void setMyPerson(Person newPerson){myPerson = newPerson;}
     public float getCurrentHealth() {return currentHealth;}
@@ -302,6 +314,24 @@ public class BodyPart
                 ErrorHandler.LogData(false,"gross value of the " + i + "th stat before changing: " + myTotalStats[i][0]);
                 myTotalStats[i][0] += f[3];
                 ErrorHandler.LogData(false,"gross value of the " + i + "th stat: " + myTotalStats[i][0] + ". The change was: " + f[3]);
+                myTotalStats[i][1] += f[4];
+                myTotalStats[i][2] = myTotalStats[i][0]*myTotalStats[i][1];
+            }
+        }
+    }
+    public void RemoveFromStat(float[][] statList)
+    {
+
+    }
+
+    public void updateStats()
+    {
+        for (int i = 0; i < 16; i++)
+        {
+            myTotalStats[i] = new float[]{0, 0, 0, 0, 0, 0};
+            for (float[] f: myStats.get(i))
+            {
+                myTotalStats[i][0] += f[3];
                 myTotalStats[i][1] += f[4];
                 myTotalStats[i][2] = myTotalStats[i][0]*myTotalStats[i][1];
             }

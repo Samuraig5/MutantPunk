@@ -3,11 +3,11 @@ type...........§1
 bodyPartClass..§misc
 bloodCapacity.............§10#1#10#0#0
 bloodGeneration...........§10#1#0#0.5#0
-neededBlood...............§10#1#0#0#0
-energyCapacity............§10#1#0#0#0
+neededBlood...............§10#1#10#0#0
+energyCapacity............§10#1#0#0.5#0
 energyGeneration..........§10#1#0#0#0
-neededEnergy..............§10#1#0#0#0
-maxHealth.................§10#1#0#0#0
+neededEnergy..............§10#1#-10#0#0
+maxHealth.................§10#1#0#-0.50#0
 regenRate.................§10#1#0#0#0
 regenLimit................§10#1#0#0#0
 armour....................§10#1#0#0#0

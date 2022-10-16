@@ -26,7 +26,6 @@ class BodyPartTest {
         bp = BodyFileDecoder.loadBodyPartFromFile("resources/BodyParts/Containers/HumanTorso",0,0);
         p.myBodyParts.add(bp);
         bp.setMyPerson(p);
-        ErrorHandler.LogData(true,"Person: " + bp.getMyPerson().name);
     }
 
     @org.junit.jupiter.api.Test
@@ -94,12 +93,86 @@ class BodyPartTest {
         regenerateWhenNoRegenRate();
     }
 
-    @org.junit.jupiter.api.Test
-    void attachTo() {
+    @Test
+    void TryToAttachTo()
+    {
+        BodyPart parent = BodyFileDecoder.loadBodyPartFromFile("resources/BodyParts/Misc/TestingBodyPart",0,0);
+        float[][] initialParentStats = parent.GetMyTotalStats().clone();
+        parent.setMyPerson(p);
+        parent.changeName("root");
+        bp.TryToAttachTo(parent);
+
+        for (int i = 0; i < 16; i++)
+        {
+            assertEquals(parent.GetMyTotalStats()[i][0],bp.GetMyTotalStats()[i][3]+initialParentStats[i][0], accuracyDelta);
+            assertEquals(parent.GetMyTotalStats()[i][1],bp.GetMyTotalStats()[i][4]+initialParentStats[i][1], accuracyDelta);
+            assertEquals(parent.GetMyTotalStats()[i][2],parent.GetMyTotalStats()[i][0]*parent.GetMyTotalStats()[i][1], accuracyDelta);
+        }
+
+        List<float[]> bpStatsForPerson = bp.getStatsToPerson();
+        List<float[]> parentStatsForPerson = parent.getStatsToPerson();
+        for (int i = 0; i < 10; i++)
+        {
+            assertEquals(parentStatsForPerson.get(i)[2]+bpStatsForPerson.get(i)[2], p.GetMyTotalStats()[i][0],accuracyDelta);
+            assertEquals(parentStatsForPerson.get(i)[5]+bpStatsForPerson.get(i)[5]+1, p.GetMyTotalStats()[i][1],accuracyDelta);
+            assertEquals(p.GetMyTotalStats()[i][2],p.GetMyTotalStats()[i][0]*p.GetMyTotalStats()[i][1],accuracyDelta);
+        }
+
+        BodyPart child = BodyFileDecoder.loadBodyPartFromFile("Resources/BodyParts/Misc/TestingBodyPart",0,0);
+        child.TryToAttachTo(parent);
+
+        for (int i = 0; i < 16; i++)
+        {
+            assertEquals(parent.GetMyTotalStats()[i][0],bp.GetMyTotalStats()[i][3]+child.GetMyTotalStats()[i][3]+initialParentStats[i][0], accuracyDelta);
+            assertEquals(parent.GetMyTotalStats()[i][1],bp.GetMyTotalStats()[i][4]+child.GetMyTotalStats()[i][4]+initialParentStats[i][1], accuracyDelta);
+            assertEquals(parent.GetMyTotalStats()[i][2],parent.GetMyTotalStats()[i][0]*parent.GetMyTotalStats()[i][1], accuracyDelta);
+        }
+
+        bpStatsForPerson = bp.getStatsToPerson();
+        parentStatsForPerson = parent.getStatsToPerson();
+        List<float[]> childStatsForPerson = child.getStatsToPerson();
+        for (int i = 0; i < 10; i++)
+        {
+            ErrorHandler.LogData(false,":::"+parentStatsForPerson.get(i)[2]+"+"+bpStatsForPerson.get(i)[2]+"+"+childStatsForPerson.get(i)[2]);
+            assertEquals(parentStatsForPerson.get(i)[2]+bpStatsForPerson.get(i)[2]+childStatsForPerson.get(i)[2], p.GetMyTotalStats()[i][0],accuracyDelta);
+            assertEquals(parentStatsForPerson.get(i)[5]+bpStatsForPerson.get(i)[5]+childStatsForPerson.get(i)[5]+1, p.GetMyTotalStats()[i][1],accuracyDelta);
+            assertEquals(p.GetMyTotalStats()[i][2],p.GetMyTotalStats()[i][0]*p.GetMyTotalStats()[i][1],accuracyDelta);
+        }
     }
 
     @org.junit.jupiter.api.Test
-    void removeBodyPart() {
+    void removeBodyPart()
+    {
+        float[][] initialParentStats = bp.GetMyTotalStats().clone();
+        BodyPart child = BodyFileDecoder.loadBodyPartFromFile("Resources/BodyParts/Misc/TestingBodyPart",0,0);
+
+        child.TryToAttachTo(bp);
+        child.removeBodyPart();
+
+        for (int i = 0; i < 16; i++)
+        {
+            assertEquals(initialParentStats[i][0],bp.GetMyTotalStats()[i][0], accuracyDelta);
+            assertEquals(initialParentStats[i][1],bp.GetMyTotalStats()[i][1], accuracyDelta);
+            assertEquals(initialParentStats[i][2],bp.GetMyTotalStats()[i][2], accuracyDelta);
+            assertNull(child.getMyPerson());
+            assertNull(child.getParentBodyPart());
+        }
+
+        BodyPart childOfChild = BodyFileDecoder.loadBodyPartFromFile("resources/BodyParts/Containers/HumanTorso",0,0);
+
+        child.TryToAttachTo(bp);
+        childOfChild.TryToAttachTo(child);
+        child.removeBodyPart();
+
+        for (int i = 0; i < 16; i++)
+        {
+            assertEquals(initialParentStats[i][0],bp.GetMyTotalStats()[i][0], accuracyDelta);
+            assertEquals(initialParentStats[i][1],bp.GetMyTotalStats()[i][1], accuracyDelta);
+            assertEquals(initialParentStats[i][2],bp.GetMyTotalStats()[i][2], accuracyDelta);
+            assertNull(child.getMyPerson());
+            assertNull(child.getParentBodyPart());
+            assertEquals(child.getAttachedBodyParts().get(0), childOfChild);
+        }
     }
 
     @org.junit.jupiter.api.Test
