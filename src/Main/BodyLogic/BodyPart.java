@@ -41,227 +41,37 @@ public class BodyPart
     private String bodyPartClass;
 
     /**
-     * Amount of blood that can be stored in this bodyPart
+     *  Gross, Modifier, Total, Upstream BodyPart Gross, Upstream BodyPart Modifier, Upstream Person Modifier
+     * [0] - Blood Capacity
+     * [1] - Blood Generation
+     * [2] - Blood Needed
+     * [3] - Energy Capacity
+     * [4] - Energy Generation
+     * [5] - Energy Needed
+     * [6] - Max Health
+     * [7] - Regen Rate
+     * [8] - Regen Limit
+     * [9] - Armour
+     * [10] - Size
+     * [11] - Organ Capacity
+     * [12] - Speed
+     * [13] - Consciousness
+     * [14] - Grabbing Slots
+     * [15] - Sight
      */
-    private final float[] bloodCapacity = {0,0,0};
+    final private List<List<float[]>> myStats = new ArrayList<>();
+    final private float[][] myTotalStats = new float[16][6];
+    private float currentHealth = 0;
+    final private List<float[]> currentOrganSizes = new ArrayList<>();
+    private float currentOrganCapacity = 0;
 
-    /**
-     * Modifiers that are to be pushed to the Person and bodyPart this bodyPart is attached to.
-     * [0]: Extra Gross Stat to the "higher" bodyPart
-     * [1]: Modifier to the "higher" bodyPart
-     * [2]: Modifier to the person
-     */
-    private float[] upstreamBloodCapacity = {0,0,0};
-
-    /**
-     * Amount of blood this bodyPart generates per time unit.
-     */
-    private final float[] bloodGeneration = {0,0,0};
-
-    /**
-     * Modifiers that are to be pushed to the Person and bodyPart this bodyPart is attached to.
-     * [0]: Extra Gross Stat to the "higher" bodyPart
-     * [1]: Modifier to the "higher" bodyPart
-     * [2]: Modifier to the person
-     */
-    private float[] upstreamBloodGeneration = {0,0,0};
-
-    /**
-     * Amount of blood needed for the bodyPart to function.
-     */
-    private final float[] bloodNeeded = {0,0,0};
-
-    /**
-     * Modifiers that are to be pushed to the Person and bodyPart this bodyPart is attached to.
-     * [0]: Extra Gross Stat to the "higher" bodyPart
-     * [1]: Modifier to the "higher" bodyPart
-     * [2]: Modifier to the person
-     */
-    private float[] upstreamBloodNeeded = {0,0,0};
-
-    /**
-     * Amount of energy this bodyPart can store.
-     */
-    private final float[] energyCapacity = {0,0,0};
-
-    /**
-     * Modifiers that are to be pushed to the Person and bodyPart this bodyPart is attached to.
-     * [0]: Extra Gross Stat to the "higher" bodyPart
-     * [1]: Modifier to the "higher" bodyPart
-     * [2]: Modifier to the person
-     */
-    private float[] upstreamEnergyCapacity = {0,0,0};
-
-    /**
-     * Amount of energy this bodyPart generates per turn.
-     */
-    private final float[] energyGeneration = {0,0,0};
-
-    /**
-     * Modifiers that are to be pushed to the Person and bodyPart this bodyPart is attached to.
-     * [0]: Extra Gross Stat to the "higher" bodyPart
-     * [1]: Modifier to the "higher" bodyPart
-     * [2]: Modifier to the person
-     */
-    private float[] upstreamEnergyGeneration = {0,0,0};
-
-    /**
-     * Amount of energy needed for the bodyPart to function.
-     */
-    private final float[] energyNeeded = {0,0,0};
-
-    /**
-     * Modifiers that are to be pushed to the Person and bodyPart this bodyPart is attached to.
-     * [0]: Extra Gross Stat to the "higher" bodyPart
-     * [1]: Modifier to the "higher" bodyPart
-     * [2]: Modifier to the person
-     */
-    private float[] upstreamEnergyNeeded = {0,0,0};
-
-    /**
-     * The maximum health of the bodyPart. Determines how much damage the bodyPart can take before being destroyed.
-     */
-    private final float[] maxHealth = {0,0,0};
-
-    /**
-     * Modifiers that are to be pushed to the Person and bodyPart this bodyPart is attached to.
-     * [0]: Extra Gross Stat to the "higher" bodyPart
-     * [1]: Modifier to the "higher" bodyPart
-     * [2]: Modifier to the person
-     */
-    private float[] upstreamMaxHealthModifier = {0,0,0};
-
-    /**
-     * The current health of the bodyPart. It can't normally be higher than maxHealth and if it's equal to 0 the bodyPart
-     * is destroyed.
-     */
-    private float currentHealth;
-
-    /**
-     * The amount of health this bodyPart generates per amount of time.
-     */
-    private final float[] regenRate = {0,0,0};
-
-    /**
-     * Modifiers that are to be pushed to the Person and bodyPart this bodyPart is attached to.
-     * [0]: Extra Gross Stat to the "higher" bodyPart
-     * [1]: Modifier to the "higher" bodyPart
-     * [2]: Modifier to the person
-     */
-    private float[] upstreamRegenRate = {0,0,0};
-
-    /**
-     * The amount of health this bodyPart can regenerate from. If health is lower than this amount,
-     * it can usually not regenerate without help.
-     */
-    private final float[] regenLimit = {0,0,0};
-
-    /**
-     * Modifiers that are to be pushed to the Person and bodyPart this bodyPart is attached to.
-     * [0]: Extra Gross Stat to the "higher" bodyPart
-     * [1]: Modifier to the "higher" bodyPart
-     * [2]: Modifier to the person
-     */
-    private float[] upstreamRegenLimit = {0,0,0};
-
-    /**
-     * The armour or resilience of the bodyPart. A higher armour rating makes incoming hits less likely to deal full
-     * or any damage.
-     */
-    private final float[] armour = {0,0,0};
-
-    /**
-     * Modifiers that are to be pushed to the Person and bodyPart this bodyPart is attached to.
-     * [0]: Extra Gross Stat to the "higher" bodyPart
-     * [1]: Modifier to the "higher" bodyPart
-     * [2]: Modifier to the person
-     */
-    private float[] upstreamArmour = {0,0,0};
-
-    /**
-     * The size of the bodyPart. The bigger the size, the more likely a bodyPart is going to be hit compared to a
-     * smaller one.
-     */
-    private final float[] size = {0,0,0};
-
-    /**
-     * Modifiers that are to be pushed to the Person and bodyPart this bodyPart is attached to.
-     * [0]: Extra Gross Stat to the "higher" bodyPart
-     * [1]: Modifier to the "higher" bodyPart
-     * [2]: Modifier to the person
-     */
-    private float[] upstreamSize = {0,0,0};
-
-    /**
-     * This signifies how many organs fit inside this bodyPart
-     */
-    private final float[] organCapacity = {0,0,0};
-
-    /**
-     * Modifiers that are to be pushed to the Person and bodyPart this bodyPart is attached to.
-     * [0]: Extra Gross Stat to the "higher" bodyPart
-     * [1]: Modifier to the "higher" bodyPart
-     * [2]: Modifier to the person
-     */
-    private float[] upstreamOrganCapacity = {0,0,0};
-
-    /**
-     * How much space the bodyPart still has for internal bodyParts. If this value is less than the internal's size,
-     * the internal can't be attached to it.
-     */
-    private float currentOrganCapacity;
-
-    /**
-     * This calculates how much this bodyPart increases the speed of its person.
-     */
-    private final float[] speed = {0,0,0};
-
-    /**
-     * Modifiers that are to be pushed to the Person and bodyPart this bodyPart is attached to.
-     * [0]: Extra Gross Stat to the "higher" bodyPart
-     * [1]: Modifier to the "higher" bodyPart
-     * [2]: Modifier to the person
-     */
-    private float[] upstreamSpeed = {0,0,0};
-
-    /**
-     * How much this bodyPart can "think". A person with no consciousness is considered dead.
-     */
-    private final float[] consciousness = {0,0,0};
-
-    /**
-     * Modifiers that are to be pushed to the Person and bodyPart this bodyPart is attached to.
-     * [0]: Extra Gross Stat to the "higher" bodyPart
-     * [1]: Modifier to the "higher" bodyPart
-     * [2]: Modifier to the person
-     */
-    private float[] upstreamConsciousness = {0,0,0};
-
-    /**
-     * How much this bodyPart can grab. Used for holding weapons.
-     */
-    private final float[] grabbingSlots = {0,0,0};
-
-    /**
-     * Modifiers that are to be pushed to the Person and bodyPart this bodyPart is attached to.
-     * [0]: Extra Gross Stat to the "higher" bodyPart
-     * [1]: Modifier to the "higher" bodyPart
-     * [2]: Modifier to the person
-     */
-    private float[] upstreamGrabbingSlots = {0,0,0};
-
-    /**
-     * How much this bodyPart can see.
-     */
-    private final float[] sight = {0,0,0};
-
-    /**
-     * Modifiers that are to be pushed to the Person and bodyPart this bodyPart is attached to.
-     * [0]: Extra Gross Stat to the "higher" bodyPart
-     * [1]: Modifier to the "higher" bodyPart
-     * [2]: Modifier to the person
-     */
-    private float[] upstreamSight = {0,0,0};
+    public BodyPart()
+    {
+        for (int i = 0; i < 16; i++) {
+            myStats.add(new ArrayList<float[]>());
+            myTotalStats[i] = new float[]{0, 0, 0, 0, 0, 0};
+        }
+    }
 
     /**
      * This is used to generate the bodyPart.
@@ -278,68 +88,24 @@ public class BodyPart
         type = Integer.parseInt(data.get(1)[0]);
         bodyPartClass = data.get(2)[0];
 
-        float[] standardBloodCapacity = BodyLogicHelper.calculateBodyPartStat(data.get(3),bias,randomness);
-        AddToBloodCapacity(standardBloodCapacity[0], standardBloodCapacity[1]);
-        float[] standardBloodGeneration = BodyLogicHelper.calculateBodyPartStat(data.get(4),bias,randomness);
-        AddToBloodGeneration(standardBloodGeneration[0], standardBloodGeneration[1]);
-        float[] standardBloodNeed = BodyLogicHelper.calculateBodyPartStat(data.get(5),bias,randomness);
-        AddToBloodNeeded(standardBloodNeed[0], standardBloodNeed[1]);
-        float[] standardEnergyCapacity = BodyLogicHelper.calculateBodyPartStat(data.get(6),bias,randomness);
-        AddToEnergyCapacity(standardEnergyCapacity[0], standardEnergyCapacity[1]);
-        float[] standardEnergyGeneration = BodyLogicHelper.calculateBodyPartStat(data.get(7),bias,randomness);
-        AddToEnergyGeneration(standardEnergyGeneration[0], standardEnergyGeneration[1]);
-        float[] standardEnergyNeed = BodyLogicHelper.calculateBodyPartStat(data.get(8),bias,randomness);
-        AddToEnergyNeeded(standardEnergyNeed[0], standardEnergyNeed[1]);
-        float[] standardHealth = BodyLogicHelper.calculateBodyPartStat(data.get(9),bias,randomness);
-        AddToMaxHealth(standardHealth[0], standardHealth[1]);
-        float[] standardRegenRate = BodyLogicHelper.calculateBodyPartStat(data.get(10),bias,randomness);
-        AddToRegenRate(standardRegenRate[0], standardRegenRate[1]);
-        float[] standardRegenLimit = BodyLogicHelper.calculateBodyPartStat(data.get(11),bias,randomness);
-        AddToRegenLimit(standardRegenLimit[0], standardRegenLimit[1]);
-        float[] standardArmour = BodyLogicHelper.calculateBodyPartStat(data.get(12),bias,randomness);
-        AddToArmour(standardArmour[0], standardArmour[1]);
-        float[] standardSize = BodyLogicHelper.calculateBodyPartStat(data.get(13),bias,randomness);
-        AddToSize(standardSize[0], standardSize[1]);
-        float[] standardOrganCapacity = BodyLogicHelper.calculateBodyPartStat(data.get(14),bias,randomness);
-        AddToOrganCapacity(standardOrganCapacity[0], standardOrganCapacity[1]);
-        float[] standardSpeed = BodyLogicHelper.calculateBodyPartStat(data.get(15),bias,randomness);
-        AddToSpeed(standardSpeed[0], standardSpeed[1]);
-        float[] standardConsciousness = BodyLogicHelper.calculateBodyPartStat(data.get(16),bias,randomness);
-        AddToConsciousness(standardConsciousness[0], standardConsciousness[1]);
-        float[] standardGrabbingSlots = BodyLogicHelper.calculateBodyPartStat(data.get(17),bias,randomness);
-        AddToGrabbingSlots(standardGrabbingSlots[0], standardGrabbingSlots[1]);
-        float[] standardSight = BodyLogicHelper.calculateBodyPartStat(data.get(18),bias,randomness);
-        AddToSight(standardSight[0], standardSight[1]);
+        float[][] calculatedStats = new float[16][6];
 
-        upstreamBloodCapacity = convertStringArrayIntoFloat(data.get(19));
-        upstreamBloodGeneration = convertStringArrayIntoFloat(data.get(20));
-        upstreamBloodNeeded = convertStringArrayIntoFloat(data.get(21));
-        upstreamEnergyCapacity = convertStringArrayIntoFloat(data.get(22));
-        upstreamEnergyGeneration = convertStringArrayIntoFloat(data.get(23));
-        upstreamEnergyNeeded = convertStringArrayIntoFloat(data.get(24));
-        upstreamMaxHealthModifier = convertStringArrayIntoFloat(data.get(25));
-        upstreamRegenRate = convertStringArrayIntoFloat(data.get(26));
-        upstreamRegenLimit = convertStringArrayIntoFloat(data.get(27));
-        upstreamArmour = convertStringArrayIntoFloat(data.get(28));
-        upstreamSize = convertStringArrayIntoFloat(data.get(29));
-        upstreamOrganCapacity = convertStringArrayIntoFloat(data.get(30));
-        upstreamSpeed = convertStringArrayIntoFloat(data.get(31));
-        upstreamConsciousness = convertStringArrayIntoFloat(data.get(32));
-        upstreamGrabbingSlots = convertStringArrayIntoFloat(data.get(33));
-        upstreamSight = convertStringArrayIntoFloat(data.get(34));
-
-
-        currentHealth = maxHealth[2];
-        currentOrganCapacity = organCapacity[2];
-    }
-    private float[] convertStringArrayIntoFloat(String[] a)
-    {
-        float[] f = new float[a.length];
-        for (int i = 0; i < a.length; i++)
+        for (int i = 0; i < 16; i++)
         {
-            f[i] = Float.parseFloat(a[i]);
+            calculatedStats[i] = rearrangeArray(BodyLogicHelper.calculateBodyPartStat(data.get(i+3),bias,randomness));
         }
-        return f;
+
+        AddToStat(calculatedStats);
+
+        currentHealth = myTotalStats[6][2];
+        currentOrganCapacity = myTotalStats[11][2];
+    }
+    private float[] rearrangeArray(float[] f)
+    {
+        float[] g = new float[6];
+        g[3] = f[0];
+        g[4] = f[1];
+        return g;
     }
 
     /**
@@ -349,7 +115,7 @@ public class BodyPart
      */
     public void doDamage(float damage)
     {
-        this.currentHealth = this.currentHealth -damage;
+        this.currentHealth = this.currentHealth - damage;
         if (this.currentHealth <= 0)
         {
             removeBodyPart();
@@ -361,15 +127,15 @@ public class BodyPart
      */
     public void regenerateDamage()
     {
-        if (currentHealth < maxHealth[2] && currentHealth > regenLimit[2])
+        if (currentHealth < myTotalStats[6][2] && currentHealth > myTotalStats[8][2])
         {
-            if((maxHealth[2]-currentHealth)<regenRate[2])
+            if((myTotalStats[6][2]-currentHealth)<myTotalStats[7][2] || currentHealth>myTotalStats[6][2])
             {
-                currentHealth = maxHealth[2];
+                currentHealth = myTotalStats[6][2];
             }
             else
             {
-                currentHealth += regenRate[2];
+                currentHealth += myTotalStats[7][2];
             }
         }
     }
@@ -385,9 +151,10 @@ public class BodyPart
     {
         if(this.bodyPartClass.equalsIgnoreCase("internal"))
         {
-            if(bodyPartToAttachTo.getCurrentOrganCapacity() >= this.getSize()[2])
+            bodyPartToAttachTo.calculateCurrentOrganCapacity();
+            if(bodyPartToAttachTo.getCurrentOrganCapacity() >= myTotalStats[10][2])
             {
-                bodyPartToAttachTo.AddToCurrentOrganCapacity(this.getSize()[2]);
+                bodyPartToAttachTo.calculateCurrentOrganCapacity(myTotalStats[10]);
                 return attach(bodyPartToAttachTo);
             }
             else
@@ -407,9 +174,10 @@ public class BodyPart
         myPerson = this.bodyPartAttachedTo.myPerson;
         myPerson.myBodyParts.add(this);
         bodyPartAttachedTo.attachedBodyParts.add(this);
-        ErrorHandler.LogData(true,"Successfully added " + this.name + " to " + bodyPartAttachedTo.name +
+        ErrorHandler.LogData(false,"Successfully added " + this.name + " to " + bodyPartAttachedTo.name +
                 ". The parent now has: " + bodyPartAttachedTo.attachedBodyParts.size() + " attached bodyParts and the " +
                 "child is attached to: " + bodyPartToAttachTo.name);
+        updateParentAndPerson();
         return true;
     }
 
@@ -422,10 +190,10 @@ public class BodyPart
     {
         if(this.bodyPartClass.equalsIgnoreCase("internal"))
         {
-            this.bodyPartAttachedTo.AddToCurrentOrganCapacity(this.getSize()[2]);
+            this.bodyPartAttachedTo.removeOrgansSize(myTotalStats[10]);
         }
         removeBodyPartRecursively();
-        BodyPart resultingWound = BodyFileDecoder.loadBodyPartFromFile(myPerson,"Resources/BodyParts/Misc/GrievousWound",0,20);
+        BodyPart resultingWound = BodyFileDecoder.loadBodyPartFromFile("Resources/BodyParts/Misc/GrievousWound",0,20);
         resultingWound.TryToAttachTo(bodyPartAttachedTo);
         bodyPartAttachedTo.attachedBodyParts.remove(this);
         bodyPartAttachedTo = null;
@@ -441,105 +209,45 @@ public class BodyPart
             attachedBodyPart.removeBodyPartRecursively();
         }
         this.myPerson.myBodyParts.remove(this);
-        updateParentAndPerson(-1);
+        updateParentAndPerson();
         this.myPerson = null;
     }
 
     /**
      * This function makes sure all the stats and modifiers of the person the parent bodyPart are updated when needed.
-     * @param i This is the sign.
-     *          If it is >= 0 the bodyPart will add its stats and modifiers
-     *          If it is < 0 the bodyPart will remove its stats and modifiers
      */
-    public void updateParentAndPerson(int i)
+    public void updateParentAndPerson()
     {
-        if (i >= 0)
-        {
-            i = 1;
-            ErrorHandler.LogData(false, name + " removed their stats");
-        }
-        else
-        {
-            i=-1;
-            ErrorHandler.LogData(false, name + " added their stats");
-        }
-
         if(bodyPartAttachedTo != null)
         {
-            ErrorHandler.LogData(true,"Updating parent bodyPart " + bodyPartAttachedTo.name + " according to the upstream stats");
-            bodyPartAttachedTo.AddToBloodCapacity(upstreamBloodCapacity[0]*i,upstreamBloodCapacity[1]*i);
-            bodyPartAttachedTo.AddToBloodGeneration(upstreamBloodGeneration[0]*i,upstreamBloodGeneration[1]*i);
-            bodyPartAttachedTo.AddToBloodNeeded(upstreamBloodNeeded[0]*i,upstreamBloodNeeded[1]*i);
-            bodyPartAttachedTo.AddToEnergyCapacity(upstreamEnergyCapacity[0]*i,upstreamEnergyCapacity[1]*i);
-            bodyPartAttachedTo.AddToEnergyGeneration(upstreamEnergyGeneration[0]*i,upstreamEnergyGeneration[1]*i);
-            bodyPartAttachedTo.AddToEnergyNeeded(upstreamEnergyNeeded[0]*i,upstreamEnergyNeeded[1]*i);
-            bodyPartAttachedTo.AddToSize(upstreamSize[0]*i,upstreamSize[1]*i);
-            bodyPartAttachedTo.AddToSpeed(upstreamSpeed[0]*i,upstreamSpeed[1]*i);
-            bodyPartAttachedTo.AddToConsciousness(upstreamConsciousness[0]*i,upstreamConsciousness[1]*i);
-            bodyPartAttachedTo.AddToSight(upstreamSight[0]*i,upstreamSight[1]*i);
-            ErrorHandler.LogData(true," Done Updating parent bodyPart " + bodyPartAttachedTo.name);
+            ErrorHandler.LogData(false,"Updating parent bodyPart " + bodyPartAttachedTo.name + " according to the upstream stats");
+            bodyPartAttachedTo.AddToStat(myTotalStats);
+            ErrorHandler.LogData(false," Done Updating parent bodyPart " + bodyPartAttachedTo.name);
         }
         else
         {
             ErrorHandler.LogData(false,name + " has no parent bodyPart: " + bodyPartAttachedTo);
         }
-
-        myPerson.changeGrossBloodCapacity(bloodCapacity[2]*i);
-        myPerson.changeBloodCapacityModifier(upstreamBloodCapacity[2]*i);
-
-        myPerson.changeGrossBloodGeneration(bloodGeneration[2]*i);
-        myPerson.changeBloodGenerationModifier(upstreamBloodGeneration[2]*i);
-
-        myPerson.changeGrossBloodNeeded(bloodNeeded[2]*i);
-        myPerson.changeBloodNeededModifier(upstreamBloodNeeded[2]*i);
-
-        myPerson.changeGrossEnergyCapacity(energyCapacity[2]*i);
-        myPerson.changeEnergyCapacityModifier(upstreamEnergyCapacity[2]*i);
-
-        myPerson.changeGrossEnergyGeneration(energyGeneration[2]*i);
-        myPerson.changeEnergyGenerationModifier(upstreamEnergyGeneration[2]*i);
-
-        myPerson.changeGrossEnergyNeeded(energyNeeded[2]*i);
-        myPerson.changeEnergyNeededModifier(upstreamEnergyNeeded[2]*i);
-
-        myPerson.changeGrossSize(size[2]*i);
-        myPerson.changeSizeModifier(upstreamSize[2]*i);
-
-        myPerson.changeGrossSpeed(speed[2]*i);
-        myPerson.changeSpeedModifier(upstreamSpeed[2]*i);
-
-        myPerson.changeGrossConsciousness(consciousness[2]*i);
-        myPerson.changeConsciousnessModifier(upstreamConsciousness[2]*i);
-
-        myPerson.changeGrossSight(sight[2]*i);
-        myPerson.changeSightModifier(upstreamSight[2]*i);
-    }
-
-    /**
-     * This function prints out the bodyPart stats for debugging;
-     */
-    public void printBodyPartToTerminal()
-    {
-        System.out.println("# Name: " + name);
-        System.out.println("    Number of body parts attached: " + attachedBodyParts.size());
-        System.out.println("    Type: " + type);
-        System.out.println("    Class: " + bodyPartClass);
-        System.out.println("    Blood capacity: " + bloodCapacity[0]);
-        System.out.println("    Blood generation: " + bloodGeneration[0]);
-        System.out.println("    Blood needed: " + bloodNeeded[0]);
-        System.out.println("    Energy capacity: " + energyCapacity[0]);
-        System.out.println("    Energy generation: " + energyGeneration[0]);
-        System.out.println("    Energy needed: " + energyNeeded[0]);
-        System.out.println("    Health: " + currentHealth + "/" + maxHealth[0]);
-        System.out.println("    RegenRate: " + regenRate[0]);
-        System.out.println("    RegenLimit: " + regenLimit[0]);
-        System.out.println("    Armour: " + armour[0]);
-        System.out.println("    Size: " + size[0]);
-        System.out.println("    Organ capacity: " + organCapacity[0]);
-        System.out.println("    Speed: " + speed[0]);
-        System.out.println("    Consciousness: " + consciousness[0]);
-        System.out.println("    Grabbing slots: " + grabbingSlots[0]);
-        System.out.println("    Sight: " + sight[0]);
+        if(myPerson != null)
+        {
+            ErrorHandler.LogData(false,"Updating person: " + myPerson.name);
+            List<float[]> personStats = new ArrayList<>();
+            personStats.add(myTotalStats[0]); //Blood Capacity
+            personStats.add(myTotalStats[1]); //Blood Generation
+            personStats.add(myTotalStats[2]); //Blood Needed
+            personStats.add(myTotalStats[3]); //Energy Capacity
+            personStats.add(myTotalStats[4]); //Energy Generation
+            personStats.add(myTotalStats[5]); //Energy Needed
+            personStats.add(myTotalStats[10]); //Size
+            personStats.add(myTotalStats[12]); //Speed
+            personStats.add(myTotalStats[13]); //Consciousness
+            personStats.add(myTotalStats[15]); //Sight
+            myPerson.AddToStat(personStats);
+        }
+        else
+        {
+            ErrorHandler.LogData(false,name + " has no person: " + myPerson);
+        }
     }
 
     public void changeName(String newName)
@@ -553,170 +261,65 @@ public class BodyPart
     public List<BodyPart> getAttachedBodyParts(){return attachedBodyParts;}
     public Person getMyPerson(){return myPerson;}
     public void setMyPerson(Person newPerson){myPerson = newPerson;}
+    public float getCurrentHealth() {return currentHealth;}
+    public float getCurrentOrganCapacity(){return currentOrganCapacity;}
+    public void removeOrgansSize(float[] size)
+    {
+        if(currentOrganSizes.contains(size))
+        {
+            currentOrganSizes.remove(size);
+        }
+        calculateCurrentOrganCapacity();
+    }
+    public void calculateCurrentOrganCapacity(float[] size)
+    {
+        if(!currentOrganSizes.contains(size))
+        {
+            currentOrganSizes.add(size);
+        }
+        calculateCurrentOrganCapacity();
+    }
+    public void calculateCurrentOrganCapacity()
+    {
+        currentOrganCapacity = myTotalStats[11][2];
+        for (float[] f: currentOrganSizes)
+        {
+            currentOrganCapacity -= f[2];
+        }
+    }
 
-    public float[] getBloodCapacity() {return bloodCapacity;}
-    public float[] getUpstreamBloodCapacity() {return upstreamBloodCapacity;}
-    public float[] getBloodGeneration() {return bloodGeneration;}
-    public float[] getUpstreamBloodGeneration() {return upstreamBloodGeneration;}
-    public float[] getBloodNeeded() {return bloodNeeded;}
-    public float[] getUpstreamBloodNeeded() {return upstreamBloodNeeded;}
-    public float[] getEnergyCapacity() {return energyCapacity;}
-    public float[] getUpstreamEnergyCapacity() {return upstreamEnergyCapacity;}
-    public float[] getEnergyGeneration() {return energyGeneration;}
-    public float[] getUpstreamEnergyGeneration() {return upstreamEnergyGeneration;}
-    public float[] getEnergyNeeded() {return energyNeeded;}
-    public float[] getUpstreamEnergyNeeded() {return upstreamEnergyNeeded;}
-    public float[] getMaxHealth(){return maxHealth;}
-    public float getCurrentHealth(){return currentHealth;}
-    public float[] getUpstreamMaxHealthModifier() {return upstreamMaxHealthModifier;}
-    public float[] getRegenLimit(){return regenLimit;}
-    public float[] getUpstreamRegenLimit() {return upstreamRegenLimit;}
-    public float[] getRegenRate(){return regenRate;}
-    public float[] getUpstreamRegenRate() {return upstreamRegenRate;}
-    public float[] getArmour() {return armour;}
-    public float[] getUpstreamArmour() {return upstreamArmour;}
-    public float[] getSize() {return size;}
-    public float[] getUpstreamSize() {return upstreamSize;}
-    public float[] getConsciousness() {return consciousness;}
-    public float[] getUpstreamConsciousness() {return upstreamConsciousness;}
-    public float[] getOrganCapacity() {return organCapacity;}
-    public float getCurrentOrganCapacity() {return currentOrganCapacity;}
-    public float[] getUpstreamOrganCapacity() {return upstreamOrganCapacity;}
-    public float[] getSpeed() {return speed;}
-    public float[] getUpstreamSpeed() {return upstreamSpeed;}
-    public float[] getSight() {return sight;}
-    public float[] getUpstreamSight() {return upstreamSight;}
-    public float[] getGrabbingSlots() {return grabbingSlots;}
-    public float[] getUpstreamGrabbingSlots() {return upstreamGrabbingSlots;}
+    public void AddToStat(float[][] statList)
+    {
+        for (int i = 0; i < 16; i++) {
+            if(!myStats.get(i).contains(statList[i]))
+            {
+                ErrorHandler.LogData(false,"Added the " + i + "th array to myStats!");
+                myStats.get(i).add(statList[i]);
+            }
+            myTotalStats[i] = new float[]{0, 0, 0, 0, 0, 0};
+            for (float[] f: myStats.get(i))
+            {
+                ErrorHandler.LogData(false,"gross value of the " + i + "th stat before changing: " + myTotalStats[i][0]);
+                myTotalStats[i][0] += f[3];
+                ErrorHandler.LogData(false,"gross value of the " + i + "th stat: " + myTotalStats[i][0] + ". The change was: " + f[3]);
+                myTotalStats[i][1] += f[4];
+                myTotalStats[i][2] = myTotalStats[i][0]*myTotalStats[i][1];
+            }
+        }
+    }
 
-    public void AddToCurrentOrganCapacity(float change) {currentOrganCapacity = currentOrganCapacity + change;}
+    public float[][] GetMyTotalStats()
+    {
+        return myTotalStats;
+    }
 
-    public void AddToBloodCapacity(float grossChange, float modifierChange)
+    public void PrintBodyPart()
     {
-        updateParentAndPerson(-1);
-        bloodCapacity[0] = bloodCapacity[0] + grossChange;
-        bloodCapacity[1] = bloodCapacity[1] + modifierChange;
-        bloodCapacity[2] = bloodCapacity[0] * bloodCapacity[1];
-        updateParentAndPerson(1);
-    }
-    public void AddToBloodGeneration(float grossChange, float modifierChange)
-    {
-        updateParentAndPerson(-1);
-        bloodGeneration[0] = bloodGeneration[0] + grossChange;
-        bloodGeneration[1] = bloodGeneration[1] + modifierChange;
-        bloodGeneration[2] = bloodGeneration[0] * bloodGeneration[1];
-        updateParentAndPerson(1);
-    }
-    public void AddToBloodNeeded(float grossChange, float modifierChange)
-    {
-        updateParentAndPerson(-1);
-        bloodNeeded[0] = bloodNeeded[0] + grossChange;
-        bloodNeeded[1] = bloodNeeded[1] + modifierChange;
-        bloodNeeded[2] = bloodNeeded[0] * bloodNeeded[1];
-        updateParentAndPerson(1);
-    }
-    public void AddToEnergyCapacity(float grossChange, float modifierChange)
-    {
-        updateParentAndPerson(-1);
-        energyCapacity[0] = energyCapacity[0] + grossChange;
-        energyCapacity[1] = energyCapacity[1] + modifierChange;
-        energyCapacity[2] = energyCapacity[0] * energyCapacity[1];
-        updateParentAndPerson(1);
-    }
-    public void AddToEnergyGeneration(float grossChange, float modifierChange)
-    {
-        updateParentAndPerson(-1);
-        energyGeneration[0] = energyGeneration[0] + grossChange;
-        energyGeneration[1] = energyGeneration[1] + modifierChange;
-        energyGeneration[2] = energyGeneration[0] * energyGeneration[1];
-        updateParentAndPerson(1);
-    }
-    public void AddToEnergyNeeded(float grossChange, float modifierChange)
-    {
-        updateParentAndPerson(-1);
-        energyNeeded[0] = energyNeeded[0] + grossChange;
-        energyNeeded[1] = energyNeeded[1] + modifierChange;
-        energyNeeded[2] = energyNeeded[0] * energyNeeded[1];
-        updateParentAndPerson(1);
-    }
-    public void AddToMaxHealth(float grossChange, float modifierChange)
-    {
-        updateParentAndPerson(-1);
-        maxHealth[0] = maxHealth[0] + grossChange;
-        maxHealth[1] = maxHealth[1] + modifierChange;
-        maxHealth[2] = maxHealth[0] * maxHealth[1];
-        updateParentAndPerson(1);
-    }
-    public void AddToRegenLimit(float grossChange, float modifierChange)
-    {
-        updateParentAndPerson(-1);
-        regenLimit[0] = regenLimit[0] + grossChange;
-        regenLimit[1] = regenLimit[1] + modifierChange;
-        regenLimit[2] = regenLimit[0] * regenLimit[1];
-        updateParentAndPerson(1);
-    }
-    public void AddToRegenRate(float grossChange, float modifierChange)
-    {
-        updateParentAndPerson(-1);
-        regenRate[0] = regenRate[0] + grossChange;
-        regenRate[1] = regenRate[1] + modifierChange;
-        regenRate[2] = regenRate[0] * regenRate[1];
-        updateParentAndPerson(1);
-    }
-    public void AddToArmour(float grossChange, float modifierChange)
-    {
-        updateParentAndPerson(-1);
-        armour[0] = armour[0] + grossChange;
-        armour[1] = armour[1] + modifierChange;
-        armour[2] = armour[0] * armour[1];
-        updateParentAndPerson(1);
-    }
-    public void AddToSize(float grossChange, float modifierChange)
-    {
-        updateParentAndPerson(-1);
-        size[0] = size[0] + grossChange;
-        size[1] = size[1] + modifierChange;
-        size[2] = size[0] * size[1];
-        updateParentAndPerson(1);
-    }
-    public void AddToOrganCapacity(float grossChange, float modifierChange)
-    {
-        updateParentAndPerson(-1);
-        organCapacity[0] = organCapacity[0] + grossChange;
-        organCapacity[1] = organCapacity[1] + modifierChange;
-        organCapacity[2] = organCapacity[0] * organCapacity[1];
-        updateParentAndPerson(1);
-    }
-    public void AddToSpeed(float grossChange, float modifierChange)
-    {
-        updateParentAndPerson(-1);
-        speed[0] = speed[0] + grossChange;
-        speed[1] = speed[1] + modifierChange;
-        speed[2] = speed[0] * speed[1];
-        updateParentAndPerson(1);
-    }
-    public void AddToConsciousness(float grossChange, float modifierChange)
-    {
-        updateParentAndPerson(-1);
-        consciousness[0] = consciousness[0] + grossChange;
-        consciousness[1] = consciousness[1] + modifierChange;
-        consciousness[2] = consciousness[0] * consciousness[1];
-        updateParentAndPerson(1);
-    }
-    public void AddToGrabbingSlots(float grossChange, float modifierChange)
-    {
-        updateParentAndPerson(-1);
-        grabbingSlots[0] = grabbingSlots[0] + grossChange;
-        grabbingSlots[1] = grabbingSlots[1] + modifierChange;
-        grabbingSlots[2] = grabbingSlots[0] * grabbingSlots[1];
-        updateParentAndPerson(1);
-    }
-    public void AddToSight(float grossChange, float modifierChange)
-    {
-        updateParentAndPerson(-1);
-        sight[0] = sight[0] + grossChange;
-        sight[1] = sight[1] + modifierChange;
-        sight[2] = sight[0] * sight[1];
-        updateParentAndPerson(1);
+        ErrorHandler.LogData(true, "===" + name + "===");
+        for (int i = 0; i < 16; i++)
+        {
+            ErrorHandler.LogData(true,i + "th stat: " + myTotalStats[i][0] + " ¦ " + myTotalStats[i][1] + "¦" + myTotalStats[i][2]);
+        }
+        ErrorHandler.LogData(true, "======");
     }
 }

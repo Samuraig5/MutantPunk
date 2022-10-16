@@ -4,21 +4,29 @@ import Main.BodyLogic.BodyFileDecoder;
 import Main.BodyLogic.BodyPart;
 import Main.BodyLogic.Person;
 import Main.ErrorHandler;
+import Main.MathHelper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class BodyPartTest {
     BodyPart bp;
     Person p;
+    float accuracyDelta = 0.0001f;
+
     @BeforeEach
     void setUp()
     {
         p = new Person();
-        bp = BodyFileDecoder.loadBodyPartFromFile(p,"resources/BodyParts/Containers/HumanTorso",0,0);
+        p.changeName("Test Dummy");
+        bp = BodyFileDecoder.loadBodyPartFromFile("resources/BodyParts/Containers/HumanTorso",0,0);
         p.myBodyParts.add(bp);
         bp.setMyPerson(p);
+        ErrorHandler.LogData(true,"Person: " + bp.getMyPerson().name);
     }
 
     @org.junit.jupiter.api.Test
@@ -37,24 +45,30 @@ class BodyPartTest {
     void regenerateAtMaxHealth()
     {
         bp.regenerateDamage();
-        assertEquals(bp.getMaxHealth()[2], bp.getCurrentHealth());
+        assertEquals(bp.GetMyTotalStats()[6][2], bp.getCurrentHealth());
     }
     @Test
     void regenerateWhenNotAtMaxHealth()
     {
-        bp.AddToMaxHealth(100,0); //This is just to make sure the bodyPart doesn't accidentally die
+        float[][] f = new float[16][6];
+        f[6] = new float[]{0, 0, 0, 100, 0, 0};
+        bp.AddToStat(f);//Increasing the max health doesn't raise current health so this simulates healing.
         float initialHealth = bp.getCurrentHealth();
-        for(int i = 0; i < (bp.getMaxHealth()[2] - initialHealth); i++)
+        for(int i = 0; i < (bp.GetMyTotalStats()[6][2] - initialHealth); i++)
         {
             bp.regenerateDamage();
         }
-        assertEquals(bp.getMaxHealth()[2],bp.getCurrentHealth());
+        assertEquals(bp.GetMyTotalStats()[6][2],bp.getCurrentHealth());
     }
     @Test
     void regenerateWhenBelowRegenLimit()
     {
-        bp.AddToRegenLimit(-bp.getRegenLimit()[0],0);
-        bp.AddToRegenLimit(bp.getMaxHealth()[2],0);
+        float[][] f = new float[16][6];
+        f[8][3] = -bp.GetMyTotalStats()[8][0];
+        bp.AddToStat(f); //Set RegenLimit to zero
+        f[8][3] = bp.GetMyTotalStats()[6][0];
+        bp.AddToStat(f); //Set RegenLimit to max health
+
         bp.doDamage(1);
         float initialHealth = bp.getCurrentHealth();
         bp.regenerateDamage();
@@ -63,7 +77,10 @@ class BodyPartTest {
     @Test
     void regenerateWhenNoRegenRate()
     {
-        bp.AddToRegenRate(-bp.getRegenRate()[0],0);
+        float[][] f = new float[16][6];
+        f[7][3] = -bp.GetMyTotalStats()[7][0];
+        bp.AddToStat(f); //Set RegenRate to zero
+
         bp.doDamage(1);
         float initialHealth = bp.getCurrentHealth();
         bp.regenerateDamage();
@@ -79,28 +96,6 @@ class BodyPartTest {
 
     @org.junit.jupiter.api.Test
     void attachTo() {
-    }
-
-    @org.junit.jupiter.api.Test
-    void updateParentAndPerson()
-    {
-        float[] initial = {bp.getBloodGeneration()[0], bp.getBloodGeneration()[1],bp.getBloodGeneration()[2]};
-        BodyPart child = BodyFileDecoder.loadBodyPartFromFile(p,"resources/BodyParts/Misc/TestingBodyPart",0,0);
-        ErrorHandler.LogData(true, "p: " + p.getBloodGeneration()[0]);
-        //child.TryToAttachTo(bp);
-        ErrorHandler.LogData(true, "p: " + p.getBloodGeneration()[0]);
-        child.updateParentAndPerson(1);
-        ErrorHandler.LogData(true, "child: " + child.getBloodGeneration()[2]);
-        ErrorHandler.LogData(true, "bp: " + bp.getBloodGeneration()[2]);
-        ErrorHandler.LogData(true, "p: " + p.getBloodGeneration()[0]);
-        assertEquals(initial[0]+10,bp.getBloodGeneration()[0]);
-        assertEquals(initial[1]+0.5,bp.getBloodGeneration()[1]);
-        float expectedResult = (bp.getBloodGeneration()[2]+child.getBloodGeneration()[2])*p.getBloodGeneration()[1];
-        assertEquals(expectedResult, p.getBloodGeneration()[2]);
-        child.updateParentAndPerson(-1);
-        assertEquals(initial[0],bp.getBloodGeneration()[0]);
-        assertEquals(initial[1],bp.getBloodGeneration()[1]);
-        assertEquals((bp.getBloodGeneration()[2]+child.getBloodGeneration()[2])*child.getUpstreamBloodGeneration()[2],p.getBloodGeneration()[2]);
     }
 
     @org.junit.jupiter.api.Test
@@ -128,751 +123,52 @@ class BodyPartTest {
         assertEquals(p, bp.getMyPerson());
     }
 
-    @org.junit.jupiter.api.Test
-    void addToBloodCapacity() {
-        float[] initial = {bp.getBloodCapacity()[0], bp.getBloodCapacity()[1],bp.getBloodCapacity()[2]};
-        float grossChange = 50;
-        float modChange = 0.5f;
-
-        //Change the Gross Stats
-        bp.AddToBloodCapacity(grossChange,0);
-        assertEquals(initial[0]+grossChange, bp.getBloodCapacity()[0]);
-        assertEquals(initial[1], bp.getBloodCapacity()[1]);
-        assertEquals((initial[0]+grossChange)*initial[1], bp.getBloodCapacity()[2]);
-        assertEquals(bp.getBloodCapacity()[2], p.getBloodCapacity()[0]);
-
-        //Reset to initial
-        bp.AddToBloodCapacity(-grossChange,0);
-        assertEquals(initial[0], bp.getBloodCapacity()[0]);
-        assertEquals(initial[1], bp.getBloodCapacity()[1]);
-        assertEquals(initial[0]*initial[1], bp.getBloodCapacity()[2]);
-        assertEquals(bp.getBloodCapacity()[2], p.getBloodCapacity()[0]);
-
-        //Change the Mod Stats
-        bp.AddToBloodCapacity(0,modChange);
-        assertEquals(initial[0], bp.getBloodCapacity()[0]);
-        assertEquals(initial[1]+modChange, bp.getBloodCapacity()[1]);
-        assertEquals(initial[0]*(initial[1]+modChange), bp.getBloodCapacity()[2]);
-        assertEquals(bp.getBloodCapacity()[2], p.getBloodCapacity()[0]);
-
-        //Reset to initial
-        bp.AddToBloodCapacity(0,-modChange);
-        assertEquals(initial[0], bp.getBloodCapacity()[0]);
-        assertEquals(initial[1], bp.getBloodCapacity()[1]);
-        assertEquals(initial[0]*initial[1], bp.getBloodCapacity()[2]);
-        assertEquals(bp.getBloodCapacity()[2], p.getBloodCapacity()[0]);
-
-        //Change both gross Stats and the modifier
-        bp.AddToBloodCapacity(grossChange,modChange);
-        assertEquals(initial[0]+grossChange, bp.getBloodCapacity()[0]);
-        assertEquals(initial[1]+modChange, bp.getBloodCapacity()[1]);
-        assertEquals((initial[0]+grossChange)*(initial[1]+modChange), bp.getBloodCapacity()[2]);
-        assertEquals(bp.getBloodCapacity()[2], p.getBloodCapacity()[0]);
-
-        //Reset to initial
-        bp.AddToBloodCapacity(-grossChange,-modChange);
-        assertEquals(initial[0], bp.getBloodCapacity()[0]);
-        assertEquals(initial[1], bp.getBloodCapacity()[1]);
-        assertEquals(initial[0]*initial[1], bp.getBloodCapacity()[2]);
-        assertEquals(bp.getBloodCapacity()[2], p.getBloodCapacity()[0]);
-    }
-
-    @org.junit.jupiter.api.Test
-    void addToBloodGeneration() {
-        float[] initial = {bp.getBloodGeneration()[0], bp.getBloodGeneration()[1],bp.getBloodGeneration()[2]};
-        float grossChange = 50;
-        float modChange = 0.5f;
-
-        //Change the Gross Stats
-        bp.AddToBloodGeneration(grossChange,0);
-        assertEquals(initial[0]+grossChange, bp.getBloodGeneration()[0]);
-        assertEquals(initial[1], bp.getBloodGeneration()[1]);
-        assertEquals((initial[0]+grossChange)*initial[1], bp.getBloodGeneration()[2]);
-        assertEquals(bp.getBloodGeneration()[2], p.getBloodGeneration()[0]);
-
-        //Reset to initial
-        bp.AddToBloodGeneration(-grossChange,0);
-        assertEquals(initial[0], bp.getBloodGeneration()[0]);
-        assertEquals(initial[1], bp.getBloodGeneration()[1]);
-        assertEquals(initial[0]*initial[1], bp.getBloodGeneration()[2]);
-        assertEquals(bp.getBloodGeneration()[2], p.getBloodGeneration()[0]);
-
-        //Change the Mod Stats
-        bp.AddToBloodGeneration(0,modChange);
-        assertEquals(initial[0], bp.getBloodGeneration()[0]);
-        assertEquals(initial[1]+modChange, bp.getBloodGeneration()[1]);
-        assertEquals(initial[0]*(initial[1]+modChange), bp.getBloodGeneration()[2]);
-        assertEquals(bp.getBloodGeneration()[2], p.getBloodGeneration()[0]);
-
-        //Reset to initial
-        bp.AddToBloodGeneration(0,-modChange);
-        assertEquals(initial[0], bp.getBloodGeneration()[0]);
-        assertEquals(initial[1], bp.getBloodGeneration()[1]);
-        assertEquals(initial[0]*initial[1], bp.getBloodGeneration()[2]);
-        assertEquals(bp.getBloodGeneration()[2], p.getBloodGeneration()[0]);
-
-        //Change both gross Stats and the modifier
-        bp.AddToBloodGeneration(grossChange,modChange);
-        assertEquals(initial[0]+grossChange, bp.getBloodGeneration()[0]);
-        assertEquals(initial[1]+modChange, bp.getBloodGeneration()[1]);
-        assertEquals((initial[0]+grossChange)*(initial[1]+modChange), bp.getBloodGeneration()[2]);
-        assertEquals(bp.getBloodGeneration()[2], p.getBloodGeneration()[0]);
-
-        //Reset to initial
-        bp.AddToBloodGeneration(-grossChange,-modChange);
-        assertEquals(initial[0], bp.getBloodGeneration()[0]);
-        assertEquals(initial[1], bp.getBloodGeneration()[1]);
-        assertEquals(initial[0]*initial[1], bp.getBloodGeneration()[2]);
-        assertEquals(bp.getBloodGeneration()[2], p.getBloodGeneration()[0]);
-    }
-
-    @org.junit.jupiter.api.Test
-    void addToBloodNeeded() {
-        float[] initial = {bp.getBloodNeeded()[0], bp.getBloodNeeded()[1],bp.getBloodNeeded()[2]};
-        float grossChange = 50;
-        float modChange = 0.5f;
-
-        //Change the Gross Stats
-        bp.AddToBloodNeeded(grossChange,0);
-        assertEquals(initial[0]+grossChange, bp.getBloodNeeded()[0]);
-        assertEquals(initial[1], bp.getBloodNeeded()[1]);
-        assertEquals((initial[0]+grossChange)*initial[1], bp.getBloodNeeded()[2]);
-        assertEquals(bp.getBloodNeeded()[2], p.getBloodNeeded()[0]);
-
-        //Reset to initial
-        bp.AddToBloodNeeded(-grossChange,0);
-        assertEquals(initial[0], bp.getBloodNeeded()[0]);
-        assertEquals(initial[1], bp.getBloodNeeded()[1]);
-        assertEquals(initial[0]*initial[1], bp.getBloodNeeded()[2]);
-        assertEquals(bp.getBloodNeeded()[2], p.getBloodNeeded()[0]);
-
-        //Change the Mod Stats
-        bp.AddToBloodNeeded(0,modChange);
-        assertEquals(initial[0], bp.getBloodNeeded()[0]);
-        assertEquals(initial[1]+modChange, bp.getBloodNeeded()[1]);
-        assertEquals(initial[0]*(initial[1]+modChange), bp.getBloodNeeded()[2]);
-        assertEquals(bp.getBloodNeeded()[2], p.getBloodNeeded()[0]);
-
-        //Reset to initial
-        bp.AddToBloodNeeded(0,-modChange);
-        assertEquals(initial[0], bp.getBloodNeeded()[0]);
-        assertEquals(initial[1], bp.getBloodNeeded()[1]);
-        assertEquals(initial[0]*initial[1], bp.getBloodNeeded()[2]);
-        assertEquals(bp.getBloodNeeded()[2], p.getBloodNeeded()[0]);
-
-        //Change both gross Stats and the modifier
-        bp.AddToBloodNeeded(grossChange,modChange);
-        assertEquals(initial[0]+grossChange, bp.getBloodNeeded()[0]);
-        assertEquals(initial[1]+modChange, bp.getBloodNeeded()[1]);
-        assertEquals((initial[0]+grossChange)*(initial[1]+modChange), bp.getBloodNeeded()[2]);
-        assertEquals(bp.getBloodNeeded()[2], p.getBloodNeeded()[0]);
-
-        //Reset to initial
-        bp.AddToBloodNeeded(-grossChange,-modChange);
-        assertEquals(initial[0], bp.getBloodNeeded()[0]);
-        assertEquals(initial[1], bp.getBloodNeeded()[1]);
-        assertEquals(initial[0]*initial[1], bp.getBloodNeeded()[2]);
-        assertEquals(bp.getBloodNeeded()[2], p.getBloodNeeded()[0]);
-    }
-
-    @org.junit.jupiter.api.Test
-    void addToEnergyCapacity() {
-        float[] initial = {bp.getEnergyCapacity()[0], bp.getEnergyCapacity()[1],bp.getEnergyCapacity()[2]};
-        float grossChange = 50;
-        float modChange = 0.5f;
-
-        //Change the Gross Stats
-        bp.AddToEnergyCapacity(grossChange,0);
-        assertEquals(initial[0]+grossChange, bp.getEnergyCapacity()[0]);
-        assertEquals(initial[1], bp.getEnergyCapacity()[1]);
-        assertEquals((initial[0]+grossChange)*initial[1], bp.getEnergyCapacity()[2]);
-        assertEquals(bp.getEnergyCapacity()[2], p.getEnergyCapacity()[0]);
-
-        //Reset to initial
-        bp.AddToEnergyCapacity(-grossChange,0);
-        assertEquals(initial[0], bp.getEnergyCapacity()[0]);
-        assertEquals(initial[1], bp.getEnergyCapacity()[1]);
-        assertEquals(initial[0]*initial[1], bp.getEnergyCapacity()[2]);
-        assertEquals(bp.getEnergyCapacity()[2], p.getEnergyCapacity()[0]);
-
-        //Change the Mod Stats
-        bp.AddToEnergyCapacity(0,modChange);
-        assertEquals(initial[0], bp.getEnergyCapacity()[0]);
-        assertEquals(initial[1]+modChange, bp.getEnergyCapacity()[1]);
-        assertEquals(initial[0]*(initial[1]+modChange), bp.getEnergyCapacity()[2]);
-        assertEquals(bp.getEnergyCapacity()[2], p.getEnergyCapacity()[0]);
-
-        //Reset to initial
-        bp.AddToEnergyCapacity(0,-modChange);
-        assertEquals(initial[0], bp.getEnergyCapacity()[0]);
-        assertEquals(initial[1], bp.getEnergyCapacity()[1]);
-        assertEquals(initial[0]*initial[1], bp.getEnergyCapacity()[2]);
-        assertEquals(bp.getEnergyCapacity()[2], p.getEnergyCapacity()[0]);
-
-        //Change both gross Stats and the modifier
-        bp.AddToEnergyCapacity(grossChange,modChange);
-        assertEquals(initial[0]+grossChange, bp.getEnergyCapacity()[0]);
-        assertEquals(initial[1]+modChange, bp.getEnergyCapacity()[1]);
-        assertEquals((initial[0]+grossChange)*(initial[1]+modChange), bp.getEnergyCapacity()[2]);
-        assertEquals(bp.getEnergyCapacity()[2], p.getEnergyCapacity()[0]);
-
-        //Reset to initial
-        bp.AddToEnergyCapacity(-grossChange,-modChange);
-        assertEquals(initial[0], bp.getEnergyCapacity()[0]);
-        assertEquals(initial[1], bp.getEnergyCapacity()[1]);
-        assertEquals(initial[0]*initial[1], bp.getEnergyCapacity()[2]);
-        assertEquals(bp.getEnergyCapacity()[2], p.getEnergyCapacity()[0]);
-    }
-
-    @org.junit.jupiter.api.Test
-    void addToEnergyGeneration() {
-        float[] initial = {bp.getEnergyGeneration()[0], bp.getEnergyGeneration()[1],bp.getEnergyGeneration()[2]};
-        float grossChange = 50;
-        float modChange = 0.5f;
-
-        //Change the Gross Stats
-        bp.AddToEnergyGeneration(grossChange,0);
-        assertEquals(initial[0]+grossChange, bp.getEnergyGeneration()[0]);
-        assertEquals(initial[1], bp.getEnergyGeneration()[1]);
-        assertEquals((initial[0]+grossChange)*initial[1], bp.getEnergyGeneration()[2]);
-        assertEquals(bp.getEnergyGeneration()[2], p.getEnergyGeneration()[0]);
-
-        //Reset to initial
-        bp.AddToEnergyGeneration(-grossChange,0);
-        assertEquals(initial[0], bp.getEnergyGeneration()[0]);
-        assertEquals(initial[1], bp.getEnergyGeneration()[1]);
-        assertEquals(initial[0]*initial[1], bp.getEnergyGeneration()[2]);
-        assertEquals(bp.getEnergyGeneration()[2], p.getEnergyGeneration()[0]);
-
-        //Change the Mod Stats
-        bp.AddToEnergyGeneration(0,modChange);
-        assertEquals(initial[0], bp.getEnergyGeneration()[0]);
-        assertEquals(initial[1]+modChange, bp.getEnergyGeneration()[1]);
-        assertEquals(initial[0]*(initial[1]+modChange), bp.getEnergyGeneration()[2]);
-        assertEquals(bp.getEnergyGeneration()[2], p.getEnergyGeneration()[0]);
-
-        //Reset to initial
-        bp.AddToEnergyGeneration(0,-modChange);
-        assertEquals(initial[0], bp.getEnergyGeneration()[0]);
-        assertEquals(initial[1], bp.getEnergyGeneration()[1]);
-        assertEquals(initial[0]*initial[1], bp.getEnergyGeneration()[2]);
-        assertEquals(bp.getEnergyGeneration()[2], p.getEnergyGeneration()[0]);
-
-        //Change both gross Stats and the modifier
-        bp.AddToEnergyGeneration(grossChange,modChange);
-        assertEquals(initial[0]+grossChange, bp.getEnergyGeneration()[0]);
-        assertEquals(initial[1]+modChange, bp.getEnergyGeneration()[1]);
-        assertEquals((initial[0]+grossChange)*(initial[1]+modChange), bp.getEnergyGeneration()[2]);
-        assertEquals(bp.getEnergyGeneration()[2], p.getEnergyGeneration()[0]);
-
-        //Reset to initial
-        bp.AddToEnergyGeneration(-grossChange,-modChange);
-        assertEquals(initial[0], bp.getEnergyGeneration()[0]);
-        assertEquals(initial[1], bp.getEnergyGeneration()[1]);
-        assertEquals(initial[0]*initial[1], bp.getEnergyGeneration()[2]);
-        assertEquals(bp.getEnergyGeneration()[2], p.getEnergyGeneration()[0]);
-    }
-
-    @org.junit.jupiter.api.Test
-    void addToEnergyNeeded() {
-        float[] initial = {bp.getEnergyNeeded()[0], bp.getEnergyNeeded()[1],bp.getEnergyNeeded()[2]};
-        float grossChange = 50;
-        float modChange = 0.5f;
-
-        //Change the Gross Stats
-        bp.AddToEnergyNeeded(grossChange,0);
-        assertEquals(initial[0]+grossChange, bp.getEnergyNeeded()[0]);
-        assertEquals(initial[1], bp.getEnergyNeeded()[1]);
-        assertEquals((initial[0]+grossChange)*initial[1], bp.getEnergyNeeded()[2]);
-        assertEquals(bp.getEnergyNeeded()[2], p.getEnergyNeeded()[0]);
-
-        //Reset to initial
-        bp.AddToEnergyNeeded(-grossChange,0);
-        assertEquals(initial[0], bp.getEnergyNeeded()[0]);
-        assertEquals(initial[1], bp.getEnergyNeeded()[1]);
-        assertEquals(initial[0]*initial[1], bp.getEnergyNeeded()[2]);
-        assertEquals(bp.getEnergyNeeded()[2], p.getEnergyNeeded()[0]);
-
-        //Change the Mod Stats
-        bp.AddToEnergyNeeded(0,modChange);
-        assertEquals(initial[0], bp.getEnergyNeeded()[0]);
-        assertEquals(initial[1]+modChange, bp.getEnergyNeeded()[1]);
-        assertEquals(initial[0]*(initial[1]+modChange), bp.getEnergyNeeded()[2]);
-        assertEquals(bp.getEnergyNeeded()[2], p.getEnergyNeeded()[0]);
-
-        //Reset to initial
-        bp.AddToEnergyNeeded(0,-modChange);
-        assertEquals(initial[0], bp.getEnergyNeeded()[0]);
-        assertEquals(initial[1], bp.getEnergyNeeded()[1]);
-        assertEquals(initial[0]*initial[1], bp.getEnergyNeeded()[2]);
-        assertEquals(bp.getEnergyNeeded()[2], p.getEnergyNeeded()[0]);
-
-        //Change both gross Stats and the modifier
-        bp.AddToEnergyNeeded(grossChange,modChange);
-        assertEquals(initial[0]+grossChange, bp.getEnergyNeeded()[0]);
-        assertEquals(initial[1]+modChange, bp.getEnergyNeeded()[1]);
-        assertEquals((initial[0]+grossChange)*(initial[1]+modChange), bp.getEnergyNeeded()[2]);
-        assertEquals(bp.getEnergyNeeded()[2], p.getEnergyNeeded()[0]);
-
-        //Reset to initial
-        bp.AddToEnergyNeeded(-grossChange,-modChange);
-        assertEquals(initial[0], bp.getEnergyNeeded()[0]);
-        assertEquals(initial[1], bp.getEnergyNeeded()[1]);
-        assertEquals(initial[0]*initial[1], bp.getEnergyNeeded()[2]);
-        assertEquals(bp.getEnergyNeeded()[2], p.getEnergyNeeded()[0]);
-    }
-
-    @org.junit.jupiter.api.Test
-    void addToMaxHealth() {
-        float[] initial = {bp.getMaxHealth()[0], bp.getMaxHealth()[1],bp.getMaxHealth()[2]};
-        float grossChange = 50;
-        float modChange = 0.5f;
-
-        //Change the Gross Stats
-        bp.AddToMaxHealth(grossChange,0);
-        assertEquals(initial[0]+grossChange, bp.getMaxHealth()[0]);
-        assertEquals(initial[1], bp.getMaxHealth()[1]);
-        assertEquals((initial[0]+grossChange)*initial[1], bp.getMaxHealth()[2]);
-
-        //Reset to initial
-        bp.AddToMaxHealth(-grossChange,0);
-        assertEquals(initial[0], bp.getMaxHealth()[0]);
-        assertEquals(initial[1], bp.getMaxHealth()[1]);
-        assertEquals(initial[0]*initial[1], bp.getMaxHealth()[2]);
-
-        //Change the Mod Stats
-        bp.AddToMaxHealth(0,modChange);
-        assertEquals(initial[0], bp.getMaxHealth()[0]);
-        assertEquals(initial[1]+modChange, bp.getMaxHealth()[1]);
-        assertEquals(initial[0]*(initial[1]+modChange), bp.getMaxHealth()[2]);
-
-        //Reset to initial
-        bp.AddToMaxHealth(0,-modChange);
-        assertEquals(initial[0], bp.getMaxHealth()[0]);
-        assertEquals(initial[1], bp.getMaxHealth()[1]);
-        assertEquals(initial[0]*initial[1], bp.getMaxHealth()[2]);
-
-        //Change both gross Stats and the modifier
-        bp.AddToMaxHealth(grossChange,modChange);
-        assertEquals(initial[0]+grossChange, bp.getMaxHealth()[0]);
-        assertEquals(initial[1]+modChange, bp.getMaxHealth()[1]);
-        assertEquals((initial[0]+grossChange)*(initial[1]+modChange), bp.getMaxHealth()[2]);
-
-        //Reset to initial
-        bp.AddToMaxHealth(-grossChange,-modChange);
-        assertEquals(initial[0], bp.getMaxHealth()[0]);
-        assertEquals(initial[1], bp.getMaxHealth()[1]);
-        assertEquals(initial[0]*initial[1], bp.getMaxHealth()[2]);
-    }
-
-    @org.junit.jupiter.api.Test
-    void addToRegenLimit() {
-        float[] initial = {bp.getRegenLimit()[0], bp.getRegenLimit()[1],bp.getRegenLimit()[2]};
-        float grossChange = 50;
-        float modChange = 0.5f;
-
-        //Change the Gross Stats
-        bp.AddToRegenLimit(grossChange,0);
-        assertEquals(initial[0]+grossChange, bp.getRegenLimit()[0]);
-        assertEquals(initial[1], bp.getRegenLimit()[1]);
-        assertEquals((initial[0]+grossChange)*initial[1], bp.getRegenLimit()[2]);
-
-        //Reset to initial
-        bp.AddToRegenLimit(-grossChange,0);
-        assertEquals(initial[0], bp.getRegenLimit()[0]);
-        assertEquals(initial[1], bp.getRegenLimit()[1]);
-        assertEquals(initial[0]*initial[1], bp.getRegenLimit()[2]);
-
-        //Change the Mod Stats
-        bp.AddToRegenLimit(0,modChange);
-        assertEquals(initial[0], bp.getRegenLimit()[0]);
-        assertEquals(initial[1]+modChange, bp.getRegenLimit()[1]);
-        assertEquals(initial[0]*(initial[1]+modChange), bp.getRegenLimit()[2]);
-
-        //Reset to initial
-        bp.AddToRegenLimit(0,-modChange);
-        assertEquals(initial[0], bp.getRegenLimit()[0]);
-        assertEquals(initial[1], bp.getRegenLimit()[1]);
-        assertEquals(initial[0]*initial[1], bp.getRegenLimit()[2]);
-
-        //Change both gross Stats and the modifier
-        bp.AddToRegenLimit(grossChange,modChange);
-        assertEquals(initial[0]+grossChange, bp.getRegenLimit()[0]);
-        assertEquals(initial[1]+modChange, bp.getRegenLimit()[1]);
-        assertEquals((initial[0]+grossChange)*(initial[1]+modChange), bp.getRegenLimit()[2]);
-
-        //Reset to initial
-        bp.AddToRegenLimit(-grossChange,-modChange);
-        assertEquals(initial[0], bp.getRegenLimit()[0]);
-        assertEquals(initial[1], bp.getRegenLimit()[1]);
-        assertEquals(initial[0]*initial[1], bp.getRegenLimit()[2]);
-    }
-
-    @org.junit.jupiter.api.Test
-    void addToRegenRate() {
-        float[] initial = {bp.getRegenRate()[0], bp.getRegenRate()[1],bp.getRegenRate()[2]};
-        float grossChange = 50;
-        float modChange = 0.5f;
-
-        //Change the Gross Stats
-        bp.AddToRegenRate(grossChange,0);
-        assertEquals(initial[0]+grossChange, bp.getRegenRate()[0]);
-        assertEquals(initial[1], bp.getRegenRate()[1]);
-        assertEquals((initial[0]+grossChange)*initial[1], bp.getRegenRate()[2]);
-
-        //Reset to initial
-        bp.AddToRegenRate(-grossChange,0);
-        assertEquals(initial[0], bp.getRegenRate()[0]);
-        assertEquals(initial[1], bp.getRegenRate()[1]);
-        assertEquals(initial[0]*initial[1], bp.getRegenRate()[2]);
-
-        //Change the Mod Stats
-        bp.AddToRegenRate(0,modChange);
-        assertEquals(initial[0], bp.getRegenRate()[0]);
-        assertEquals(initial[1]+modChange, bp.getRegenRate()[1]);
-        assertEquals(initial[0]*(initial[1]+modChange), bp.getRegenRate()[2]);
-
-        //Reset to initial
-        bp.AddToRegenRate(0,-modChange);
-        assertEquals(initial[0], bp.getRegenRate()[0]);
-        assertEquals(initial[1], bp.getRegenRate()[1]);
-        assertEquals(initial[0]*initial[1], bp.getRegenRate()[2]);
-
-        //Change both gross Stats and the modifier
-        bp.AddToRegenRate(grossChange,modChange);
-        assertEquals(initial[0]+grossChange, bp.getRegenRate()[0]);
-        assertEquals(initial[1]+modChange, bp.getRegenRate()[1]);
-        assertEquals((initial[0]+grossChange)*(initial[1]+modChange), bp.getRegenRate()[2]);
-
-        //Reset to initial
-        bp.AddToRegenRate(-grossChange,-modChange);
-        assertEquals(initial[0], bp.getRegenRate()[0]);
-        assertEquals(initial[1], bp.getRegenRate()[1]);
-        assertEquals(initial[0]*initial[1], bp.getRegenRate()[2]);
-    }
-
-    @org.junit.jupiter.api.Test
-    void addToArmour() {
-        float[] initial = {bp.getArmour()[0], bp.getArmour()[1],bp.getArmour()[2]};
-        float grossChange = 50;
-        float modChange = 0.5f;
-
-        //Change the Gross Stats
-        bp.AddToArmour(grossChange,0);
-        assertEquals(initial[0]+grossChange, bp.getArmour()[0]);
-        assertEquals(initial[1], bp.getArmour()[1]);
-        assertEquals((initial[0]+grossChange)*initial[1], bp.getArmour()[2]);
-
-        //Reset to initial
-        bp.AddToArmour(-grossChange,0);
-        assertEquals(initial[0], bp.getArmour()[0]);
-        assertEquals(initial[1], bp.getArmour()[1]);
-        assertEquals(initial[0]*initial[1], bp.getArmour()[2]);
-
-        //Change the Mod Stats
-        bp.AddToArmour(0,modChange);
-        assertEquals(initial[0], bp.getArmour()[0]);
-        assertEquals(initial[1]+modChange, bp.getArmour()[1]);
-        assertEquals(initial[0]*(initial[1]+modChange), bp.getArmour()[2]);
-
-        //Reset to initial
-        bp.AddToArmour(0,-modChange);
-        assertEquals(initial[0], bp.getArmour()[0]);
-        assertEquals(initial[1], bp.getArmour()[1]);
-        assertEquals(initial[0]*initial[1], bp.getArmour()[2]);
-
-        //Change both gross Stats and the modifier
-        bp.AddToArmour(grossChange,modChange);
-        assertEquals(initial[0]+grossChange, bp.getArmour()[0]);
-        assertEquals(initial[1]+modChange, bp.getArmour()[1]);
-        assertEquals((initial[0]+grossChange)*(initial[1]+modChange), bp.getArmour()[2]);
-
-        //Reset to initial
-        bp.AddToArmour(-grossChange,-modChange);
-        assertEquals(initial[0], bp.getArmour()[0]);
-        assertEquals(initial[1], bp.getArmour()[1]);
-        assertEquals(initial[0]*initial[1], bp.getArmour()[2]);
-    }
-
-    @org.junit.jupiter.api.Test
-    void addToSize() {
-        float[] initial = {bp.getSize()[0], bp.getSize()[1],bp.getSize()[2]};
-        float grossChange = 50;
-        float modChange = 0.5f;
-
-        //Change the Gross Stats
-        bp.AddToSize(grossChange,0);
-        assertEquals(initial[0]+grossChange, bp.getSize()[0]);
-        assertEquals(initial[1], bp.getSize()[1]);
-        assertEquals((initial[0]+grossChange)*initial[1], bp.getSize()[2]);
-        assertEquals(bp.getSize()[2], p.getSize()[0]);
-
-        //Reset to initial
-        bp.AddToSize(-grossChange,0);
-        assertEquals(initial[0], bp.getSize()[0]);
-        assertEquals(initial[1], bp.getSize()[1]);
-        assertEquals(initial[0]*initial[1], bp.getSize()[2]);
-        assertEquals(bp.getSize()[2], p.getSize()[0]);
-
-        //Change the Mod Stats
-        bp.AddToSize(0,modChange);
-        assertEquals(initial[0], bp.getSize()[0]);
-        assertEquals(initial[1]+modChange, bp.getSize()[1]);
-        assertEquals(initial[0]*(initial[1]+modChange), bp.getSize()[2]);
-        assertEquals(bp.getSize()[2], p.getSize()[0]);
-
-        //Reset to initial
-        bp.AddToSize(0,-modChange);
-        assertEquals(initial[0], bp.getSize()[0]);
-        assertEquals(initial[1], bp.getSize()[1]);
-        assertEquals(initial[0]*initial[1], bp.getSize()[2]);
-        assertEquals(bp.getSize()[2], p.getSize()[0]);
-
-        //Change both gross Stats and the modifier
-        bp.AddToSize(grossChange,modChange);
-        assertEquals(initial[0]+grossChange, bp.getSize()[0]);
-        assertEquals(initial[1]+modChange, bp.getSize()[1]);
-        assertEquals((initial[0]+grossChange)*(initial[1]+modChange), bp.getSize()[2]);
-        assertEquals(bp.getSize()[2], p.getSize()[0]);
-
-        //Reset to initial
-        bp.AddToSize(-grossChange,-modChange);
-        assertEquals(initial[0], bp.getSize()[0]);
-        assertEquals(initial[1], bp.getSize()[1]);
-        assertEquals(initial[0]*initial[1], bp.getSize()[2]);
-        assertEquals(bp.getSize()[2], p.getSize()[0]);
-    }
-
-    @org.junit.jupiter.api.Test
-    void addToOrganCapacity() {
-        float[] initial = {bp.getOrganCapacity()[0], bp.getOrganCapacity()[1],bp.getOrganCapacity()[2]};
-        float grossChange = 50;
-        float modChange = 0.5f;
-
-        //Change the Gross Stats
-        bp.AddToOrganCapacity(grossChange,0);
-        assertEquals(initial[0]+grossChange, bp.getOrganCapacity()[0]);
-        assertEquals(initial[1], bp.getOrganCapacity()[1]);
-        assertEquals((initial[0]+grossChange)*initial[1], bp.getOrganCapacity()[2]);
-
-        //Reset to initial
-        bp.AddToOrganCapacity(-grossChange,0);
-        assertEquals(initial[0], bp.getOrganCapacity()[0]);
-        assertEquals(initial[1], bp.getOrganCapacity()[1]);
-        assertEquals(initial[0]*initial[1], bp.getOrganCapacity()[2]);
-
-        //Change the Mod Stats
-        bp.AddToOrganCapacity(0,modChange);
-        assertEquals(initial[0], bp.getOrganCapacity()[0]);
-        assertEquals(initial[1]+modChange, bp.getOrganCapacity()[1]);
-        assertEquals(initial[0]*(initial[1]+modChange), bp.getOrganCapacity()[2]);
-
-        //Reset to initial
-        bp.AddToOrganCapacity(0,-modChange);
-        assertEquals(initial[0], bp.getOrganCapacity()[0]);
-        assertEquals(initial[1], bp.getOrganCapacity()[1]);
-        assertEquals(initial[0]*initial[1], bp.getOrganCapacity()[2]);
-
-        //Change both gross Stats and the modifier
-        bp.AddToOrganCapacity(grossChange,modChange);
-        assertEquals(initial[0]+grossChange, bp.getOrganCapacity()[0]);
-        assertEquals(initial[1]+modChange, bp.getOrganCapacity()[1]);
-        assertEquals((initial[0]+grossChange)*(initial[1]+modChange), bp.getOrganCapacity()[2]);
-
-        //Reset to initial
-        bp.AddToOrganCapacity(-grossChange,-modChange);
-        assertEquals(initial[0], bp.getOrganCapacity()[0]);
-        assertEquals(initial[1], bp.getOrganCapacity()[1]);
-        assertEquals(initial[0]*initial[1], bp.getOrganCapacity()[2]);
-    }
-
-    @org.junit.jupiter.api.Test
-    void addToSpeed() {
-        float[] initial = {bp.getSpeed()[0], bp.getSpeed()[1],bp.getSpeed()[2]};
-        float grossChange = 50;
-        float modChange = 0.5f;
-
-        //Change the Gross Stats
-        bp.AddToSpeed(grossChange,0);
-        assertEquals(initial[0]+grossChange, bp.getSpeed()[0]);
-        assertEquals(initial[1], bp.getSpeed()[1]);
-        assertEquals((initial[0]+grossChange)*initial[1], bp.getSpeed()[2]);
-        assertEquals(bp.getSpeed()[2], p.getSpeed()[0]);
-
-        //Reset to initial
-        bp.AddToSpeed(-grossChange,0);
-        assertEquals(initial[0], bp.getSpeed()[0]);
-        assertEquals(initial[1], bp.getSpeed()[1]);
-        assertEquals(initial[0]*initial[1], bp.getSpeed()[2]);
-        assertEquals(bp.getSpeed()[2], p.getSpeed()[0]);
-
-        //Change the Mod Stats
-        bp.AddToSpeed(0,modChange);
-        assertEquals(initial[0], bp.getSpeed()[0]);
-        assertEquals(initial[1]+modChange, bp.getSpeed()[1]);
-        assertEquals(initial[0]*(initial[1]+modChange), bp.getSpeed()[2]);
-        assertEquals(bp.getSpeed()[2], p.getSpeed()[0]);
-
-        //Reset to initial
-        bp.AddToSpeed(0,-modChange);
-        assertEquals(initial[0], bp.getSpeed()[0]);
-        assertEquals(initial[1], bp.getSpeed()[1]);
-        assertEquals(initial[0]*initial[1], bp.getSpeed()[2]);
-        assertEquals(bp.getSpeed()[2], p.getSpeed()[0]);
-
-        //Change both gross Stats and the modifier
-        bp.AddToSpeed(grossChange,modChange);
-        assertEquals(initial[0]+grossChange, bp.getSpeed()[0]);
-        assertEquals(initial[1]+modChange, bp.getSpeed()[1]);
-        assertEquals((initial[0]+grossChange)*(initial[1]+modChange), bp.getSpeed()[2]);
-        assertEquals(bp.getSpeed()[2], p.getSpeed()[0]);
-
-        //Reset to initial
-        bp.AddToSpeed(-grossChange,-modChange);
-        assertEquals(initial[0], bp.getSpeed()[0]);
-        assertEquals(initial[1], bp.getSpeed()[1]);
-        assertEquals(initial[0]*initial[1], bp.getSpeed()[2]);
-        assertEquals(bp.getSpeed()[2], p.getSpeed()[0]);
-    }
-
-    @org.junit.jupiter.api.Test
-    void addToConsciousness() {
-        float[] initial = {bp.getConsciousness()[0], bp.getConsciousness()[1],bp.getConsciousness()[2]};
-        float grossChange = 50;
-        float modChange = 0.5f;
-
-        //Change the Gross Stats
-        bp.AddToConsciousness(grossChange,0);
-        assertEquals(initial[0]+grossChange, bp.getConsciousness()[0]);
-        assertEquals(initial[1], bp.getConsciousness()[1]);
-        assertEquals((initial[0]+grossChange)*initial[1], bp.getConsciousness()[2]);
-        assertEquals(bp.getConsciousness()[2], p.getConsciousness()[0]);
-
-        //Reset to initial
-        bp.AddToConsciousness(-grossChange,0);
-        assertEquals(initial[0], bp.getConsciousness()[0]);
-        assertEquals(initial[1], bp.getConsciousness()[1]);
-        assertEquals(initial[0]*initial[1], bp.getConsciousness()[2]);
-        assertEquals(bp.getConsciousness()[2], p.getConsciousness()[0]);
-
-        //Change the Mod Stats
-        bp.AddToConsciousness(0,modChange);
-        assertEquals(initial[0], bp.getConsciousness()[0]);
-        assertEquals(initial[1]+modChange, bp.getConsciousness()[1]);
-        assertEquals(initial[0]*(initial[1]+modChange), bp.getConsciousness()[2]);
-        assertEquals(bp.getConsciousness()[2], p.getConsciousness()[0]);
-
-        //Reset to initial
-        bp.AddToConsciousness(0,-modChange);
-        assertEquals(initial[0], bp.getConsciousness()[0]);
-        assertEquals(initial[1], bp.getConsciousness()[1]);
-        assertEquals(initial[0]*initial[1], bp.getConsciousness()[2]);
-        assertEquals(bp.getConsciousness()[2], p.getConsciousness()[0]);
-
-        //Change both gross Stats and the modifier
-        bp.AddToConsciousness(grossChange,modChange);
-        assertEquals(initial[0]+grossChange, bp.getConsciousness()[0]);
-        assertEquals(initial[1]+modChange, bp.getConsciousness()[1]);
-        assertEquals((initial[0]+grossChange)*(initial[1]+modChange), bp.getConsciousness()[2]);
-        assertEquals(bp.getConsciousness()[2], p.getConsciousness()[0]);
-
-        //Reset to initial
-        bp.AddToConsciousness(-grossChange,-modChange);
-        assertEquals(initial[0], bp.getConsciousness()[0]);
-        assertEquals(initial[1], bp.getConsciousness()[1]);
-        assertEquals(initial[0]*initial[1], bp.getConsciousness()[2]);
-        assertEquals(bp.getConsciousness()[2], p.getConsciousness()[0]);
-    }
-
-    @org.junit.jupiter.api.Test
-    void addToGrabbingSlots() {
-        float[] initial = {bp.getGrabbingSlots()[0], bp.getGrabbingSlots()[1],bp.getGrabbingSlots()[2]};
-        float grossChange = 50;
-        float modChange = 0.5f;
-
-        //Change the Gross Stats
-        bp.AddToGrabbingSlots(grossChange,0);
-        assertEquals(initial[0]+grossChange, bp.getGrabbingSlots()[0]);
-        assertEquals(initial[1], bp.getGrabbingSlots()[1]);
-        assertEquals((initial[0]+grossChange)*initial[1], bp.getGrabbingSlots()[2]);
-
-        //Reset to initial
-        bp.AddToGrabbingSlots(-grossChange,0);
-        assertEquals(initial[0], bp.getGrabbingSlots()[0]);
-        assertEquals(initial[1], bp.getGrabbingSlots()[1]);
-        assertEquals(initial[0]*initial[1], bp.getGrabbingSlots()[2]);
-
-        //Change the Mod Stats
-        bp.AddToGrabbingSlots(0,modChange);
-        assertEquals(initial[0], bp.getGrabbingSlots()[0]);
-        assertEquals(initial[1]+modChange, bp.getGrabbingSlots()[1]);
-        assertEquals(initial[0]*(initial[1]+modChange), bp.getGrabbingSlots()[2]);
-
-        //Reset to initial
-        bp.AddToGrabbingSlots(0,-modChange);
-        assertEquals(initial[0], bp.getGrabbingSlots()[0]);
-        assertEquals(initial[1], bp.getGrabbingSlots()[1]);
-        assertEquals(initial[0]*initial[1], bp.getGrabbingSlots()[2]);
-
-        //Change both gross Stats and the modifier
-        bp.AddToGrabbingSlots(grossChange,modChange);
-        assertEquals(initial[0]+grossChange, bp.getGrabbingSlots()[0]);
-        assertEquals(initial[1]+modChange, bp.getGrabbingSlots()[1]);
-        assertEquals((initial[0]+grossChange)*(initial[1]+modChange), bp.getGrabbingSlots()[2]);
-
-        //Reset to initial
-        bp.AddToGrabbingSlots(-grossChange,-modChange);
-        assertEquals(initial[0], bp.getGrabbingSlots()[0]);
-        assertEquals(initial[1], bp.getGrabbingSlots()[1]);
-        assertEquals(initial[0]*initial[1], bp.getGrabbingSlots()[2]);
-    }
-
-    @org.junit.jupiter.api.Test
-    void addToSight() {
-        float[] initial = {bp.getSight()[0], bp.getSight()[1],bp.getSight()[2]};
-        float grossChange = 50;
-        float modChange = 0.5f;
-
-        //Change the Gross Stats
-        bp.AddToSight(grossChange,0);
-        assertEquals(initial[0]+grossChange, bp.getSight()[0]);
-        assertEquals(initial[1], bp.getSight()[1]);
-        assertEquals((initial[0]+grossChange)*initial[1], bp.getSight()[2]);
-        assertEquals(bp.getSight()[2], p.getSight()[0]);
-
-        //Reset to initial
-        bp.AddToSight(-grossChange,0);
-        assertEquals(initial[0], bp.getSight()[0]);
-        assertEquals(initial[1], bp.getSight()[1]);
-        assertEquals(initial[0]*initial[1], bp.getSight()[2]);
-        assertEquals(bp.getSight()[2], p.getSight()[0]);
-
-        //Change the Mod Stats
-        bp.AddToSight(0,modChange);
-        assertEquals(initial[0], bp.getSight()[0]);
-        assertEquals(initial[1]+modChange, bp.getSight()[1]);
-        assertEquals(initial[0]*(initial[1]+modChange), bp.getSight()[2]);
-        assertEquals(bp.getSight()[2], p.getSight()[0]);
-
-        //Reset to initial
-        bp.AddToSight(0,-modChange);
-        assertEquals(initial[0], bp.getSight()[0]);
-        assertEquals(initial[1], bp.getSight()[1]);
-        assertEquals(initial[0]*initial[1], bp.getSight()[2]);
-        assertEquals(bp.getSight()[2], p.getSight()[0]);
-
-        //Change both gross Stats and the modifier
-        bp.AddToSight(grossChange,modChange);
-        assertEquals(initial[0]+grossChange, bp.getSight()[0]);
-        assertEquals(initial[1]+modChange, bp.getSight()[1]);
-        assertEquals((initial[0]+grossChange)*(initial[1]+modChange), bp.getSight()[2]);
-        assertEquals(bp.getSight()[2], p.getSight()[0]);
-
-        //Reset to initial
-        bp.AddToSight(-grossChange,-modChange);
-        assertEquals(initial[0], bp.getSight()[0]);
-        assertEquals(initial[1], bp.getSight()[1]);
-        assertEquals(initial[0]*initial[1], bp.getSight()[2]);
-        assertEquals(bp.getSight()[2], p.getSight()[0]);
+    @Test
+    void AddToStatLocal()
+    {
+        float[][] initialStats = bp.GetMyTotalStats().clone();
+        float[][] newStatList = new float[16][6];
+        for (int i = 0; i < 16; i++)
+        {
+            float gross = Math.round(MathHelper.randomRange()*10);
+            float mod = MathHelper.randomRange();
+            float total = gross*mod;
+            float upsGrossBP = MathHelper.randomRange()*10;
+            float upsModBP = MathHelper.randomRange();
+            float upsModPers = MathHelper.randomRange();
+            newStatList[i] = new float[]{gross, mod, total, upsGrossBP, upsModBP, upsModPers};
+        }
+        bp.PrintBodyPart();
+        bp.AddToStat(newStatList);
+        bp.PrintBodyPart();
+
+        for (int i = 0; i < 16; i++)
+        {
+            assertEquals(bp.GetMyTotalStats()[i][0],newStatList[i][3]+initialStats[i][0], accuracyDelta);
+            assertEquals(bp.GetMyTotalStats()[i][1],newStatList[i][4]+initialStats[i][1], accuracyDelta);
+            assertEquals(bp.GetMyTotalStats()[i][2],bp.GetMyTotalStats()[i][0]*bp.GetMyTotalStats()[i][1], accuracyDelta);
+        }
+
+        float[][] newStatList2 = new float[16][6];
+        for (int i = 0; i < 16; i++)
+        {
+            float gross = MathHelper.randomRange()*10;
+            float mod = MathHelper.randomRange();
+            float total = gross*mod;
+            float upsGrossBP = MathHelper.randomRange()*10;
+            float upsModBP = MathHelper.randomRange();
+            float upsModPers = MathHelper.randomRange();
+            float[] someStat = {gross,mod,total,upsGrossBP,upsModBP,upsModPers};
+            newStatList2[i] = new float[]{gross, mod, total, upsGrossBP, upsModBP, upsModPers};
+        }
+
+        bp.AddToStat(newStatList2);
+
+        for (int i = 0; i < 16; i++)
+        {
+            assertEquals(bp.GetMyTotalStats()[i][0],newStatList[i][3]+newStatList2[i][3]+initialStats[i][0], accuracyDelta);
+            assertEquals(bp.GetMyTotalStats()[i][1],newStatList[i][4]+newStatList2[i][4]+initialStats[i][1], accuracyDelta);
+            assertEquals(bp.GetMyTotalStats()[i][2],bp.GetMyTotalStats()[i][0]*bp.GetMyTotalStats()[i][1], accuracyDelta);
+        }
     }
 }

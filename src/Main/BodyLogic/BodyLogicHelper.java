@@ -23,8 +23,8 @@ public class BodyLogicHelper
      */
     static public float[] calculateBodyPartStat(String[] incomingStandardStat, int bias, int randomness, int shiftStrength)
     {
-        float[] sol = new float[2];
-        for (int i = 0; i < 2; i++)
+        float[] sol = new float[5];
+        for (int i = 0; i < 5; i++)
         {
             float a = Float.parseFloat(incomingStandardStat[i]);
             float b = (float)bias;

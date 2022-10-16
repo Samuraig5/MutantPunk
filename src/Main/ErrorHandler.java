@@ -24,13 +24,29 @@ public class ErrorHandler
             StackTraceElement[] elements = t.getStackTrace();
             for (int i = 0; i < depth; i++)
             {
-                String caller = elements[i+1].getClassName();
+                String caller = elements[i+2].getClassName();
                 s = caller + " -> " + s;
             }
             System.out.println(s);
         }
     }
 
-    public static void LogData(String s) {
+    static public void PrintArray(float[] a, String name)
+    {
+        LogData(true,"Printing Array: " + name);
+        for (int i = 0; i < a.length; i++) {
+            System.out.println("["+i+"] - " + a[i]);
+        }
+    }
+    static public void PrintArray(boolean print, String[] a, String name)
+    {
+        if(print)
+        {
+            LogData(true,"Printing Array: " + name,1);
+            for (int i = 0; i < a.length; i++)
+            {
+                System.out.println("["+i+"] - " + a[i]);
+            }
+        }
     }
 }
