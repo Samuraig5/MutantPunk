@@ -55,15 +55,15 @@ public class ConsoleBodyInterface
         int modPadding = 10;
         int finalPadding = 7;
         c.cc.println(" STATS             ¦ GROSS ¦ MODIFIER ¦ TOTAL ¦");
-        c.cc.println("Consciousness:     ¦" + generateStatLine(p.GetMyTotalStats()[0],grossPadding,modPadding,finalPadding));
-        c.cc.println("Blood Capacity:    ¦" + generateStatLine(p.GetMyTotalStats()[1],grossPadding,modPadding,finalPadding));
-        c.cc.println("Blood Generation:  ¦" + generateStatLine(p.GetMyTotalStats()[2],grossPadding,modPadding,finalPadding));
-        c.cc.println("Blood Needed:      ¦" + generateStatLine(p.GetMyTotalStats()[3],grossPadding,modPadding,finalPadding));
-        c.cc.println("Energy Capacity:   ¦" + generateStatLine(p.GetMyTotalStats()[4],grossPadding,modPadding,finalPadding));
-        c.cc.println("Energy Generation: ¦" + generateStatLine(p.GetMyTotalStats()[5],grossPadding,modPadding,finalPadding));
-        c.cc.println("Energy Needed:     ¦" + generateStatLine(p.GetMyTotalStats()[6],grossPadding,modPadding,finalPadding));
-        c.cc.println("Size:              ¦" + generateStatLine(p.GetMyTotalStats()[7],grossPadding,modPadding,finalPadding));
-        c.cc.println("Speed:             ¦" + generateStatLine(p.GetMyTotalStats()[8],grossPadding,modPadding,finalPadding));
+        c.cc.println("Blood Capacity:    ¦" + generateStatLine(p.GetMyTotalStats()[0],grossPadding,modPadding,finalPadding));
+        c.cc.println("Blood Generation:  ¦" + generateStatLine(p.GetMyTotalStats()[1],grossPadding,modPadding,finalPadding));
+        c.cc.println("Blood Needed:      ¦" + generateStatLine(p.GetMyTotalStats()[2],grossPadding,modPadding,finalPadding));
+        c.cc.println("Energy Capacity:   ¦" + generateStatLine(p.GetMyTotalStats()[3],grossPadding,modPadding,finalPadding));
+        c.cc.println("Energy Generation: ¦" + generateStatLine(p.GetMyTotalStats()[4],grossPadding,modPadding,finalPadding));
+        c.cc.println("Energy Needed:     ¦" + generateStatLine(p.GetMyTotalStats()[5],grossPadding,modPadding,finalPadding));
+        c.cc.println("Size:              ¦" + generateStatLine(p.GetMyTotalStats()[6],grossPadding,modPadding,finalPadding));
+        c.cc.println("Speed:             ¦" + generateStatLine(p.GetMyTotalStats()[7],grossPadding,modPadding,finalPadding));
+        c.cc.println("Consciousness:     ¦" + generateStatLine(p.GetMyTotalStats()[8],grossPadding,modPadding,finalPadding));
         c.cc.println("Sight:             ¦" + generateStatLine(p.GetMyTotalStats()[9],grossPadding,modPadding,finalPadding));
         c.cc.println("");
 
