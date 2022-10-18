@@ -160,7 +160,7 @@ public class BodyPart
             }
             else
             {
-                ErrorHandler.LogData(true,"Failed to attach internal because it's too big!");
+                ErrorHandler.LogData(true,"Failed to attach internal bodyPart because it's too big!");
                 return false;
             }
         }
@@ -345,11 +345,11 @@ public class BodyPart
 
     public void PrintBodyPart()
     {
-        ErrorHandler.LogData(true, "===" + name + "===");
+        ErrorHandler.LogData(false, "===" + name + "===");
         for (int i = 0; i < 16; i++)
         {
-            ErrorHandler.LogData(true,i + "th stat: " + myTotalStats[i][0] + " ¦ " + myTotalStats[i][1] + "¦" + myTotalStats[i][2]);
+            ErrorHandler.LogData(false,i + "th stat: " + myTotalStats[i][0] + " ¦ " + myTotalStats[i][1] + "¦" + myTotalStats[i][2]);
         }
-        ErrorHandler.LogData(true, "======");
+        ErrorHandler.LogData(false, "======");
     }
 }
