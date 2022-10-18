@@ -138,14 +138,14 @@ public class ConsoleBodyInterface
         int grossPadding = 7;
         int modPadding = 10;
         int finalPadding = 7;
-        int parentGrossPadding = 21;
+        int parentGrossPadding = 22;
         int parentModPadding = 25;
         int personModPadding = 25;
         c.cc.println("Health:         "+bp.getCurrentHealth()+"/"+bp.GetMyTotalStats()[6][2]);
         c.cc.println("Organ Capacity: "+bp.getCurrentOrganCapacity()+"/"+bp.GetMyTotalStats()[11][2]);
         c.cc.println("");
 
-        c.cc.println(" STATS             ¦ GROSS ¦ MODIFIER ¦ TOTAL ¦ GOSS BONI TO PARENT ¦ MODIFIER BONI TO PARENT ¦ MODIFIER BONI TO PERSON ¦");
+        c.cc.println(" STATS             ¦ GROSS ¦ MODIFIER ¦ TOTAL ¦ GROSS BONI TO PARENT ¦ MODIFIER BONI TO PARENT ¦ MODIFIER BONI TO PERSON ¦");
         c.cc.println("Blood Capacity:    ¦" + generateStatLine(bp.GetMyTotalStats()[0],grossPadding,modPadding,finalPadding,parentGrossPadding,parentModPadding,personModPadding));
         c.cc.println("Blood Generation:  ¦" + generateStatLine(bp.GetMyTotalStats()[1],grossPadding,modPadding,finalPadding,parentGrossPadding,parentModPadding,personModPadding));
         c.cc.println("Blood Needed:      ¦" + generateStatLine(bp.GetMyTotalStats()[2],grossPadding,modPadding,finalPadding,parentGrossPadding,parentModPadding,personModPadding));
