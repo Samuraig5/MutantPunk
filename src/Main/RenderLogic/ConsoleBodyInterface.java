@@ -128,6 +128,7 @@ public class ConsoleBodyInterface
 
         List<String> topBarMenuBlockList = new ArrayList<>();
         topBarMenuBlockList.add("Deal one damage");
+        topBarMenuBlockList.add("Allow to regenerate");
 
         displayBodyPartStats(bp);
 

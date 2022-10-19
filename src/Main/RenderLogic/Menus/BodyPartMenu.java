@@ -204,8 +204,24 @@ public class BodyPartMenu implements MenuLogic
     }
 
     @Override
-    public void num1Element() {
-
+    public void num1Element()
+    {
+        bp.regenerateDamage();
+        if(bp.getCurrentHealth() > 0)
+        {
+            c.cb.openBodyPartView(bp);
+        }
+        else
+        {
+            if (p != null)
+            {
+                c.cb.openBodyView(p);
+            }
+            else
+            {
+                c.cb.listAllPersons();
+            }
+        }
     }
 
     @Override

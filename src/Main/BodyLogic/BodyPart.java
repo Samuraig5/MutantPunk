@@ -210,6 +210,7 @@ public class BodyPart
      */
     private void removeBodyPartRecursively()
     {
+        //TODO: The stats of Children of a removed bodyParts seem not to be removed from the person
         for (BodyPart attachedBodyPart : this.attachedBodyParts)
         {
             attachedBodyPart.removeBodyPartRecursively();

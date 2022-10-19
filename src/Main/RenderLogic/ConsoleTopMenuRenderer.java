@@ -13,15 +13,23 @@ public class ConsoleTopMenuRenderer
     public void renderTopMenuList(List<String> input)
     {
         List<String[]> blocks = new ArrayList<>();
-        blocks.add(generateBlock("0: " + input.get(0), 20));
+        for (int i = 0; i < input.size(); i++) {
+            blocks.add(generateBlock(i + ": " + input.get(i), 20));
+        }
+
+        String top = "+";
+        String middle = "|";
+        String bottom = "+";
 
         for (String[] s: blocks)
         {
-            c.cc.println(s[0]);
-            c.cc.println(s[1]);
-            c.cc.println(s[2]);
+            top = top + s[0] + "+";
+            middle = middle + s[1] + "|";
+            bottom = bottom + s[2] + "+";
         }
-
+        c.cc.println(top);
+        c.cc.println(middle);
+        c.cc.println(bottom);
         c.cc.println("");
     }
 
@@ -43,23 +51,22 @@ public class ConsoleTopMenuRenderer
     private String[] generateBlock(String message, int length)
     {
         String[] s = new String[3];
-        String line = getHorizontalLines(length, '+', '-');
+        String line = getHorizontalLines(length, '-');
         String m = pruneMessage(message, length-2);
 
         s[0] = line;
-        s[1] = "+ " + rightpad(m,length-1) + "+";
+        s[1] = " " + rightpad(m,length-2) + " ";
         s[2] = line;
 
         return s;
     }
-    private String getHorizontalLines(int length, Character edge, Character filler)
+    private String getHorizontalLines(int length, Character filler)
     {
-        String s = "" + edge;
+        String s = "";
         for (int i = 0; i < length; i++)
         {
             s = s + filler;
         }
-        s = s + edge;
         return s;
     }
     private String pruneMessage(String message, int maxLength)
