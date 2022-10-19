@@ -14,6 +14,7 @@ public class ConsoleListRenderer
     private boolean currentlyRendering = false;
     private List<String> currentlyRenderedList = new ArrayList<>();
     private String currentlyRenderedTitle;
+    private List<String> currentTopBarMenu = new ArrayList<>();
     private int amountOfPages = 0;
     private int currentPage = 0;
 
@@ -22,23 +23,33 @@ public class ConsoleListRenderer
         c = console;
     }
 
+    public void renderList(List<String> list, String title, MenuLogic newMenuLogic, List<String> topMenuBar)
+    {
+        generateList(list,title,newMenuLogic,topMenuBar);
+        renderPage();
+    }
     public void renderList(List<String> list, String title, MenuLogic newMenuLogic)
     {
-        generateList(list,title,newMenuLogic);
-        renderPage();
+        renderList(list,title,newMenuLogic,new ArrayList<>());
+    }
+    public void appendList(List<String> list, String title, MenuLogic newMenuLogic, List<String> topMenuBar)
+    {
+        generateList(list,title,newMenuLogic, topMenuBar);
+        appendPage();
     }
     public void appendList(List<String> list, String title, MenuLogic newMenuLogic)
     {
-        generateList(list,title,newMenuLogic);
-        appendPage();
+        appendList(list,title,newMenuLogic,new ArrayList<>());
     }
-    private void generateList(List<String> list, String title, MenuLogic newMenuLogic)
+
+    private void generateList(List<String> list, String title, MenuLogic newMenuLogic, List<String> topMenuBar)
     {
         c.ckb.setCurrentMenu(newMenuLogic);
         reset();
         currentlyRendering = true;
         currentlyRenderedList = list;
         currentlyRenderedTitle = title;
+        currentTopBarMenu = topMenuBar;
         currentPage = 1;
         amountOfPages = 1;
 
@@ -63,6 +74,11 @@ public class ConsoleListRenderer
         {
             String s = styledDocument.getText(0, styledDocument.getLength());
             c.cc.clear();
+
+            if (currentTopBarMenu.size()>0)
+            {
+                c.ctmr.renderTopMenuList(currentTopBarMenu);
+            }
 
             if (amountOfPages > 1)
             {

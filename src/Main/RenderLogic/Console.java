@@ -12,6 +12,7 @@ public class Console
     public ConsoleBodyInterface cb = new ConsoleBodyInterface(this);
     public ConsoleListRenderer clir = new ConsoleListRenderer(this);
     public ConsoleKeyBinds ckb;
+    public ConsoleTopMenuRenderer ctmr = new ConsoleTopMenuRenderer(this);
 
     public final Color errorColour = new Color(255,155,155);
 

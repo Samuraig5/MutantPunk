@@ -126,11 +126,14 @@ public class ConsoleBodyInterface
     {
         c.cc.clear();
 
+        List<String> topBarMenuBlockList = new ArrayList<>();
+        topBarMenuBlockList.add("Deal one damage");
+
         displayBodyPartStats(bp);
 
-        List<String> list = new ArrayList<>();
-        assembleBodyPartRelations(bp, list);
-        c.clir.appendList(list, bp.getMyPerson().name+"'s "+bp.getName(), new BodyPartMenu(c,bp));
+        List<String> bodyPartList = new ArrayList<>();
+        assembleBodyPartRelations(bp, bodyPartList);
+        c.clir.appendList(bodyPartList, bp.getMyPerson().name+"'s "+bp.getName(), new BodyPartMenu(c,bp), topBarMenuBlockList);
 
     }
     private void displayBodyPartStats(BodyPart bp)
