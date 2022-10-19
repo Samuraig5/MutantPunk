@@ -164,28 +164,30 @@ public class ConsoleBodyInterface
         c.cc.println("Sight:             ¦" + generateStatLine(bp.GetMyTotalStats()[15],grossPadding,modPadding,finalPadding,parentGrossPadding,parentModPadding,personModPadding));
 
         c.cc.println("");
+
+        c.cc.println("My Person: " );
     }
     private void assembleBodyPartRelations(BodyPart bp, List<String> list)
     {
         if (bp.getMyPerson() != null)
         {
-            list.add("My Person: " + bp.getMyPerson().name);
+            list.add(bp.getMyPerson().name  + "\n" + "" + "\n" + "My parent body parts:");
         }
         else
         {
-            list.add("My Person: N/A");
+            list.add("N/A"  + "\n" + "" + "\n" + "My parent body part:");
         }
         if (bp.getParentBodyPart() != null)
         {
-            list.add("My parent body part: " + bp.getParentBodyPart().getName());
+            list.add(bp.getParentBodyPart().getName()  + "\n" + "" + "\n" + "Attached body parts: ");
         }
         else
         {
-            list.add("My parent body part: N/A");
+            list.add("N/A"  + "\n" + "" + "\n" + "Attached body parts: ");
         }
         for (BodyPart nextbp:bp.getAttachedBodyParts())
         {
-            list.add("Attached body part: " + nextbp.getName());
+            list.add(nextbp.getName());
         }
     }
 }
