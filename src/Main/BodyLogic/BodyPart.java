@@ -242,16 +242,19 @@ public class BodyPart
             myPerson.RemoveFromStat(personStats);
             ErrorHandler.LogData(false,name + " is Updating person: " + myPerson.name);
             personStats.removeAll(personStats);
-            personStats.add(myTotalStats[0]); //Blood Capacity
-            personStats.add(myTotalStats[1]); //Blood Generation
-            personStats.add(myTotalStats[2]); //Blood Needed
-            personStats.add(myTotalStats[3]); //Energy Capacity
-            personStats.add(myTotalStats[4]); //Energy Generation
-            personStats.add(myTotalStats[5]); //Energy Needed
-            personStats.add(myTotalStats[10]); //Size
-            personStats.add(myTotalStats[12]); //Speed
-            personStats.add(myTotalStats[13]); //Consciousness
-            personStats.add(myTotalStats[15]); //Sight
+            if(currentHealth > 0)
+            {
+                personStats.add(myTotalStats[0]); //Blood Capacity
+                personStats.add(myTotalStats[1]); //Blood Generation
+                personStats.add(myTotalStats[2]); //Blood Needed
+                personStats.add(myTotalStats[3]); //Energy Capacity
+                personStats.add(myTotalStats[4]); //Energy Generation
+                personStats.add(myTotalStats[5]); //Energy Needed
+                personStats.add(myTotalStats[10]); //Size
+                personStats.add(myTotalStats[12]); //Speed
+                personStats.add(myTotalStats[13]); //Consciousness
+                personStats.add(myTotalStats[15]); //Sight
+            }
             myPerson.AddToStat(personStats);
         }
         else
@@ -318,10 +321,6 @@ public class BodyPart
                 myTotalStats[i][2] = myTotalStats[i][0]*myTotalStats[i][1];
             }
         }
-    }
-    public void RemoveFromStat(float[][] statList)
-    {
-
     }
 
     public void updateStats()

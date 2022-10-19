@@ -45,6 +45,19 @@ class ConsoleKeyBinds
     Action periodAction;
     Action commaAction;
     Action escapeAction;
+    Action num0Action;
+    Action num1Action;
+    Action num2Action;
+    Action num3Action;
+    Action num4Action;
+    Action num5Action;
+    Action num6Action;
+    Action num7Action;
+    Action num8Action;
+    Action num9Action;
+
+
+
 
     ConsoleKeyBinds(Console console)
     {
@@ -82,6 +95,16 @@ class ConsoleKeyBinds
         periodAction = new PeriodAction();
         commaAction = new CommaAction();
         escapeAction = new EscapeAction();
+        num0Action = new Num0Action();
+        num1Action = new Num1Action();
+        num2Action = new Num2Action();
+        num3Action = new Num3Action();
+        num4Action = new Num4Action();
+        num5Action = new Num5Action();
+        num6Action = new Num6Action();
+        num7Action = new Num7Action();
+        num8Action = new Num8Action();
+        num9Action = new Num9Action();
 
         label.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke('a'), "aAction");
         label.getActionMap().put("aAction", aAction);
@@ -141,6 +164,27 @@ class ConsoleKeyBinds
         label.getActionMap().put("commaAction", commaAction);
         label.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), "escapeAction");
         label.getActionMap().put("escapeAction", escapeAction);
+        label.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke('0'), "num0Action");
+        label.getActionMap().put("num0Action", num0Action);
+        label.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke('1'), "num1Action");
+        label.getActionMap().put("num1Action", num1Action);
+        label.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke('2'), "num2Action");
+        label.getActionMap().put("num2Action", num2Action);
+        label.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke('3'), "num3Action");
+        label.getActionMap().put("num3Action", num3Action);
+        label.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke('4'), "num4Action");
+        label.getActionMap().put("num4Action", num4Action);
+        label.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke('5'), "num5Action");
+        label.getActionMap().put("num5Action", num5Action);
+        label.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke('6'), "num6Action");
+        label.getActionMap().put("num6Action", num6Action);
+        label.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke('7'), "num7Action");
+        label.getActionMap().put("num7Action", num7Action);
+        label.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke('8'), "num8Action");
+        label.getActionMap().put("num8Action", num8Action);
+        label.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke('9'), "num9Action");
+        label.getActionMap().put("num9Action", num9Action);
+
     }
 
     public void setCurrentMenu(MenuLogic newMenuLogic)
@@ -321,6 +365,66 @@ class ConsoleKeyBinds
         @Override
         public void actionPerformed(ActionEvent e) {
             currentMenuLogic.escapeElement();
+        }
+    }
+    public class Num0Action extends AbstractAction{
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            currentMenuLogic.num0Element();
+        }
+    }
+    public class Num1Action extends AbstractAction{
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            currentMenuLogic.num1Element();
+        }
+    }
+    public class Num2Action extends AbstractAction{
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            currentMenuLogic.num2Element();
+        }
+    }
+    public class Num3Action extends AbstractAction{
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            currentMenuLogic.num3Element();
+        }
+    }
+    public class Num4Action extends AbstractAction{
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            currentMenuLogic.num4Element();
+        }
+    }
+    public class Num5Action extends AbstractAction{
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            currentMenuLogic.num5Element();
+        }
+    }
+    public class Num6Action extends AbstractAction{
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            currentMenuLogic.num6Element();
+        }
+    }
+    public class Num7Action extends AbstractAction{
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            currentMenuLogic.num7Element();
+        }
+    }
+    public class Num8Action extends AbstractAction{
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            currentMenuLogic.num8Element();
+        }
+    }
+    public class Num9Action extends AbstractAction{
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            currentMenuLogic.num9Element();
         }
     }
 }

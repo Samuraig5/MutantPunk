@@ -1,6 +1,7 @@
 package Main.RenderLogic.Menus;
 
 import Main.BodyLogic.BodyPart;
+import Main.BodyLogic.Person;
 import Main.ErrorHandler;
 import Main.RenderLogic.Console;
 
@@ -8,10 +9,12 @@ public class BodyPartMenu implements MenuLogic
 {
     Console c;
     BodyPart bp;
+    Person p;
     public BodyPartMenu(Console console, BodyPart bodyPart)
     {
         c = console;
         bp = bodyPart;
+        p = bp.getMyPerson();
     }
 
     private void openBodyPartView(int i)
@@ -178,5 +181,70 @@ public class BodyPartMenu implements MenuLogic
     @Override
     public void escapeElement() {
         c.cb.openBodyView(bp.getMyPerson());
+    }
+
+    @Override
+    public void num0Element() {
+        bp.doDamage(1);
+        if(bp.getCurrentHealth() > 0)
+        {
+            c.cb.openBodyPartView(bp);
+        }
+        else
+        {
+            if (p != null)
+            {
+                c.cb.openBodyView(p);
+            }
+            else
+            {
+                c.cb.listAllPersons();
+            }
+        }
+    }
+
+    @Override
+    public void num1Element() {
+
+    }
+
+    @Override
+    public void num2Element() {
+
+    }
+
+    @Override
+    public void num3Element() {
+
+    }
+
+    @Override
+    public void num4Element() {
+
+    }
+
+    @Override
+    public void num5Element() {
+
+    }
+
+    @Override
+    public void num6Element() {
+
+    }
+
+    @Override
+    public void num7Element() {
+
+    }
+
+    @Override
+    public void num8Element() {
+
+    }
+
+    @Override
+    public void num9Element() {
+
     }
 }

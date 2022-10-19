@@ -169,4 +169,54 @@ public class MainMenu implements MenuLogic
     public void escapeElement() {
 
     }
+
+    @Override
+    public void num0Element() {
+
+    }
+
+    @Override
+    public void num1Element() {
+
+    }
+
+    @Override
+    public void num2Element() {
+
+    }
+
+    @Override
+    public void num3Element() {
+
+    }
+
+    @Override
+    public void num4Element() {
+
+    }
+
+    @Override
+    public void num5Element() {
+
+    }
+
+    @Override
+    public void num6Element() {
+
+    }
+
+    @Override
+    public void num7Element() {
+
+    }
+
+    @Override
+    public void num8Element() {
+
+    }
+
+    @Override
+    public void num9Element() {
+
+    }
 }
