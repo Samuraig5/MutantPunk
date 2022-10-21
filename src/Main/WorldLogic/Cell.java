@@ -35,4 +35,12 @@ public class Cell
     {
         people.remove(p);
     }
+    public boolean isEmpty()
+    {
+        if (people.size() == 0)
+        {
+            return true;
+        }
+        return false;
+    }
 }

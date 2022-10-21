@@ -80,6 +80,7 @@ public class ConsoleCommands
 
     public void fullClear()
     {
+        c.ckb.setCurrentMenu(null);
         c.clir.reset();
         clear();
     }
@@ -87,6 +88,7 @@ public class ConsoleCommands
     public void openMainMenu()
     {
         List<String> mainMenuOptions = new ArrayList<>();
+        mainMenuOptions.add("Generate a 10x10 local map");
         mainMenuOptions.add("Spawn a Human");
         mainMenuOptions.add("Spawn 10 Humans");
         mainMenuOptions.add("Spawn 100 Humans");
