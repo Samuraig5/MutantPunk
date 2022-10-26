@@ -1,5 +1,6 @@
 package Main.RenderLogic;
 
+import Main.ErrorHandler;
 import Main.RenderLogic.Menus.MainMenu;
 import Main.RenderLogic.Menus.WorldMenu;
 import Main.WorldLogic.GameWorld;
@@ -98,18 +99,59 @@ public class ConsoleCommands
     }
     private void generateLogo()
     {
-        println(" ███▄ ▄███▓ █    ██ ▄▄▄█████▓ ▄▄▄       ███▄    █ ▄▄▄█████▓    ██▓███   █    ██  ███▄    █  ██ ▄█▀");
-        println("▓██▒▀█▀ ██▒ ██  ▓██▒▓  ██▒ ▓▒▒████▄     ██ ▀█   █ ▓  ██▒ ▓▒   ▓██░  ██▒ ██  ▓██▒ ██ ▀█   █  ██▄█▒ ");
-        println("▓██    ▓██░▓██  ▒██░▒ ▓██░ ▒░▒██  ▀█▄  ▓██  ▀█ ██▒▒ ▓██░ ▒░   ▓██░ ██▓▒▓██  ▒██░▓██  ▀█ ██▒▓███▄░ ");
-        println("▒██    ▒██ ▓▓█  ░██░░ ▓██▓ ░ ░██▄▄▄▄██ ▓██▒  ▐▌██▒░ ▓██▓ ░    ▒██▄█▓▒ ▒▓▓█  ░██░▓██▒  ▐▌██▒▓██ █▄ ");
-        println("▒██▒   ░██▒▒▒█████▓   ▒██▒ ░  ▓█   ▓██▒▒██░   ▓██░  ▒██▒ ░    ▒██▒ ░  ░▒▒█████▓ ▒██░   ▓██░▒██▒ █▄");
-        println("░ ▒░   ░  ░░▒▓▒ ▒ ▒   ▒ ░░    ▒▒   ▓▒█░░ ▒░   ▒ ▒   ▒ ░░      ▒▓▒░ ░  ░░▒▓▒ ▒ ▒ ░ ▒░   ▒ ▒ ▒ ▒▒ ▓▒");
-        println("░  ░      ░░░▒░ ░ ░     ░      ▒   ▒▒ ░░ ░░   ░ ▒░    ░       ░▒ ░     ░░▒░ ░ ░ ░ ░░   ░ ▒░░ ░▒ ▒░");
-        println("░      ░    ░░░ ░ ░   ░        ░   ▒      ░   ░ ░   ░         ░░        ░░░ ░ ░    ░   ░ ░ ░ ░░ ░ ");
-        println("       ░      ░                    ░  ░         ░                         ░              ░ ░  ░   ");
-        println("");
-        println("");
-        println("");
+        List<String> logoList = new ArrayList<>();
+
+        logoList.add(" ███▄ ▄███▓ █    ██ ▄▄▄█████▓ ▄▄▄       ███▄    █ ▄▄▄█████▓    ██▓███   █    ██  ███▄    █  ██ ▄█▀");
+        logoList.add("▓██▒▀█▀ ██▒ ██  ▓██▒▓  ██▒ ▓▒▒████▄     ██ ▀█   █ ▓  ██▒ ▓▒   ▓██░  ██▒ ██  ▓██▒ ██ ▀█   █  ██▄█▒ ");
+        logoList.add("▓██    ▓██░▓██  ▒██░▒ ▓██░ ▒░▒██  ▀█▄  ▓██  ▀█ ██▒▒ ▓██░ ▒░   ▓██░ ██▓▒▓██  ▒██░▓██  ▀█ ██▒▓███▄░ ");
+        logoList.add("▒██    ▒██ ▓▓█  ░██░░ ▓██▓ ░ ░██▄▄▄▄██ ▓██▒  ▐▌██▒░ ▓██▓ ░    ▒██▄█▓▒ ▒▓▓█  ░██░▓██▒  ▐▌██▒▓██ █▄ ");
+        logoList.add("▒██▒   ░██▒▒▒█████▓   ▒██▒ ░  ▓█   ▓██▒▒██░   ▓██░  ▒██▒ ░    ▒██▒ ░  ░▒▒█████▓ ▒██░   ▓██░▒██▒ █▄");
+        logoList.add("░ ▒░   ░  ░░▒▓▒ ▒ ▒   ▒ ░░    ▒▒   ▓▒█░░ ▒░   ▒ ▒   ▒ ░░      ▒▓▒░ ░  ░░▒▓▒ ▒ ▒ ░ ▒░   ▒ ▒ ▒ ▒▒ ▓▒");
+        logoList.add("░  ░      ░░░▒░ ░ ░     ░      ▒   ▒▒ ░░ ░░   ░ ▒░    ░       ░▒ ░     ░░▒░ ░ ░ ░ ░░   ░ ▒░░ ░▒ ▒░");
+        logoList.add("░      ░    ░░░ ░ ░   ░        ░   ▒      ░   ░ ░   ░         ░░        ░░░ ░ ░    ░   ░ ░ ░ ░░ ░ ");
+        logoList.add("       ░      ░                    ░  ░         ░                         ░              ░ ░  ░   ");
+        logoList.add("");
+        logoList.add("");
+        logoList.add("");
+
+        logoList = centreStringsInScreen(logoList);
+
+        for (String s:logoList)
+        {
+            println(s);
+        }
+    }
+
+    private List<String> centreStringsInScreen(List<String> input)
+    {
+        List<String> centredStrings = new ArrayList<>();
+        int characterWidth = 7;
+
+
+        for (String s:input)
+        {
+            int stringLength = characterWidth*s.length();
+            ErrorHandler.LogData(false, "String Length" + stringLength);
+
+            int screenWidth = c.getScreenSize()[1];
+            ErrorHandler.LogData(false, "Screen Width" + screenWidth);
+
+            int emptySpace = screenWidth-stringLength;
+            ErrorHandler.LogData(false, "empty Space" + emptySpace);
+
+            int spacerNumber = (emptySpace/characterWidth)/2;
+            ErrorHandler.LogData(false, "Spacer Number" + spacerNumber);
+
+            String spacer = "";
+            for (int i = 0; i < spacerNumber; i++)
+            {
+                spacer = spacer + " ";
+            }
+            s = spacer + s;
+            centredStrings.add(s);
+        }
+
+        return centredStrings;
     }
 
     public void openWorldMenu(GameWorld gw)

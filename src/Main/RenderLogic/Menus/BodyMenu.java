@@ -12,6 +12,7 @@ public class BodyMenu implements MenuLogic
     public BodyMenu(Console console, Person person)
     {
         c = console;
+        c.setInMainMenu(false);
         p = person;
     }
 

@@ -11,6 +11,7 @@ public class PersonMenu implements MenuLogic
     public PersonMenu(Console console, Person person)
     {
         c = console;
+        c.setInMainMenu(false);
         p = person;
     }
 

@@ -1,11 +1,14 @@
 package Main.RenderLogic;
 
+import Main.ErrorHandler;
 import Main.RenderLogic.Menus.MainMenu;
 import Main.RenderLogic.Menus.WorldMenu;
 
 import javax.swing.*;
 import javax.swing.text.StyledDocument;
 import java.awt.*;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
 
 public class Console
 {
@@ -23,6 +26,7 @@ public class Console
     public static StyledDocument styledDocument;
     private final JTextField input;
     private final JScrollPane scrollPane;
+    private boolean inMainMenu;
 
     public Console()
     {
@@ -36,6 +40,7 @@ public class Console
         }
 
         frame = new JFrame();
+
         frame.setTitle("Mutant Punk");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); //Program stops when window is closed
 
@@ -60,6 +65,18 @@ public class Console
 
         frame.setSize(1000, 700);
         frame.setLocationRelativeTo(null);
+
+        frame.addComponentListener(new ComponentAdapter() {
+            @Override
+            public void componentResized(ComponentEvent e)
+            {
+                if (inMainMenu)
+                {
+                    cc.openMainMenu();
+                }
+            }
+        });
+
         frame.setVisible(true);
 
         ckb.label.grabFocus();
@@ -68,6 +85,23 @@ public class Console
         while (true)
         {
             ckb.label.grabFocus();
+            ErrorHandler.LogData(false, getScreenSize()[0] + "/" + getScreenSize()[1]);
         }
+    }
+
+    /**
+     * Returns the current screenSize in an array
+     * @return array of the current screenSize. First element is the height, second is the width.
+     */
+    public int[] getScreenSize()
+    {
+        int[] screenSize = new int[2];
+        screenSize[0] = frame.getBounds().height;
+        screenSize[1] = frame.getBounds().width;
+        return screenSize;
+    }
+
+    public void setInMainMenu(boolean inMainMenu) {
+        this.inMainMenu = inMainMenu;
     }
 }

@@ -10,6 +10,7 @@ public class LocalMapMenu implements MenuLogic
     public LocalMapMenu(Console console, GameWorld gameWorld)
     {
         c = console;
+        c.setInMainMenu(false);
         gw = gameWorld;
     }
 

@@ -10,6 +10,7 @@ public class WorldMenu implements MenuLogic
     public WorldMenu(Console console, GameWorld gameWorld)
     {
         c = console;
+        c.setInMainMenu(false);
         gw = gameWorld;
     }
 

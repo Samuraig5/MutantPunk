@@ -11,6 +11,7 @@ public class AllCharactersMenu implements MenuLogic
     public AllCharactersMenu(Console console, GameWorld gameWorld)
     {
         c = console;
+        c.setInMainMenu(false);
         gw = gameWorld;
     }
 

@@ -9,6 +9,7 @@ public class MainMenu implements MenuLogic
     public MainMenu(Console console)
     {
         c = console;
+        c.setInMainMenu(true);
     }
 
     @Override
