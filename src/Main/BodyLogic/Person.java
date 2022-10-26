@@ -1,6 +1,7 @@
 package Main.BodyLogic;
 
 import Main.ErrorHandler;
+import Main.WorldLogic.GameWorld;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -8,6 +9,7 @@ import java.util.List;
 public class Person
 {
     public List<BodyPart> myBodyParts = new ArrayList<>();
+    private GameWorld gw;
     public String name;
     /**
      *  Gross, Modifier, Total
@@ -79,5 +81,12 @@ public class Person
     public void changeName(String newName)
     {
         name = newName;
+    }
+
+    public GameWorld getGameWord() {
+        return gw;
+    }
+    public void setGameWorld(GameWorld gw) {
+        this.gw = gw;
     }
 }

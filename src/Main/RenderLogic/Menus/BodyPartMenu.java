@@ -4,12 +4,14 @@ import Main.BodyLogic.BodyPart;
 import Main.BodyLogic.Person;
 import Main.ErrorHandler;
 import Main.RenderLogic.Console;
+import Main.WorldLogic.GameWorld;
 
 public class BodyPartMenu implements MenuLogic
 {
     Console c;
     BodyPart bp;
     Person p;
+    GameWorld gw;
     public BodyPartMenu(Console console, BodyPart bodyPart)
     {
         c = console;
@@ -198,7 +200,7 @@ public class BodyPartMenu implements MenuLogic
             }
             else
             {
-                c.cb.listAllPersons();
+                c.cb.listAllPersons(gw);
             }
         }
     }
@@ -219,7 +221,7 @@ public class BodyPartMenu implements MenuLogic
             }
             else
             {
-                c.cb.listAllPersons();
+                c.cb.listAllPersons(gw);
             }
         }
     }

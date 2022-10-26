@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 public class MapGenerator
 {
-    static public LocalMap generateEmptyLocalMap(int[] size)
+    static public LocalMap generateEmptyLocalMap(int[] size, GameWorld gameWorld)
     {
         Cell[][] cells = new Cell[size[0]][size[1]];
         for (int x = 0; x < size[0]; x++)
@@ -15,6 +15,6 @@ public class MapGenerator
                 cells[x][y] = new Cell(xy, new ArrayList<>());
             }
         }
-        return new LocalMap(size,cells);
+        return new LocalMap(size,cells, gameWorld);
     }
 }

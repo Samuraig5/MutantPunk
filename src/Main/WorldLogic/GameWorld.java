@@ -28,6 +28,7 @@ public class GameWorld
     public void addCharacter(Person person)
     {
         allCharacters.add(person);
+        person.setGameWorld(this);
     }
 
     public void removeLocalMap(LocalMap localMap)
@@ -38,6 +39,7 @@ public class GameWorld
     public void removeCharacter(Person person)
     {
         allCharacters.remove(person);
+        person.setGameWorld(null);
     }
 
     public String getWorldName() {

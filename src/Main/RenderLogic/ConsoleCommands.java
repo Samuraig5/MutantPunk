@@ -1,8 +1,8 @@
 package Main.RenderLogic;
 
-import Main.BodyLogic.BodyFileDecoder;
-import Main.BodyLogic.Person;
 import Main.RenderLogic.Menus.MainMenu;
+import Main.RenderLogic.Menus.WorldMenu;
+import Main.WorldLogic.GameWorld;
 
 import javax.swing.text.Style;
 import javax.swing.text.StyleConstants;
@@ -92,15 +92,8 @@ public class ConsoleCommands
         fullClear();
         generateLogo();
 
-        //mainMenuOptions.add("Open new World");
+        mainMenuOptions.add("Open new World");
 
-        mainMenuOptions.add("Generate a 10x10 local map");
-        mainMenuOptions.add("Spawn a Human");
-        mainMenuOptions.add("Spawn 10 Humans");
-        mainMenuOptions.add("Spawn 100 Humans");
-        mainMenuOptions.add("Spawn a Minor Mutant");
-        mainMenuOptions.add("Spawn a Human Spider");
-        mainMenuOptions.add("Spawn a Slime");
         c.clir.appendList(mainMenuOptions, "", new MainMenu(c));
     }
     private void generateLogo()
@@ -117,5 +110,19 @@ public class ConsoleCommands
         println("");
         println("");
         println("");
+    }
+
+    public void openWorldMenu(GameWorld gw)
+    {
+        List<String> mainMenuOptions = new ArrayList<>();
+
+        mainMenuOptions.add("Generate a 10x10 local map");
+        mainMenuOptions.add("Spawn a Human");
+        mainMenuOptions.add("Spawn 10 Humans");
+        mainMenuOptions.add("Spawn 100 Humans");
+        mainMenuOptions.add("Spawn a Minor Mutant");
+        mainMenuOptions.add("Spawn a Human Spider");
+        mainMenuOptions.add("Spawn a Slime");
+        c.clir.renderList(mainMenuOptions, gw.getWorldName(), new WorldMenu(c, gw));
     }
 }

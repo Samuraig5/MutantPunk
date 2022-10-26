@@ -1,13 +1,16 @@
 package Main.RenderLogic.Menus;
 
 import Main.RenderLogic.Console;
+import Main.WorldLogic.GameWorld;
 
 public class LocalMapMenu implements MenuLogic
 {
     Console c;
-    public LocalMapMenu(Console console)
+    GameWorld gw;
+    public LocalMapMenu(Console console, GameWorld gameWorld)
     {
         c = console;
+        gw = gameWorld;
     }
 
     @Override
@@ -152,7 +155,7 @@ public class LocalMapMenu implements MenuLogic
 
     @Override
     public void escapeElement() {
-        c.cc.openMainMenu();
+        c.cc.openWorldMenu(gw);
     }
 
     @Override

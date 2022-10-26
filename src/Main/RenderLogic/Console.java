@@ -1,6 +1,7 @@
 package Main.RenderLogic;
 
 import Main.RenderLogic.Menus.MainMenu;
+import Main.RenderLogic.Menus.WorldMenu;
 
 import javax.swing.*;
 import javax.swing.text.StyledDocument;

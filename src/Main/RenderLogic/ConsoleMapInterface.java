@@ -2,6 +2,7 @@ package Main.RenderLogic;
 
 import Main.RenderLogic.Menus.LocalMapMenu;
 import Main.WorldLogic.Cell;
+import Main.WorldLogic.GameWorld;
 import Main.WorldLogic.LocalMap;
 import Main.WorldLogic.MapGenerator;
 
@@ -13,15 +14,15 @@ public class ConsoleMapInterface
         c = console;
     }
 
-    public LocalMap GenerateEmptyLocalMap(int[] size)
+    public LocalMap GenerateEmptyLocalMap(int[] size, GameWorld gameWorld)
     {
-        return MapGenerator.generateEmptyLocalMap(size);
+        return MapGenerator.generateEmptyLocalMap(size, gameWorld);
     }
 
     public void RenderLocalMap(LocalMap lm)
     {
         c.cc.fullClear();
-        LocalMapMenu localMapMenu = new LocalMapMenu(c);
+        LocalMapMenu localMapMenu = new LocalMapMenu(c, lm.getMyWorld());
         c.ckb.setCurrentMenu(localMapMenu);
 
         int[] xy = lm.getSize();

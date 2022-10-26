@@ -2,6 +2,7 @@ package Main.RenderLogic.Menus;
 
 import Main.BodyLogic.Person;
 import Main.RenderLogic.Console;
+import Main.WorldLogic.GameWorld;
 
 public class PersonMenu implements MenuLogic
 {
@@ -155,7 +156,7 @@ public class PersonMenu implements MenuLogic
 
     @Override
     public void escapeElement() {
-        c.cb.listAllPersons();
+        c.cb.listAllPersons(p.getGameWord());
     }
 
     @Override

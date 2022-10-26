@@ -2,19 +2,22 @@ package Main.RenderLogic.Menus;
 
 import Main.BodyLogic.Person;
 import Main.RenderLogic.Console;
+import Main.WorldLogic.GameWorld;
 
 public class AllCharactersMenu implements MenuLogic
 {
     Console c;
-    public AllCharactersMenu(Console console)
+    GameWorld gw;
+    public AllCharactersMenu(Console console, GameWorld gameWorld)
     {
         c = console;
+        gw = gameWorld;
     }
 
     private void openPersonView(int i)
     {
         int currentPage = c.clir.getCurrentPage();
-        Person p = c.cb.getAllCharactersList().get((26*currentPage-26)+i);
+        Person p = gw.getAllCharacters().get((26*currentPage-26)+i);
         c.cb.openPersonView(p);
     }
 
@@ -160,7 +163,7 @@ public class AllCharactersMenu implements MenuLogic
 
     @Override
     public void escapeElement() {
-        c.cc.openMainMenu();
+        c.cc.openWorldMenu(gw);
     }
 
     @Override

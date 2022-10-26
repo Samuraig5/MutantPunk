@@ -8,6 +8,7 @@ import Main.RenderLogic.Menus.AllCharactersMenu;
 import Main.RenderLogic.Menus.BodyMenu;
 import Main.RenderLogic.Menus.BodyPartMenu;
 import Main.RenderLogic.Menus.PersonMenu;
+import Main.WorldLogic.GameWorld;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,14 +16,12 @@ import java.util.List;
 public class ConsoleBodyInterface
 {
     Console c;
-    private final List<Person> allCharacters = new ArrayList<>();
-
     public ConsoleBodyInterface(Console console)
     {
         c = console;
     }
 
-    public void spawnPerson(String name, String bias, String randomness, String filePath)
+    public void spawnPerson(String name, String bias, String randomness, String filePath, GameWorld gw)
     {
         try
         {
@@ -30,7 +29,7 @@ public class ConsoleBodyInterface
             int r = Integer.parseInt(randomness);
             Person newCharacter = BodyFileDecoder.getBodyPlanData(filePath, b, r);
             newCharacter.changeName(name);
-            c.cb.allCharacters.add(newCharacter);
+            gw.addCharacter(newCharacter);
         }
         catch (Exception e)
         {
@@ -38,14 +37,14 @@ public class ConsoleBodyInterface
         }
     }
 
-    public void listAllPersons()
+    public void listAllPersons(GameWorld gw)
     {
         List<String> allCharacterNames = new ArrayList<>();
-        for (Person p:allCharacters)
+        for (Person p:gw.getAllCharacters())
         {
             allCharacterNames.add(p.name);
         }
-        c.clir.renderList(allCharacterNames, "Current Characters", new AllCharactersMenu(c));
+        c.clir.renderList(allCharacterNames, "Current Characters", new AllCharactersMenu(c, gw));
     }
 
     public void openPersonView(Person p)
@@ -98,12 +97,6 @@ public class ConsoleBodyInterface
 
         return s;
     }
-
-    public List<Person> getAllCharactersList()
-    {
-        return allCharacters;
-    }
-
     public void openBodyView(Person p)
     {
         c.cc.clear();
