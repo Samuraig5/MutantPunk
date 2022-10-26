@@ -88,6 +88,12 @@ public class ConsoleCommands
     public void openMainMenu()
     {
         List<String> mainMenuOptions = new ArrayList<>();
+
+        fullClear();
+        generateLogo();
+
+        //mainMenuOptions.add("Open new World");
+
         mainMenuOptions.add("Generate a 10x10 local map");
         mainMenuOptions.add("Spawn a Human");
         mainMenuOptions.add("Spawn 10 Humans");
@@ -95,6 +101,21 @@ public class ConsoleCommands
         mainMenuOptions.add("Spawn a Minor Mutant");
         mainMenuOptions.add("Spawn a Human Spider");
         mainMenuOptions.add("Spawn a Slime");
-        c.clir.renderList(mainMenuOptions, "MainMenu", new MainMenu(c));
+        c.clir.appendList(mainMenuOptions, "", new MainMenu(c));
+    }
+    private void generateLogo()
+    {
+        println(" ███▄ ▄███▓ █    ██ ▄▄▄█████▓ ▄▄▄       ███▄    █ ▄▄▄█████▓    ██▓███   █    ██  ███▄    █  ██ ▄█▀");
+        println("▓██▒▀█▀ ██▒ ██  ▓██▒▓  ██▒ ▓▒▒████▄     ██ ▀█   █ ▓  ██▒ ▓▒   ▓██░  ██▒ ██  ▓██▒ ██ ▀█   █  ██▄█▒ ");
+        println("▓██    ▓██░▓██  ▒██░▒ ▓██░ ▒░▒██  ▀█▄  ▓██  ▀█ ██▒▒ ▓██░ ▒░   ▓██░ ██▓▒▓██  ▒██░▓██  ▀█ ██▒▓███▄░ ");
+        println("▒██    ▒██ ▓▓█  ░██░░ ▓██▓ ░ ░██▄▄▄▄██ ▓██▒  ▐▌██▒░ ▓██▓ ░    ▒██▄█▓▒ ▒▓▓█  ░██░▓██▒  ▐▌██▒▓██ █▄ ");
+        println("▒██▒   ░██▒▒▒█████▓   ▒██▒ ░  ▓█   ▓██▒▒██░   ▓██░  ▒██▒ ░    ▒██▒ ░  ░▒▒█████▓ ▒██░   ▓██░▒██▒ █▄");
+        println("░ ▒░   ░  ░░▒▓▒ ▒ ▒   ▒ ░░    ▒▒   ▓▒█░░ ▒░   ▒ ▒   ▒ ░░      ▒▓▒░ ░  ░░▒▓▒ ▒ ▒ ░ ▒░   ▒ ▒ ▒ ▒▒ ▓▒");
+        println("░  ░      ░░░▒░ ░ ░     ░      ▒   ▒▒ ░░ ░░   ░ ▒░    ░       ░▒ ░     ░░▒░ ░ ░ ░ ░░   ░ ▒░░ ░▒ ▒░");
+        println("░      ░    ░░░ ░ ░   ░        ░   ▒      ░   ░ ░   ░         ░░        ░░░ ░ ░    ░   ░ ░ ░ ░░ ░ ");
+        println("       ░      ░                    ░  ░         ░                         ░              ░ ░  ░   ");
+        println("");
+        println("");
+        println("");
     }
 }
