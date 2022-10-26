@@ -5,8 +5,10 @@ import Main.RenderLogic.Menus.MainMenu;
 import Main.RenderLogic.Menus.WorldMenu;
 import Main.WorldLogic.GameWorld;
 
+import javax.swing.text.BadLocationException;
 import javax.swing.text.Style;
 import javax.swing.text.StyleConstants;
+import javax.swing.text.StyledDocument;
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -61,6 +63,14 @@ public class ConsoleCommands
     {
         println(s,false,c);
     }
+    public void println(List<String> sList)
+    {
+        for (String s:sList)
+        {
+            println(s,false,Color.lightGray);
+        }
+    }
+
     public void println(String s)
     {
         println(s,false,Color.lightGray);
@@ -93,14 +103,19 @@ public class ConsoleCommands
         fullClear();
         generateLogo();
 
-        mainMenuOptions.add("Open new World");
+        mainMenuOptions.add("a - Open new World");
+        mainMenuOptions = centreStringsInScreen(mainMenuOptions);
 
-        c.clir.appendList(mainMenuOptions, "", new MainMenu(c));
+        println(mainMenuOptions);
+
+        c.ckb.setCurrentMenu(new MainMenu(c));
+
     }
     private void generateLogo()
     {
         List<String> logoList = new ArrayList<>();
 
+        logoList.add("");
         logoList.add(" ███▄ ▄███▓ █    ██ ▄▄▄█████▓ ▄▄▄       ███▄    █ ▄▄▄█████▓    ██▓███   █    ██  ███▄    █  ██ ▄█▀");
         logoList.add("▓██▒▀█▀ ██▒ ██  ▓██▒▓  ██▒ ▓▒▒████▄     ██ ▀█   █ ▓  ██▒ ▓▒   ▓██░  ██▒ ██  ▓██▒ ██ ▀█   █  ██▄█▒ ");
         logoList.add("▓██    ▓██░▓██  ▒██░▒ ▓██░ ▒░▒██  ▀█▄  ▓██  ▀█ ██▒▒ ▓██░ ▒░   ▓██░ ██▓▒▓██  ▒██░▓██  ▀█ ██▒▓███▄░ ");
@@ -118,7 +133,7 @@ public class ConsoleCommands
 
         for (String s:logoList)
         {
-            println(s);
+            println(s, Color.GREEN);
         }
     }
 
