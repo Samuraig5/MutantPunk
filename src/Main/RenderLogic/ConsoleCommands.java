@@ -116,6 +116,8 @@ public class ConsoleCommands
         List<String> logoList = new ArrayList<>();
 
         logoList.add("");
+        logoList.add("");
+        logoList.add("");
         logoList.add(" ███▄ ▄███▓ █    ██ ▄▄▄█████▓ ▄▄▄       ███▄    █ ▄▄▄█████▓    ██▓███   █    ██  ███▄    █  ██ ▄█▀");
         logoList.add("▓██▒▀█▀ ██▒ ██  ▓██▒▓  ██▒ ▓▒▒████▄     ██ ▀█   █ ▓  ██▒ ▓▒   ▓██░  ██▒ ██  ▓██▒ ██ ▀█   █  ██▄█▒ ");
         logoList.add("▓██    ▓██░▓██  ▒██░▒ ▓██░ ▒░▒██  ▀█▄  ▓██  ▀█ ██▒▒ ▓██░ ▒░   ▓██░ ██▓▒▓██  ▒██░▓██  ▀█ ██▒▓███▄░ ");
@@ -125,8 +127,8 @@ public class ConsoleCommands
         logoList.add("░  ░      ░░░▒░ ░ ░     ░      ▒   ▒▒ ░░ ░░   ░ ▒░    ░       ░▒ ░     ░░▒░ ░ ░ ░ ░░   ░ ▒░░ ░▒ ▒░");
         logoList.add("░      ░    ░░░ ░ ░   ░        ░   ▒      ░   ░ ░   ░         ░░        ░░░ ░ ░    ░   ░ ░ ░ ░░ ░ ");
         logoList.add("       ░      ░                    ░  ░         ░                         ░              ░ ░  ░   ");
-        logoList.add("");
-        logoList.add("");
+        logoList.add("                 ░                                 ░          ░                    ░              ");
+        logoList.add("       ░                           ░                                     ░                 ░      ");
         logoList.add("");
 
         logoList = centreStringsInScreen(logoList);
