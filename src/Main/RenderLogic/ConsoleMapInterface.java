@@ -2,10 +2,14 @@ package Main.RenderLogic;
 
 import Main.BodyLogic.Person;
 import Main.RenderLogic.Menus.LocalMapMenu;
+import Main.RenderLogic.Menus.WorldMenu;
 import Main.WorldLogic.Cell;
 import Main.WorldLogic.GameWorld;
 import Main.WorldLogic.LocalMap;
 import Main.WorldLogic.MapGenerator;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class ConsoleMapInterface
 {
@@ -15,9 +19,9 @@ public class ConsoleMapInterface
         c = console;
     }
 
-    public LocalMap GenerateEmptyLocalMap(int[] size, GameWorld gameWorld)
+    public LocalMap GenerateEmptyLocalMap(int[] size, GameWorld gameWorld, String name)
     {
-        return MapGenerator.generateEmptyLocalMap(size, gameWorld);
+        return MapGenerator.generateEmptyLocalMap(size, gameWorld, name);
     }
 
     public void RenderLocalMap(LocalMap lm)
@@ -61,5 +65,30 @@ public class ConsoleMapInterface
             }
         }
         return symbols;
+    }
+
+    public void openWorldMenu(GameWorld gw)
+    {
+        List<String> mainMenuOptions = new ArrayList<>();
+        mainMenuOptions.add("Generate a 10x10 local map \n\nCurrent Local Maps");
+
+        List<LocalMap> localMaps = gw.getLocalMaps();
+        for (int i = 0; i < localMaps.size(); i++)
+        {
+            mainMenuOptions.add("Local Map " + i);
+        }
+        c.clir.renderList(mainMenuOptions, gw.getWorldName(), new WorldMenu(c, gw));
+    }
+
+    public void openLocalMapMenu(LocalMap lm)
+    {
+        List<String> mainMenuOptions = new ArrayList<>();
+        mainMenuOptions.add("Spawn a Human");
+        mainMenuOptions.add("Spawn 10 Humans");
+        mainMenuOptions.add("Spawn 100 Humans");
+        mainMenuOptions.add("Spawn a Minor Mutant");
+        mainMenuOptions.add("Spawn a Human Spider");
+        mainMenuOptions.add("Spawn a Slime");
+        c.clir.renderList(mainMenuOptions, lm.getMapName(), new LocalMapMenu(c, lm.getMyWorld()));
     }
 }

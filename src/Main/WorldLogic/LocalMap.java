@@ -6,13 +6,15 @@ public class LocalMap
     private final Cell[][] cells;
 
     private GameWorld myWorld;
+    private String mapName;
 
-    public LocalMap(int[] xySize, Cell[][] mapCells, GameWorld gameWorld)
+    public LocalMap(int[] xySize, Cell[][] mapCells, GameWorld gameWorld, String name)
     {
         size[0] = xySize[0];
         size[1] = xySize[1];
         cells = mapCells;
         myWorld = gameWorld;
+        mapName = name;
     }
 
     public int[] getSize()
@@ -27,5 +29,13 @@ public class LocalMap
 
     public GameWorld getMyWorld() {
         return myWorld;
+    }
+
+    public String getMapName() {
+        return mapName;
+    }
+
+    public void setMapName(String mapName) {
+        this.mapName = mapName;
     }
 }

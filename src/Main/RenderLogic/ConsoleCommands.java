@@ -168,18 +168,4 @@ public class ConsoleCommands
 
         return centredStrings;
     }
-
-    public void openWorldMenu(GameWorld gw)
-    {
-        List<String> mainMenuOptions = new ArrayList<>();
-
-        mainMenuOptions.add("Generate a 10x10 local map");
-        mainMenuOptions.add("Spawn a Human");
-        mainMenuOptions.add("Spawn 10 Humans");
-        mainMenuOptions.add("Spawn 100 Humans");
-        mainMenuOptions.add("Spawn a Minor Mutant");
-        mainMenuOptions.add("Spawn a Human Spider");
-        mainMenuOptions.add("Spawn a Slime");
-        c.clir.renderList(mainMenuOptions, gw.getWorldName(), new WorldMenu(c, gw));
-    }
 }

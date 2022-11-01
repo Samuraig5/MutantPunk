@@ -1,7 +1,9 @@
 package Main.RenderLogic.Menus;
 
+import Main.BodyLogic.Person;
 import Main.RenderLogic.Console;
 import Main.WorldLogic.GameWorld;
+import Main.WorldLogic.LocalMap;
 
 public class WorldMenu implements MenuLogic
 {
@@ -14,150 +16,203 @@ public class WorldMenu implements MenuLogic
         gw = gameWorld;
     }
 
+    private void openLocalMapView(int i)
+    {
+        int currentPage = c.clir.getCurrentPage();
+        LocalMap lm = gw.getLocalMaps().get((26*currentPage-26)+i);
+        c.cm.openLocalMapMenu(lm);
+    }
+
     @Override
     public void aElement()
     {
-        int[] size = {50,50};
-        c.cm.RenderLocalMap(c.cm.GenerateEmptyLocalMap(size, gw));
+        if (c.clir.getCurrentPage() == 1)
+        {
+            int[] size = {50,50};
+            c.cm.openLocalMapMenu(c.cm.GenerateEmptyLocalMap(size, gw, "LocalMap: " + gw.getLocalMaps().size()));
+        }
+        else
+        {
+            openLocalMapView(-1);
+        }
+
+        //c.cm.RenderLocalMap(c.cm.GenerateEmptyLocalMap(size, gw, "LocalMap: " + gw.getLocalMaps().size()));
     }
 
     @Override
     public void bElement()
     {
-        c.cb.spawnPerson("Greg","0","0", "Resources/BodyPlans/Human", gw);
-        c.cb.listAllPersons(gw);
+        int i = 0;
+        if (c.clir.getCurrentPage() < 1) {i = i + 1;}
+        openLocalMapView(i);
     }
 
     @Override
     public void cElement()
     {
-        for (int i = 0; i < 10; i++)
-        {
-            c.cb.spawnPerson("Bob","0","0", "Resources/BodyPlans/Human", gw);
-        }
-        c.cb.listAllPersons(gw);
+        int i = 1;
+        if (c.clir.getCurrentPage() < 1) {i = i + 1;}
+        openLocalMapView(i);
     }
 
     @Override
     public void dElement() {
-        for (int i = 0; i < 100; i++)
-        {
-            c.cb.spawnPerson(i+"th Clone","0","0", "Resources/BodyPlans/Human", gw);
-        }
-        c.cb.listAllPersons(gw);
+        int i = 2;
+        if (c.clir.getCurrentPage() < 1) {i = i + 1;}
+        openLocalMapView(i);
     }
 
     @Override
     public void eElement() {
-        c.cb.spawnPerson("Minor Mutant","0","50", "Resources/BodyPlans/Human", gw);
-        c.cb.listAllPersons(gw);
+        int i = 3;
+        if (c.clir.getCurrentPage() < 1) {i = i + 1;}
+        openLocalMapView(i);
     }
 
     @Override
     public void fElement() {
-        c.cb.spawnPerson("Human Spider","0","0", "Resources/BodyPlans/HumanSpider", gw);
-        c.cb.listAllPersons(gw);
+        int i = 4;
+        if (c.clir.getCurrentPage() < 1) {i = i + 1;}
+        openLocalMapView(i);
     }
 
     @Override
     public void gElement() {
-        c.cb.spawnPerson("Slime","0","0", "Resources/BodyPlans/Slime", gw);
-        c.cb.listAllPersons(gw);
+        int i = 5;
+        if (c.clir.getCurrentPage() < 1) {i = i + 1;}
+        openLocalMapView(i);
     }
 
     @Override
     public void hElement() {
-
+        int i = 6;
+        if (c.clir.getCurrentPage() < 1) {i = i + 1;}
+        openLocalMapView(i);
     }
 
     @Override
     public void iElement() {
-
+        int i = 7;
+        if (c.clir.getCurrentPage() < 1) {i = i + 1;}
+        openLocalMapView(i);
     }
 
     @Override
     public void jElement() {
-
+        int i = 8;
+        if (c.clir.getCurrentPage() < 1) {i = i + 1;}
+        openLocalMapView(i);
     }
 
     @Override
     public void kElement() {
-
+        int i = 9;
+        if (c.clir.getCurrentPage() < 1) {i = i + 1;}
+        openLocalMapView(i);
     }
 
     @Override
     public void lElement() {
-
+        int i = 10;
+        if (c.clir.getCurrentPage() < 1) {i = i + 1;}
+        openLocalMapView(i);
     }
 
     @Override
     public void mElement() {
-
+        int i = 11;
+        if (c.clir.getCurrentPage() < 1) {i = i + 1;}
+        openLocalMapView(i);
     }
 
     @Override
     public void nElement() {
-
+        int i = 12;
+        if (c.clir.getCurrentPage() < 1) {i = i + 1;}
+        openLocalMapView(i);
     }
 
     @Override
     public void oElement() {
-
+        int i = 13;
+        if (c.clir.getCurrentPage() < 1) {i = i + 1;}
+        openLocalMapView(i);
     }
 
     @Override
     public void pElement() {
-
+        int i = 14;
+        if (c.clir.getCurrentPage() < 1) {i = i + 1;}
+        openLocalMapView(i);
     }
 
     @Override
     public void qElement() {
-
+        int i = 15;
+        if (c.clir.getCurrentPage() < 1) {i = i + 1;}
+        openLocalMapView(i);
     }
 
     @Override
     public void rElement() {
-
+        int i = 16;
+        if (c.clir.getCurrentPage() < 1) {i = i + 1;}
+        openLocalMapView(i);
     }
 
     @Override
     public void sElement() {
-
+        int i = 17;
+        if (c.clir.getCurrentPage() < 1) {i = i + 1;}
+        openLocalMapView(i);
     }
 
     @Override
     public void tElement() {
-
+        int i = 18;
+        if (c.clir.getCurrentPage() < 1) {i = i + 1;}
+        openLocalMapView(i);
     }
-
     @Override
     public void uElement() {
-
+        int i = 19;
+        if (c.clir.getCurrentPage() < 1) {i = i + 1;}
+        openLocalMapView(i);
     }
 
     @Override
     public void vElement() {
-
+        int i = 20;
+        if (c.clir.getCurrentPage() < 1) {i = i + 1;}
+        openLocalMapView(i);
     }
 
     @Override
     public void wElement() {
-
+        int i = 21;
+        if (c.clir.getCurrentPage() < 1) {i = i + 1;}
+        openLocalMapView(i);
     }
 
     @Override
     public void xElement() {
-
+        int i = 22;
+        if (c.clir.getCurrentPage() < 1) {i = i + 1;}
+        openLocalMapView(i);
     }
 
     @Override
     public void yElement() {
-
+        int i = 23;
+        if (c.clir.getCurrentPage() < 1) {i = i + 1;}
+        openLocalMapView(i);
     }
 
     @Override
     public void zElement() {
-
+        int i = 24;
+        if (c.clir.getCurrentPage() < 1) {i = i + 1;}
+        openLocalMapView(i);
     }
 
     @Override

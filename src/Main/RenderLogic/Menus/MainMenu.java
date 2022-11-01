@@ -14,7 +14,7 @@ public class MainMenu implements MenuLogic
 
     @Override
     public void aElement() {
-        c.cc.openWorldMenu(new GameWorld("New World"));
+        c.cm.openWorldMenu(new GameWorld("New World"));
     }
 
     @Override

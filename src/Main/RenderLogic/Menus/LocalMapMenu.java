@@ -16,32 +16,44 @@ public class LocalMapMenu implements MenuLogic
 
     @Override
     public void aElement() {
-
+        c.cb.spawnPerson("Greg","0","0", "Resources/BodyPlans/Human", gw);
+        c.cb.listAllPersons(gw);
     }
 
     @Override
     public void bElement() {
-
+        for (int i = 0; i < 10; i++)
+        {
+            c.cb.spawnPerson("Bob","0","0", "Resources/BodyPlans/Human", gw);
+        }
+        c.cb.listAllPersons(gw);
     }
 
     @Override
     public void cElement() {
-
+        for (int i = 0; i < 100; i++)
+        {
+            c.cb.spawnPerson(i+"th Clone","0","0", "Resources/BodyPlans/Human", gw);
+        }
+        c.cb.listAllPersons(gw);
     }
 
     @Override
     public void dElement() {
-
+        c.cb.spawnPerson("Minor Mutant","0","50", "Resources/BodyPlans/Human", gw);
+        c.cb.listAllPersons(gw);
     }
 
     @Override
     public void eElement() {
-
+        c.cb.spawnPerson("Human Spider","0","0", "Resources/BodyPlans/HumanSpider", gw);
+        c.cb.listAllPersons(gw);
     }
 
     @Override
     public void fElement() {
-
+        c.cb.spawnPerson("Slime","0","0", "Resources/BodyPlans/Slime", gw);
+        c.cb.listAllPersons(gw);
     }
 
     @Override
@@ -156,7 +168,7 @@ public class LocalMapMenu implements MenuLogic
 
     @Override
     public void escapeElement() {
-        c.cc.openWorldMenu(gw);
+        c.cm.openWorldMenu(gw);
     }
 
     @Override

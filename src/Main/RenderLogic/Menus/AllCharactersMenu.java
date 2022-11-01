@@ -164,7 +164,7 @@ public class AllCharactersMenu implements MenuLogic
 
     @Override
     public void escapeElement() {
-        c.cc.openWorldMenu(gw);
+        c.cm.openWorldMenu(gw);
     }
 
     @Override
