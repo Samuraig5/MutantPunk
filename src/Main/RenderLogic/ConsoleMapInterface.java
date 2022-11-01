@@ -2,6 +2,7 @@ package Main.RenderLogic;
 
 import Main.BodyLogic.Person;
 import Main.RenderLogic.Menus.LocalMapMenu;
+import Main.RenderLogic.Menus.LocalMapView;
 import Main.RenderLogic.Menus.WorldMenu;
 import Main.WorldLogic.Cell;
 import Main.WorldLogic.GameWorld;
@@ -27,8 +28,8 @@ public class ConsoleMapInterface
     public void RenderLocalMap(LocalMap lm)
     {
         c.cc.fullClear();
-        LocalMapMenu localMapMenu = new LocalMapMenu(c, lm.getMyWorld());
-        c.ckb.setCurrentMenu(localMapMenu);
+        LocalMapView localMapView = new LocalMapView(c, lm);
+        c.ckb.setCurrentMenu(localMapView);
 
         int[] xy = lm.getSize();
         char[][] symbols = TranslateCellsToSymbols(lm.getCells(),xy);
@@ -83,12 +84,14 @@ public class ConsoleMapInterface
     public void openLocalMapMenu(LocalMap lm)
     {
         List<String> mainMenuOptions = new ArrayList<>();
+        mainMenuOptions.add("Open Map View");
+        mainMenuOptions.add("List all local character\n\nSpawn character");
         mainMenuOptions.add("Spawn a Human");
         mainMenuOptions.add("Spawn 10 Humans");
         mainMenuOptions.add("Spawn 100 Humans");
         mainMenuOptions.add("Spawn a Minor Mutant");
         mainMenuOptions.add("Spawn a Human Spider");
         mainMenuOptions.add("Spawn a Slime");
-        c.clir.renderList(mainMenuOptions, lm.getMapName(), new LocalMapMenu(c, lm.getMyWorld()));
+        c.clir.renderList(mainMenuOptions, lm.getMapName(), new LocalMapMenu(c, lm));
     }
 }

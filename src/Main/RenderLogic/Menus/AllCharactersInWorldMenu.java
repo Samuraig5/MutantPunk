@@ -1,175 +1,170 @@
 package Main.RenderLogic.Menus;
 
+import Main.BodyLogic.Person;
 import Main.RenderLogic.Console;
 import Main.WorldLogic.GameWorld;
-import Main.WorldLogic.LocalMap;
 
-public class LocalMapMenu implements MenuLogic
+public class AllCharactersInWorldMenu implements MenuLogic
 {
     Console c;
-    LocalMap lm;
-    public LocalMapMenu(Console console, LocalMap localMap)
+    GameWorld gw;
+    public AllCharactersInWorldMenu(Console console, GameWorld gameWorld)
     {
         c = console;
         c.setInMainMenu(false);
-        lm = localMap;
+        gw = gameWorld;
+    }
+
+    private void openPersonView(int i)
+    {
+        int currentPage = c.clir.getCurrentPage();
+        Person p = gw.getAllCharacters().get((26*currentPage-26)+i);
+        c.cb.openPersonView(p);
     }
 
     @Override
     public void aElement() {
-        c.cm.RenderLocalMap(lm);
+        openPersonView(0);
     }
 
     @Override
     public void bElement() {
-        c.cb.listAllPersons(lm);
+        openPersonView(1);
     }
 
     @Override
     public void cElement() {
-        c.cb.spawnPerson("Greg","0","0", "Resources/BodyPlans/Human", lm);
-        c.cb.listAllPersons(lm);
+        openPersonView(2);
     }
 
     @Override
     public void dElement() {
-        for (int i = 0; i < 10; i++)
-        {
-            c.cb.spawnPerson("Bob","0","0", "Resources/BodyPlans/Human", lm);
-        }
-        c.cb.listAllPersons(lm);
+        openPersonView(3);
     }
 
     @Override
     public void eElement() {
-        for (int i = 0; i < 100; i++)
-        {
-            c.cb.spawnPerson(i+"th Clone","0","0", "Resources/BodyPlans/Human", lm);
-        }
-        c.cb.listAllPersons(lm);
+        openPersonView(4);
     }
 
     @Override
     public void fElement() {
-        c.cb.spawnPerson("Minor Mutant","0","50", "Resources/BodyPlans/Human", lm);
-        c.cb.listAllPersons(lm);
+        openPersonView(5);
     }
 
     @Override
     public void gElement() {
-        c.cb.spawnPerson("Human Spider","0","0", "Resources/BodyPlans/HumanSpider", lm);
-        c.cb.listAllPersons(lm);
+        openPersonView(6);
     }
 
     @Override
     public void hElement() {
-        c.cb.spawnPerson("Slime","0","0", "Resources/BodyPlans/Slime", lm);
-        c.cb.listAllPersons(lm);
+        openPersonView(7);
     }
 
     @Override
     public void iElement() {
-
+        openPersonView(8);
     }
 
     @Override
     public void jElement() {
-
+        openPersonView(9);
     }
 
     @Override
     public void kElement() {
-
+        openPersonView(10);
     }
 
     @Override
     public void lElement() {
-
+        openPersonView(11);
     }
 
     @Override
     public void mElement() {
-
+        openPersonView(12);
     }
 
     @Override
     public void nElement() {
-
+        openPersonView(13);
     }
 
     @Override
     public void oElement() {
-
+        openPersonView(14);
     }
 
     @Override
     public void pElement() {
-
+        openPersonView(15);
     }
 
     @Override
     public void qElement() {
-
+        openPersonView(16);
     }
 
     @Override
     public void rElement() {
-
+        openPersonView(17);
     }
 
     @Override
     public void sElement() {
-
+        openPersonView(18);
     }
 
     @Override
     public void tElement() {
-
+        openPersonView(19);
     }
 
     @Override
     public void uElement() {
-
+        openPersonView(20);
     }
 
     @Override
     public void vElement() {
-
+        openPersonView(21);
     }
 
     @Override
     public void wElement() {
-
+        openPersonView(22);
     }
 
     @Override
     public void xElement() {
-
+        openPersonView(23);
     }
 
     @Override
     public void yElement() {
-
+        openPersonView(24);
     }
 
     @Override
     public void zElement() {
-
+        openPersonView(25);
     }
 
     @Override
     public void periodElement() {
-
+        c.clir.pageUp();
     }
 
     @Override
     public void commaElement() {
-
+        c.clir.pageDown();
     }
 
     @Override
     public void escapeElement() {
-        c.cm.openWorldMenu(lm.getMyWorld());
+        c.cm.openWorldMenu(gw);
     }
 
     @Override

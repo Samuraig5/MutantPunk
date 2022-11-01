@@ -4,11 +4,9 @@ import Main.BodyLogic.BodyFileDecoder;
 import Main.BodyLogic.BodyPart;
 import Main.BodyLogic.Person;
 import Main.ErrorHandler;
-import Main.RenderLogic.Menus.AllCharactersMenu;
-import Main.RenderLogic.Menus.BodyMenu;
-import Main.RenderLogic.Menus.BodyPartMenu;
-import Main.RenderLogic.Menus.PersonMenu;
+import Main.RenderLogic.Menus.*;
 import Main.WorldLogic.GameWorld;
+import Main.WorldLogic.LocalMap;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,7 +19,7 @@ public class ConsoleBodyInterface
         c = console;
     }
 
-    public void spawnPerson(String name, String bias, String randomness, String filePath, GameWorld gw)
+    public void spawnPerson(String name, String bias, String randomness, String filePath, LocalMap lm)
     {
         try
         {
@@ -29,7 +27,8 @@ public class ConsoleBodyInterface
             int r = Integer.parseInt(randomness);
             Person newCharacter = BodyFileDecoder.getBodyPlanData(filePath, b, r);
             newCharacter.changeName(name);
-            gw.addCharacter(newCharacter);
+            newCharacter.setGameWorld(lm.getMyWorld());
+            newCharacter.setLocalMap(lm);
         }
         catch (Exception e)
         {
@@ -44,7 +43,16 @@ public class ConsoleBodyInterface
         {
             allCharacterNames.add(p.name);
         }
-        c.clir.renderList(allCharacterNames, "Current Characters", new AllCharactersMenu(c, gw));
+        c.clir.renderList(allCharacterNames, "Current Characters", new AllCharactersInWorldMenu(c, gw));
+    }
+    public void listAllPersons(LocalMap lm)
+    {
+        List<String> allCharacterNames = new ArrayList<>();
+        for (Person p:lm.getLocalPersons())
+        {
+            allCharacterNames.add(p.name);
+        }
+        c.clir.renderList(allCharacterNames, "Current Characters", new AllCharactersInLocalMapsMenu(c, lm));
     }
 
     public void openPersonView(Person p)

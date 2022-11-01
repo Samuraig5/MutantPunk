@@ -1,5 +1,11 @@
 package Main.WorldLogic;
 
+import Main.BodyLogic.Person;
+import Main.ErrorHandler;
+
+import java.util.ArrayList;
+import java.util.List;
+
 public class LocalMap
 {
     private final int[] size = new int[2];
@@ -7,6 +13,7 @@ public class LocalMap
 
     private GameWorld myWorld;
     private String mapName;
+    private List<Person> localPersons = new ArrayList<>();
 
     public LocalMap(int[] xySize, Cell[][] mapCells, GameWorld gameWorld, String name)
     {
@@ -37,5 +44,10 @@ public class LocalMap
 
     public void setMapName(String mapName) {
         this.mapName = mapName;
+    }
+
+    public List<Person> getLocalPersons() {
+        ErrorHandler.LogData(true, "The local map: " + mapName + " has " + localPersons.size() + " persons.");
+        return localPersons;
     }
 }

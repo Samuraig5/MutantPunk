@@ -90,16 +90,24 @@ public class Person
     public GameWorld getGameWord() {
         return gw;
     }
-    public void setGameWorld(GameWorld gw) {
+    public void setGameWorld(GameWorld gw)
+    {
         this.gw = gw;
+        this.gw.getAllCharacters().add(this);
     }
 
     public LocalMap getLocalMap() {
         return lm;
     }
 
-    public void setLocalMap(LocalMap lm) {
+    public void setLocalMap(LocalMap lm)
+    {
+        if (this.lm != null)
+        {
+            this.lm.getLocalPersons().remove(this);
+        }
         this.lm = lm;
+        this.lm.getLocalPersons().add(this);
     }
 
     public Cell getMyCell() {
@@ -107,7 +115,10 @@ public class Person
     }
 
     public void setMyCell(Cell myCell) {
-        this.myCell.getPeople().remove(this);
+        if (this.myCell != null)
+        {
+            this.myCell.getPeople().remove(this);
+        }
         this.myCell = myCell;
         this.myCell.getPeople().add(this);
     }

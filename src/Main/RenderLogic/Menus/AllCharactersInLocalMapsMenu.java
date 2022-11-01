@@ -3,22 +3,23 @@ package Main.RenderLogic.Menus;
 import Main.BodyLogic.Person;
 import Main.RenderLogic.Console;
 import Main.WorldLogic.GameWorld;
+import Main.WorldLogic.LocalMap;
 
-public class AllCharactersMenu implements MenuLogic
+public class AllCharactersInLocalMapsMenu implements MenuLogic
 {
     Console c;
-    GameWorld gw;
-    public AllCharactersMenu(Console console, GameWorld gameWorld)
+    LocalMap lm;
+    public AllCharactersInLocalMapsMenu(Console console, LocalMap localMap)
     {
         c = console;
         c.setInMainMenu(false);
-        gw = gameWorld;
+        lm = localMap;
     }
 
     private void openPersonView(int i)
     {
         int currentPage = c.clir.getCurrentPage();
-        Person p = gw.getAllCharacters().get((26*currentPage-26)+i);
+        Person p = lm.getLocalPersons().get((26*currentPage-26)+i);
         c.cb.openPersonView(p);
     }
 
@@ -164,7 +165,7 @@ public class AllCharactersMenu implements MenuLogic
 
     @Override
     public void escapeElement() {
-        c.cm.openWorldMenu(gw);
+        c.cm.openLocalMapMenu(lm);
     }
 
     @Override
