@@ -107,6 +107,8 @@ public class Person
     }
 
     public void setMyCell(Cell myCell) {
+        this.myCell.getPeople().remove(this);
         this.myCell = myCell;
+        this.myCell.getPeople().add(this);
     }
 }

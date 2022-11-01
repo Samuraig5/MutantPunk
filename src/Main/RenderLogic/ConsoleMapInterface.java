@@ -1,5 +1,6 @@
 package Main.RenderLogic;
 
+import Main.BodyLogic.Person;
 import Main.RenderLogic.Menus.LocalMapMenu;
 import Main.WorldLogic.Cell;
 import Main.WorldLogic.GameWorld;
@@ -48,6 +49,10 @@ public class ConsoleMapInterface
                 if (cells[x][y].isEmpty())
                 {
                     symbols[x][y] = '.';
+                }
+                else if (cells[x][y].getPeople().size() < 0)
+                {
+                    symbols[x][y] = '@';
                 }
                 else
                 {
