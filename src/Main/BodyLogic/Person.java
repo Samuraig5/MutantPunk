@@ -1,7 +1,9 @@
 package Main.BodyLogic;
 
 import Main.ErrorHandler;
+import Main.WorldLogic.Cell;
 import Main.WorldLogic.GameWorld;
+import Main.WorldLogic.LocalMap;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -10,6 +12,8 @@ public class Person
 {
     public List<BodyPart> myBodyParts = new ArrayList<>();
     private GameWorld gw;
+    private LocalMap lm;
+    private Cell myCell;
     public String name;
     /**
      *  Gross, Modifier, Total
@@ -88,5 +92,21 @@ public class Person
     }
     public void setGameWorld(GameWorld gw) {
         this.gw = gw;
+    }
+
+    public LocalMap getLocalMap() {
+        return lm;
+    }
+
+    public void setLocalMap(LocalMap lm) {
+        this.lm = lm;
+    }
+
+    public Cell getMyCell() {
+        return myCell;
+    }
+
+    public void setMyCell(Cell myCell) {
+        this.myCell = myCell;
     }
 }
