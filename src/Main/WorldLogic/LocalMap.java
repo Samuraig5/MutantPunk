@@ -15,7 +15,7 @@ public class LocalMap
     private String mapName;
     private List<Person> localPersons = new ArrayList<>();
 
-    public LocalMap(int[] xySize, Cell[][] mapCells, GameWorld gameWorld, String name)
+    protected LocalMap(int[] xySize, Cell[][] mapCells, GameWorld gameWorld, String name)
     {
         size[0] = xySize[0];
         size[1] = xySize[1];

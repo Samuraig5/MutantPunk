@@ -25,7 +25,7 @@ public class ConsoleBodyInterface
         {
             int b = Integer.parseInt(bias);
             int r = Integer.parseInt(randomness);
-            Person newCharacter = BodyFileDecoder.getBodyPlanData(filePath, b, r);
+            Person newCharacter = BodyFileDecoder.SpawnNewPersonFromFile(filePath, b, r);
             newCharacter.changeName(name);
             newCharacter.setGameWorld(lm.getMyWorld());
             newCharacter.setLocalMap(lm);

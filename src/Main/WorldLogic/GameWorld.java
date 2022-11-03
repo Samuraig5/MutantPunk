@@ -11,7 +11,7 @@ public class GameWorld
     private List<LocalMap> localMaps = new ArrayList<>();
     private List<Person> allCharacters = new ArrayList<>();
 
-    public GameWorld(String name)
+    protected GameWorld(String name)
     {
         worldName = name;
     }

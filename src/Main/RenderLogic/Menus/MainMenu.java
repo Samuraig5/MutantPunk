@@ -2,6 +2,7 @@ package Main.RenderLogic.Menus;
 
 import Main.RenderLogic.Console;
 import Main.WorldLogic.GameWorld;
+import Main.WorldLogic.MapGenerator;
 
 public class MainMenu implements MenuLogic
 {
@@ -14,7 +15,7 @@ public class MainMenu implements MenuLogic
 
     @Override
     public void aElement() {
-        c.cm.openWorldMenu(new GameWorld("New World"));
+        c.cm.openWorldMenu(MapGenerator.generateNewGameWorld("New World"));
     }
 
     @Override

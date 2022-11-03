@@ -19,4 +19,9 @@ public class MapGenerator
         newMap.getMyWorld().getLocalMaps().add(newMap);
         return newMap;
     }
+
+    static public GameWorld generateNewGameWorld(String worldName)
+    {
+        return new GameWorld(worldName);
+    }
 }

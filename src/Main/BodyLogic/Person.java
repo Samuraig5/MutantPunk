@@ -31,7 +31,7 @@ public class Person
     final private List<List<float[]>> myStats = new ArrayList<>();
     final private float[][] myTotalStats = new float[10][3];
 
-    public Person()
+    protected Person()
     {
         for (int i = 0; i < 10; i++) {
             myStats.add(new ArrayList<>());

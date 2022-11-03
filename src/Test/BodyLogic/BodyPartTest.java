@@ -21,7 +21,7 @@ class BodyPartTest {
     @BeforeEach
     void setUp()
     {
-        p = new Person();
+        p = BodyFileDecoder.SpawnNewPersonFromFile("Resources/BodyPlans/Human",0,0);
         p.changeName("Test Dummy");
         bp = BodyFileDecoder.loadBodyPartFromFile("resources/BodyParts/Containers/HumanTorso",0,0);
         p.myBodyParts.add(bp);
@@ -191,7 +191,7 @@ class BodyPartTest {
 
     @org.junit.jupiter.api.Test
     void setMyPerson() {
-        Person p = new Person();
+        Person p =BodyFileDecoder.SpawnNewPersonFromFile("Resources/BodyPlans/Human",0,0);
         bp.setMyPerson(p);
         assertEquals(p, bp.getMyPerson());
     }

@@ -61,7 +61,7 @@ public class BodyFileDecoder
         return bp;
     }
 
-    static public Person getBodyPlanData(String filePath, int bias, int randomness)
+    static public Person SpawnNewPersonFromFile(String filePath, int bias, int randomness)
     {
         Person p = new Person();
         List<BodyPart> currentTargetsToAttach = new ArrayList<>();
