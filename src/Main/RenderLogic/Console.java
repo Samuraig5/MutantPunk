@@ -36,7 +36,7 @@ public class Console
         }
         catch (Exception e)
         {
-            System.out.println("Console.java ant find SystemLookAndFeel");
+            System.out.println("Console.java cant find SystemLookAndFeel");
         }
 
         frame = new JFrame();
