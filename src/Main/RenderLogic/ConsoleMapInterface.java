@@ -38,7 +38,8 @@ public class ConsoleMapInterface
             for (int x = 0; x < xy[0]; x++)
             {
                 MapIcon mi = mapIcons[x][y];
-                c.cc.print(String.valueOf(mi.getSymbol()), false, mi.getIconColour());
+                String s = String.valueOf(mi.getSymbol());
+                c.cc.print(s, false, mi.getIconColour());
                 c.cc.print(" ");
             }
             c.cc.print("\n");

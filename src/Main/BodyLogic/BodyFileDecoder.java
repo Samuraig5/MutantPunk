@@ -86,7 +86,7 @@ public class BodyFileDecoder
             char[] c = personInfo[1].toCharArray();
             if (personInfo.length > 2)
             {
-                String[] RGBValues =  personInfo[2].split("|");
+                String[] RGBValues =  personInfo[2].split(":");
                 Color newColor = new Color(Integer.parseInt(RGBValues[0]), Integer.parseInt(RGBValues[1]), Integer.parseInt(RGBValues[2]));
                 p.setMapIcon(new MapIcon(c[0], newColor));
             }
