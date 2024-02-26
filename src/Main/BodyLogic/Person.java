@@ -5,6 +5,7 @@ import Main.WorldLogic.Cell;
 import Main.WorldLogic.GameWorld;
 import Main.WorldLogic.LocalMap;
 
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,7 +15,11 @@ public class Person
     private GameWorld gw;
     private LocalMap lm;
     private Cell myCell;
+    private char mapIcon;
+    private Color mapColor;
+
     public String name;
+    final private List<List<float[]>> myStats = new ArrayList<>();
     /**
      *  Gross, Modifier, Total
      * [0] - Blood Capacity
@@ -28,7 +33,6 @@ public class Person
      * [8] - Consciousness
      * [9] - Sight
      */
-    final private List<List<float[]>> myStats = new ArrayList<>();
     final private float[][] myTotalStats = new float[10][3];
 
     protected Person()
@@ -107,7 +111,7 @@ public class Person
             this.lm.getLocalPersons().remove(this);
         }
         this.lm = lm;
-        this.lm.getLocalPersons().add(this);
+        this.lm.addPersonToLocalMap(this);
     }
 
     public Cell getMyCell() {
@@ -121,5 +125,17 @@ public class Person
         }
         this.myCell = myCell;
         this.myCell.getPeople().add(this);
+    }
+
+    public char getMapIcon() {return mapIcon;}
+
+    public void setMapIcon(char c, Color co)
+    {
+        this.mapIcon = c;
+        this.mapColor = co;
+    }
+    public void setMapIcon(char c)
+    {
+        setMapIcon(c, this.mapColor);
     }
 }

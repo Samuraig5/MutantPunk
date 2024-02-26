@@ -51,13 +51,13 @@ public class ConsoleMapInterface
         {
             for (int y = 0; y < size[1]; y++)
             {
-                if (cells[x][y].isEmpty())
+                if (cells[x][y].isEmpty()) //Empty Cell
                 {
                     symbols[x][y] = '.';
                 }
-                else if (cells[x][y].getPeople().size() < 0)
+                else if (cells[x][y].getPeople().size() > 0)
                 {
-                    symbols[x][y] = '@';
+                    symbols[x][y] = cells[x][y].getPeople().get(0).getMapIcon();
                 }
                 else
                 {

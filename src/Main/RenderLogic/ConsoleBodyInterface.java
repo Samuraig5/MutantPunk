@@ -19,20 +19,34 @@ public class ConsoleBodyInterface
         c = console;
     }
 
-    public void spawnPerson(String name, String bias, String randomness, String filePath, LocalMap lm)
+    public Person spawnPerson(String name, String bias, String randomness, String filePath, LocalMap lm)
+    {
+        Person newCharacter = spawnPerson(bias, randomness, filePath, lm);
+        if (newCharacter != null)
+        {
+            newCharacter.changeName(name);
+        }
+        else
+        {
+            //Print Warning
+        }
+        return newCharacter;
+    }
+    public Person spawnPerson(String bias, String randomness, String filePath, LocalMap lm)
     {
         try
         {
             int b = Integer.parseInt(bias);
             int r = Integer.parseInt(randomness);
             Person newCharacter = BodyFileDecoder.SpawnNewPersonFromFile(filePath, b, r);
-            newCharacter.changeName(name);
             newCharacter.setGameWorld(lm.getMyWorld());
             newCharacter.setLocalMap(lm);
+            return  newCharacter;
         }
         catch (Exception e)
         {
             c.cc.println("WARNING: The second and third parameters of spawnPerson must be integer numbers", c.errorColour);
+            return null;
         }
     }
 

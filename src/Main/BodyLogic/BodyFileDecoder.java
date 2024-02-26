@@ -61,21 +61,34 @@ public class BodyFileDecoder
         return bp;
     }
 
+    /**
+     * Creates a new person from a standard bodyplan file
+     *
+     * @param filePath file path to the bodyplan. (resources>BodyPlans)
+     * @param bias nudge the stats of an bodypart according to the bias. Positive bias improves the bodypart
+     * @param randomness magnitude of the randomness applied to the stats of the bodypart.
+     * @return
+     */
     static public Person SpawnNewPersonFromFile(String filePath, int bias, int randomness)
     {
         Person p = new Person();
         List<BodyPart> currentTargetsToAttach = new ArrayList<>();
         int depth;
-        String name;
-        String path;
+        String bodyPartName;
+        String bodyPartPath;
         try
         {
             Scanner fileIn = new Scanner(new File(filePath));
 
-            name = fileIn.nextLine().split("§")[1];
-            path = fileIn.nextLine().split("§")[1];
-            p.myBodyParts.add(loadBodyPartFromFile(path, bias, randomness));
-            p.myBodyParts.get(0).changeName(name);
+            String[] personInfo = fileIn.nextLine().split("§");
+            p.changeName(personInfo[0]);
+            char[] c = personInfo[1].toCharArray();
+            p.setMapIcon(c[0]);
+
+            bodyPartName = fileIn.nextLine().split("§")[1];
+            bodyPartPath = fileIn.nextLine().split("§")[1];
+            p.myBodyParts.add(loadBodyPartFromFile(bodyPartPath, bias, randomness));
+            p.myBodyParts.get(0).changeName(bodyPartName);
             p.myBodyParts.get(0).setMyPerson(p);
             p.myBodyParts.get(0).updateParentAndPerson();
             currentTargetsToAttach.add(p.myBodyParts.get(0));
@@ -83,10 +96,10 @@ public class BodyFileDecoder
             while(fileIn.hasNextLine())
             {
                 depth = fileIn.nextLine().length();
-                name = fileIn.nextLine().split("§")[1];
-                path = fileIn.nextLine().split("§")[1];
-                BodyPart bp = loadBodyPartFromFile(path, bias, randomness);
-                bp.changeName(name);
+                bodyPartName = fileIn.nextLine().split("§")[1];
+                bodyPartPath = fileIn.nextLine().split("§")[1];
+                BodyPart bp = loadBodyPartFromFile(bodyPartPath, bias, randomness);
+                bp.changeName(bodyPartName);
                 if(depth > currentTargetsToAttach.size()-1)
                 {
                     currentTargetsToAttach.add(bp);
