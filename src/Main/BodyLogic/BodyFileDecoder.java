@@ -1,7 +1,9 @@
 package Main.BodyLogic;
 
 import Main.ErrorHandler;
+import Main.RenderLogic.MapIcon;
 
+import java.awt.*;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
@@ -76,14 +78,22 @@ public class BodyFileDecoder
         int depth;
         String bodyPartName;
         String bodyPartPath;
-        try
-        {
+        try {
             Scanner fileIn = new Scanner(new File(filePath));
 
             String[] personInfo = fileIn.nextLine().split("§");
             p.changeName(personInfo[0]);
             char[] c = personInfo[1].toCharArray();
-            p.setMapIcon(c[0]);
+            if (personInfo.length > 2)
+            {
+                String[] RGBValues =  personInfo[2].split("|");
+                Color newColor = new Color(Integer.parseInt(RGBValues[0]), Integer.parseInt(RGBValues[1]), Integer.parseInt(RGBValues[2]));
+                p.setMapIcon(new MapIcon(c[0], newColor));
+            }
+            else
+            {
+                p.setMapIcon(new MapIcon(c[0]));
+            }
 
             bodyPartName = fileIn.nextLine().split("§")[1];
             bodyPartPath = fileIn.nextLine().split("§")[1];

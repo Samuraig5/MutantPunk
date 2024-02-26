@@ -32,40 +32,41 @@ public class ConsoleMapInterface
         c.ckb.setCurrentMenu(localMapView);
 
         int[] xy = lm.getSize();
-        char[][] symbols = TranslateCellsToSymbols(lm.getCells(),xy);
+        MapIcon[][] mapIcons = TranslateCellsToSymbols(lm.getCells(),xy);
         for (int y = 0; y < xy[1]; y++)
         {
-            String line = "";
             for (int x = 0; x < xy[0]; x++)
             {
-                line = line + symbols[x][y] + " ";
+                MapIcon mi = mapIcons[x][y];
+                c.cc.print(String.valueOf(mi.getSymbol()), false, mi.getIconColour());
+                c.cc.print(" ");
             }
-            c.cc.println(line);
+            c.cc.print("\n");
         }
     }
 
-    private char[][] TranslateCellsToSymbols(Cell[][] cells, int[] size)
+    private MapIcon[][] TranslateCellsToSymbols(Cell[][] cells, int[] size)
     {
-        char[][] symbols = new char[size[0]][size[1]];
+        MapIcon[][] mapIcons = new MapIcon[size[0]][size[1]];
         for (int x = 0; x < size[0]; x++)
         {
             for (int y = 0; y < size[1]; y++)
             {
                 if (cells[x][y].isEmpty()) //Empty Cell
                 {
-                    symbols[x][y] = '.';
+                    mapIcons[x][y] = new MapIcon('.');
                 }
                 else if (cells[x][y].getPeople().size() > 0)
                 {
-                    symbols[x][y] = cells[x][y].getPeople().get(0).getMapIcon();
+                    mapIcons[x][y] = cells[x][y].getPeople().get(0).getMapIcon();
                 }
                 else
                 {
-                    symbols[y][y] = '#';
+                    mapIcons[y][y] = new MapIcon();
                 }
             }
         }
-        return symbols;
+        return mapIcons;
     }
 
     public void openWorldMenu(GameWorld gw)

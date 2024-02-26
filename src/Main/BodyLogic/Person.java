@@ -1,6 +1,7 @@
 package Main.BodyLogic;
 
 import Main.ErrorHandler;
+import Main.RenderLogic.MapIcon;
 import Main.WorldLogic.Cell;
 import Main.WorldLogic.GameWorld;
 import Main.WorldLogic.LocalMap;
@@ -15,8 +16,7 @@ public class Person
     private GameWorld gw;
     private LocalMap lm;
     private Cell myCell;
-    private char mapIcon;
-    private Color mapColor;
+    private MapIcon mapIcon;
 
     public String name;
     final private List<List<float[]>> myStats = new ArrayList<>();
@@ -127,15 +127,10 @@ public class Person
         this.myCell.getPeople().add(this);
     }
 
-    public char getMapIcon() {return mapIcon;}
+    public MapIcon getMapIcon() {return mapIcon;}
 
-    public void setMapIcon(char c, Color co)
+    public void setMapIcon(MapIcon mi)
     {
-        this.mapIcon = c;
-        this.mapColor = co;
-    }
-    public void setMapIcon(char c)
-    {
-        setMapIcon(c, this.mapColor);
+        this.mapIcon = mi;
     }
 }

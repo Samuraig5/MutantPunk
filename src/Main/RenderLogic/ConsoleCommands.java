@@ -23,6 +23,13 @@ public class ConsoleCommands
     {
         c = console;
     }
+
+    /**
+     * This prints the given string to the console
+     * @param s String to be printed
+     * @param trace Should the print be traced?
+     * @param c The colour the String should be printed in
+     */
     public void print(String s, boolean trace, Color c)
     {
         Style style = console.addStyle("Style", null);
@@ -43,6 +50,7 @@ public class ConsoleCommands
             System.out.println("Console.java cant insert String int styledDocument");
         }
     }
+
     public void print(String s, boolean trace)
     {
         print(s, trace, Color.lightGray);
