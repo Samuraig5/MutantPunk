@@ -30,6 +30,10 @@ public class Cell
         {
             people.add(p);
         }
+        if(p.getMyCell() != this)
+        {
+            p.setMyCell(this);
+        }
     }
     public void personLeaves(Person p)
     {

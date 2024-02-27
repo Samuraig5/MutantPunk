@@ -1,6 +1,5 @@
 package Main.RenderLogic;
 
-import Main.BodyLogic.Person;
 import Main.RenderLogic.Menus.LocalMapMenu;
 import Main.RenderLogic.Menus.LocalMapView;
 import Main.RenderLogic.Menus.WorldMenu;
@@ -27,6 +26,8 @@ public class ConsoleMapInterface
 
     public void RenderLocalMap(LocalMap lm)
     {
+        lm.getMyWorld().setActiveLocalMap(lm);
+
         c.cc.fullClear();
         LocalMapView localMapView = new LocalMapView(c, lm);
         c.ckb.setCurrentMenu(localMapView);

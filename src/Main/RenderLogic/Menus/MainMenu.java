@@ -15,7 +15,9 @@ public class MainMenu implements MenuLogic
 
     @Override
     public void aElement() {
-        c.cm.openWorldMenu(MapGenerator.generateNewGameWorld("New World"));
+        GameWorld gw = MapGenerator.generateNewGameWorld("New World");
+        c.wc.setActiveWorld(gw);
+        c.cm.openWorldMenu(gw);
     }
 
     @Override

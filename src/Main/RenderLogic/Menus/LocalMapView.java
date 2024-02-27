@@ -157,6 +157,7 @@ public class LocalMapView implements MenuLogic
     @Override
     public void escapeElement() {
         c.cm.openLocalMapMenu(lm);
+        c.wc.stopClock();
     }
 
     @Override

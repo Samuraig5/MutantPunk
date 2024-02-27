@@ -73,7 +73,7 @@ public class BodyFileDecoder
      */
     static public Person SpawnNewPersonFromFile(String filePath, int bias, int randomness)
     {
-        Person p = new Person();
+        Person p = new Person(true);
         List<BodyPart> currentTargetsToAttach = new ArrayList<>();
         int depth;
         String bodyPartName;

@@ -18,6 +18,7 @@ public class LocalMapMenu implements MenuLogic
     @Override
     public void aElement() {
         c.cm.RenderLocalMap(lm);
+        c.wc.startClock();
     }
 
     @Override

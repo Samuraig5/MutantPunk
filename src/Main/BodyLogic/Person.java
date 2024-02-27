@@ -3,6 +3,7 @@ package Main.BodyLogic;
 import Main.AILogic.ThinkingThing;
 import Main.Direction;
 import Main.ErrorHandler;
+import Main.MathHelper;
 import Main.RenderLogic.MapIcon;
 import Main.WorldLogic.Cell;
 import Main.WorldLogic.GameWorld;
@@ -126,46 +127,49 @@ public class Person
         return myCell;
     }
 
-    public void setMyCell(Cell myCell) {
-        if (this.myCell != null)
+    public void setMyCell(Cell newCell) {
+        if (myCell != null)
         {
-            this.myCell.getPeople().remove(this);
+            myCell.personLeaves(this);
         }
-        this.myCell = myCell;
-        this.myCell.getPeople().add(this);
+        myCell = newCell;
+        if (!newCell.getPeople().contains(this)) {
+            newCell.personEnters(this);
+        }
     }
 
     public void move(Direction d)
     {
         Cell c = getMyCell();
+        if (c == null) {return;}
         int[] coord = c.getCoordinates();
         int x = coord[0];
         int y = coord[1];
         switch (d)
         {
             case NORTH:
-                setMyCell(lm.getCell(x,y-1));
+                setMyCell(lm.getCell( MathHelper.boundedInteger(x,0,lm.getSize()[0]), MathHelper.boundedInteger(y,-1,lm.getSize()[1])));
                 break;
             case NORTH_EAST:
-                setMyCell(lm.getCell(x+1,y-1));
+                setMyCell(lm.getCell( MathHelper.boundedInteger(x,+1,lm.getSize()[0]), MathHelper.boundedInteger(y,-1,lm.getSize()[1])));
                 break;
             case EAST:
-                setMyCell(lm.getCell(x+1,y));
+                setMyCell(lm.getCell( MathHelper.boundedInteger(x,+1,lm.getSize()[0]), MathHelper.boundedInteger(y,0,lm.getSize()[1])));
                 break;
             case SOUTH_EAST:
-                setMyCell(lm.getCell(x+1,y+1));
+                setMyCell(lm.getCell( MathHelper.boundedInteger(x,+1,lm.getSize()[0]), MathHelper.boundedInteger(y,+1,lm.getSize()[1])));
                 break;
             case SOUTH:
-                setMyCell(lm.getCell(x,y+1));
+                setMyCell(lm.getCell( MathHelper.boundedInteger(x,0,lm.getSize()[0]), MathHelper.boundedInteger(y,+1,lm.getSize()[1])));
                 break;
             case SOUTH_WEST:
-                setMyCell(lm.getCell(x-1,y+1));
+                setMyCell(lm.getCell( MathHelper.boundedInteger(x,-1,lm.getSize()[0]), MathHelper.boundedInteger(y,+1,lm.getSize()[1])));
                 break;
             case WEST:
-                setMyCell(lm.getCell(x-1,y));
+                setMyCell(lm.getCell( MathHelper.boundedInteger(x,-1,lm.getSize()[0]), MathHelper.boundedInteger(y,0,lm.getSize()[1])));
                 break;
             case NORTH_WEST:
-                setMyCell(lm.getCell(x-1,y-1));
+                setMyCell(lm.getCell( MathHelper.boundedInteger(x,-1,lm.getSize()[0]), MathHelper.boundedInteger(y,-1,lm.getSize()[1])));
                 break;
             case NONE:
                 break;

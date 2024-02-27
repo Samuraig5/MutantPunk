@@ -4,11 +4,14 @@ import Main.BodyLogic.Person;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Timer;
 
 public class GameWorld
 {
     private String worldName;
     private List<LocalMap> localMaps = new ArrayList<>();
+
+    private LocalMap activeLocalMap;
     private List<Person> allCharacters = new ArrayList<>();
 
     protected GameWorld(String name)
@@ -48,6 +51,12 @@ public class GameWorld
 
     public List<LocalMap> getLocalMaps() {
         return localMaps;
+    }
+
+    public LocalMap getActiveLocalMap() {return activeLocalMap;}
+    public void setActiveLocalMap(LocalMap lm)
+    {
+        activeLocalMap = lm;
     }
 
     public List<Person> getAllCharacters() {
