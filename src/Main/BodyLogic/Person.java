@@ -1,5 +1,6 @@
 package Main.BodyLogic;
 
+import Main.AILogic.ThinkingThing;
 import Main.Direction;
 import Main.ErrorHandler;
 import Main.RenderLogic.MapIcon;
@@ -36,8 +37,14 @@ public class Person
      */
     final private float[][] myTotalStats = new float[10][3];
 
-    protected Person()
+    private ThinkingThing myThoughts;
+
+    protected Person(boolean addThoughts)
     {
+        if (addThoughts)
+        {
+            setMyThoughts(new ThinkingThing(this));
+        }
         for (int i = 0; i < 10; i++) {
             myStats.add(new ArrayList<>());
             myTotalStats[i] = new float[]{0, 1, 0};
@@ -160,6 +167,8 @@ public class Person
             case NORTH_WEST:
                 setMyCell(lm.getCell(x-1,y-1));
                 break;
+            case NONE:
+                break;
         }
     }
 
@@ -168,5 +177,15 @@ public class Person
     public void setMapIcon(MapIcon mi)
     {
         this.mapIcon = mi;
+    }
+
+    public ThinkingThing getMyThoughts()
+    {
+        return myThoughts;
+    }
+
+    public void setMyThoughts(ThinkingThing newThoughts)
+    {
+        myThoughts = newThoughts;
     }
 }
