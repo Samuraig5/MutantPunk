@@ -1,5 +1,6 @@
 package Main.BodyLogic;
 
+import Main.Direction;
 import Main.ErrorHandler;
 import Main.RenderLogic.MapIcon;
 import Main.WorldLogic.Cell;
@@ -125,6 +126,41 @@ public class Person
         }
         this.myCell = myCell;
         this.myCell.getPeople().add(this);
+    }
+
+    public void move(Direction d)
+    {
+        Cell c = getMyCell();
+        int[] coord = c.getCoordinates();
+        int x = coord[0];
+        int y = coord[1];
+        switch (d)
+        {
+            case NORTH:
+                setMyCell(lm.getCell(x,y-1));
+                break;
+            case NORTH_EAST:
+                setMyCell(lm.getCell(x+1,y-1));
+                break;
+            case EAST:
+                setMyCell(lm.getCell(x+1,y));
+                break;
+            case SOUTH_EAST:
+                setMyCell(lm.getCell(x+1,y+1));
+                break;
+            case SOUTH:
+                setMyCell(lm.getCell(x,y+1));
+                break;
+            case SOUTH_WEST:
+                setMyCell(lm.getCell(x-1,y+1));
+                break;
+            case WEST:
+                setMyCell(lm.getCell(x-1,y));
+                break;
+            case NORTH_WEST:
+                setMyCell(lm.getCell(x-1,y-1));
+                break;
+        }
     }
 
     public MapIcon getMapIcon() {return mapIcon;}

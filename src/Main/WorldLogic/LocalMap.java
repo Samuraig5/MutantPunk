@@ -39,6 +39,8 @@ public class LocalMap
         return cells;
     }
 
+    public Cell getCell(int x, int y) {return cells[x][y];}
+
     public GameWorld getMyWorld() {
         return myWorld;
     }
