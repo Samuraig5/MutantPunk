@@ -70,11 +70,11 @@ public class ConsoleMapInterface
             {
                 if (cells[x][y].isEmpty()) //Empty Cell
                 {
-                    mapIcons[x][y] = new MapIcon('.');
+                    mapIcons[x][y] = new MapIcon(' ');
                 }
-                else if (cells[x][y].getThings().size() > 0)
+                else if (!cells[x][y].getThings().isEmpty())
                 {
-                    mapIcons[x][y] = cells[x][y].getThings().get(0).getMapIcon();
+                    mapIcons[x][y] = cells[x][y].getThingWithHighestRenderPriority().getMapIcon();
                 }
                 else
                 {

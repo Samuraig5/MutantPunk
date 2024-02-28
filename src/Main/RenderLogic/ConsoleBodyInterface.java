@@ -63,9 +63,9 @@ public class ConsoleBodyInterface
     public void listAllPersons(LocalMap lm)
     {
         List<String> allCharacterNames = new ArrayList<>();
-        for (Thing t:lm.getLocalThings())
+        for (Person p:lm.getLocalPeople())
         {
-            allCharacterNames.add(t.getName());
+            allCharacterNames.add(p.getName());
         }
         c.clir.renderList(allCharacterNames, "Current Characters", new AllCharactersInLocalMapsMenu(c, lm));
     }

@@ -1,6 +1,7 @@
 package Main.WorldLogic;
 
 import Main.MathHelper;
+import Main.ObjectLogic.Grass;
 import Main.ObjectLogic.Walls.Wall;
 
 import java.util.ArrayList;
@@ -37,6 +38,11 @@ public class MapGenerator
                 {
                     Wall wall = new Wall();
                     cells[x][y].thingEnters(wall);
+                }
+                else
+                {
+                    Grass grass = new Grass();
+                    cells[x][y].thingEnters(grass);
                 }
             }
         }

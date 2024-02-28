@@ -4,21 +4,25 @@ import Main.RenderLogic.MapIcon;
 import Main.WorldLogic.Cell;
 import Main.WorldLogic.GameWorld;
 import Main.WorldLogic.LocalMap;
+import Main.Direction;
 
-public class Thing
+
+abstract public class Thing
 {
     private GameWorld gw;
     private LocalMap lm;
     private Cell myCell;
     private MapIcon mapIcon;
-
     private String name;
-
     private boolean hasCollision = true;
-
     public LocalMap getLocalMap() {
         return lm;
     }
+
+    /**
+     * Priority with which this thing is rendered. Higher number indicates a higher priority.
+     */
+    private int renderPriority;
 
     public void setLocalMap(LocalMap lm)
     {
@@ -79,4 +83,18 @@ public class Thing
     {
         hasCollision = bool;
     }
+
+    public int getRenderPriority()
+    {
+        return renderPriority;
+    }
+
+    public void setRenderPriority(int renderPriority)
+    {
+        this.renderPriority = renderPriority;
+    }
+
+    public abstract void newNeightbour(Thing t, Direction directionToSource);
+
+    public abstract void updateTick();
 }

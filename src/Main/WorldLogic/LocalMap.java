@@ -26,6 +26,13 @@ public class LocalMap
         size[0] = xySize[0];
         size[1] = xySize[1];
         cells = mapCells;
+        for (int i = 0; i < cells.length; i++) {
+            for (int j = 0; j < cells[i].length; j++) {
+                cells[j][i].setLocalMap(this);
+                localThings.addAll(cells[j][i].getThings());
+            }
+        }
+
         myWorld = gameWorld;
         mapName = name;
     }
@@ -59,8 +66,13 @@ public class LocalMap
      * @return the list of all persons
      */
     public List<Thing> getLocalThings() {
-        ErrorHandler.LogData(true, "The local map: " + mapName + " has " + localThings.size() + " persons.");
+        ErrorHandler.LogData(false, "The local map: " + mapName + " has " + localThings.size() + " persons.");
         return localThings;
+    }
+
+    public void addLocalThing(Thing t)
+    {
+        localThings.add(t);
     }
 
     public List<Person> getLocalPeople()

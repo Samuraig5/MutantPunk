@@ -45,6 +45,8 @@ public class Person extends Thing
             myStats.add(new ArrayList<>());
             myTotalStats[i] = new float[]{0, 1, 0};
         }
+
+        setRenderPriority(9);
     }
 
     public void AddToStat(List<float[]> statList)
@@ -175,5 +177,15 @@ public class Person extends Thing
     public void setMyThoughts(ThinkingThing newThoughts)
     {
         myThoughts = newThoughts;
+    }
+
+    @Override
+    public void newNeightbour(Thing t, Direction directionToSource) {
+
+    }
+
+    @Override
+    public void updateTick() {
+        myThoughts.thinkAboutMovement();
     }
 }
