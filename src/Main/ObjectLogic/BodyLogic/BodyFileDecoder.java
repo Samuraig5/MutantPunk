@@ -1,4 +1,4 @@
-package Main.BodyLogic;
+package Main.ObjectLogic.BodyLogic;
 
 import Main.ErrorHandler;
 import Main.RenderLogic.MapIcon;
@@ -82,7 +82,7 @@ public class BodyFileDecoder
             Scanner fileIn = new Scanner(new File(filePath));
 
             String[] personInfo = fileIn.nextLine().split("§");
-            p.changeName(personInfo[0]);
+            p.setName(personInfo[0]);
             char[] c = personInfo[1].toCharArray();
             if (personInfo.length > 2)
             {

@@ -1,27 +1,21 @@
-package Main.BodyLogic;
+package Main.ObjectLogic.BodyLogic;
 
 import Main.AILogic.ThinkingThing;
 import Main.Direction;
 import Main.ErrorHandler;
 import Main.MathHelper;
+import Main.ObjectLogic.Thing;
 import Main.RenderLogic.MapIcon;
 import Main.WorldLogic.Cell;
 import Main.WorldLogic.GameWorld;
 import Main.WorldLogic.LocalMap;
 
-import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Person
+public class Person extends Thing
 {
     public List<BodyPart> myBodyParts = new ArrayList<>();
-    private GameWorld gw;
-    private LocalMap lm;
-    private Cell myCell;
-    private MapIcon mapIcon;
-
-    public String name;
     final private List<List<float[]>> myStats = new ArrayList<>();
     /**
      *  Gross, Modifier, Total
@@ -42,6 +36,7 @@ public class Person
 
     protected Person(boolean addThoughts)
     {
+        super();
         if (addThoughts)
         {
             setMyThoughts(new ThinkingThing(this));
@@ -95,47 +90,10 @@ public class Person
         return myTotalStats;
     }
 
-    public void changeName(String newName)
-    {
-        name = newName;
-    }
-
-    public GameWorld getGameWord() {
-        return gw;
-    }
     public void setGameWorld(GameWorld gw)
     {
-        this.gw = gw;
-        this.gw.getAllCharacters().add(this);
-    }
-
-    public LocalMap getLocalMap() {
-        return lm;
-    }
-
-    public void setLocalMap(LocalMap lm)
-    {
-        if (this.lm != null)
-        {
-            this.lm.getLocalPersons().remove(this);
-        }
-        this.lm = lm;
-        this.lm.addPersonToLocalMap(this);
-    }
-
-    public Cell getMyCell() {
-        return myCell;
-    }
-
-    public void setMyCell(Cell newCell) {
-        if (myCell != null)
-        {
-            myCell.personLeaves(this);
-        }
-        myCell = newCell;
-        if (!newCell.getPeople().contains(this)) {
-            newCell.personEnters(this);
-        }
+        super.setGameWorld(gw);
+        super.getGameWord().getAllCharacters().add(this);
     }
 
     public void move(Direction d)
@@ -148,39 +106,32 @@ public class Person
         switch (d)
         {
             case NORTH:
-                setMyCell(lm.getCell( MathHelper.boundedInteger(x,0,lm.getSize()[0]), MathHelper.boundedInteger(y,-1,lm.getSize()[1])));
+                setMyCell(getLocalMap().getCell( MathHelper.boundedInteger(x,0,getLocalMap().getSize()[0]), MathHelper.boundedInteger(y,-1,getLocalMap().getSize()[1])));
                 break;
             case NORTH_EAST:
-                setMyCell(lm.getCell( MathHelper.boundedInteger(x,+1,lm.getSize()[0]), MathHelper.boundedInteger(y,-1,lm.getSize()[1])));
+                setMyCell(getLocalMap().getCell( MathHelper.boundedInteger(x,+1,getLocalMap().getSize()[0]), MathHelper.boundedInteger(y,-1,getLocalMap().getSize()[1])));
                 break;
             case EAST:
-                setMyCell(lm.getCell( MathHelper.boundedInteger(x,+1,lm.getSize()[0]), MathHelper.boundedInteger(y,0,lm.getSize()[1])));
+                setMyCell(getLocalMap().getCell( MathHelper.boundedInteger(x,+1,getLocalMap().getSize()[0]), MathHelper.boundedInteger(y,0,getLocalMap().getSize()[1])));
                 break;
             case SOUTH_EAST:
-                setMyCell(lm.getCell( MathHelper.boundedInteger(x,+1,lm.getSize()[0]), MathHelper.boundedInteger(y,+1,lm.getSize()[1])));
+                setMyCell(getLocalMap().getCell( MathHelper.boundedInteger(x,+1,getLocalMap().getSize()[0]), MathHelper.boundedInteger(y,+1,getLocalMap().getSize()[1])));
                 break;
             case SOUTH:
-                setMyCell(lm.getCell( MathHelper.boundedInteger(x,0,lm.getSize()[0]), MathHelper.boundedInteger(y,+1,lm.getSize()[1])));
+                setMyCell(getLocalMap().getCell( MathHelper.boundedInteger(x,0,getLocalMap().getSize()[0]), MathHelper.boundedInteger(y,+1,getLocalMap().getSize()[1])));
                 break;
             case SOUTH_WEST:
-                setMyCell(lm.getCell( MathHelper.boundedInteger(x,-1,lm.getSize()[0]), MathHelper.boundedInteger(y,+1,lm.getSize()[1])));
+                setMyCell(getLocalMap().getCell( MathHelper.boundedInteger(x,-1,getLocalMap().getSize()[0]), MathHelper.boundedInteger(y,+1,getLocalMap().getSize()[1])));
                 break;
             case WEST:
-                setMyCell(lm.getCell( MathHelper.boundedInteger(x,-1,lm.getSize()[0]), MathHelper.boundedInteger(y,0,lm.getSize()[1])));
+                setMyCell(getLocalMap().getCell( MathHelper.boundedInteger(x,-1,getLocalMap().getSize()[0]), MathHelper.boundedInteger(y,0,getLocalMap().getSize()[1])));
                 break;
             case NORTH_WEST:
-                setMyCell(lm.getCell( MathHelper.boundedInteger(x,-1,lm.getSize()[0]), MathHelper.boundedInteger(y,-1,lm.getSize()[1])));
+                setMyCell(getLocalMap().getCell( MathHelper.boundedInteger(x,-1,getLocalMap().getSize()[0]), MathHelper.boundedInteger(y,-1,getLocalMap().getSize()[1])));
                 break;
             case NONE:
                 break;
         }
-    }
-
-    public MapIcon getMapIcon() {return mapIcon;}
-
-    public void setMapIcon(MapIcon mi)
-    {
-        this.mapIcon = mi;
     }
 
     public ThinkingThing getMyThoughts()

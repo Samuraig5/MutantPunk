@@ -1,6 +1,6 @@
 package Main.AILogic;
 
-import Main.BodyLogic.Person;
+import Main.ObjectLogic.BodyLogic.Person;
 import Main.Direction;
 
 public class ThinkingThing

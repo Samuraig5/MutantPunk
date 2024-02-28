@@ -1,4 +1,4 @@
-package Main.BodyLogic;
+package Main.ObjectLogic.BodyLogic;
 
 public class BodyLogicHelper
 {

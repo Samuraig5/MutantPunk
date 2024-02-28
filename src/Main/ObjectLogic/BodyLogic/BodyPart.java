@@ -1,4 +1,4 @@
-package Main.BodyLogic;
+package Main.ObjectLogic.BodyLogic;
 
 import Main.ErrorHandler;
 
@@ -241,7 +241,7 @@ public class BodyPart
         if(myPerson != null)
         {
             myPerson.RemoveFromStat(personStats);
-            ErrorHandler.LogData(false,name + " is Updating person: " + myPerson.name);
+            ErrorHandler.LogData(false,name + " is Updating person: " + myPerson.getName());
             personStats.removeAll(personStats);
             if(currentHealth > 0)
             {

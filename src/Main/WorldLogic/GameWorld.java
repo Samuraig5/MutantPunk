@@ -1,10 +1,9 @@
 package Main.WorldLogic;
 
-import Main.BodyLogic.Person;
+import Main.ObjectLogic.BodyLogic.Person;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Timer;
 
 public class GameWorld
 {

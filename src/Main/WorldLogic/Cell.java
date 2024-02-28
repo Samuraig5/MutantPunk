@@ -1,47 +1,48 @@
 package Main.WorldLogic;
 
-import Main.BodyLogic.Person;
+import Main.ObjectLogic.BodyLogic.Person;
+import Main.ObjectLogic.Thing;
 
 import java.util.List;
 
 public class Cell
 {
     private final int[] coordinates = new int[2];
-    private final List<Person> people;
+    private final List<Thing> things;
 
-    public Cell(int[] xy, List<Person> personList)
+    public Cell(int[] xy, List<Thing> thingsList)
     {
         coordinates[0] = xy[0];
         coordinates[1] = xy[1];
-        people = personList;
+        things = thingsList;
     }
 
     public int[] getCoordinates()
     {
         return coordinates;
     }
-    public List<Person> getPeople()
+    public List<Thing> getThings()
     {
-        return people;
+        return things;
     }
-    public void personEnters(Person p)
+    public void thingEnters(Thing t)
     {
-        if(!people.contains(p))
+        if(!things.contains(t))
         {
-            people.add(p);
+            things.add(t);
         }
-        if(p.getMyCell() != this)
+        if(t.getMyCell() != this)
         {
-            p.setMyCell(this);
+            t.setMyCell(this);
         }
     }
-    public void personLeaves(Person p)
+    public void thingLeaves(Thing t)
     {
-        people.remove(p);
+        things.remove(t);
     }
     public boolean isEmpty()
     {
-        if (people.size() == 0)
+        if (things.size() == 0)
         {
             return true;
         }

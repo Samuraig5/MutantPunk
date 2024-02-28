@@ -1,8 +1,7 @@
 package Main.RenderLogic.Menus;
 
-import Main.BodyLogic.Person;
+import Main.ObjectLogic.BodyLogic.Person;
 import Main.RenderLogic.Console;
-import Main.WorldLogic.GameWorld;
 
 public class PersonMenu implements MenuLogic
 {

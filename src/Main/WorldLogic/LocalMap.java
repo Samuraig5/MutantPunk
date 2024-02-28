@@ -1,7 +1,8 @@
 package Main.WorldLogic;
 
-import Main.BodyLogic.Person;
 import Main.ErrorHandler;
+import Main.ObjectLogic.BodyLogic.Person;
+import Main.ObjectLogic.Thing;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,7 +19,7 @@ public class LocalMap
 
     private GameWorld myWorld;
     private String mapName;
-    private List<Person> localPersons = new ArrayList<>();
+    private List<Thing> localThings = new ArrayList<>();
 
     protected LocalMap(int[] xySize, Cell[][] mapCells, GameWorld gameWorld, String name)
     {
@@ -57,17 +58,33 @@ public class LocalMap
      * Returns the list of all persons currently on the local map. DO NOT use this to add persons to this list. Use addPersonToLocalMap instead.
      * @return the list of all persons
      */
-    public List<Person> getLocalPersons() {
-        ErrorHandler.LogData(true, "The local map: " + mapName + " has " + localPersons.size() + " persons.");
-        return localPersons;
+    public List<Thing> getLocalThings() {
+        ErrorHandler.LogData(true, "The local map: " + mapName + " has " + localThings.size() + " persons.");
+        return localThings;
     }
 
-    public void addPersonToLocalMap(Person p)
+    public List<Person> getLocalPeople()
     {
-        localPersons.add(p);
+        List<Thing> things = getLocalThings();
+        List<Person> people = new ArrayList<>();
+
+        for (int i = 0; i < things.size(); i++)
+        {
+            if (things.get(i) instanceof Person)
+            {
+                people.add((Person)things.get(i));
+            }
+        }
+
+        return people;
+    }
+
+    public void addPersonToLocalMap(Thing t)
+    {
+        localThings.add(t);
         Random r = new Random();
         int xCoord = r.nextInt(size[0]);
         int yCoord = r.nextInt(size[1]);
-        cells[xCoord][yCoord].personEnters(p);
+        cells[xCoord][yCoord].thingEnters(t);
     }
 }

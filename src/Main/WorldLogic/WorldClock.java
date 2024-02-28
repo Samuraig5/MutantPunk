@@ -1,6 +1,6 @@
 package Main.WorldLogic;
 
-import Main.BodyLogic.Person;
+import Main.ObjectLogic.BodyLogic.Person;
 import Main.RenderLogic.Console;
 
 import java.util.List;
@@ -21,7 +21,7 @@ public class WorldClock extends TimerTask
     {
         if (!isClockRunning) {return;}
         if (activeWorld == null) {return;}
-        List<Person> people = activeWorld.getActiveLocalMap().getLocalPersons();
+        List<Person> people = activeWorld.getActiveLocalMap().getLocalPeople();
         if (people == null) {return;}
         for (int i = 0; i < people.size(); i++)
         {

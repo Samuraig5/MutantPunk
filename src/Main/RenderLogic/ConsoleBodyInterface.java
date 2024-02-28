@@ -1,9 +1,10 @@
 package Main.RenderLogic;
 
-import Main.BodyLogic.BodyFileDecoder;
-import Main.BodyLogic.BodyPart;
-import Main.BodyLogic.Person;
+import Main.ObjectLogic.BodyLogic.BodyFileDecoder;
+import Main.ObjectLogic.BodyLogic.BodyPart;
+import Main.ObjectLogic.BodyLogic.Person;
 import Main.ErrorHandler;
+import Main.ObjectLogic.Thing;
 import Main.RenderLogic.Menus.*;
 import Main.WorldLogic.GameWorld;
 import Main.WorldLogic.LocalMap;
@@ -24,7 +25,7 @@ public class ConsoleBodyInterface
         Person newCharacter = spawnPerson(bias, randomness, filePath, lm);
         if (newCharacter != null)
         {
-            newCharacter.changeName(name);
+            newCharacter.setName(name);
         }
         else
         {
@@ -55,16 +56,16 @@ public class ConsoleBodyInterface
         List<String> allCharacterNames = new ArrayList<>();
         for (Person p:gw.getAllCharacters())
         {
-            allCharacterNames.add(p.name);
+            allCharacterNames.add(p.getName());
         }
         c.clir.renderList(allCharacterNames, "Current Characters", new AllCharactersInWorldMenu(c, gw));
     }
     public void listAllPersons(LocalMap lm)
     {
         List<String> allCharacterNames = new ArrayList<>();
-        for (Person p:lm.getLocalPersons())
+        for (Thing t:lm.getLocalThings())
         {
-            allCharacterNames.add(p.name);
+            allCharacterNames.add(t.getName());
         }
         c.clir.renderList(allCharacterNames, "Current Characters", new AllCharactersInLocalMapsMenu(c, lm));
     }
@@ -92,7 +93,7 @@ public class ConsoleBodyInterface
 
         List<String> list = new ArrayList<>();
         list.add("View Body");
-        c.clir.appendList(list, p.name, new PersonMenu(c,p));
+        c.clir.appendList(list, p.getName(), new PersonMenu(c,p));
     }
     private String rightpad(int text, int length) {
         return String.format("%-" + length + "." + length + "s", text);
@@ -125,7 +126,7 @@ public class ConsoleBodyInterface
 
         List<String> list = new ArrayList<>();
         addChildrenBodyPartsToList(p.myBodyParts.get(0), list, "");
-        c.clir.renderList(list, p.name+"'s Body", new BodyMenu(c,p));
+        c.clir.renderList(list, p.getName()+"'s Body", new BodyMenu(c,p));
     }
     private void addChildrenBodyPartsToList(BodyPart bp, List<String> list, String depth)
     {
@@ -149,7 +150,7 @@ public class ConsoleBodyInterface
 
         List<String> bodyPartList = new ArrayList<>();
         assembleBodyPartRelations(bp, bodyPartList);
-        c.clir.appendList(bodyPartList, bp.getMyPerson().name+"'s "+bp.getName(), new BodyPartMenu(c,bp), topBarMenuBlockList);
+        c.clir.appendList(bodyPartList, bp.getMyPerson().getName()+"'s "+bp.getName(), new BodyPartMenu(c,bp), topBarMenuBlockList);
 
     }
     private void displayBodyPartStats(BodyPart bp)
@@ -190,7 +191,7 @@ public class ConsoleBodyInterface
     {
         if (bp.getMyPerson() != null)
         {
-            list.add(bp.getMyPerson().name  + "\n" + "" + "\n" + "My parent body parts:");
+            list.add(bp.getMyPerson().getName()  + "\n" + "" + "\n" + "My parent body parts:");
         }
         else
         {

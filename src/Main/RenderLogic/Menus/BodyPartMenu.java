@@ -1,7 +1,7 @@
 package Main.RenderLogic.Menus;
 
-import Main.BodyLogic.BodyPart;
-import Main.BodyLogic.Person;
+import Main.ObjectLogic.BodyLogic.BodyPart;
+import Main.ObjectLogic.BodyLogic.Person;
 import Main.ErrorHandler;
 import Main.RenderLogic.Console;
 import Main.WorldLogic.GameWorld;

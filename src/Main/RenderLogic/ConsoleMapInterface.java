@@ -68,9 +68,9 @@ public class ConsoleMapInterface
                 {
                     mapIcons[x][y] = new MapIcon('.');
                 }
-                else if (cells[x][y].getPeople().size() > 0)
+                else if (cells[x][y].getThings().size() > 0)
                 {
-                    mapIcons[x][y] = cells[x][y].getPeople().get(0).getMapIcon();
+                    mapIcons[x][y] = cells[x][y].getThings().get(0).getMapIcon();
                 }
                 else
                 {
