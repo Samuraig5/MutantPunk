@@ -50,6 +50,24 @@ public class ConsoleCommands
             System.out.println("Console.java cant insert String int styledDocument");
         }
     }
+    public void printStrings(List<String> s, boolean trace, List<Color> c)
+    {
+        if (s.size() != c.size()) {throw new RuntimeException("String List and Colour List are not the same length");}
+
+        Color currentColor = c.get(0);
+        StringBuilder colourBlock = new StringBuilder();
+        for (int i = 0; i < s.size(); i++)
+        {
+            if (currentColor != c.get(i))
+            {
+                print(colourBlock.toString(), trace, currentColor);
+                colourBlock = new StringBuilder();
+                currentColor = c.get(i);
+            }
+            colourBlock.append(s.get(i));
+        }
+        print(colourBlock.toString(), trace, currentColor);
+    }
 
     public void print(String s, boolean trace)
     {

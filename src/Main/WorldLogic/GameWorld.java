@@ -14,6 +14,8 @@ public class GameWorld
     private LocalMap activeLocalMap;
     private List<Person> allCharacters = new ArrayList<>();
 
+    private Person playerCharacter;
+
     protected GameWorld(String name)
     {
         worldName = name;

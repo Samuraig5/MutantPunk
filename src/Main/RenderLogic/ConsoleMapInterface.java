@@ -8,6 +8,7 @@ import Main.WorldLogic.GameWorld;
 import Main.WorldLogic.LocalMap;
 import Main.WorldLogic.MapGenerator;
 
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -34,17 +35,26 @@ public class ConsoleMapInterface
 
         int[] xy = lm.getSize();
         MapIcon[][] mapIcons = TranslateCellsToSymbols(lm.getCells(),xy);
+
+        List<String> stringList = new ArrayList<>();
+        List<Color> colorList = new ArrayList<>();
+
         for (int y = 0; y < xy[1]; y++)
         {
             for (int x = 0; x < xy[0]; x++)
             {
                 MapIcon mi = mapIcons[x][y];
                 String s = String.valueOf(mi.getSymbol());
-                c.cc.print(s, false, mi.getIconColour());
-                c.cc.print(" ");
+                s += " ";
+                Color c =  mi.getIconColour();
+
+                stringList.add(s);
+                colorList.add(c);
             }
-            c.cc.print("\n");
+            stringList.add("\n");
+            colorList.add(Color.lightGray);
         }
+        c.cc.printStrings(stringList,false,colorList);
     }
 
     private MapIcon[][] TranslateCellsToSymbols(Cell[][] cells, int[] size)
