@@ -1,8 +1,8 @@
 package Test.BodyLogic;
 
-import Main.BodyLogic.BodyFileDecoder;
-import Main.BodyLogic.BodyPart;
-import Main.BodyLogic.Person;
+import Main.ObjectLogic.BodyLogic.BodyFileDecoder;
+import Main.ObjectLogic.BodyLogic.BodyPart;
+import Main.ObjectLogic.BodyLogic.Person;
 import Main.ErrorHandler;
 import Main.MathHelper;
 import org.junit.jupiter.api.BeforeEach;
@@ -22,7 +22,7 @@ class BodyPartTest {
     void setUp()
     {
         p = BodyFileDecoder.SpawnNewPersonFromFile("Resources/BodyPlans/Human",0,0);
-        p.changeName("Test Dummy");
+        p.setName("Test Dummy");
         bp = BodyFileDecoder.loadBodyPartFromFile("resources/BodyParts/Containers/HumanTorso",0,0);
         p.myBodyParts.add(bp);
         bp.setMyPerson(p);

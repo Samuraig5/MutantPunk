@@ -24,6 +24,10 @@ public class ConsoleMapInterface
     {
         return MapGenerator.generateEmptyLocalMap(size, gameWorld, name);
     }
+    public LocalMap GenerateLocalMapWithWalls(int[] size, GameWorld gameWorld, String name, float wallCover)
+    {
+        return MapGenerator.generateLocalMapWithWalls(size,gameWorld,name,wallCover);
+    }
 
     public void RenderLocalMap(LocalMap lm)
     {

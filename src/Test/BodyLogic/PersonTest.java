@@ -1,7 +1,7 @@
 package Test.BodyLogic;
 
-import Main.BodyLogic.BodyFileDecoder;
-import Main.BodyLogic.Person;
+import Main.ObjectLogic.BodyLogic.BodyFileDecoder;
+import Main.ObjectLogic.BodyLogic.Person;
 import Main.MathHelper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -19,7 +19,7 @@ class PersonTest {
     void setUp()
     {
         p = BodyFileDecoder.SpawnNewPersonFromFile("Resources/BodyPlans/Human",0,0);
-        p.changeName("Test Guy");
+        p.setName("Test Guy");
     }
 
     @Test
