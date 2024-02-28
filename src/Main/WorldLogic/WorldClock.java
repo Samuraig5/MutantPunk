@@ -25,7 +25,7 @@ public class WorldClock extends TimerTask
         if (people == null) {return;}
         for (int i = 0; i < people.size(); i++)
         {
-            people.get(i).getMyThoughts().doMovement();
+            people.get(i).getMyThoughts().thinkAboutMovement();
         }
         updateScreen();
     }

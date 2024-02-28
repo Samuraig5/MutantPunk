@@ -103,31 +103,64 @@ public class Person extends Thing
         int[] coord = c.getCoordinates();
         int x = coord[0];
         int y = coord[1];
+        Cell targetCell;
         switch (d)
         {
             case NORTH:
-                setMyCell(getLocalMap().getCell( MathHelper.boundedInteger(x,0,getLocalMap().getSize()[0]), MathHelper.boundedInteger(y,-1,getLocalMap().getSize()[1])));
+                targetCell = getLocalMap().getCell( MathHelper.boundedInteger(x,0,getLocalMap().getSize()[0]), MathHelper.boundedInteger(y,-1,getLocalMap().getSize()[1]));
+                if (targetCell.isThereAThingWithCollision()) {
+                    break;
+                }
+                setMyCell(targetCell);
                 break;
             case NORTH_EAST:
-                setMyCell(getLocalMap().getCell( MathHelper.boundedInteger(x,+1,getLocalMap().getSize()[0]), MathHelper.boundedInteger(y,-1,getLocalMap().getSize()[1])));
+                targetCell = getLocalMap().getCell( MathHelper.boundedInteger(x,+1,getLocalMap().getSize()[0]), MathHelper.boundedInteger(y,-1,getLocalMap().getSize()[1]));
+                if (targetCell.isThereAThingWithCollision()) {
+                    break;
+                }
+                setMyCell(targetCell);
                 break;
             case EAST:
-                setMyCell(getLocalMap().getCell( MathHelper.boundedInteger(x,+1,getLocalMap().getSize()[0]), MathHelper.boundedInteger(y,0,getLocalMap().getSize()[1])));
+                targetCell = getLocalMap().getCell( MathHelper.boundedInteger(x,+1,getLocalMap().getSize()[0]), MathHelper.boundedInteger(y,0,getLocalMap().getSize()[1]));
+                if (targetCell.isThereAThingWithCollision()) {
+                    break;
+                }
+                setMyCell(targetCell);
                 break;
             case SOUTH_EAST:
-                setMyCell(getLocalMap().getCell( MathHelper.boundedInteger(x,+1,getLocalMap().getSize()[0]), MathHelper.boundedInteger(y,+1,getLocalMap().getSize()[1])));
+                targetCell = getLocalMap().getCell( MathHelper.boundedInteger(x,+1,getLocalMap().getSize()[0]), MathHelper.boundedInteger(y,+1,getLocalMap().getSize()[1]));
+                if (targetCell.isThereAThingWithCollision()) {
+                    break;
+                }
+                setMyCell(targetCell);
                 break;
             case SOUTH:
-                setMyCell(getLocalMap().getCell( MathHelper.boundedInteger(x,0,getLocalMap().getSize()[0]), MathHelper.boundedInteger(y,+1,getLocalMap().getSize()[1])));
+                targetCell = getLocalMap().getCell( MathHelper.boundedInteger(x,0,getLocalMap().getSize()[0]), MathHelper.boundedInteger(y,+1,getLocalMap().getSize()[1]));
+                if (targetCell.isThereAThingWithCollision()) {
+                    break;
+                }
+                setMyCell(targetCell);
                 break;
             case SOUTH_WEST:
-                setMyCell(getLocalMap().getCell( MathHelper.boundedInteger(x,-1,getLocalMap().getSize()[0]), MathHelper.boundedInteger(y,+1,getLocalMap().getSize()[1])));
+                targetCell = getLocalMap().getCell( MathHelper.boundedInteger(x,-1,getLocalMap().getSize()[0]), MathHelper.boundedInteger(y,+1,getLocalMap().getSize()[1]));
+                if (targetCell.isThereAThingWithCollision()) {
+                    break;
+                }
+                setMyCell(targetCell);
                 break;
             case WEST:
-                setMyCell(getLocalMap().getCell( MathHelper.boundedInteger(x,-1,getLocalMap().getSize()[0]), MathHelper.boundedInteger(y,0,getLocalMap().getSize()[1])));
+                targetCell = getLocalMap().getCell( MathHelper.boundedInteger(x,-1,getLocalMap().getSize()[0]), MathHelper.boundedInteger(y,0,getLocalMap().getSize()[1]));
+                if (targetCell.isThereAThingWithCollision()) {
+                    break;
+                }
+                setMyCell(targetCell);
                 break;
             case NORTH_WEST:
-                setMyCell(getLocalMap().getCell( MathHelper.boundedInteger(x,-1,getLocalMap().getSize()[0]), MathHelper.boundedInteger(y,-1,getLocalMap().getSize()[1])));
+                targetCell = getLocalMap().getCell( MathHelper.boundedInteger(x,-1,getLocalMap().getSize()[0]), MathHelper.boundedInteger(y,-1,getLocalMap().getSize()[1]));
+                if (targetCell.isThereAThingWithCollision()) {
+                    break;
+                }
+                setMyCell(targetCell);
                 break;
             case NONE:
                 break;

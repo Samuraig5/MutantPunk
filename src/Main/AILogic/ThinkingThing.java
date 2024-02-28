@@ -14,7 +14,7 @@ public class ThinkingThing
 
     public Person getMyPerson() {return myPerson;}
 
-    public void doMovement()
+    public void thinkAboutMovement()
     {
         System.out.println(myPerson.getMyCell());
         Direction d = Direction.getRandomDirection();

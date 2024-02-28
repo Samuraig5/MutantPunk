@@ -13,6 +13,9 @@ public class Thing
     private MapIcon mapIcon;
 
     private String name;
+
+    private boolean hasCollision = true;
+
     public LocalMap getLocalMap() {
         return lm;
     }
@@ -66,5 +69,14 @@ public class Thing
     public void setGameWorld(GameWorld gw)
     {
         this.gw = gw;
+    }
+
+    public boolean hasCollision()
+    {
+        return hasCollision;
+    }
+    public void setCollision(boolean bool)
+    {
+        hasCollision = bool;
     }
 }

@@ -25,6 +25,17 @@ public class Cell
     {
         return things;
     }
+
+    public boolean isThereAThingWithCollision()
+    {
+        for (int i = 0; i < things.size(); i++) {
+            if (things.get(i).hasCollision())
+            {
+                return true;
+            }
+        }
+        return false;
+    }
     public void thingEnters(Thing t)
     {
         if(!things.contains(t))
