@@ -30,7 +30,13 @@ public class Wall extends Thing
     }
 
     @Override
+    public void thingLeftCell(Thing t, Direction directionToNewCell) {
+
+    }
+
+    @Override
     public void updateTick() {
 
     }
+
 }

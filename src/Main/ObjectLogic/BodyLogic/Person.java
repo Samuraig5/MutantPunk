@@ -113,56 +113,56 @@ public class Person extends Thing
                 if (targetCell.isThereAThingWithCollision()) {
                     break;
                 }
-                setMyCell(targetCell);
+                setMyCell(targetCell, Direction.NORTH);
                 break;
             case NORTH_EAST:
                 targetCell = getLocalMap().getCell( MathHelper.boundedInteger(x,+1,getLocalMap().getSize()[0]), MathHelper.boundedInteger(y,-1,getLocalMap().getSize()[1]));
                 if (targetCell.isThereAThingWithCollision()) {
                     break;
                 }
-                setMyCell(targetCell);
+                setMyCell(targetCell, Direction.NORTH_EAST);
                 break;
             case EAST:
                 targetCell = getLocalMap().getCell( MathHelper.boundedInteger(x,+1,getLocalMap().getSize()[0]), MathHelper.boundedInteger(y,0,getLocalMap().getSize()[1]));
                 if (targetCell.isThereAThingWithCollision()) {
                     break;
                 }
-                setMyCell(targetCell);
+                setMyCell(targetCell, Direction.EAST);
                 break;
             case SOUTH_EAST:
                 targetCell = getLocalMap().getCell( MathHelper.boundedInteger(x,+1,getLocalMap().getSize()[0]), MathHelper.boundedInteger(y,+1,getLocalMap().getSize()[1]));
                 if (targetCell.isThereAThingWithCollision()) {
                     break;
                 }
-                setMyCell(targetCell);
+                setMyCell(targetCell, Direction.SOUTH_EAST);
                 break;
             case SOUTH:
                 targetCell = getLocalMap().getCell( MathHelper.boundedInteger(x,0,getLocalMap().getSize()[0]), MathHelper.boundedInteger(y,+1,getLocalMap().getSize()[1]));
                 if (targetCell.isThereAThingWithCollision()) {
                     break;
                 }
-                setMyCell(targetCell);
+                setMyCell(targetCell, Direction.SOUTH);
                 break;
             case SOUTH_WEST:
                 targetCell = getLocalMap().getCell( MathHelper.boundedInteger(x,-1,getLocalMap().getSize()[0]), MathHelper.boundedInteger(y,+1,getLocalMap().getSize()[1]));
                 if (targetCell.isThereAThingWithCollision()) {
                     break;
                 }
-                setMyCell(targetCell);
+                setMyCell(targetCell, Direction.SOUTH_WEST);
                 break;
             case WEST:
                 targetCell = getLocalMap().getCell( MathHelper.boundedInteger(x,-1,getLocalMap().getSize()[0]), MathHelper.boundedInteger(y,0,getLocalMap().getSize()[1]));
                 if (targetCell.isThereAThingWithCollision()) {
                     break;
                 }
-                setMyCell(targetCell);
+                setMyCell(targetCell, Direction.WEST);
                 break;
             case NORTH_WEST:
                 targetCell = getLocalMap().getCell( MathHelper.boundedInteger(x,-1,getLocalMap().getSize()[0]), MathHelper.boundedInteger(y,-1,getLocalMap().getSize()[1]));
                 if (targetCell.isThereAThingWithCollision()) {
                     break;
                 }
-                setMyCell(targetCell);
+                setMyCell(targetCell, Direction.NORTH_WEST);
                 break;
             case NONE:
                 break;
@@ -185,7 +185,13 @@ public class Person extends Thing
     }
 
     @Override
+    public void thingLeftCell(Thing t, Direction directionToNewCell) {
+
+    }
+
+    @Override
     public void updateTick() {
         myThoughts.thinkAboutMovement();
     }
+
 }

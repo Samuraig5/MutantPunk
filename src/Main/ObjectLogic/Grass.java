@@ -28,6 +28,11 @@ public class Grass extends Thing
 
     @Override
     public void newNeightbour(Thing t, Direction d) {
+
+    }
+
+    @Override
+    public void thingLeftCell(Thing t, Direction d) {
         if (t instanceof Person)
         {
             switch (d)

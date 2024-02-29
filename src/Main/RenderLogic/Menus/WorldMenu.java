@@ -28,7 +28,7 @@ public class WorldMenu implements MenuLogic
         if (c.clir.getCurrentPage() == 1)
         {
             int[] size = {50,50};
-            c.cm.openLocalMapMenu(c.cm.GenerateLocalMapWithWalls(size, gw, "LocalMap: " + gw.getLocalMaps().size(), 0.1f));
+            c.cm.openLocalMapMenu(c.cm.GenerateLocalMapWithWalls(size, gw, "LocalMap: " + gw.getLocalMaps().size(), 0.01f));
         }
         else
         {

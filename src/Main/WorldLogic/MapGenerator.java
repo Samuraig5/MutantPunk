@@ -1,5 +1,6 @@
 package Main.WorldLogic;
 
+import Main.Direction;
 import Main.MathHelper;
 import Main.ObjectLogic.Grass;
 import Main.ObjectLogic.Walls.Wall;
@@ -37,12 +38,12 @@ public class MapGenerator
                 if (Math.random() < wallCover)
                 {
                     Wall wall = new Wall();
-                    cells[x][y].thingEnters(wall);
+                    cells[x][y].thingEnters(wall, Direction.NONE);
                 }
                 else
                 {
                     Grass grass = new Grass();
-                    cells[x][y].thingEnters(grass);
+                    cells[x][y].thingEnters(grass, Direction.NONE);
                 }
             }
         }

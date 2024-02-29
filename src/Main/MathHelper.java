@@ -21,4 +21,12 @@ public class MathHelper
      * @return Positive modulo of the sum
      */
     static public int boundedInteger(int value, int add, int modulo){return (value + add + modulo) % modulo;}
+
+    static public boolean fiftyFifty()
+    {
+        if (Math.random() > 0.5) {
+            return true;
+        }
+        return false;
+    }
 }

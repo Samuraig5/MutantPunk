@@ -18,7 +18,7 @@ public class AllCharactersInLocalMapsMenu implements MenuLogic
     private void openPersonView(int i)
     {
         int currentPage = c.clir.getCurrentPage();
-        Person p = lm.getLocalPeople().get((26*currentPage-26)+i);
+        Person p = lm.getLocalThing().get((26*currentPage-26)+i);
         c.cb.openPersonView(p);
     }
 

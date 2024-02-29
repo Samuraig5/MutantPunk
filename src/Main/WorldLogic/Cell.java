@@ -1,7 +1,6 @@
 package Main.WorldLogic;
 
 import Main.MathHelper;
-import Main.ObjectLogic.BodyLogic.Person;
 import Main.ObjectLogic.Thing;
 import Main.Direction;
 
@@ -26,6 +25,8 @@ public class Cell
     {
         this.lm = lm;
     }
+
+    public LocalMap getLocalMap() {return lm;}
 
     public int[] getCoordinates()
     {
@@ -62,7 +63,7 @@ public class Cell
         }
         return false;
     }
-    public void thingEnters(Thing t)
+    public void thingEnters(Thing t, Direction directionOfSource)
     {
         if(!things.contains(t))
         {
@@ -70,7 +71,7 @@ public class Cell
         }
         if(t.getMyCell() != this)
         {
-            t.setMyCell(this);
+            t.setMyCell(this, Direction.invertDirection(directionOfSource));
         }
 
         if (lm == null) {return;}
@@ -86,9 +87,12 @@ public class Cell
         n[6].newThingInNeighbour(t, Direction.EAST);
         n[7].newThingInNeighbour(t, Direction.SOUTH_EAST);
     }
-    public void thingLeaves(Thing t)
+    public void thingLeaves(Thing t, Direction directionOfTravel)
     {
         things.remove(t);
+        for (int i = 0; i < things.size(); i++) {
+            things.get(i).thingLeftCell(t, directionOfTravel);
+        }
     }
     public boolean isEmpty()
     {

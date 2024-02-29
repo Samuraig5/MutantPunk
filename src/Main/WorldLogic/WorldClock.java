@@ -22,10 +22,13 @@ public class WorldClock extends TimerTask
     {
         if (!isClockRunning) {return;}
         if (activeWorld == null) {return;}
+
+        activeWorld.getActiveLocalMap().updateTick();
+
         List<Thing> things = activeWorld.getActiveLocalMap().getLocalThings();
         if (things == null) {return;}
-        for (Thing thing : things) {
-            thing.updateTick();
+        for (int i = 0; i < things.size(); i++) {
+            things.get(i).updateTick();
         }
         updateScreen();
     }

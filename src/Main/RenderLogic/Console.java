@@ -87,7 +87,7 @@ public class Console
         cc.openMainMenu();
 
         java.util.Timer timer = new Timer();
-        timer.schedule(wc, 0, 1000);
+        timer.schedule(wc, 0, 333);
 
         while (true)
         {

@@ -31,21 +31,21 @@ abstract public class Thing
             this.lm.getLocalThings().remove(this);
         }
         this.lm = lm;
-        this.lm.addPersonToLocalMap(this);
+        this.lm.addThingToLocalMap(this);
     }
 
     public Cell getMyCell() {
         return myCell;
     }
 
-    public void setMyCell(Cell newCell) {
+    public void setMyCell(Cell newCell, Direction directionOfTravel) {
         if (myCell != null)
         {
-            myCell.thingLeaves(this);
+            myCell.thingLeaves(this, directionOfTravel);
         }
         myCell = newCell;
         if (!newCell.getThings().contains(this)) {
-            newCell.thingEnters(this);
+            newCell.thingEnters(this, Direction.invertDirection(directionOfTravel));
         }
     }
 
@@ -96,5 +96,16 @@ abstract public class Thing
 
     public abstract void newNeightbour(Thing t, Direction directionToSource);
 
+    public abstract void thingLeftCell(Thing t, Direction directionToNewCell);
+
     public abstract void updateTick();
+
+    public void destroy()
+    {
+        myCell.thingLeaves(this, Direction.NONE);
+        myCell = null;
+        lm.removeThingFromLocalMap(this);
+        lm = null;
+        gw = null;
+    }
 }

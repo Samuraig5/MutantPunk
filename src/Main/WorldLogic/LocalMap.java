@@ -1,8 +1,11 @@
 package Main.WorldLogic;
 
+import Main.Direction;
 import Main.ErrorHandler;
+import Main.MathHelper;
 import Main.ObjectLogic.BodyLogic.Person;
 import Main.ObjectLogic.Thing;
+import Main.ObjectLogic.Wind;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -62,7 +65,7 @@ public class LocalMap
     }
 
     /**
-     * Returns the list of all persons currently on the local map. DO NOT use this to add persons to this list. Use addPersonToLocalMap instead.
+     * Returns the list of all persons currently on the local map. DO NOT use this to add persons to this list. Use addThingToLocalMap instead.
      * @return the list of all persons
      */
     public List<Thing> getLocalThings() {
@@ -75,7 +78,7 @@ public class LocalMap
         localThings.add(t);
     }
 
-    public List<Person> getLocalPeople()
+    public List<Person> getLocalThing()
     {
         List<Thing> things = getLocalThings();
         List<Person> people = new ArrayList<>();
@@ -91,12 +94,32 @@ public class LocalMap
         return people;
     }
 
-    public void addPersonToLocalMap(Thing t)
+    public void addThingToLocalMap(Thing t)
     {
         localThings.add(t);
-        Random r = new Random();
-        int xCoord = r.nextInt(size[0]);
-        int yCoord = r.nextInt(size[1]);
-        cells[xCoord][yCoord].thingEnters(t);
+        if (t.getMyCell() == null) {
+            Random r = new Random();
+            int xCoord = r.nextInt(size[0]);
+            int yCoord = r.nextInt(size[1]);
+            cells[xCoord][yCoord].thingEnters(t, Direction.NONE);
+        }
+    }
+
+    public void removeThingFromLocalMap(Thing t)
+    {
+        boolean removedThing = true;
+        while (removedThing)
+        {
+            removedThing = localThings.remove(t);;
+        }
+    }
+
+    public void updateTick()
+    {
+        if (Math.random() < 0.1)
+        {
+            int xOrigin = (int) (Math.random() * getMyWorld().getActiveLocalMap().getSize()[1]);
+            new Wind(cells[xOrigin][0],Direction.SOUTH,1);
+        }
     }
 }
