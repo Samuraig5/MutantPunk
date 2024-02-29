@@ -11,6 +11,7 @@ import java.util.Random;
 
 public class Grass extends Thing
 {
+    private int pushedDownValue;
     public Grass()
     {
         super();
@@ -33,7 +34,24 @@ public class Grass extends Thing
 
     @Override
     public void thingLeftCell(Thing t, Direction d) {
+        boolean changeDirection = false;
         if (t instanceof Person)
+        {
+            if (pushedDownValue <= 10)
+            {
+                changeDirection = true;
+                pushedDownValue = 10;
+            }
+        }
+        else if (t instanceof Wind)
+        {
+            if (pushedDownValue <= 1)
+            {
+                changeDirection = true;
+                pushedDownValue = 1;
+            }
+        }
+        if (changeDirection)
         {
             switch (d)
             {
@@ -59,7 +77,16 @@ public class Grass extends Thing
 
     @Override
     public void updateTick() {
-        if (Math.random()>0.9f)
-            getMapIcon().setSymbol('.');
+        if (pushedDownValue == 0)
+        {
+            if (Math.random() < 0.9f)
+            {
+                getMapIcon().setSymbol('.');
+            }
+        }
+        else if (Math.random() < 0.9f)
+        {
+            pushedDownValue -= 1;
+        }
     }
 }

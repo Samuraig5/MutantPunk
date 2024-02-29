@@ -25,7 +25,7 @@ public class Wind extends Thing
         mi.setIconColour(Color.white);
         setMapIcon(mi);
 
-        setRenderPriority(9);
+        setRenderPriority(-1);
 
         setName("Gust of Wind");
 
