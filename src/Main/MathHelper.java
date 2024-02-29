@@ -24,7 +24,12 @@ public class MathHelper
 
     static public boolean fiftyFifty()
     {
-        if (Math.random() > 0.5) {
+        return randomDecider(0.5f);
+    }
+
+    static public boolean randomDecider(float percentageToHit)
+    {
+        if (Math.random() < percentageToHit) {
             return true;
         }
         return false;

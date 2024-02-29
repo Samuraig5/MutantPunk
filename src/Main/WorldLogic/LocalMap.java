@@ -24,7 +24,7 @@ public class LocalMap
     private String mapName;
     private List<Thing> localThings = new ArrayList<>();
 
-    private Direction localWind = Direction.SOUTH;
+    private Direction localWind = Direction.EAST;
 
     protected LocalMap(int[] xySize, Cell[][] mapCells, GameWorld gameWorld, String name)
     {
@@ -147,7 +147,7 @@ public class LocalMap
             x = MathHelper.clamp(x,0,xMax-1);
             y = MathHelper.clamp(y,0,yMax-1);
 
-            new Wind(cells[x][y],localWind,1.25f);
+            new Wind(cells[x][y],localWind,2f);
         }
     }
 }

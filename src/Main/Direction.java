@@ -103,6 +103,72 @@ public enum Direction
         return result;
     }
 
+    static public Direction[] coneCastAll(Direction d)
+    {
+        Direction[] directionsOptions = new Direction[3];
+        switch (d)
+        {
+            case NORTH:
+                directionsOptions[0] = NORTH_WEST;
+                directionsOptions[1] = NORTH;
+                directionsOptions[2] = NORTH_EAST;
+                break;
+            case NORTH_EAST:
+                directionsOptions[0] = NORTH;
+                directionsOptions[1] = NORTH_EAST;
+                directionsOptions[2] = EAST;
+                break;
+            case EAST:
+                directionsOptions[0] = NORTH_EAST;
+                directionsOptions[1] = EAST;
+                directionsOptions[2] = SOUTH_EAST;
+                break;
+            case SOUTH_EAST:
+                directionsOptions[0] = EAST;
+                directionsOptions[1] = SOUTH_EAST;
+                directionsOptions[2] = SOUTH;
+                break;
+            case SOUTH:
+                directionsOptions[0] = SOUTH_EAST;
+                directionsOptions[1] = SOUTH;
+                directionsOptions[2] = SOUTH_WEST;
+                break;
+            case SOUTH_WEST:
+                directionsOptions[0] = SOUTH;
+                directionsOptions[1] = SOUTH_WEST;
+                directionsOptions[2] = WEST;
+                break;
+            case WEST:
+                directionsOptions[0] = SOUTH_WEST;
+                directionsOptions[1] = WEST;
+                directionsOptions[2] = NORTH_WEST;
+                break;
+            case NORTH_WEST:
+                directionsOptions[0] = WEST;
+                directionsOptions[1] = NORTH_WEST;
+                directionsOptions[2] = NORTH;
+                break;
+        }
+        return directionsOptions;
+    }
+
+    static public Direction coneCastChance (Direction d, float accuracy)
+    {
+        Direction[] directionsOptions = coneCastAll(d);
+        if (MathHelper.randomDecider(accuracy))
+        {
+            return directionsOptions[1];
+        }
+        else if (MathHelper.fiftyFifty())
+        {
+            return directionsOptions[0];
+        }
+        else
+        {
+            return directionsOptions[2];
+        }
+    }
+
     public static Cell getCellInDirection(Cell origin, Direction direction)
     {
         if (origin == null) {throw new RuntimeException("Origin Cell is null");}

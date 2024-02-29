@@ -14,23 +14,30 @@ public class Wind extends Thing
 {
     private Direction directionOfTravel;
     private float strengthOfSpread;
-    private Wind windSource;
 
     public Wind(Cell spawnPoint, Direction directionOfTravel, float strengthOfSpread)
     {
         super();
-        initialize(spawnPoint, directionOfTravel, strengthOfSpread, this);
+
+        initialize(spawnPoint, directionOfTravel, strengthOfSpread);
+
+        spreadWind(directionOfTravel, Direction.invertDirection(directionOfTravel), Direction.directionsAt90Degrees(directionOfTravel)[0]);
+        spreadWind(directionOfTravel, Direction.invertDirection(directionOfTravel), Direction.directionsAt90Degrees(directionOfTravel)[0]);
+        spreadWind(directionOfTravel, Direction.directionsAt90Degrees(directionOfTravel)[0]);
+        spreadWind(directionOfTravel, Direction.directionsAt90Degrees(directionOfTravel)[1]);
     }
-    public Wind(Cell spawnPoint, Direction directionOfTravel, float strengthOfSpread, Wind windSource)
+    public Wind(Cell spawnPoint, Direction directionOfTravel, float strengthOfSpread, Direction sourceOfSpread)
     {
         super();
         setLocalMap(spawnPoint.getLocalMap());
-        Cell fixedSpawnPoint = boundDiffrence(getMyCell(), windSource.getMyCell(), 1);
+        //Cell fixedSpawnPoint = boundDiffrence(getMyCell(), windSource.getMyCell(), 1);
+        Cell fixedSpawnPoint = spawnPoint;
 
-        initialize(fixedSpawnPoint, directionOfTravel, strengthOfSpread, windSource);
+        initialize(fixedSpawnPoint, directionOfTravel, strengthOfSpread);
+        spreadWind(directionOfTravel, sourceOfSpread);
     }
 
-    private void initialize(Cell spawnPoint, Direction directionOfTravel, float strengthOfSpread, Wind windSource)
+    private void initialize(Cell spawnPoint, Direction directionOfTravel, float strengthOfSpread)
     {
         setLocalMap(spawnPoint.getLocalMap());
         setMyCell(spawnPoint, Direction.NONE);
@@ -46,59 +53,25 @@ public class Wind extends Thing
 
         setName("Gust of Wind");
 
-        this.windSource = windSource;
-
         this.directionOfTravel = directionOfTravel;
         this.strengthOfSpread = strengthOfSpread;
-        spreadWind(directionOfTravel, windSource);
     }
 
-    public void spreadWind(Direction directionOfTravel, Wind windSource)
+    public void spreadWind(Direction directionOfTravel, Direction directionOfSpread)
+    {
+        spreadWind(directionOfTravel, directionOfSpread, directionOfSpread);
+    }
+    public void spreadWind(Direction directionOfTravel, Direction directionOfTranslation, Direction directionOfPropagation)
     {
         if (Math.random() > strengthOfSpread) {return;}
-        List<Direction> targetDirections = new ArrayList<>();
-        if (Math.random() < 0.33)
-        {
-            targetDirections.add(Direction.directionsAt90Degrees(directionOfTravel)[0]);
-        }
-        else if (Math.random() < 0.66) {
-            targetDirections.add(Direction.directionsAt90Degrees(directionOfTravel)[1]);
-        }
-        else
-        {
-            targetDirections.add(Direction.directionsAt90Degrees(directionOfTravel)[0]);
-            targetDirections.add(Direction.directionsAt90Degrees(directionOfTravel)[1]);
-        }
 
-        for (Direction targetDirection : targetDirections) {
-            Cell targetCell = Direction.getCellInDirection(getMyCell(), targetDirection);
-            new Wind(targetCell, directionOfTravel, weakenStrengthOfSpread(strengthOfSpread), windSource);
-        }
+        Cell targetCell = Direction.getCellInDirection(getMyCell(), directionOfTranslation);
+        new Wind(targetCell, directionOfTravel, weakenStrengthOfSpread(strengthOfSpread), directionOfPropagation);
     }
 
     private float weakenStrengthOfSpread(float startingPoint)
     {
         return (float)(startingPoint - (Math.random() * (startingPoint/10)));
-    }
-
-    private Cell boundDiffrence(Cell myCell, Cell sourceCell, int maxDiffrence)
-    {
-        if (sourceCell == null) {return myCell;}
-        int x = myCell.getCoordinates()[0];
-        int y = sourceCell.getCoordinates()[1];
-        if (directionOfTravel == Direction.NORTH || directionOfTravel == Direction.SOUTH)
-        {
-            y = MathHelper.clamp(myCell.getCoordinates()[1],
-                    sourceCell.getCoordinates()[1]-maxDiffrence,
-                    sourceCell.getCoordinates()[1]+maxDiffrence);
-        }
-        if (directionOfTravel == Direction.EAST || directionOfTravel == Direction.WEST)
-        {
-            x = MathHelper.clamp(myCell.getCoordinates()[0],
-                    sourceCell.getCoordinates()[0]-maxDiffrence,
-                    sourceCell.getCoordinates()[0]+maxDiffrence);
-        }
-        return getLocalMap().getCell(x,y);
     }
 
     @Override
@@ -115,25 +88,10 @@ public class Wind extends Thing
     public void updateTick() {
         if (Math.random() < 0.05) {destroy(); return;}
 
-        Direction targetDirection = directionOfTravel;
+        Direction targetDirection = Direction.coneCastChance(directionOfTravel, 0.9f);
 
-
-        if (Math.random() < 0.1)
-        {
-            if (Math.random() < 0.5)
-            {
-                targetDirection = Direction.directionsAt90Degrees(directionOfTravel)[0];
-            }
-            else
-            {
-                targetDirection = Direction.directionsAt90Degrees(directionOfTravel)[1];
-            }
-        }
         Cell targetCell = Direction.getCellInDirection(getMyCell(), targetDirection);
-        if(windSource != null && this != windSource)
-        {
-            targetCell = boundDiffrence(targetCell, windSource.getMyCell(), 0);
-        }
+
         setMyCell(targetCell, targetDirection);
     }
 }
