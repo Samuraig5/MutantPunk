@@ -77,16 +77,14 @@ public class Grass extends Thing
 
     @Override
     public void updateTick() {
-        if (pushedDownValue == 0)
-        {
-            if (Math.random() < 0.9f)
-            {
-                getMapIcon().setSymbol('.');
-            }
-        }
-        else if (Math.random() < 0.9f)
+
+        if (pushedDownValue > 0 && Math.random() < 0.9f)
         {
             pushedDownValue -= 1;
+        }
+        if (pushedDownValue == 0)
+        {
+            getMapIcon().setSymbol('.');
         }
     }
 }

@@ -24,6 +24,8 @@ public class LocalMap
     private String mapName;
     private List<Thing> localThings = new ArrayList<>();
 
+    private Direction localWind = Direction.SOUTH;
+
     protected LocalMap(int[] xySize, Cell[][] mapCells, GameWorld gameWorld, String name)
     {
         size[0] = xySize[0];
@@ -38,6 +40,7 @@ public class LocalMap
 
         myWorld = gameWorld;
         mapName = name;
+        //this.localWind = Direction.getRandomDirection(false);
     }
 
     public int[] getSize()
@@ -116,10 +119,35 @@ public class LocalMap
 
     public void updateTick()
     {
+        if (localWind == Direction.NONE) {return;}
+
+        int xMax = getMyWorld().getActiveLocalMap().getSize()[0];
+        int yMax = getMyWorld().getActiveLocalMap().getSize()[1];
+
         if (Math.random() < 0.1)
         {
-            int xOrigin = (int) (Math.random() * getMyWorld().getActiveLocalMap().getSize()[1]);
-            new Wind(cells[xOrigin][0],Direction.SOUTH,1);
+            int xRandOrigin = (int) (Math.random() * xMax);
+            int yRandOrigin = (int) (Math.random() * yMax);
+
+            int x = 0;
+            int y = 0;
+
+            switch (localWind)
+            {
+                case NORTH:
+                case SOUTH:
+                    x = xRandOrigin;
+                    break;
+                case WEST:
+                case EAST:
+                    y = yRandOrigin;
+                    break;
+            }
+
+            x = MathHelper.clamp(x,0,xMax-1);
+            y = MathHelper.clamp(y,0,yMax-1);
+
+            new Wind(cells[x][y],localWind,1.25f);
         }
     }
 }
