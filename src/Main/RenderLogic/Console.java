@@ -3,6 +3,7 @@ package Main.RenderLogic;
 import Main.ErrorHandler;
 import Main.RenderLogic.Menus.MainMenu;
 import Main.RenderLogic.Menus.WorldMenu;
+import Main.Settings;
 import Main.WorldLogic.WorldClock;
 
 import javax.swing.*;
@@ -87,7 +88,7 @@ public class Console
         cc.openMainMenu();
 
         java.util.Timer timer = new Timer();
-        timer.schedule(wc, 0, 333);
+        timer.schedule(wc, 0, Settings.updateSpeed);
 
         while (true)
         {

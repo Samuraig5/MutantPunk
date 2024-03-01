@@ -1,6 +1,7 @@
 package Main.RenderLogic.Menus;
 
 import Main.RenderLogic.Console;
+import Main.Settings;
 import Main.WorldLogic.GameWorld;
 import Main.WorldLogic.LocalMap;
 
@@ -27,7 +28,7 @@ public class WorldMenu implements MenuLogic
     {
         if (c.clir.getCurrentPage() == 1)
         {
-            int[] size = {50,50};
+            int[] size = {Settings.mapSizeX, Settings.mapSizeY};
             c.cm.openLocalMapMenu(c.cm.GenerateLocalMapWithWalls(size, gw, "LocalMap: " + gw.getLocalMaps().size(), 0.01f));
         }
         else

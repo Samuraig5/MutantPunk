@@ -4,6 +4,7 @@ import Main.Direction;
 import Main.MathHelper;
 import Main.ObjectLogic.Grass;
 import Main.ObjectLogic.Walls.Wall;
+import Main.Settings;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -35,12 +36,12 @@ public class MapGenerator
             {
                 int[] xy = {x,y};
                 cells[x][y] = new Cell(xy, new ArrayList<>());
-                if (Math.random() < wallCover)
+                if (Settings.spawnWalls && Math.random() < wallCover)
                 {
                     Wall wall = new Wall();
                     cells[x][y].thingEnters(wall, Direction.NONE);
                 }
-                else
+                else if (Settings.spawnGrass)
                 {
                     Grass grass = new Grass();
                     cells[x][y].thingEnters(grass, Direction.NONE);
