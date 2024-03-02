@@ -2,6 +2,8 @@ package Main;
 
 public class Settings
 {
+    public static final int windowWidth = 1000;
+    public static final int windowHeight = 600;
     public static boolean spawnGrass = true;
 
     public static boolean spawnWalls = true;

@@ -29,11 +29,32 @@ public class Console
     private final JFrame frame;
     public static JTextPane console;
     public static StyledDocument styledDocument;
-    private final JTextField input;
-    private final JScrollPane scrollPane;
+    //private final JTextField input;
+    //private final JScrollPane scrollPane;
     private boolean inMainMenu;
 
     public Console()
+    {
+        frame = new JFrame();
+        frame.setSize(Settings.windowWidth,Settings.windowHeight);
+
+        frame.setTitle("Mutant Punk");
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); //Program stops when window is closed
+
+        console = new JTextPane();
+        console.setEditable(false);
+        console.setFont(new Font("Courier New", Font.PLAIN, 12));
+        console.setOpaque(false);
+
+        ConsolePainter cp = new ConsolePainter();
+        frame.add(cp);
+        cp.requestFocusInWindow();
+
+        cp.repaint();
+        cp.revalidate();
+        frame.setVisible(true);
+    }
+    /*public void TConsole()
     {
         try
         {
@@ -95,6 +116,8 @@ public class Console
             ckb.label.grabFocus();
             ErrorHandler.LogData(false, getScreenSize()[0] + "/" + getScreenSize()[1]);
         }
+
+
     }
 
     /**
