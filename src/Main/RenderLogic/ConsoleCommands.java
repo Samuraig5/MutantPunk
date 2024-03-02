@@ -2,13 +2,9 @@ package Main.RenderLogic;
 
 import Main.ErrorHandler;
 import Main.RenderLogic.Menus.MainMenu;
-import Main.RenderLogic.Menus.WorldMenu;
-import Main.WorldLogic.GameWorld;
 
-import javax.swing.text.BadLocationException;
 import javax.swing.text.Style;
 import javax.swing.text.StyleConstants;
-import javax.swing.text.StyledDocument;
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -127,7 +123,7 @@ public class ConsoleCommands
         List<String> mainMenuOptions = new ArrayList<>();
 
         fullClear();
-        generateLogo();
+        LEGACY_generateLogo();
 
         mainMenuOptions.add("a - Open new World");
         mainMenuOptions = centreStringsInScreen(mainMenuOptions);
@@ -137,7 +133,26 @@ public class ConsoleCommands
         c.ckb.setCurrentMenu(new MainMenu(c));
 
     }
-    private void generateLogo()
+    public String[] generateLogo()
+    {
+        String[] logo = new String[11];
+
+        logo[0] = (" ███▄ ▄███▓ █    ██ ▄▄▄█████▓ ▄▄▄       ███▄    █ ▄▄▄█████▓    ██▓███   █    ██  ███▄    █  ██ ▄█▀\n");
+        logo[1] =("▓██▒▀█▀ ██▒ ██  ▓██▒▓  ██▒ ▓▒▒████▄     ██ ▀█   █ ▓  ██▒ ▓▒   ▓██░  ██▒ ██  ▓██▒ ██ ▀█   █  ██▄█▒ \n");
+        logo[2] =("▓██    ▓██░▓██  ▒██░▒ ▓██░ ▒░▒██  ▀█▄  ▓██  ▀█ ██▒▒ ▓██░ ▒░   ▓██░ ██▓▒▓██  ▒██░▓██  ▀█ ██▒▓███▄░ \n");
+        logo[3] =("▒██    ▒██ ▓▓█  ░██░░ ▓██▓ ░ ░██▄▄▄▄██ ▓██▒  ▐▌██▒░ ▓██▓ ░    ▒██▄█▓▒ ▒▓▓█  ░██░▓██▒  ▐▌██▒▓██ █▄ \n");
+        logo[4] =("▒██▒   ░██▒▒▒█████▓   ▒██▒ ░  ▓█   ▓██▒▒██░   ▓██░  ▒██▒ ░    ▒██▒ ░  ░▒▒█████▓ ▒██░   ▓██░▒██▒ █▄\n");
+        logo[5] =("░ ▒░   ░  ░░▒▓▒ ▒ ▒   ▒ ░░    ▒▒   ▓▒█░░ ▒░   ▒ ▒   ▒ ░░      ▒▓▒░ ░  ░░▒▓▒ ▒ ▒ ░ ▒░   ▒ ▒ ▒ ▒▒ ▓▒\n");
+        logo[6] =("░  ░      ░░░▒░ ░ ░     ░      ▒   ▒▒ ░░ ░░   ░ ▒░    ░       ░▒ ░     ░░▒░ ░ ░ ░ ░░   ░ ▒░░ ░▒ ▒░\n");
+        logo[7] =("░      ░    ░░░ ░ ░   ░        ░   ▒      ░   ░ ░   ░         ░░        ░░░ ░ ░    ░   ░ ░ ░ ░░ ░ \n");
+        logo[8] =("       ░      ░                    ░  ░         ░                         ░              ░ ░  ░   \n");
+        logo[9] =("                 ░                                 ░          ░                    ░              \n");
+        logo[10] =("       ░                           ░                                     ░                 ░      \n");
+
+        return logo;
+    }
+
+    private void LEGACY_generateLogo()
     {
         List<String> logoList = new ArrayList<>();
 

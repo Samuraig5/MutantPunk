@@ -21,6 +21,7 @@ public class Console
     public ConsoleKeyBinds ckb;
     public ConsoleTopMenuRenderer ctmr = new ConsoleTopMenuRenderer(this);
     public ConsoleMapInterface cm = new ConsoleMapInterface(this);
+    public ConsolePainter cp = new ConsolePainter(this);
 
     public WorldClock wc = new WorldClock(this);
 
@@ -35,20 +36,30 @@ public class Console
 
     public Console()
     {
+        try
+        {
+            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName()); //Make the window's look match the OS
+        }
+        catch (Exception e)
+        {
+            System.out.println("Console.java cant find SystemLookAndFeel");
+        }
+
         frame = new JFrame();
         frame.setSize(Settings.windowWidth,Settings.windowHeight);
-
         frame.setTitle("Mutant Punk");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); //Program stops when window is closed
+        frame.setResizable(false);
+        frame.setBounds(200, 80, Settings.windowWidth, Settings.windowHeight);
 
         console = new JTextPane();
         console.setEditable(false);
         console.setFont(new Font("Courier New", Font.PLAIN, 12));
         console.setOpaque(false);
 
-        ConsolePainter cp = new ConsolePainter();
         frame.add(cp);
         cp.requestFocusInWindow();
+        cp.renderState = RenderState.MAIN_MENU;
 
         cp.repaint();
         cp.revalidate();
