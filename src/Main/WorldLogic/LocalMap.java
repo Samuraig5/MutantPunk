@@ -31,8 +31,8 @@ public class LocalMap
         size[0] = xySize[0];
         size[1] = xySize[1];
         cells = mapCells;
-        for (int i = 0; i < cells[i].length; i++) {
-            for (int j = 0; j < cells.length; j++) {
+        for (int i = 0; i < cells.length; i++) {
+            for (int j = 0; j < cells[i].length; j++) {
                 cells[j][i].setLocalMap(this);
                 localThings.addAll(cells[j][i].getThings());
             }
