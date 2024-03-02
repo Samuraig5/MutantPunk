@@ -10,6 +10,8 @@ public class ConsolePainter extends JPanel
     public Console c;
     public RenderState renderState;
 
+    private Graphics g;
+
     public ConsolePainter(Console c)
     {
         this.c = c;
@@ -21,18 +23,54 @@ public class ConsolePainter extends JPanel
         super.paintComponent(g);
         repaint(); revalidate();
 
+        this.g = g;
+
         g.setColor(Color.LIGHT_GRAY);
         g.setFont(new Font("Courier New", Font.PLAIN, Settings.fontSize));
 
-        drawBackground(g, new Color(50,50,50));
+        drawBackground(new Color(50,50,50));
         switch (renderState)
         {
             case MAIN_MENU:
-                drawMainMenu(g);
+                drawMainMenu();
         }
     }
 
-    private void drawBackground(Graphics g, Color backColor)
+    private void printString(int xPos, int yPos, Color c, String s)
+    {
+        Color current = g.getColor();
+        g.setColor(c);
+        g.drawString(s, xPos, yPos);
+        g.setColor(current);
+    }
+
+    private void printString(int xPos, int yPos, Color c, String[] s)
+    {
+        for (int i = 0; i < s.length; i++)
+        {
+            printString(xPos,yPos+Math.round((50+(i*Settings.fontSize*Settings.relativeFontHeight))), c,s);
+        }
+    }
+
+    private void printCentredString(int yPos, Color c, String s)
+    {
+        float stringWidth = ((s.length()-1)* (Settings.fontSize)*Settings.relativeFontWidth);
+        int xPos = Math.round((Settings.windowWidth-stringWidth)/2);
+
+        printString(xPos,yPos,c,s);
+    }
+
+    private void printCentredString(int yPos, Color c, String s[])
+    {
+        for (int i = 0; i < s.length; i++) {
+            float stringWidth = ((s[i].length()-1)* (Settings.fontSize)*Settings.relativeFontWidth);
+            int xPos = Math.round((Settings.windowWidth-stringWidth)/2);
+
+            printString(xPos,yPos+Math.round((50+(i*Settings.fontSize*Settings.relativeFontHeight))), c,s[i]);
+        }
+    }
+
+    private void drawBackground(Color backColor)
     {
         Color current = g.getColor();
         g.setColor(backColor);
@@ -40,23 +78,11 @@ public class ConsolePainter extends JPanel
         g.setColor(current);
     }
 
-    private void drawMainMenu(Graphics g)
+    private void drawMainMenu()
     {
-        Color current = g.getColor();
         String[] logo =c.cc.generateLogo();
+        printCentredString(50,Color.green,logo);
 
-        float logoLength = (
-                (logo[0].length()-1)*
-                        (Settings.fontSize)*Settings.relativeFontWidth);
-
-        for (int i = 0; i < logo.length; i++)
-        {
-            g.setColor(Color.GREEN);
-            g.drawString(logo[i],
-                    Math.round((Settings.windowWidth-logoLength)/2),
-                    Math.round((50+(i*Settings.fontSize*Settings.relativeFontHeight))));
-        }
-        g.setColor(current);
+        printCentredString(250, Color.green, "Strange creatures in a strange land");
     }
-
 }
