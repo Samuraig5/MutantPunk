@@ -1,5 +1,6 @@
 package Main.RenderLogic;
 
+import Main.RenderLogic.Menus.LocalMapMenu;
 import Main.RenderLogic.Menus.MainMenu;
 import Main.RenderLogic.Menus.WorldMenu;
 import Main.Settings;
@@ -153,6 +154,11 @@ public class Console
             case WORLD_MENU:
                 cp.newListener(new WorldMenu(this));
                 break;
+            case LOCAL_MAP_MENU:
+                cp.newListener(new LocalMapMenu(this));
+                break;
+            default:
+                throw new RuntimeException("Console couldn't find a new KeyListener for game state: " + gs);
         }
         gameState = gs;
     }

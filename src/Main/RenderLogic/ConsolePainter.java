@@ -57,6 +57,11 @@ public class ConsolePainter extends JPanel
             case WORLD_MENU:
                 drawWorldMenu();
                 break;
+            case LOCAL_MAP_MENU:
+                drawLocalMapMenu();
+                break;
+            default:
+                printCentredString(50,c.errorColour,"THIS GAME STATE DOESN'T EXIST");
         }
     }
 
@@ -119,9 +124,19 @@ public class ConsolePainter extends JPanel
         List<LocalMap> localMaps = c.wc.getActiveWorld().getLocalMaps();
         List<String> localMapsNames = new ArrayList<>();
 
+        Color current = g.getColor();
+        g.setColor(Color.lightGray);
+        g.fillRect(10, 80, 200, 1);
+        g.setColor(current);
+
         for (int i = 0; i < localMaps.size(); i++) {
-            printString(10, 70+Math.round((i+1)*Settings.fontHeight), Color.LIGHT_GRAY,
-                    MathHelper.indexToLetter(i) + ": " + localMaps.get(i).getMapName());
+            printString(10, 90+Math.round((i+1)*Settings.fontHeight), Color.LIGHT_GRAY,
+                    MathHelper.indexToLetter(i+1) + ": " + localMaps.get(i).getMapName());
         }
+    }
+
+    private void drawLocalMapMenu()
+    {
+        printCentredString(10, Color.lightGray, c.wc.getActiveWorld().getActiveLocalMap().getMapName());
     }
 }
