@@ -81,7 +81,7 @@ public class LocalMap
         localThings.add(t);
     }
 
-    public List<Person> getLocalThing()
+    public List<Person> getLocalPeople()
     {
         List<Thing> things = getLocalThings();
         List<Person> people = new ArrayList<>();

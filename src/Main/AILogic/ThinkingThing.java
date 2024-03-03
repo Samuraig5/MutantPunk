@@ -16,7 +16,6 @@ public class ThinkingThing
 
     public void thinkAboutMovement()
     {
-        System.out.println(myPerson.getMyCell());
         Direction d = Direction.getRandomDirection();
         if (myPerson.getMyCell() == null) {return;}
         myPerson.move(d);

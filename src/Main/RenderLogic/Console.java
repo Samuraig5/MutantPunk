@@ -1,9 +1,6 @@
 package Main.RenderLogic;
 
-import Main.RenderLogic.Menus.LocalMapMenu;
-import Main.RenderLogic.Menus.LocalMapView;
-import Main.RenderLogic.Menus.MainMenu;
-import Main.RenderLogic.Menus.WorldMenu;
+import Main.RenderLogic.Menus.*;
 import Main.Settings;
 import Main.WorldLogic.WorldClock;
 
@@ -166,6 +163,8 @@ public class Console
             case LOCAL_MAP_VIEW:
                 cp.newListener(new LocalMapView(this));
                 wc.startClock();
+            case ALL_CHARACTERS_IN_LOCAL_MAP:
+                cp.newListener(new AllCharactersInLocalMapMenu(this));
                 break;
             default:
                 throw new RuntimeException("Console couldn't find a new KeyListener for game state: " + gs);

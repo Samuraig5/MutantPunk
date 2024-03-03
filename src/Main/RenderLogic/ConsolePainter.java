@@ -1,6 +1,7 @@
 package Main.RenderLogic;
 
 import Main.MathHelper;
+import Main.ObjectLogic.BodyLogic.Person;
 import Main.Settings;
 import Main.WorldLogic.LocalMap;
 
@@ -62,6 +63,9 @@ public class ConsolePainter extends JPanel
                 break;
             case LOCAL_MAP_VIEW:
                 drawLocalMapView();
+                break;
+            case ALL_CHARACTERS_IN_LOCAL_MAP:
+                drawListOfLocalPeople();
                 break;
             default:
                 printCentredString(50,c.errorColour,"THIS GAME STATE DOESN'T EXIST");
@@ -144,6 +148,8 @@ public class ConsolePainter extends JPanel
 
         printString(10, 70, Color.LIGHT_GRAY, "a: Open map view");
         printString(10, Math.round(70+(1*Settings.fontHeight)), Color.LIGHT_GRAY, "b: List all local characters");
+        printString(10, Math.round(70+(2*Settings.fontHeight)), Color.LIGHT_GRAY, "c: Spawn a Human");
+
     }
 
     private void drawLocalMapView()
@@ -165,6 +171,17 @@ public class ConsolePainter extends JPanel
                         Math.round(y*Settings.fontHeight),
                         mi.getIconColour(),mi.getSymbol()+"");
             }
+        }
+    }
+
+    private void drawListOfLocalPeople()
+    {
+        List<Person> people = c.wc.getActiveWorld().getActiveLocalMap().getLocalPeople();
+
+        for (int i = 0; i < people.size(); i++)
+        {
+            printString(10, 80+Math.round((i)*Settings.fontHeight), Color.LIGHT_GRAY,
+                    MathHelper.indexToLetter(i) + ": " + people.get(i).getName());
         }
     }
 }

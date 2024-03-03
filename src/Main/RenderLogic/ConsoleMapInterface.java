@@ -1,6 +1,6 @@
 package Main.RenderLogic;
 
-import Main.RenderLogic.Menus.LEGACY_LocalMapView;
+import Main.RenderLogic.Menus.LEGACY.LEGACY_LocalMapView;
 import Main.WorldLogic.Cell;
 import Main.WorldLogic.GameWorld;
 import Main.WorldLogic.LocalMap;

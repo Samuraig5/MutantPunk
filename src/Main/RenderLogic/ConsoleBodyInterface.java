@@ -4,7 +4,6 @@ import Main.ObjectLogic.BodyLogic.BodyFileDecoder;
 import Main.ObjectLogic.BodyLogic.BodyPart;
 import Main.ObjectLogic.BodyLogic.Person;
 import Main.ErrorHandler;
-import Main.RenderLogic.Menus.*;
 import Main.WorldLogic.GameWorld;
 import Main.WorldLogic.LocalMap;
 
@@ -62,7 +61,7 @@ public class ConsoleBodyInterface
     public void listAllPersons(LocalMap lm)
     {
         List<String> allCharacterNames = new ArrayList<>();
-        for (Person p:lm.getLocalThing())
+        for (Person p:lm.getLocalPeople())
         {
             allCharacterNames.add(p.getName());
         }

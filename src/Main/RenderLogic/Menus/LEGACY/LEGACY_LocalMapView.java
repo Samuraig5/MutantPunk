@@ -1,13 +1,14 @@
-package Main.RenderLogic.Menus;
+package Main.RenderLogic.Menus.LEGACY;
 
 import Main.RenderLogic.Console;
+import Main.RenderLogic.Menus.MenuLogic;
 import Main.WorldLogic.LocalMap;
 
-public class LEGACY_LocalMapMenu implements MenuLogic
+public class LEGACY_LocalMapView implements MenuLogic
 {
     Console c;
     LocalMap lm;
-    public LEGACY_LocalMapMenu(Console console, LocalMap localMap)
+    public LEGACY_LocalMapView(Console console, LocalMap localMap)
     {
         c = console;
         c.setInMainMenu(false);
@@ -16,55 +17,42 @@ public class LEGACY_LocalMapMenu implements MenuLogic
 
     @Override
     public void aElement() {
-        c.cm.RenderLocalMap(lm);
-        c.wc.startClock();
+
     }
 
     @Override
     public void bElement() {
-        c.cb.listAllPersons(lm);
+
     }
 
     @Override
     public void cElement() {
-        c.cb.spawnPerson("Greg","0","0", "Resources/BodyPlans/Human", lm);
-        c.cb.listAllPersons(lm);
+
     }
 
     @Override
     public void dElement() {
-        for (int i = 0; i < 10; i++)
-        {
-            c.cb.spawnPerson("Bob","0","0", "Resources/BodyPlans/Human", lm);
-        }
-        c.cb.listAllPersons(lm);
+
     }
 
     @Override
     public void eElement() {
-        for (int i = 0; i < 100; i++)
-        {
-            c.cb.spawnPerson(i+"th Clone","0","0", "Resources/BodyPlans/Human", lm);
-        }
-        c.cb.listAllPersons(lm);
+
     }
 
     @Override
     public void fElement() {
-        c.cb.spawnPerson("Minor Mutant","0","50", "Resources/BodyPlans/Human", lm);
-        c.cb.listAllPersons(lm);
+
     }
 
     @Override
     public void gElement() {
-        c.cb.spawnPerson("Human Spider","0","0", "Resources/BodyPlans/HumanSpider", lm);
-        c.cb.listAllPersons(lm);
+
     }
 
     @Override
     public void hElement() {
-        c.cb.spawnPerson("Slime","0","0", "Resources/BodyPlans/Slime", lm);
-        c.cb.listAllPersons(lm);
+
     }
 
     @Override
@@ -169,7 +157,8 @@ public class LEGACY_LocalMapMenu implements MenuLogic
 
     @Override
     public void escapeElement() {
-        c.cm.openWorldMenu(lm.getMyWorld());
+        c.cm.openLocalMapMenu(lm);
+        c.wc.stopClock();
     }
 
     @Override

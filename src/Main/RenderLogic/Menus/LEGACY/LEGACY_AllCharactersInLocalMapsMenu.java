@@ -1,14 +1,15 @@
-package Main.RenderLogic.Menus;
+package Main.RenderLogic.Menus.LEGACY;
 
 import Main.ObjectLogic.BodyLogic.Person;
 import Main.RenderLogic.Console;
+import Main.RenderLogic.Menus.MenuLogic;
 import Main.WorldLogic.LocalMap;
 
-public class AllCharactersInLocalMapsMenu implements MenuLogic
+public class LEGACY_AllCharactersInLocalMapsMenu implements MenuLogic
 {
     Console c;
     LocalMap lm;
-    public AllCharactersInLocalMapsMenu(Console console, LocalMap localMap)
+    public LEGACY_AllCharactersInLocalMapsMenu(Console console, LocalMap localMap)
     {
         c = console;
         c.setInMainMenu(false);
@@ -18,7 +19,7 @@ public class AllCharactersInLocalMapsMenu implements MenuLogic
     private void openPersonView(int i)
     {
         int currentPage = c.clir.getCurrentPage();
-        Person p = lm.getLocalThing().get((26*currentPage-26)+i);
+        Person p = lm.getLocalPeople().get((26*currentPage-26)+i);
         c.cb.openPersonView(p);
     }
 

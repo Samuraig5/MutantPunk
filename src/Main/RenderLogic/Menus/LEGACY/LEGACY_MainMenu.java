@@ -1,6 +1,7 @@
-package Main.RenderLogic.Menus;
+package Main.RenderLogic.Menus.LEGACY;
 
 import Main.RenderLogic.Console;
+import Main.RenderLogic.Menus.MenuLogic;
 import Main.WorldLogic.GameWorld;
 import Main.WorldLogic.MapGenerator;
 
