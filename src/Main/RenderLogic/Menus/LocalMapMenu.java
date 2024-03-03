@@ -23,6 +23,7 @@ public class LocalMapMenu implements KeyListener
         switch (e.getKeyCode())
         {
             case KeyEvent.VK_A:
+                c.setGameState(GameState.LOCAL_MAP_VIEW);
                 break;
             case KeyEvent.VK_ESCAPE:
                 c.setGameState(GameState.WORLD_MENU);

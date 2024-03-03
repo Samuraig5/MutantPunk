@@ -35,7 +35,7 @@ public class WorldClock extends TimerTask
 
     private void updateScreen()
     {
-        c.cm.RenderLocalMap(activeWorld.getActiveLocalMap());
+        //c.cm.RenderLocalMap(activeWorld.getActiveLocalMap());
     }
 
     public void startClock()

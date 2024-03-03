@@ -31,10 +31,10 @@ public class LocalMap
         size[0] = xySize[0];
         size[1] = xySize[1];
         cells = mapCells;
-        for (int i = 0; i < cells.length; i++) {
-            for (int j = 0; j < cells[i].length; j++) {
-                cells[j][i].setLocalMap(this);
-                localThings.addAll(cells[j][i].getThings());
+        for (int y = 0; y < cells[0].length; y++) {
+            for (int x = 0; x < cells.length; x++) {
+                cells[x][y].setLocalMap(this);
+                localThings.addAll(cells[x][y].getThings());
             }
         }
 
@@ -120,6 +120,7 @@ public class LocalMap
     public void updateTick()
     {
         if (localWind == Direction.NONE) {return;}
+
 
         int xMax = getMyWorld().getActiveLocalMap().getSize()[0];
         int yMax = getMyWorld().getActiveLocalMap().getSize()[1];

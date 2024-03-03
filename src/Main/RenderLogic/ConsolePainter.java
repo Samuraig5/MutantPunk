@@ -60,6 +60,9 @@ public class ConsolePainter extends JPanel
             case LOCAL_MAP_MENU:
                 drawLocalMapMenu();
                 break;
+            case LOCAL_MAP_VIEW:
+                drawLocalMapView();
+                break;
             default:
                 printCentredString(50,c.errorColour,"THIS GAME STATE DOESN'T EXIST");
         }
@@ -126,11 +129,11 @@ public class ConsolePainter extends JPanel
 
         Color current = g.getColor();
         g.setColor(Color.lightGray);
-        g.fillRect(10, 80, 200, 1);
+        g.fillRect(10, 75, 200, 1);
         g.setColor(current);
 
         for (int i = 0; i < localMaps.size(); i++) {
-            printString(10, 90+Math.round((i+1)*Settings.fontHeight), Color.LIGHT_GRAY,
+            printString(10, 80+Math.round((i+1)*Settings.fontHeight), Color.LIGHT_GRAY,
                     MathHelper.indexToLetter(i+1) + ": " + localMaps.get(i).getMapName());
         }
     }
@@ -138,5 +141,30 @@ public class ConsolePainter extends JPanel
     private void drawLocalMapMenu()
     {
         printCentredString(10, Color.lightGray, c.wc.getActiveWorld().getActiveLocalMap().getMapName());
+
+        printString(10, 70, Color.LIGHT_GRAY, "a: Open map view");
+        printString(10, Math.round(70+(1*Settings.fontHeight)), Color.LIGHT_GRAY, "b: List all local characters");
+    }
+
+    private void drawLocalMapView()
+    {
+        LocalMap lm = c.wc.getActiveWorld().getActiveLocalMap();
+
+        int[] xy = lm.getSize();
+        MapIcon[][] mapIcons = c.cm.TranslateCellsToSymbols(lm.getCells(),xy);
+
+        for (int y = 0; y < xy[1]; y++)
+        {
+            for (int x = 0; x < xy[0]; x++)
+            {
+                MapIcon mi = mapIcons[x][y];
+                String s = String.valueOf(mi.getSymbol());
+                Color c =  mi.getIconColour();
+
+                printString(Math.round(x*Settings.fontHeight),
+                        Math.round(y*Settings.fontHeight),
+                        mi.getIconColour(),mi.getSymbol()+"");
+            }
+        }
     }
 }

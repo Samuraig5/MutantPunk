@@ -1,6 +1,7 @@
 package Main.RenderLogic;
 
 import Main.RenderLogic.Menus.LocalMapMenu;
+import Main.RenderLogic.Menus.LocalMapView;
 import Main.RenderLogic.Menus.MainMenu;
 import Main.RenderLogic.Menus.WorldMenu;
 import Main.Settings;
@@ -9,6 +10,7 @@ import Main.WorldLogic.WorldClock;
 import javax.swing.*;
 import javax.swing.text.StyledDocument;
 import java.awt.*;
+import java.util.Timer;
 
 public class Console
 {
@@ -60,6 +62,9 @@ public class Console
         cp.repaint();
         cp.revalidate();
         frame.setVisible(true);
+
+        java.util.Timer timer = new Timer();
+        timer.schedule(wc, 0, Settings.updateSpeed);
     }
     /*public void TConsole()
     {
@@ -146,6 +151,7 @@ public class Console
     public GameState getGameState() {return gameState;}
     public void setGameState(GameState gs)
     {
+        if (gameState == GameState.LOCAL_MAP_VIEW) {wc.stopClock();}
         switch (gs)
         {
             case MAIN_MENU:
@@ -156,6 +162,10 @@ public class Console
                 break;
             case LOCAL_MAP_MENU:
                 cp.newListener(new LocalMapMenu(this));
+                break;
+            case LOCAL_MAP_VIEW:
+                cp.newListener(new LocalMapView(this));
+                wc.startClock();
                 break;
             default:
                 throw new RuntimeException("Console couldn't find a new KeyListener for game state: " + gs);

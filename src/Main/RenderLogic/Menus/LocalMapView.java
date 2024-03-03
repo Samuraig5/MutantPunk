@@ -1,212 +1,44 @@
 package Main.RenderLogic.Menus;
 
 import Main.RenderLogic.Console;
+import Main.RenderLogic.GameState;
+import Main.Settings;
+import Main.WorldLogic.GameWorld;
 import Main.WorldLogic.LocalMap;
 
-public class LocalMapView implements MenuLogic
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
+
+public class LocalMapView implements KeyListener
 {
     Console c;
-    LocalMap lm;
-    public LocalMapView(Console console, LocalMap localMap)
+    public LocalMapView(Console console)
     {
         c = console;
-        c.setInMainMenu(false);
-        lm = localMap;
     }
 
     @Override
-    public void aElement() {
-
-    }
-
-    @Override
-    public void bElement() {
-
-    }
-
-    @Override
-    public void cElement() {
-
-    }
-
-    @Override
-    public void dElement() {
+    public void keyPressed(KeyEvent e)
+    {
+        switch (e.getKeyCode())
+        {
+            case KeyEvent.VK_A:
+                break;
+            case KeyEvent.VK_ESCAPE:
+                c.setGameState(GameState.LOCAL_MAP_MENU);
+                break;
+        }
 
     }
 
     @Override
-    public void eElement() {
+    public void keyTyped(KeyEvent e) {
 
     }
 
-    @Override
-    public void fElement() {
-
-    }
 
     @Override
-    public void gElement() {
-
-    }
-
-    @Override
-    public void hElement() {
-
-    }
-
-    @Override
-    public void iElement() {
-
-    }
-
-    @Override
-    public void jElement() {
-
-    }
-
-    @Override
-    public void kElement() {
-
-    }
-
-    @Override
-    public void lElement() {
-
-    }
-
-    @Override
-    public void mElement() {
-
-    }
-
-    @Override
-    public void nElement() {
-
-    }
-
-    @Override
-    public void oElement() {
-
-    }
-
-    @Override
-    public void pElement() {
-
-    }
-
-    @Override
-    public void qElement() {
-
-    }
-
-    @Override
-    public void rElement() {
-
-    }
-
-    @Override
-    public void sElement() {
-
-    }
-
-    @Override
-    public void tElement() {
-
-    }
-
-    @Override
-    public void uElement() {
-
-    }
-
-    @Override
-    public void vElement() {
-
-    }
-
-    @Override
-    public void wElement() {
-
-    }
-
-    @Override
-    public void xElement() {
-
-    }
-
-    @Override
-    public void yElement() {
-
-    }
-
-    @Override
-    public void zElement() {
-
-    }
-
-    @Override
-    public void periodElement() {
-
-    }
-
-    @Override
-    public void commaElement() {
-
-    }
-
-    @Override
-    public void escapeElement() {
-        c.cm.openLocalMapMenu(lm);
-        c.wc.stopClock();
-    }
-
-    @Override
-    public void num0Element() {
-
-    }
-
-    @Override
-    public void num1Element() {
-
-    }
-
-    @Override
-    public void num2Element() {
-
-    }
-
-    @Override
-    public void num3Element() {
-
-    }
-
-    @Override
-    public void num4Element() {
-
-    }
-
-    @Override
-    public void num5Element() {
-
-    }
-
-    @Override
-    public void num6Element() {
-
-    }
-
-    @Override
-    public void num7Element() {
-
-    }
-
-    @Override
-    public void num8Element() {
-
-    }
-
-    @Override
-    public void num9Element() {
+    public void keyReleased(KeyEvent e) {
 
     }
 }

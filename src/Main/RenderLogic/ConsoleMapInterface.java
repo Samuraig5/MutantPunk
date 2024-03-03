@@ -1,6 +1,6 @@
 package Main.RenderLogic;
 
-import Main.RenderLogic.Menus.LocalMapView;
+import Main.RenderLogic.Menus.LEGACY_LocalMapView;
 import Main.WorldLogic.Cell;
 import Main.WorldLogic.GameWorld;
 import Main.WorldLogic.LocalMap;
@@ -32,7 +32,7 @@ public class ConsoleMapInterface
         lm.getMyWorld().setActiveLocalMap(lm);
 
         c.cc.fullClear();
-        LocalMapView localMapView = new LocalMapView(c, lm);
+        LEGACY_LocalMapView localMapView = new LEGACY_LocalMapView(c, lm);
         c.ckb.setCurrentMenu(localMapView);
 
         int[] xy = lm.getSize();
@@ -59,7 +59,7 @@ public class ConsoleMapInterface
         c.cc.printStrings(stringList,false,colorList);
     }
 
-    private MapIcon[][] TranslateCellsToSymbols(Cell[][] cells, int[] size)
+    public MapIcon[][] TranslateCellsToSymbols(Cell[][] cells, int[] size)
     {
         MapIcon[][] mapIcons = new MapIcon[size[0]][size[1]];
         for (int x = 0; x < size[0]; x++)
