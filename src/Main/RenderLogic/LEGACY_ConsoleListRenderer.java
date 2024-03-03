@@ -8,41 +8,48 @@ import java.util.List;
 
 import static Main.RenderLogic.Console.styledDocument;
 
-public class ConsoleListRenderer
+public class LEGACY_ConsoleListRenderer
 {
     Console c;
     private boolean currentlyRendering = false;
     private List<String> currentlyRenderedList = new ArrayList<>();
     private String currentlyRenderedTitle;
+    private List<String> currentTopBarMenu = new ArrayList<>();
     private int amountOfPages = 0;
     private int currentPage = 0;
 
-    public ConsoleListRenderer(Console console)
+    public LEGACY_ConsoleListRenderer(Console console)
     {
         c = console;
     }
 
-    public String renderList(List<String> list, String title)
+    public void renderList(List<String> list, String title, MenuLogic newMenuLogic, List<String> topMenuBar)
     {
-        generateList(list,title);
-        return generateString();
+        generateList(list,title,newMenuLogic,topMenuBar);
+        renderPage();
     }
-    public void appendList(List<String> list, String title, List<String> topMenuBar)
+    public void renderList(List<String> list, String title, MenuLogic newMenuLogic)
     {
-        generateList(list,title);
-        generateString();
+        renderList(list,title,newMenuLogic,new ArrayList<>());
     }
-    public void appendList(List<String> list, String title)
+    public void appendList(List<String> list, String title, MenuLogic newMenuLogic, List<String> topMenuBar)
     {
-        appendList(list,title,new ArrayList<>());
+        generateList(list,title,newMenuLogic, topMenuBar);
+        appendPage();
+    }
+    public void appendList(List<String> list, String title, MenuLogic newMenuLogic)
+    {
+        appendList(list,title,newMenuLogic,new ArrayList<>());
     }
 
-    private void generateList(List<String> list, String title)
+    private void generateList(List<String> list, String title, MenuLogic newMenuLogic, List<String> topMenuBar)
     {
+        c.ckb.setCurrentMenu(newMenuLogic);
         reset();
         currentlyRendering = true;
         currentlyRenderedList = list;
         currentlyRenderedTitle = title;
+        currentTopBarMenu = topMenuBar;
         currentPage = 1;
         amountOfPages = 1;
 
@@ -55,7 +62,7 @@ public class ConsoleListRenderer
         }
     }
 
-    public String generateString()
+    public void appendPage()
     {
         int finalPageSize = currentlyRenderedList.size()%26;
         if (finalPageSize == 0 && currentlyRenderedList.size() != 0)
@@ -66,42 +73,49 @@ public class ConsoleListRenderer
         try
         {
             String s = styledDocument.getText(0, styledDocument.getLength());
-            StringBuilder newString = new StringBuilder();
+            c.cc.clear();
+
+            if (currentTopBarMenu.size()>0)
+            {
+                c.ctmr.renderTopMenuList(currentTopBarMenu);
+            }
 
             if (amountOfPages > 1)
             {
-
-                newString.append(currentlyRenderedTitle + "     (" + currentPage + "/" + amountOfPages + ")" + "\n");
+                c.cc.println(currentlyRenderedTitle + "     (" + currentPage + "/" + amountOfPages + ")");
             }
             else
             {
-                newString.append(currentlyRenderedTitle + "\n");
+                c.cc.println(currentlyRenderedTitle);
             }
-            newString.append("\n");
+            c.cc.println("");
 
-            newString.append(s);
+            c.cc.print(s);
 
             if (currentPage == amountOfPages)
             {
                 for(int i = 26*(currentPage-1); i < 26*(currentPage-1)+finalPageSize; i++)
                 {
-                    newString.append(indexToLetter((i%26)) + " - " + currentlyRenderedList.get(i)+"\n");
+                    c.cc.println(indexToLetter((i%26)) + " - " + currentlyRenderedList.get(i));
                 }
             }
             else
             {
                 for(int i = 26*(currentPage-1); i < 26*(currentPage); i++)
                 {
-                    newString.append(indexToLetter((i%26)) + " - " + currentlyRenderedList.get(i)+"\n");
+                    c.cc.println(indexToLetter((i%26)) + " - " + currentlyRenderedList.get(i));
                 }
             }
-            return  newString.toString();
         }
         catch (Exception e)
         {
             ErrorHandler.LogData(true,"Was unable to copy the content on screen");
         }
-        return "ConsoleListRenderer was unable to generate String";
+    }
+    public void renderPage()
+    {
+        c.cc.clear();
+        appendPage();
     }
 
     public void reset()
@@ -111,7 +125,7 @@ public class ConsoleListRenderer
         currentlyRendering = false;
     }
 
-    public String pageUp()
+    public void pageUp()
     {
         if (currentPage<amountOfPages)
         {
@@ -121,10 +135,10 @@ public class ConsoleListRenderer
         {
             currentPage = 1;
         }
-        return generateString();
+        renderPage();
     }
 
-    public String pageDown()
+    public void pageDown()
     {
         if (currentPage>1)
         {
@@ -134,7 +148,7 @@ public class ConsoleListRenderer
         {
             currentPage = amountOfPages;
         }
-        return generateString();
+        renderPage();
     }
 
     public int getCurrentPage()

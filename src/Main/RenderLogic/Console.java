@@ -9,8 +9,6 @@ import javax.swing.*;
 import javax.swing.text.StyledDocument;
 import java.awt.*;
 
-import static com.sun.java.accessibility.util.AWTEventMonitor.addKeyListener;
-
 public class Console
 {
     public ConsoleCommands cc = new ConsoleCommands(this);

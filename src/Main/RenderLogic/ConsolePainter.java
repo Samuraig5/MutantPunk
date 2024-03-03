@@ -1,10 +1,14 @@
 package Main.RenderLogic;
 
+import Main.MathHelper;
 import Main.Settings;
+import Main.WorldLogic.LocalMap;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyListener;
+import java.util.ArrayList;
+import java.util.List;
 
 public class ConsolePainter extends JPanel
 {
@@ -109,6 +113,15 @@ public class ConsolePainter extends JPanel
 
     private void drawWorldMenu()
     {
-        printCentredString(50, Color.lightGray, "Welcome to a new world");
+        printCentredString(10, Color.lightGray, "Welcome to a new world");
+
+        printString(10, 70, Color.LIGHT_GRAY, "a: Generate a new Local Map");
+        List<LocalMap> localMaps = c.wc.getActiveWorld().getLocalMaps();
+        List<String> localMapsNames = new ArrayList<>();
+
+        for (int i = 0; i < localMaps.size(); i++) {
+            printString(10, 70+Math.round((i+1)*Settings.fontHeight), Color.LIGHT_GRAY,
+                    MathHelper.indexToLetter(i) + ": " + localMaps.get(i).getMapName());
+        }
     }
 }

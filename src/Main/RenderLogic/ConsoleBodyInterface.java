@@ -57,7 +57,7 @@ public class ConsoleBodyInterface
         {
             allCharacterNames.add(p.getName());
         }
-        c.clir.renderList(allCharacterNames, "Current Characters", new AllCharactersInWorldMenu(c, gw));
+        //c.clir.renderList(allCharacterNames, "Current Characters", new AllCharactersInWorldMenu(c, gw));
     }
     public void listAllPersons(LocalMap lm)
     {
@@ -66,7 +66,7 @@ public class ConsoleBodyInterface
         {
             allCharacterNames.add(p.getName());
         }
-        c.clir.renderList(allCharacterNames, "Current Characters", new AllCharactersInLocalMapsMenu(c, lm));
+        //c.clir.renderList(allCharacterNames, "Current Characters", new AllCharactersInLocalMapsMenu(c, lm));
     }
 
     public void openPersonView(Person p)
@@ -92,7 +92,7 @@ public class ConsoleBodyInterface
 
         List<String> list = new ArrayList<>();
         list.add("View Body");
-        c.clir.appendList(list, p.getName(), new PersonMenu(c,p));
+        //c.clir.appendList(list, p.getName(), new PersonMenu(c,p));
     }
     private String rightpad(int text, int length) {
         return String.format("%-" + length + "." + length + "s", text);
@@ -125,7 +125,7 @@ public class ConsoleBodyInterface
 
         List<String> list = new ArrayList<>();
         addChildrenBodyPartsToList(p.myBodyParts.get(0), list, "");
-        c.clir.renderList(list, p.getName()+"'s Body", new BodyMenu(c,p));
+        //c.clir.renderList(list, p.getName()+"'s Body", new BodyMenu(c,p));
     }
     private void addChildrenBodyPartsToList(BodyPart bp, List<String> list, String depth)
     {
@@ -149,7 +149,7 @@ public class ConsoleBodyInterface
 
         List<String> bodyPartList = new ArrayList<>();
         assembleBodyPartRelations(bp, bodyPartList);
-        c.clir.appendList(bodyPartList, bp.getMyPerson().getName()+"'s "+bp.getName(), new BodyPartMenu(c,bp), topBarMenuBlockList);
+        //c.clir.appendList(bodyPartList, bp.getMyPerson().getName()+"'s "+bp.getName(), new BodyPartMenu(c,bp), topBarMenuBlockList);
 
     }
     private void displayBodyPartStats(BodyPart bp)

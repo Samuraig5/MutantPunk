@@ -95,7 +95,7 @@ public class ConsoleMapInterface
         {
             mainMenuOptions.add("Local Map " + i);
         }
-        c.clir.renderList(mainMenuOptions, gw.getWorldName(), new LEGACY_WorldMenu(c, gw));
+        //c.clir.renderList(mainMenuOptions, gw.getWorldName(), new LEGACY_WorldMenu(c, gw));
     }
 
     public void openLocalMapMenu(LocalMap lm)
@@ -109,6 +109,6 @@ public class ConsoleMapInterface
         mainMenuOptions.add("Spawn a Minor Mutant");
         mainMenuOptions.add("Spawn a Human Spider");
         mainMenuOptions.add("Spawn a Slime");
-        c.clir.renderList(mainMenuOptions, lm.getMapName(), new LocalMapMenu(c, lm));
+        //c.clir.renderList(mainMenuOptions, lm.getMapName(), new LocalMapMenu(c, lm));
     }
 }
