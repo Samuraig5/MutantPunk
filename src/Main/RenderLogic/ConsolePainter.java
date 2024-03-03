@@ -98,7 +98,7 @@ public class ConsolePainter extends JPanel
             float stringWidth = ((s[i].length()-1)* (Settings.fontSize)*Settings.relativeFontWidth);
             int xPos = Math.round((Settings.windowWidth-stringWidth)/2);
 
-            printString(xPos,yPos+Math.round((50+(i*Settings.fontSize*Settings.relativeFontHeight))), c,s[i]);
+            printString(xPos,yPos+Math.round((i*Settings.fontSize*Settings.relativeFontHeight)), c,s[i]);
         }
     }
 
@@ -115,8 +115,8 @@ public class ConsolePainter extends JPanel
         String[] logo =c.cc.generateLogo();
         printCentredString(50,Color.green,logo);
 
-        printCentredString(250, Color.green, "Strange creatures in a strange land");
-        printCentredString(300, Color.lightGray, "a: Generate a new World");
+        printCentredString(Math.round(Settings.fontHeight*(logo.length+1))+50, Color.green, "Strange creatures in a strange land");
+        printCentredString(Math.round(Settings.fontHeight*(logo.length+3))+50, Color.lightGray, "a: Generate a new World");
     }
 
     private void drawWorldMenu()
