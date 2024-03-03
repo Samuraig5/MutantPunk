@@ -2,7 +2,7 @@ package Main.RenderLogic;
 
 import Main.RenderLogic.Menus.LocalMapMenu;
 import Main.RenderLogic.Menus.LocalMapView;
-import Main.RenderLogic.Menus.WorldMenu;
+import Main.RenderLogic.Menus.LEGACY_WorldMenu;
 import Main.WorldLogic.Cell;
 import Main.WorldLogic.GameWorld;
 import Main.WorldLogic.LocalMap;
@@ -95,7 +95,7 @@ public class ConsoleMapInterface
         {
             mainMenuOptions.add("Local Map " + i);
         }
-        c.clir.renderList(mainMenuOptions, gw.getWorldName(), new WorldMenu(c, gw));
+        c.clir.renderList(mainMenuOptions, gw.getWorldName(), new LEGACY_WorldMenu(c, gw));
     }
 
     public void openLocalMapMenu(LocalMap lm)

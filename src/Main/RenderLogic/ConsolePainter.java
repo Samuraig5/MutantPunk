@@ -4,17 +4,30 @@ import Main.Settings;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.KeyListener;
 
 public class ConsolePainter extends JPanel
 {
     public Console c;
-    public RenderState renderState;
 
     private Graphics g;
+
+    private KeyListener activeKeyListener;
 
     public ConsolePainter(Console c)
     {
         this.c = c;
+    }
+
+    public void newListener(KeyListener keyListener)
+    {
+        if (activeKeyListener != null)
+        {
+            removeKeyListener(activeKeyListener);
+        }
+        addKeyListener(keyListener);
+        this.setFocusable(true);
+        activeKeyListener = keyListener;
     }
 
     @Override
@@ -29,10 +42,17 @@ public class ConsolePainter extends JPanel
         g.setFont(new Font("Courier New", Font.PLAIN, Settings.fontSize));
 
         drawBackground(new Color(50,50,50));
-        switch (renderState)
+
+        GameState gameState = c.getGameState();
+
+        switch (c.getGameState())
         {
             case MAIN_MENU:
                 drawMainMenu();
+                break;
+            case WORLD_MENU:
+                drawWorldMenu();
+                break;
         }
     }
 
@@ -84,5 +104,11 @@ public class ConsolePainter extends JPanel
         printCentredString(50,Color.green,logo);
 
         printCentredString(250, Color.green, "Strange creatures in a strange land");
+        printCentredString(300, Color.lightGray, "a: Generate a new World");
+    }
+
+    private void drawWorldMenu()
+    {
+        printCentredString(50, Color.lightGray, "Welcome to a new world");
     }
 }

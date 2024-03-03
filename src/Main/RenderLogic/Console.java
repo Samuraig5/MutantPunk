@@ -1,6 +1,5 @@
 package Main.RenderLogic;
 
-import Main.ErrorHandler;
 import Main.RenderLogic.Menus.MainMenu;
 import Main.RenderLogic.Menus.WorldMenu;
 import Main.Settings;
@@ -9,9 +8,8 @@ import Main.WorldLogic.WorldClock;
 import javax.swing.*;
 import javax.swing.text.StyledDocument;
 import java.awt.*;
-import java.awt.event.ComponentAdapter;
-import java.awt.event.ComponentEvent;
-import java.util.Timer;
+
+import static com.sun.java.accessibility.util.AWTEventMonitor.addKeyListener;
 
 public class Console
 {
@@ -22,9 +20,8 @@ public class Console
     public ConsoleTopMenuRenderer ctmr = new ConsoleTopMenuRenderer(this);
     public ConsoleMapInterface cm = new ConsoleMapInterface(this);
     public ConsolePainter cp = new ConsolePainter(this);
-
     public WorldClock wc = new WorldClock(this);
-
+    private GameState gameState;
     public final Color errorColour = new Color(255,155,155);
 
     private final JFrame frame;
@@ -59,7 +56,7 @@ public class Console
 
         frame.add(cp);
         cp.requestFocusInWindow();
-        cp.renderState = RenderState.MAIN_MENU;
+        setGameState(GameState.MAIN_MENU);
 
         cp.repaint();
         cp.revalidate();
@@ -145,5 +142,20 @@ public class Console
 
     public void setInMainMenu(boolean inMainMenu) {
         this.inMainMenu = inMainMenu;
+    }
+
+    public GameState getGameState() {return gameState;}
+    public void setGameState(GameState gs)
+    {
+        switch (gs)
+        {
+            case MAIN_MENU:
+                cp.newListener(new MainMenu(this));
+                break;
+            case WORLD_MENU:
+                cp.newListener(new WorldMenu(this));
+                break;
+        }
+        gameState = gs;
     }
 }

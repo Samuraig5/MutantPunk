@@ -1,7 +1,7 @@
 package Main.RenderLogic;
 
 import Main.ErrorHandler;
-import Main.RenderLogic.Menus.MainMenu;
+import Main.RenderLogic.Menus.LEGACY_MainMenu;
 
 import javax.swing.text.Style;
 import javax.swing.text.StyleConstants;
@@ -130,7 +130,7 @@ public class ConsoleCommands
 
         println(mainMenuOptions);
 
-        c.ckb.setCurrentMenu(new MainMenu(c));
+        c.ckb.setCurrentMenu(new LEGACY_MainMenu(c));
 
     }
     public String[] generateLogo()

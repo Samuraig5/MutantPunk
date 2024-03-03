@@ -1,6 +1,6 @@
 package Main.RenderLogic;
 
-public enum RenderState
+public enum GameState
 {
     MAIN_MENU,
     WORLD_MENU,

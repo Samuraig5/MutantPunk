@@ -1,212 +1,42 @@
 package Main.RenderLogic.Menus;
 
 import Main.RenderLogic.Console;
+import Main.RenderLogic.GameState;
 import Main.WorldLogic.GameWorld;
 import Main.WorldLogic.MapGenerator;
 
-public class MainMenu implements MenuLogic
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
+
+public class MainMenu implements KeyListener
 {
     Console c;
     public MainMenu(Console console)
     {
         c = console;
-        c.setInMainMenu(true);
     }
 
     @Override
-    public void aElement() {
-        GameWorld gw = MapGenerator.generateNewGameWorld("New World");
-        c.wc.setActiveWorld(gw);
-        c.cm.openWorldMenu(gw);
-    }
-
-    @Override
-    public void bElement() {
-
-    }
-
-    @Override
-    public void cElement() {
+    public void keyPressed(KeyEvent e)
+    {
+        switch (e.getKeyCode())
+        {
+            case KeyEvent.VK_A:
+                c.setGameState(GameState.WORLD_MENU);
+                GameWorld gw = MapGenerator.generateNewGameWorld("New World");
+                c.wc.setActiveWorld(gw);
+        }
 
     }
 
     @Override
-    public void dElement() {
+    public void keyTyped(KeyEvent e) {
 
     }
 
-    @Override
-    public void eElement() {
-
-    }
 
     @Override
-    public void fElement() {
-
-    }
-
-    @Override
-    public void gElement() {
-
-    }
-
-    @Override
-    public void hElement() {
-
-    }
-
-    @Override
-    public void iElement() {
-
-    }
-
-    @Override
-    public void jElement() {
-
-    }
-
-    @Override
-    public void kElement() {
-
-    }
-
-    @Override
-    public void lElement() {
-
-    }
-
-    @Override
-    public void mElement() {
-
-    }
-
-    @Override
-    public void nElement() {
-
-    }
-
-    @Override
-    public void oElement() {
-
-    }
-
-    @Override
-    public void pElement() {
-
-    }
-
-    @Override
-    public void qElement() {
-
-    }
-
-    @Override
-    public void rElement() {
-
-    }
-
-    @Override
-    public void sElement() {
-
-    }
-
-    @Override
-    public void tElement() {
-
-    }
-
-    @Override
-    public void uElement() {
-
-    }
-
-    @Override
-    public void vElement() {
-
-    }
-
-    @Override
-    public void wElement() {
-
-    }
-
-    @Override
-    public void xElement() {
-
-    }
-
-    @Override
-    public void yElement() {
-
-    }
-
-    @Override
-    public void zElement() {
-
-    }
-
-    @Override
-    public void periodElement() {
-
-    }
-
-    @Override
-    public void commaElement() {
-
-    }
-
-    @Override
-    public void escapeElement() {
-
-    }
-
-    @Override
-    public void num0Element() {
-
-    }
-
-    @Override
-    public void num1Element() {
-
-    }
-
-    @Override
-    public void num2Element() {
-
-    }
-
-    @Override
-    public void num3Element() {
-
-    }
-
-    @Override
-    public void num4Element() {
-
-    }
-
-    @Override
-    public void num5Element() {
-
-    }
-
-    @Override
-    public void num6Element() {
-
-    }
-
-    @Override
-    public void num7Element() {
-
-    }
-
-    @Override
-    public void num8Element() {
-
-    }
-
-    @Override
-    public void num9Element() {
+    public void keyReleased(KeyEvent e) {
 
     }
 }

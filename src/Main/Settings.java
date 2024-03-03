@@ -3,7 +3,7 @@ package Main;
 public class Settings
 {
     // == RENDERING ==
-    public static final int windowWidth = 1000;
+    public static final int windowWidth = 1200;
     public static final int windowHeight = 600;
 
     public static final int fontSize = 10;
