@@ -4,6 +4,7 @@ import Main.Direction;
 import Main.MathHelper;
 import Main.ObjectLogic.BodyLogic.BodyPart;
 import Main.ObjectLogic.BodyLogic.Person;
+import Main.ObjectLogic.Thing;
 import Main.Settings;
 import Main.WorldLogic.LocalMap;
 
@@ -201,6 +202,17 @@ public class ConsolePainter extends JPanel
         g.drawRoundRect(Math.round(xy[0]*Settings.fontHeight), 5,
                 250, Math.round((xy[1]-1)*Settings.fontHeight),
                 5, 5);
+        if (cursorEnabled)
+        {
+            List<Thing> things = c.wc.getActiveWorld().getActiveLocalMap().getCell(cursorPosition[0], cursorPosition[1]).getThings();
+            for (int i = 0; i < things.size(); i++)
+            {
+                printString(Math.round(Math.round(xy[0]+1)*Settings.fontHeight),
+                        20+Math.round((i)*Settings.fontHeight),
+                        things.get(i).getMapIcon().getIconColour(),
+                        things.get(i).getName());
+            }
+        }
     }
 
     private void drawListOfLocalPeople()
