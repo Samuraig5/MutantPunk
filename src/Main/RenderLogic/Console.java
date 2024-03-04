@@ -162,6 +162,9 @@ public class Console
             case PERSON_VIEW:
                 cp.newListener(new PersonMenu(this));
                 break;
+            case BODY_PART_MENU:
+                cp.newListener(new BodyPartMenu(this));
+                break;
             default:
                 throw new RuntimeException("Console couldn't find a new KeyListener for game state: " + gs);
         }

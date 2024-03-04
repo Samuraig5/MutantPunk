@@ -150,7 +150,7 @@ public class ConsoleBodyInterface
         //c.clir.appendList(bodyPartList, bp.getMyPerson().getName()+"'s "+bp.getName(), new BodyPartMenu(c,bp), topBarMenuBlockList);
 
     }
-    private void displayBodyPartStats(BodyPart bp)
+    public String[] displayBodyPartStats(BodyPart bp)
     {
         int grossPadding = 7;
         int modPadding = 10;
@@ -158,31 +158,31 @@ public class ConsoleBodyInterface
         int parentGrossPadding = 22;
         int parentModPadding = 25;
         int personModPadding = 25;
-        c.cc.println("Health:         "+bp.getCurrentHealth()+"/"+bp.GetMyTotalStats()[6][2]);
-        c.cc.println("Organ Capacity: "+bp.getCurrentOrganCapacity()+"/"+bp.GetMyTotalStats()[11][2]);
-        c.cc.println("");
+        String[] s = new String[20];
 
-        c.cc.println(" STATS             ¦ GROSS ¦ MODIFIER ¦ TOTAL ¦ GROSS BONI TO PARENT ¦ MODIFIER BONI TO PARENT ¦ MODIFIER BONI TO PERSON ¦");
-        c.cc.println("Blood Capacity:    ¦" + generateStatLine(bp.GetMyTotalStats()[0],grossPadding,modPadding,finalPadding,parentGrossPadding,parentModPadding,personModPadding));
-        c.cc.println("Blood Generation:  ¦" + generateStatLine(bp.GetMyTotalStats()[1],grossPadding,modPadding,finalPadding,parentGrossPadding,parentModPadding,personModPadding));
-        c.cc.println("Blood Needed:      ¦" + generateStatLine(bp.GetMyTotalStats()[2],grossPadding,modPadding,finalPadding,parentGrossPadding,parentModPadding,personModPadding));
-        c.cc.println("Energy Capacity:   ¦" + generateStatLine(bp.GetMyTotalStats()[3],grossPadding,modPadding,finalPadding,parentGrossPadding,parentModPadding,personModPadding));
-        c.cc.println("Energy Generation: ¦" + generateStatLine(bp.GetMyTotalStats()[4],grossPadding,modPadding,finalPadding,parentGrossPadding,parentModPadding,personModPadding));
-        c.cc.println("Energy Needed:     ¦" + generateStatLine(bp.GetMyTotalStats()[5],grossPadding,modPadding,finalPadding,parentGrossPadding,parentModPadding,personModPadding));
-        c.cc.println("Max Health:        ¦" + generateStatLine(bp.GetMyTotalStats()[6],grossPadding,modPadding,finalPadding,parentGrossPadding,parentModPadding,personModPadding));
-        c.cc.println("Regen Rate:        ¦" + generateStatLine(bp.GetMyTotalStats()[7],grossPadding,modPadding,finalPadding,parentGrossPadding,parentModPadding,personModPadding));
-        c.cc.println("Regen Limit:       ¦" + generateStatLine(bp.GetMyTotalStats()[8],grossPadding,modPadding,finalPadding,parentGrossPadding,parentModPadding,personModPadding));
-        c.cc.println("Armour:            ¦" + generateStatLine(bp.GetMyTotalStats()[9],grossPadding,modPadding,finalPadding,parentGrossPadding,parentModPadding,personModPadding));
-        c.cc.println("Size:              ¦" + generateStatLine(bp.GetMyTotalStats()[10],grossPadding,modPadding,finalPadding,parentGrossPadding,parentModPadding,personModPadding));
-        c.cc.println("Organ Capacity:    ¦" + generateStatLine(bp.GetMyTotalStats()[11],grossPadding,modPadding,finalPadding,parentGrossPadding,parentModPadding,personModPadding));
-        c.cc.println("Speed:             ¦" + generateStatLine(bp.GetMyTotalStats()[12],grossPadding,modPadding,finalPadding,parentGrossPadding,parentModPadding,personModPadding));
-        c.cc.println("Consciousness:     ¦" + generateStatLine(bp.GetMyTotalStats()[13],grossPadding,modPadding,finalPadding,parentGrossPadding,parentModPadding,personModPadding));
-        c.cc.println("Grabbing Slots:    ¦" + generateStatLine(bp.GetMyTotalStats()[14],grossPadding,modPadding,finalPadding,parentGrossPadding,parentModPadding,personModPadding));
-        c.cc.println("Sight:             ¦" + generateStatLine(bp.GetMyTotalStats()[15],grossPadding,modPadding,finalPadding,parentGrossPadding,parentModPadding,personModPadding));
+        s[0] = ("Health:         "+bp.getCurrentHealth()+"/"+bp.GetMyTotalStats()[6][2]);
+        s[1] = ("Organ Capacity: "+bp.getCurrentOrganCapacity()+"/"+bp.GetMyTotalStats()[11][2]);
+        s[2] = " ";
 
-        c.cc.println("");
+        s[3] = (" STATS             ¦ GROSS ¦ MODIFIER ¦ TOTAL ¦ GROSS BONI TO PARENT ¦ MODIFIER BONI TO PARENT ¦ MODIFIER BONI TO PERSON ¦");
+        s[4] = ("Blood Capacity:    ¦" + generateStatLine(bp.GetMyTotalStats()[0],grossPadding,modPadding,finalPadding,parentGrossPadding,parentModPadding,personModPadding));
+        s[5] = ("Blood Generation:  ¦" + generateStatLine(bp.GetMyTotalStats()[1],grossPadding,modPadding,finalPadding,parentGrossPadding,parentModPadding,personModPadding));
+        s[6] = ("Blood Needed:      ¦" + generateStatLine(bp.GetMyTotalStats()[2],grossPadding,modPadding,finalPadding,parentGrossPadding,parentModPadding,personModPadding));
+        s[7] = ("Energy Capacity:   ¦" + generateStatLine(bp.GetMyTotalStats()[3],grossPadding,modPadding,finalPadding,parentGrossPadding,parentModPadding,personModPadding));
+        s[8] = ("Energy Generation: ¦" + generateStatLine(bp.GetMyTotalStats()[4],grossPadding,modPadding,finalPadding,parentGrossPadding,parentModPadding,personModPadding));
+        s[9] = ("Energy Needed:     ¦" + generateStatLine(bp.GetMyTotalStats()[5],grossPadding,modPadding,finalPadding,parentGrossPadding,parentModPadding,personModPadding));
+        s[10] = ("Max Health:        ¦" + generateStatLine(bp.GetMyTotalStats()[6],grossPadding,modPadding,finalPadding,parentGrossPadding,parentModPadding,personModPadding));
+        s[11] = ("Regen Rate:        ¦" + generateStatLine(bp.GetMyTotalStats()[7],grossPadding,modPadding,finalPadding,parentGrossPadding,parentModPadding,personModPadding));
+        s[12] = ("Regen Limit:       ¦" + generateStatLine(bp.GetMyTotalStats()[8],grossPadding,modPadding,finalPadding,parentGrossPadding,parentModPadding,personModPadding));
+        s[13] = ("Armour:            ¦" + generateStatLine(bp.GetMyTotalStats()[9],grossPadding,modPadding,finalPadding,parentGrossPadding,parentModPadding,personModPadding));
+        s[14] = ("Size:              ¦" + generateStatLine(bp.GetMyTotalStats()[10],grossPadding,modPadding,finalPadding,parentGrossPadding,parentModPadding,personModPadding));
+        s[15] = ("Organ Capacity:    ¦" + generateStatLine(bp.GetMyTotalStats()[11],grossPadding,modPadding,finalPadding,parentGrossPadding,parentModPadding,personModPadding));
+        s[16] = ("Speed:             ¦" + generateStatLine(bp.GetMyTotalStats()[12],grossPadding,modPadding,finalPadding,parentGrossPadding,parentModPadding,personModPadding));
+        s[17] = ("Consciousness:     ¦" + generateStatLine(bp.GetMyTotalStats()[13],grossPadding,modPadding,finalPadding,parentGrossPadding,parentModPadding,personModPadding));
+        s[18] = ("Grabbing Slots:    ¦" + generateStatLine(bp.GetMyTotalStats()[14],grossPadding,modPadding,finalPadding,parentGrossPadding,parentModPadding,personModPadding));
+        s[19] = ("Sight:             ¦" + generateStatLine(bp.GetMyTotalStats()[15],grossPadding,modPadding,finalPadding,parentGrossPadding,parentModPadding,personModPadding));
 
-        c.cc.println("My Person: " );
+        return s;
     }
     private void assembleBodyPartRelations(BodyPart bp, List<String> list)
     {

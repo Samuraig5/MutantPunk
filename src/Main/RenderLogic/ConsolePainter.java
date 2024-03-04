@@ -78,6 +78,9 @@ public class ConsolePainter extends JPanel
             case PERSON_VIEW:
                 drawPersonView();
                 break;
+            case BODY_PART_MENU:
+                drawBodyPartMenu();
+                break;
             default:
                 printCentredString(50,c.errorColour,"THIS GAME STATE DOESN'T EXIST");
         }
@@ -95,7 +98,7 @@ public class ConsolePainter extends JPanel
     {
         for (int i = 0; i < s.length; i++)
         {
-            printString(xPos,yPos+Math.round((50+(i*Settings.fontSize*Settings.relativeFontHeight))), c,s);
+            printString(xPos,yPos+Math.round((50+(i*Settings.fontSize*Settings.relativeFontHeight))), c,s[i]);
         }
     }
 
@@ -205,5 +208,10 @@ public class ConsolePainter extends JPanel
             printString(10, 80+Math.round((i)*Settings.fontHeight), Color.LIGHT_GRAY,
                     MathHelper.indexToLetter(i) + ": " + list.get(i));
         }
+    }
+
+    private void drawBodyPartMenu()
+    {
+        printString(10,80, Color.LIGHT_GRAY, c.cb.displayBodyPartStats(focusedBodyPart));
     }
 }
