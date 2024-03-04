@@ -25,6 +25,8 @@ public class AllCharactersInLocalMapMenu implements KeyListener
     {
         LocalMap lm = c.wc.getActiveWorld().getActiveLocalMap();
 
+        if (lm.getLocalPeople().size() <= i) {return;}
+
         Person p = lm.getLocalPeople().get(i);
 
         c.cp.setFocusedPerson(p);

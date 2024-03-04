@@ -156,6 +156,7 @@ public class Console
             case LOCAL_MAP_VIEW:
                 cp.newListener(new LocalMapView(this));
                 wc.startClock();
+                break;
             case ALL_CHARACTERS_IN_LOCAL_MAP:
                 cp.newListener(new AllCharactersInLocalMapMenu(this));
                 break;

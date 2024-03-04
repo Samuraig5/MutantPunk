@@ -1,5 +1,6 @@
 package Main.RenderLogic.Menus;
 
+import Main.Direction;
 import Main.RenderLogic.Console;
 import Main.RenderLogic.GameState;
 import Main.Settings;
@@ -22,10 +23,31 @@ public class LocalMapView implements KeyListener
     {
         switch (e.getKeyCode())
         {
+            case KeyEvent.VK_W:
+                c.cp.setCursorEnabled(true);
+                c.cp.moveCursor(Direction.NORTH, 1);
+                break;
             case KeyEvent.VK_A:
+                c.cp.setCursorEnabled(true);
+                c.cp.moveCursor(Direction.WEST, 1);
+                break;
+            case KeyEvent.VK_S:
+                c.cp.setCursorEnabled(true);
+                c.cp.moveCursor(Direction.SOUTH, 1);
+                break;
+            case KeyEvent.VK_D:
+                c.cp.setCursorEnabled(true);
+                c.cp.moveCursor(Direction.EAST, 1);
                 break;
             case KeyEvent.VK_ESCAPE:
-                c.setGameState(GameState.LOCAL_MAP_MENU);
+                if (c.cp.isCursorEnabled())
+                {
+                    c.cp.setCursorEnabled(false);
+                }
+                else
+                {
+                    c.setGameState(GameState.LOCAL_MAP_MENU);
+                }
                 break;
         }
 

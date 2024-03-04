@@ -1,5 +1,6 @@
 package Main.RenderLogic;
 
+import Main.Direction;
 import Main.MathHelper;
 import Main.ObjectLogic.BodyLogic.BodyPart;
 import Main.ObjectLogic.BodyLogic.Person;
@@ -21,6 +22,9 @@ public class ConsolePainter extends JPanel
     private KeyListener activeKeyListener;
     private Person focusedPerson;
     private BodyPart focusedBodyPart;
+
+    private int[] cursorPosition = {0,0};
+    private boolean cursorEnabled = false;
 
     public ConsolePainter(Console c)
     {
@@ -55,8 +59,6 @@ public class ConsolePainter extends JPanel
         g.setFont(new Font("Courier New", Font.PLAIN, Settings.fontSize));
 
         drawBackground(new Color(50,50,50));
-
-        GameState gameState = c.getGameState();
 
         switch (c.getGameState())
         {
@@ -177,15 +179,28 @@ public class ConsolePainter extends JPanel
         {
             for (int x = 0; x < xy[0]; x++)
             {
-                MapIcon mi = mapIcons[x][y];
-                String s = String.valueOf(mi.getSymbol());
-                Color c =  mi.getIconColour();
+                if (cursorEnabled && cursorPosition[0] == x && cursorPosition[1] == y)
+                {
+                    printString(Math.round(x*Settings.fontHeight),
+                            Math.round((y+1)*Settings.fontHeight),
+                            Color.yellow,"X");
+                }
+                else
+                {
+                    MapIcon mi = mapIcons[x][y];
+                    String s = String.valueOf(mi.getSymbol());
+                    Color c =  mi.getIconColour();
 
-                printString(Math.round(x*Settings.fontHeight),
-                        Math.round(y*Settings.fontHeight),
-                        mi.getIconColour(),mi.getSymbol()+"");
+                    printString(Math.round(x*Settings.fontHeight),
+                            Math.round((y+1)*Settings.fontHeight),
+                            mi.getIconColour(),mi.getSymbol()+"");
+                }
             }
         }
+
+        g.drawRoundRect(Math.round(xy[0]*Settings.fontHeight), 5,
+                250, Math.round((xy[1]-1)*Settings.fontHeight),
+                5, 5);
     }
 
     private void drawListOfLocalPeople()
@@ -213,5 +228,39 @@ public class ConsolePainter extends JPanel
     private void drawBodyPartMenu()
     {
         printString(10,80, Color.LIGHT_GRAY, c.cb.displayBodyPartStats(focusedBodyPart));
+    }
+
+    public void setCursorEnabled(boolean b) {cursorEnabled = b;}
+    public boolean isCursorEnabled() {return cursorEnabled;}
+
+    public int[] getCursorPosition() {return cursorPosition;}
+    public void setCursorPosition(int[] i) {cursorPosition = i;}
+
+    public void moveCursor(Direction direction, int amount)
+    {
+        int[] xy = getCursorPosition();
+        switch (direction)
+        {
+            case NORTH:
+                xy[1] -= amount;
+                break;
+            case EAST:
+                xy[0] += amount;
+                break;
+            case SOUTH:
+                xy[1] += amount;
+                break;
+            case WEST:
+                xy[0] -= amount;
+                break;
+            default:
+                throw new RuntimeException("The cursor can't move in that direction");
+        }
+        int[] xyMax = c.wc.getActiveWorld().getActiveLocalMap().getSize();
+
+        xy[0] = MathHelper.clamp(xy[0],0, xyMax[0]-1);
+        xy[1] = MathHelper.clamp(xy[1],0, xyMax[1]-1);
+
+        setCursorPosition(xy);
     }
 }
