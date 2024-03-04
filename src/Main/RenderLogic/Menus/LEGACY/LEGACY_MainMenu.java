@@ -11,7 +11,7 @@ public class LEGACY_MainMenu implements MenuLogic
     public LEGACY_MainMenu(Console console)
     {
         c = console;
-        c.setInMainMenu(true);
+        //c.setInMainMenu(true);
     }
 
     @Override

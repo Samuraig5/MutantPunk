@@ -1,5 +1,6 @@
 package Main.RenderLogic.Menus;
 
+import Main.ObjectLogic.BodyLogic.Person;
 import Main.RenderLogic.Console;
 import Main.RenderLogic.GameState;
 import Main.Settings;
@@ -22,9 +23,12 @@ public class AllCharactersInLocalMapMenu implements KeyListener
 
     private void openPersonView(int i)
     {
-        //LocalMap lm = c.wc.getActiveWorld().getLocalMaps().get(i);
-        //c.wc.getActiveWorld().setActiveLocalMap(lm);
-        //c.setGameState(GameState.LOCAL_MAP_MENU);
+        LocalMap lm = c.wc.getActiveWorld().getActiveLocalMap();
+
+        Person p = lm.getLocalPeople().get(i);
+
+        c.cp.setFocusedPerson(p);
+        c.setGameState(GameState.PERSON_VIEW);
     }
 
     @Override

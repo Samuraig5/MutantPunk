@@ -12,7 +12,7 @@ public class LEGACY_AllCharactersInLocalMapsMenu implements MenuLogic
     public LEGACY_AllCharactersInLocalMapsMenu(Console console, LocalMap localMap)
     {
         c = console;
-        c.setInMainMenu(false);
+        //c.setInMainMenu(false);
         lm = localMap;
     }
 

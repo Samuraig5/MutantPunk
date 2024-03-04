@@ -118,18 +118,17 @@ public class ConsoleBodyInterface
 
         return s;
     }
-    public void openBodyView(Person p)
+    public List<String> openBodyView(Person p)
     {
-        c.cc.clear();
-
         List<String> list = new ArrayList<>();
         addChildrenBodyPartsToList(p.myBodyParts.get(0), list, "");
+        return list;
         //c.clir.renderList(list, p.getName()+"'s Body", new BodyMenu(c,p));
     }
     private void addChildrenBodyPartsToList(BodyPart bp, List<String> list, String depth)
     {
         ErrorHandler.LogData(false,"Number of attached BodyParts: " + bp.getAttachedBodyParts().size());
-        list.add(depth + "↳" + bp.getName());
+        list.add(depth + "> " + bp.getName());
         for (BodyPart nextbp:bp.getAttachedBodyParts())
         {
             addChildrenBodyPartsToList(nextbp, list, depth+"¦ ");

@@ -4,14 +4,14 @@ import Main.ObjectLogic.BodyLogic.BodyPart;
 import Main.ObjectLogic.BodyLogic.Person;
 import Main.RenderLogic.Console;
 
-public class BodyMenu implements MenuLogic
+public class LEGACY_BodyMenu implements MenuLogic
 {
     Console c;
     Person p;
-    public BodyMenu(Console console, Person person)
+    public LEGACY_BodyMenu(Console console, Person person)
     {
         c = console;
-        c.setInMainMenu(false);
+        //c.setInMainMenu(false);
         p = person;
     }
 

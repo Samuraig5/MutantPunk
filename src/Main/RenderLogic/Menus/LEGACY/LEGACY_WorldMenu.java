@@ -13,7 +13,7 @@ public class LEGACY_WorldMenu implements MenuLogic
     public LEGACY_WorldMenu(Console console, GameWorld gameWorld)
     {
         c = console;
-        c.setInMainMenu(false);
+        //c.setInMainMenu(false);
         gw = gameWorld;
     }
 

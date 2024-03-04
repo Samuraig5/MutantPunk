@@ -25,9 +25,6 @@ public class Console
     private final JFrame frame;
     public static JTextPane console;
     public static StyledDocument styledDocument;
-    //private final JTextField input;
-    //private final JScrollPane scrollPane;
-    private boolean inMainMenu;
 
     public Console()
     {
@@ -141,10 +138,6 @@ public class Console
         return screenSize;
     }
 
-    public void setInMainMenu(boolean inMainMenu) {
-        this.inMainMenu = inMainMenu;
-    }
-
     public GameState getGameState() {return gameState;}
     public void setGameState(GameState gs)
     {
@@ -165,6 +158,9 @@ public class Console
                 wc.startClock();
             case ALL_CHARACTERS_IN_LOCAL_MAP:
                 cp.newListener(new AllCharactersInLocalMapMenu(this));
+                break;
+            case PERSON_VIEW:
+                cp.newListener(new PersonMenu(this));
                 break;
             default:
                 throw new RuntimeException("Console couldn't find a new KeyListener for game state: " + gs);

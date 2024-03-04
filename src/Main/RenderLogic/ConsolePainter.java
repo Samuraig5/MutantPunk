@@ -1,6 +1,7 @@
 package Main.RenderLogic;
 
 import Main.MathHelper;
+import Main.ObjectLogic.BodyLogic.BodyPart;
 import Main.ObjectLogic.BodyLogic.Person;
 import Main.Settings;
 import Main.WorldLogic.LocalMap;
@@ -18,6 +19,8 @@ public class ConsolePainter extends JPanel
     private Graphics g;
 
     private KeyListener activeKeyListener;
+    private Person focusedPerson;
+    private BodyPart focusedBodyPart;
 
     public ConsolePainter(Console c)
     {
@@ -34,6 +37,11 @@ public class ConsolePainter extends JPanel
         this.setFocusable(true);
         activeKeyListener = keyListener;
     }
+
+    public void setFocusedPerson(Person newPerson) {focusedPerson = newPerson;}
+    public Person getFocusedPerson() {return focusedPerson;}
+    public void setFocusedBodyPart(BodyPart newBodyPart) {focusedBodyPart = newBodyPart;}
+    public BodyPart getFocusedBodyPart() {return focusedBodyPart;}
 
     @Override
     protected void paintComponent(Graphics g)
@@ -66,6 +74,9 @@ public class ConsolePainter extends JPanel
                 break;
             case ALL_CHARACTERS_IN_LOCAL_MAP:
                 drawListOfLocalPeople();
+                break;
+            case PERSON_VIEW:
+                drawPersonView();
                 break;
             default:
                 printCentredString(50,c.errorColour,"THIS GAME STATE DOESN'T EXIST");
@@ -182,6 +193,17 @@ public class ConsolePainter extends JPanel
         {
             printString(10, 80+Math.round((i)*Settings.fontHeight), Color.LIGHT_GRAY,
                     MathHelper.indexToLetter(i) + ": " + people.get(i).getName());
+        }
+    }
+
+    private void drawPersonView()
+    {
+        if (focusedPerson == null) {throw new RuntimeException("The ConsolePainter is trying to draw a body but no person is focused");}
+        List<String> list = c.cb.openBodyView(focusedPerson);
+        for (int i = 0; i < list.size(); i++)
+        {
+            printString(10, 80+Math.round((i)*Settings.fontHeight), Color.LIGHT_GRAY,
+                    MathHelper.indexToLetter(i) + ": " + list.get(i));
         }
     }
 }

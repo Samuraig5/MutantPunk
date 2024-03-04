@@ -15,7 +15,7 @@ public class BodyPartMenu implements MenuLogic
     public BodyPartMenu(Console console, BodyPart bodyPart)
     {
         c = console;
-        c.setInMainMenu(false);
+        //c.setInMainMenu(false);
         bp = bodyPart;
         p = bp.getMyPerson();
     }

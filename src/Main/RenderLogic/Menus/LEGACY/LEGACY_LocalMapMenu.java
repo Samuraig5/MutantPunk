@@ -11,7 +11,7 @@ public class LEGACY_LocalMapMenu implements MenuLogic
     public LEGACY_LocalMapMenu(Console console, LocalMap localMap)
     {
         c = console;
-        c.setInMainMenu(false);
+        //c.setInMainMenu(false);
         lm = localMap;
     }
 
