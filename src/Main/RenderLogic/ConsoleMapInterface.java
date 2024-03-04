@@ -1,6 +1,5 @@
 package Main.RenderLogic;
 
-import Main.RenderLogic.Menus.LEGACY.LEGACY_LocalMapView;
 import Main.WorldLogic.Cell;
 import Main.WorldLogic.GameWorld;
 import Main.WorldLogic.LocalMap;
@@ -25,38 +24,6 @@ public class ConsoleMapInterface
     public LocalMap GenerateLocalMapWithWalls(int[] size, GameWorld gameWorld, String name, float wallCover)
     {
         return MapGenerator.generateLocalMapWithWalls(size,gameWorld,name,wallCover);
-    }
-
-    public void RenderLocalMap(LocalMap lm)
-    {
-        lm.getMyWorld().setActiveLocalMap(lm);
-
-        c.cc.fullClear();
-        LEGACY_LocalMapView localMapView = new LEGACY_LocalMapView(c, lm);
-        c.ckb.setCurrentMenu(localMapView);
-
-        int[] xy = lm.getSize();
-        MapIcon[][] mapIcons = TranslateCellsToSymbols(lm.getCells(),xy);
-
-        List<String> stringList = new ArrayList<>();
-        List<Color> colorList = new ArrayList<>();
-
-        for (int y = 0; y < xy[1]; y++)
-        {
-            for (int x = 0; x < xy[0]; x++)
-            {
-                MapIcon mi = mapIcons[x][y];
-                String s = String.valueOf(mi.getSymbol());
-                s += " ";
-                Color c =  mi.getIconColour();
-
-                stringList.add(s);
-                colorList.add(c);
-            }
-            stringList.add("\n");
-            colorList.add(Color.lightGray);
-        }
-        c.cc.printStrings(stringList,false,colorList);
     }
 
     public MapIcon[][] TranslateCellsToSymbols(Cell[][] cells, int[] size)

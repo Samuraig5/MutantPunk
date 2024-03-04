@@ -1,7 +1,6 @@
 package Main.RenderLogic;
 
 import Main.ErrorHandler;
-import Main.RenderLogic.Menus.LEGACY.LEGACY_MainMenu;
 
 import javax.swing.text.Style;
 import javax.swing.text.StyleConstants;
@@ -118,21 +117,6 @@ public class ConsoleCommands
         clear();
     }
 
-    public void openMainMenu()
-    {
-        List<String> mainMenuOptions = new ArrayList<>();
-
-        fullClear();
-        LEGACY_generateLogo();
-
-        mainMenuOptions.add("a - Open new World");
-        mainMenuOptions = centreStringsInScreen(mainMenuOptions);
-
-        println(mainMenuOptions);
-
-        c.ckb.setCurrentMenu(new LEGACY_MainMenu(c));
-
-    }
     public String[] generateLogo()
     {
         String[] logo = new String[11];
@@ -150,34 +134,6 @@ public class ConsoleCommands
         logo[10] =("       ░                           ░                                     ░                 ░      \n");
 
         return logo;
-    }
-
-    private void LEGACY_generateLogo()
-    {
-        List<String> logoList = new ArrayList<>();
-
-        logoList.add("");
-        logoList.add("");
-        logoList.add("");
-        logoList.add(" ███▄ ▄███▓ █    ██ ▄▄▄█████▓ ▄▄▄       ███▄    █ ▄▄▄█████▓    ██▓███   █    ██  ███▄    █  ██ ▄█▀");
-        logoList.add("▓██▒▀█▀ ██▒ ██  ▓██▒▓  ██▒ ▓▒▒████▄     ██ ▀█   █ ▓  ██▒ ▓▒   ▓██░  ██▒ ██  ▓██▒ ██ ▀█   █  ██▄█▒ ");
-        logoList.add("▓██    ▓██░▓██  ▒██░▒ ▓██░ ▒░▒██  ▀█▄  ▓██  ▀█ ██▒▒ ▓██░ ▒░   ▓██░ ██▓▒▓██  ▒██░▓██  ▀█ ██▒▓███▄░ ");
-        logoList.add("▒██    ▒██ ▓▓█  ░██░░ ▓██▓ ░ ░██▄▄▄▄██ ▓██▒  ▐▌██▒░ ▓██▓ ░    ▒██▄█▓▒ ▒▓▓█  ░██░▓██▒  ▐▌██▒▓██ █▄ ");
-        logoList.add("▒██▒   ░██▒▒▒█████▓   ▒██▒ ░  ▓█   ▓██▒▒██░   ▓██░  ▒██▒ ░    ▒██▒ ░  ░▒▒█████▓ ▒██░   ▓██░▒██▒ █▄");
-        logoList.add("░ ▒░   ░  ░░▒▓▒ ▒ ▒   ▒ ░░    ▒▒   ▓▒█░░ ▒░   ▒ ▒   ▒ ░░      ▒▓▒░ ░  ░░▒▓▒ ▒ ▒ ░ ▒░   ▒ ▒ ▒ ▒▒ ▓▒");
-        logoList.add("░  ░      ░░░▒░ ░ ░     ░      ▒   ▒▒ ░░ ░░   ░ ▒░    ░       ░▒ ░     ░░▒░ ░ ░ ░ ░░   ░ ▒░░ ░▒ ▒░");
-        logoList.add("░      ░    ░░░ ░ ░   ░        ░   ▒      ░   ░ ░   ░         ░░        ░░░ ░ ░    ░   ░ ░ ░ ░░ ░ ");
-        logoList.add("       ░      ░                    ░  ░         ░                         ░              ░ ░  ░   ");
-        logoList.add("                 ░                                 ░          ░                    ░              ");
-        logoList.add("       ░                           ░                                     ░                 ░      ");
-        logoList.add("");
-
-        logoList = centreStringsInScreen(logoList);
-
-        for (String s:logoList)
-        {
-            println(s, Color.GREEN);
-        }
     }
 
     private List<String> centreStringsInScreen(List<String> input)
