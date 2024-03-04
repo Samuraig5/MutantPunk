@@ -216,7 +216,7 @@ public class ConsolePainter extends JPanel
         {
             int width = 100;
             int heigth =  Math.round(Settings.fontHeight*2);
-            int startPointX = Math.round(xy[0]*Settings.fontHeight)-width;
+            int startPointX = Math.round(xy[0]*Settings.fontHeight)-width-25;
             int startPointY = 10;
 
             Color current = g.getColor();
@@ -225,7 +225,13 @@ public class ConsolePainter extends JPanel
             g.setColor(Color.LIGHT_GRAY);
             g.drawRoundRect(startPointX,startPointY, width, heigth, 5,5);
             g.setColor(current);
-            printString(startPointX,startPointY+(heigth/2),c.errorColour,"PAUSED");
+
+            String s = "PAUSED";
+            int stringLength = Math.round(Settings.fontWidth*s.length());
+            int stringHeight = Math.round(Settings.fontHeight);
+            printString(startPointX+(width/2)-(stringLength/2),
+                    startPointY+(heigth/2)+(stringHeight/3),
+                    c.errorColour,s);
         }
     }
 
