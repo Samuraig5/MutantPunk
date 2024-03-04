@@ -48,6 +48,8 @@ public class WorldClock extends TimerTask
         isClockRunning = false;
     }
 
+    public void toggleClock() {isClockRunning = !isClockRunning;}
+
     public boolean isClockRunning() {return isClockRunning;}
 
     public GameWorld getActiveWorld() {return activeWorld;}

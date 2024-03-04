@@ -39,6 +39,9 @@ public class LocalMapView implements KeyListener
                 c.cp.setCursorEnabled(true);
                 c.cp.moveCursor(Direction.EAST, 1);
                 break;
+            case KeyEvent.VK_SPACE:
+                c.wc.toggleClock();
+                break;
             case KeyEvent.VK_ESCAPE:
                 if (c.cp.isCursorEnabled())
                 {

@@ -17,9 +17,8 @@ import java.util.List;
 public class ConsolePainter extends JPanel
 {
     public Console c;
-
     private Graphics g;
-
+    private Color backgroundColour = new Color(50,50,50);
     private KeyListener activeKeyListener;
     private Person focusedPerson;
     private BodyPart focusedBodyPart;
@@ -59,7 +58,7 @@ public class ConsolePainter extends JPanel
         g.setColor(Color.LIGHT_GRAY);
         g.setFont(new Font("Courier New", Font.PLAIN, Settings.fontSize));
 
-        drawBackground(new Color(50,50,50));
+        drawBackground(backgroundColour);
 
         switch (c.getGameState())
         {
@@ -212,6 +211,21 @@ public class ConsolePainter extends JPanel
                         things.get(i).getMapIcon().getIconColour(),
                         things.get(i).getName());
             }
+        }
+        if (!c.wc.isClockRunning())
+        {
+            int width = 100;
+            int heigth =  Math.round(Settings.fontHeight*2);
+            int startPointX = Math.round(xy[0]*Settings.fontHeight)-width;
+            int startPointY = 10;
+
+            Color current = g.getColor();
+            g.setColor(backgroundColour);
+            g.fillRoundRect(startPointX,startPointY, width, heigth, 5,5);
+            g.setColor(Color.LIGHT_GRAY);
+            g.drawRoundRect(startPointX,startPointY, width, heigth, 5,5);
+            g.setColor(current);
+            printString(startPointX,startPointY+(heigth/2),c.errorColour,"PAUSED");
         }
     }
 
