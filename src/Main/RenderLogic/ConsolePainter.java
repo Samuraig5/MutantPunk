@@ -197,40 +197,72 @@ public class ConsolePainter extends JPanel
                 }
             }
         }
-
-        g.drawRoundRect(Math.round(xy[0]*Settings.fontHeight), 5,
-                250, Math.round((xy[1]-1)*Settings.fontHeight),
-                5, 5);
+        drawCursorUI();
+        drawPausedButton(xy);
+    }
+    private void drawCursorUI()
+    {
         if (cursorEnabled)
         {
-            List<Thing> things = c.wc.getActiveWorld().getActiveLocalMap().getCell(cursorPosition[0], cursorPosition[1]).getThings();
-            for (int i = 0; i < things.size(); i++)
-            {
-                printString(Math.round(Math.round(xy[0]+1)*Settings.fontHeight),
-                        20+Math.round((i)*Settings.fontHeight),
-                        things.get(i).getMapIcon().getIconColour(),
-                        things.get(i).getName());
-            }
-        }
-        if (!c.wc.isClockRunning())
-        {
-            int width = 100;
-            int heigth =  Math.round(Settings.fontHeight*2);
-            int startPointX = Math.round(xy[0]*Settings.fontHeight)-width-25;
-            int startPointY = 10;
+            int width = 250;
+            int heigth =  Settings.windowHeight-50;
+            int startPointX = Settings.windowWidth-250;
+            int startPointY = 5;
 
             Color current = g.getColor();
             g.setColor(backgroundColour);
-            g.fillRoundRect(startPointX,startPointY, width, heigth, 5,5);
+            g.fillRoundRect(startPointX-20, startPointY,
+                    width, heigth, 5, 5);
             g.setColor(Color.LIGHT_GRAY);
-            g.drawRoundRect(startPointX,startPointY, width, heigth, 5,5);
+            g.drawRoundRect(startPointX-20, startPointY,
+                    width, heigth, 5, 5);
+            g.setColor(current);
+
+            List<Thing> things = c.wc.getActiveWorld().getActiveLocalMap().getCell(cursorPosition[0], cursorPosition[1]).getThings();
+            for (int i = 0; i < things.size(); i++)
+            {
+                printString(startPointX, 20+Math.round((i+1)*Settings.fontHeight),
+                        things.get(i).getMapIcon().getIconColour(), things.get(i).getName());
+            }
+        }
+    }
+
+    private void drawPausedButton(int[] mapSize)
+    {
+
+        if (!c.wc.isClockRunning())
+        {
+            int width;
+            int height;
+            int startPointX;
+            int startPointY;
+            if (cursorEnabled)
+            {
+                width = 100;
+                height =  Math.round(Settings.fontHeight*2);
+                startPointX = Settings.windowWidth-270-width-2;
+                startPointY = 5;
+            }
+            else
+            {
+                width = 100;
+                height =  Math.round(Settings.fontHeight*2);
+                startPointX = Settings.windowWidth-width-20;
+                startPointY = 5;
+            }
+
+            Color current = g.getColor();
+            g.setColor(backgroundColour);
+            g.fillRoundRect(startPointX,startPointY, width, height, 5,5);
+            g.setColor(Color.LIGHT_GRAY);
+            g.drawRoundRect(startPointX,startPointY, width, height, 5,5);
             g.setColor(current);
 
             String s = "PAUSED";
             int stringLength = Math.round(Settings.fontWidth*s.length());
             int stringHeight = Math.round(Settings.fontHeight);
             printString(startPointX+(width/2)-(stringLength/2),
-                    startPointY+(heigth/2)+(stringHeight/3),
+                    startPointY+(height/2)+(stringHeight/3),
                     c.errorColour,s);
         }
     }

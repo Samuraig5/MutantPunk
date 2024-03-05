@@ -18,19 +18,6 @@ public class ConsoleBodyInterface
         c = console;
     }
 
-    public Person spawnPerson(String name, String bias, String randomness, String filePath, LocalMap lm)
-    {
-        Person newCharacter = spawnPerson(bias, randomness, filePath, lm);
-        if (newCharacter != null)
-        {
-            newCharacter.setName(name);
-        }
-        else
-        {
-            //Print Warning
-        }
-        return newCharacter;
-    }
     public Person spawnPerson(String bias, String randomness, String filePath, LocalMap lm)
     {
         try
@@ -44,8 +31,7 @@ public class ConsoleBodyInterface
         }
         catch (Exception e)
         {
-            c.cc.println("WARNING: The second and third parameters of spawnPerson must be integer numbers", c.errorColour);
-            return null;
+            throw new RuntimeException("WARNING: The second and third parameters of spawnPerson must be integer numbers");
         }
     }
 
