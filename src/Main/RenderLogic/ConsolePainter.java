@@ -179,11 +179,21 @@ public class ConsolePainter extends JPanel
         {
             for (int x = 0; x < xy[0]; x++)
             {
+                int xBase = Math.round(x*Settings.fontHeight);
+                int yBase = Math.round((y+1)*Settings.fontHeight);
+
+                int xCursorOffset = Math.round(cursorPosition[0]*Settings.fontHeight);
+                int yCursorOffset = Math.round(cursorPosition[1]*Settings.fontHeight);
+
+                int xScreenCenter = Math.round((float) Settings.windowWidth /2);
+                int yScreenCenter = Math.round((float) Settings.windowHeight /2);
+
+                int xPos = xBase-xCursorOffset+xScreenCenter;
+                int yPos = yBase-yCursorOffset+yScreenCenter;
+
                 if (cursorEnabled && cursorPosition[0] == x && cursorPosition[1] == y)
                 {
-                    printString(Math.round(x*Settings.fontHeight),
-                            Math.round((y+1)*Settings.fontHeight),
-                            Color.yellow,"X");
+                    printString(xPos, yPos, Color.yellow,"X");
                 }
                 else
                 {
@@ -191,9 +201,7 @@ public class ConsolePainter extends JPanel
                     String s = String.valueOf(mi.getSymbol());
                     Color c =  mi.getIconColour();
 
-                    printString(Math.round(x*Settings.fontHeight),
-                            Math.round((y+1)*Settings.fontHeight),
-                            mi.getIconColour(),mi.getSymbol()+"");
+                    printString(xPos, yPos, mi.getIconColour(),mi.getSymbol()+"");
                 }
             }
         }
