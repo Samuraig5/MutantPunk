@@ -6,6 +6,7 @@ import Main.MathHelper;
 import Main.ObjectLogic.BodyLogic.Person;
 import Main.ObjectLogic.Thing;
 import Main.ObjectLogic.Wind;
+import Main.Settings;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -125,28 +126,14 @@ public class LocalMap
         int xMax = getMyWorld().getActiveLocalMap().getSize()[0];
         int yMax = getMyWorld().getActiveLocalMap().getSize()[1];
 
-        if (Math.random() < 0.1)
+        if (Math.random() < 0.1*(Settings.mapSizeX+Settings.mapSizeY))
         {
             int xRandOrigin = (int) (Math.random() * xMax);
             int yRandOrigin = (int) (Math.random() * yMax);
 
-            int x = 0;
-            int y = 0;
 
-            switch (localWind)
-            {
-                case NORTH:
-                case SOUTH:
-                    x = xRandOrigin;
-                    break;
-                case WEST:
-                case EAST:
-                    y = yRandOrigin;
-                    break;
-            }
-
-            x = MathHelper.clamp(x,0,xMax-1);
-            y = MathHelper.clamp(y,0,yMax-1);
+            int x = MathHelper.clamp(xRandOrigin,0,xMax-1);
+            int y = MathHelper.clamp(yRandOrigin,0,yMax-1);
 
             new Wind(cells[x][y],localWind,2f);
         }
