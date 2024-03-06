@@ -83,6 +83,8 @@ public class BodyFileDecoder
 
             String[] personInfo = fileIn.nextLine().split("§");
             p.setName(personInfo[0]);
+            String[] description = fileIn.nextLine().split("§");
+            p.setDescription(description[1]);
             char[] c = personInfo[1].toCharArray();
             if (personInfo.length > 2)
             {

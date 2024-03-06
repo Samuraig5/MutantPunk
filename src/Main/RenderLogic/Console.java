@@ -143,7 +143,11 @@ public class Console
     public GameState getPreviousGameState() {return previousGameState;}
     public void setGameState(GameState gs)
     {
-        previousGameState = gameState;
+        if (gameState == GameState.LOCAL_MAP_VIEW || gameState == GameState.LOCAL_MAP_MENU)
+        {
+            previousGameState = gameState;
+        }
+
         if (gameState == GameState.LOCAL_MAP_VIEW) {wc.stopClock();}
         switch (gs)
         {
