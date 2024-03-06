@@ -22,6 +22,7 @@ public class Wall extends Thing
         setRenderPriority(10);
 
         setName("Wall");
+        setDescription("This is a solid wall");
     }
 
     @Override

@@ -27,6 +27,7 @@ public class Grass extends Thing
         setRenderPriority(0);
 
         setName("Grass");
+        setDescription("This is a cluster of lush, high grass");
     }
 
     @Override

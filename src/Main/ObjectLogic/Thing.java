@@ -15,6 +15,7 @@ abstract public class Thing
     private Cell myCell;
     private MapIcon mapIcon;
     private String name;
+    private String description;
     private boolean hasCollision = true;
     public LocalMap getLocalMap() {
         return lm;
@@ -62,11 +63,12 @@ abstract public class Thing
     {
         name = n;
     }
-
     public String getName()
     {
         return name;
     }
+    public void setDescription(String d) {description=d;}
+    public String getDescription() {return description;}
 
     public GameWorld getGameWord() {
         return gw;

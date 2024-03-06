@@ -334,15 +334,20 @@ public class ConsolePainter extends JPanel
         int nameOffset = 10 + Math.round(nameFontSize*Settings.relativeFontHeight);
         printString(10, nameOffset, focusedThing.getMapIcon().getIconColour(), focusedThing.getName() + " (" + focusedThing.getMapIcon().getSymbol() + ")" , nameFontSize);
 
+        if (focusedThing.getDescription() != null)
+        {
+            printString(10, nameOffset+20, Color.lightGray, focusedThing.getDescription());
+        }
+
         if (focusedThing instanceof Person)
         {
             List<String> stats = c.cb.openPersonView((Person) focusedThing);
-            printString(10, 50+nameOffset, Color.lightGray, stats);
+            printString(10, 70+nameOffset, Color.lightGray, stats);
 
             List<String> body = c.cb.openBodyView((Person) focusedThing);
             for (int i = 0; i < body.size(); i++)
             {
-                printString(10, 250+nameOffset+Math.round((i)*Settings.fontHeight), Color.LIGHT_GRAY,
+                printString(10, 270+nameOffset+Math.round((i)*Settings.fontHeight), Color.LIGHT_GRAY,
                         MathHelper.indexToLetter(i) + ": " + body.get(i));
             }
         }

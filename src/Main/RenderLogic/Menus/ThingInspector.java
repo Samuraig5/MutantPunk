@@ -121,7 +121,6 @@ public class ThingInspector implements KeyListener
                 }
                 break;
         }
-
     }
 
     @Override

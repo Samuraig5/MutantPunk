@@ -52,6 +52,7 @@ public class Wind extends Thing
         setRenderPriority(-1);
 
         setName("Gust of Wind");
+        setDescription("This is a nice gust of wind");
 
         this.directionOfTravel = directionOfTravel;
         this.strengthOfSpread = strengthOfSpread;
