@@ -20,11 +20,11 @@ public class ConsolePainter extends JPanel
     private Graphics g;
     private Color backgroundColour = new Color(50,50,50);
     private KeyListener activeKeyListener;
-    private Person focusedPerson;
+    private Thing focusedThing;
     private BodyPart focusedBodyPart;
-
     private int[] cursorPosition = {0,0};
     private boolean cursorEnabled = false;
+    private int listSelector = 0;
 
     public ConsolePainter(Console c)
     {
@@ -42,10 +42,14 @@ public class ConsolePainter extends JPanel
         activeKeyListener = keyListener;
     }
 
-    public void setFocusedPerson(Person newPerson) {focusedPerson = newPerson;}
-    public Person getFocusedPerson() {return focusedPerson;}
+    public void setFocusedThing(Thing newThing) {
+        focusedThing = newThing;}
+    public Thing getFocusedThing() {return focusedThing;}
     public void setFocusedBodyPart(BodyPart newBodyPart) {focusedBodyPart = newBodyPart;}
     public BodyPart getFocusedBodyPart() {return focusedBodyPart;}
+
+    public int getListSelector() {return listSelector;}
+    public void setListSelector(int i) {listSelector = i;}
 
     @Override
     protected void paintComponent(Graphics g)
@@ -77,8 +81,8 @@ public class ConsolePainter extends JPanel
             case ALL_CHARACTERS_IN_LOCAL_MAP:
                 drawListOfLocalPeople();
                 break;
-            case PERSON_VIEW:
-                drawPersonView();
+            case THING_INSPECTOR:
+                drawThingInspector();
                 break;
             case BODY_PART_MENU:
                 drawBodyPartMenu();
@@ -258,8 +262,14 @@ public class ConsolePainter extends JPanel
             g.setColor(current);
 
             List<Thing> things = c.wc.getActiveWorld().getActiveLocalMap().getCell(cursorPosition[0], cursorPosition[1]).getThings();
+            listSelector = MathHelper.clamp(listSelector, 0, things.size()-1);
             for (int i = 0; i < things.size(); i++)
             {
+                if (listSelector == i)
+                {
+                    printString(startPointX-10, 20+Math.round((i+1)*Settings.fontHeight),
+                            Color.yellow, ">");
+                }
                 printString(startPointX, 20+Math.round((i+1)*Settings.fontHeight),
                         things.get(i).getMapIcon().getIconColour(), things.get(i).getName());
             }
@@ -268,7 +278,6 @@ public class ConsolePainter extends JPanel
 
     private void drawPausedButton(int[] mapSize)
     {
-
         if (!c.wc.isClockRunning())
         {
             int width;
@@ -317,22 +326,25 @@ public class ConsolePainter extends JPanel
         }
     }
 
-    private void drawPersonView()
+    private void drawThingInspector()
     {
-        if (focusedPerson == null) {throw new RuntimeException("The ConsolePainter is trying to draw a body but no person is focused");}
+        if (focusedThing == null) {throw new RuntimeException("The ConsolePainter is trying to draw a body but no person is focused");}
 
         int nameFontSize = Settings.fontSize*2;
         int nameOffset = 10 + Math.round(nameFontSize*Settings.relativeFontHeight);
-        printString(10, nameOffset, focusedPerson.getMapIcon().getIconColour(), focusedPerson.getName() + " (" + focusedPerson.getMapIcon().getSymbol() + ")" , nameFontSize);
+        printString(10, nameOffset, focusedThing.getMapIcon().getIconColour(), focusedThing.getName() + " (" + focusedThing.getMapIcon().getSymbol() + ")" , nameFontSize);
 
-        List<String> stats = c.cb.openPersonView(focusedPerson);
-        printString(10, 50+nameOffset, Color.lightGray, stats);
-
-        List<String> body = c.cb.openBodyView(focusedPerson);
-        for (int i = 0; i < body.size(); i++)
+        if (focusedThing instanceof Person)
         {
-            printString(10, 250+nameOffset+Math.round((i)*Settings.fontHeight), Color.LIGHT_GRAY,
-                    MathHelper.indexToLetter(i) + ": " + body.get(i));
+            List<String> stats = c.cb.openPersonView((Person) focusedThing);
+            printString(10, 50+nameOffset, Color.lightGray, stats);
+
+            List<String> body = c.cb.openBodyView((Person) focusedThing);
+            for (int i = 0; i < body.size(); i++)
+            {
+                printString(10, 250+nameOffset+Math.round((i)*Settings.fontHeight), Color.LIGHT_GRAY,
+                        MathHelper.indexToLetter(i) + ": " + body.get(i));
+            }
         }
     }
 

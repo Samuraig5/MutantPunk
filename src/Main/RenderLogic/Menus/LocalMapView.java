@@ -3,9 +3,6 @@ package Main.RenderLogic.Menus;
 import Main.Direction;
 import Main.RenderLogic.Console;
 import Main.RenderLogic.GameState;
-import Main.Settings;
-import Main.WorldLogic.GameWorld;
-import Main.WorldLogic.LocalMap;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
@@ -38,6 +35,20 @@ public class LocalMapView implements KeyListener
             case KeyEvent.VK_D:
                 c.cp.setCursorEnabled(true);
                 c.cp.moveCursor(Direction.EAST, 1);
+                break;
+            case KeyEvent.VK_UP:
+                c.cp.setListSelector(c.cp.getListSelector()-1);
+                break;
+            case KeyEvent.VK_DOWN:
+                c.cp.setListSelector(c.cp.getListSelector()+1);
+                break;
+            case KeyEvent.VK_ENTER:
+                int[] xy = c.cp.getCursorPosition();
+                c.cp.setFocusedThing(
+                        c.wc.getActiveWorld().getActiveLocalMap().
+                        getCell(xy[0],xy[1]).getThings().
+                        get(c.cp.getListSelector()));
+                c.setGameState(GameState.THING_INSPECTOR);
                 break;
             case KeyEvent.VK_SPACE:
                 c.wc.toggleClock();

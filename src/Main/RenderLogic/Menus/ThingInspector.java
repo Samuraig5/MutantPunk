@@ -8,20 +8,20 @@ import Main.RenderLogic.GameState;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
-public class PersonMenu implements KeyListener
+public class ThingInspector implements KeyListener
 {
     Console c;
 
     int currentPage = 0;
 
-    public PersonMenu(Console console)
+    public ThingInspector(Console console)
     {
         c = console;
     }
 
     private void openBodyPartView(int i)
     {
-        Person p = c.cp.getFocusedPerson();
+        Person p = (Person) c.cp.getFocusedThing();
         BodyPart bp = p.myBodyParts.get(i);
         c.cp.setFocusedBodyPart(bp);
         c.setGameState(GameState.BODY_PART_MENU);
@@ -111,7 +111,14 @@ public class PersonMenu implements KeyListener
                 openBodyPartView(25);
                 break;
             case KeyEvent.VK_ESCAPE:
-                c.setGameState(GameState.LOCAL_MAP_MENU);
+                if (c.getPreviousGameState() == GameState.LOCAL_MAP_MENU)
+                {
+                    c.setGameState(GameState.LOCAL_MAP_MENU);
+                }
+                else if (c.getPreviousGameState() == GameState.LOCAL_MAP_VIEW)
+                {
+                    c.setGameState(GameState.LOCAL_MAP_VIEW);
+                }
                 break;
         }
 

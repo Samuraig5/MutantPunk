@@ -2,8 +2,6 @@ package Main.RenderLogic.Menus;
 
 import Main.RenderLogic.Console;
 import Main.RenderLogic.GameState;
-import Main.WorldLogic.GameWorld;
-import Main.WorldLogic.MapGenerator;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
@@ -22,7 +20,7 @@ public class BodyPartMenu implements KeyListener
         switch (e.getKeyCode())
         {
             case KeyEvent.VK_ESCAPE:
-                c.setGameState(GameState.PERSON_VIEW);
+                c.setGameState(GameState.THING_INSPECTOR);
         }
 
     }

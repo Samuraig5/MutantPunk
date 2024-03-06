@@ -8,6 +8,6 @@ public enum GameState
     LOCAL_MAP_MENU,
     LOCAL_MAP_VIEW,
     ALL_CHARACTERS_IN_LOCAL_MAP,
-    PERSON_VIEW,
+    THING_INSPECTOR,
     BODY_PART_MENU;
 }

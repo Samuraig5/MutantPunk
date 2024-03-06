@@ -20,6 +20,7 @@ public class Console
     public ConsolePainter cp = new ConsolePainter(this);
     public WorldClock wc = new WorldClock(this);
     private GameState gameState;
+    private GameState previousGameState;
     public final Color errorColour = new Color(255,155,155);
 
     private final JFrame frame;
@@ -139,8 +140,10 @@ public class Console
     }
 
     public GameState getGameState() {return gameState;}
+    public GameState getPreviousGameState() {return previousGameState;}
     public void setGameState(GameState gs)
     {
+        previousGameState = gameState;
         if (gameState == GameState.LOCAL_MAP_VIEW) {wc.stopClock();}
         switch (gs)
         {
@@ -160,8 +163,8 @@ public class Console
             case ALL_CHARACTERS_IN_LOCAL_MAP:
                 cp.newListener(new AllCharactersInLocalMapMenu(this));
                 break;
-            case PERSON_VIEW:
-                cp.newListener(new PersonMenu(this));
+            case THING_INSPECTOR:
+                cp.newListener(new ThingInspector(this));
                 break;
             case BODY_PART_MENU:
                 cp.newListener(new BodyPartMenu(this));
