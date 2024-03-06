@@ -14,6 +14,7 @@ abstract public class Thing
     private LocalMap lm;
     private Cell myCell;
     private MapIcon mapIcon;
+    private ObjectTag[] tags;
     private String name;
     private String description;
     private boolean hasCollision = true;
@@ -53,12 +54,10 @@ abstract public class Thing
     }
 
     public MapIcon getMapIcon() {return mapIcon;}
-
     public void setMapIcon(MapIcon mi)
     {
         this.mapIcon = mi;
     }
-
     public void setName(String n)
     {
         name = n;
@@ -69,16 +68,13 @@ abstract public class Thing
     }
     public void setDescription(String d) {description=d;}
     public String getDescription() {return description;}
-
     public GameWorld getGameWord() {
         return gw;
     }
-
     public void setGameWorld(GameWorld gw)
     {
         this.gw = gw;
     }
-
     public boolean hasCollision()
     {
         return hasCollision;
@@ -87,24 +83,21 @@ abstract public class Thing
     {
         hasCollision = bool;
     }
-
     public int getRenderPriority()
     {
         return renderPriority;
     }
-
     public void setRenderPriority(int renderPriority)
     {
         this.renderPriority = renderPriority;
     }
-
     public abstract void newNeightbour(Thing t, Direction directionToSource);
-
     public abstract void thingLeftCell(Thing t, Direction directionToNewCell);
-
     public int getActionPoints() {return actionPoints;}
     public void setActionPoints(int newVal) {actionPoints = newVal;}
     public void changeActionPoints(int change) {actionPoints += change;}
+    public ObjectTag[] getTags() {return tags;}
+    public void setTags(ObjectTag[] newTags) {tags = newTags;}
 
     public void updateTick()
     {

@@ -2,6 +2,7 @@ package Main.ObjectLogic.Decorations;
 
 import Main.MathHelper;
 import Main.ObjectLogic.BodyLogic.Person;
+import Main.ObjectLogic.ObjectTag;
 import Main.ObjectLogic.Thing;
 import Main.ObjectLogic.Wind;
 import Main.RenderLogic.MapIcon;
@@ -28,6 +29,7 @@ public class Grass extends Thing
 
         setName("Grass");
         setDescription("This is a cluster of lush, high grass");
+        setTags(new ObjectTag[] {ObjectTag.SOLID, ObjectTag.LIVING, ObjectTag.PLANT});
     }
 
     @Override

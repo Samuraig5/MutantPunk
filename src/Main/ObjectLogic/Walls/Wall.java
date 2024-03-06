@@ -1,5 +1,6 @@
 package Main.ObjectLogic.Walls;
 
+import Main.ObjectLogic.ObjectTag;
 import Main.ObjectLogic.Thing;
 import Main.RenderLogic.MapIcon;
 
@@ -23,6 +24,8 @@ public class Wall extends Thing
 
         setName("Wall");
         setDescription("This is a solid wall");
+        setTags(new ObjectTag[] {ObjectTag.SOLID});
+
     }
 
     @Override

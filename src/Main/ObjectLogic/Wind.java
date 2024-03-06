@@ -53,6 +53,8 @@ public class Wind extends Thing
 
         setName("Gust of Wind");
         setDescription("This is a nice gust of wind");
+        setTags(new ObjectTag[] {ObjectTag.GASEOUS});
+
 
         this.directionOfTravel = directionOfTravel;
         this.strengthOfSpread = strengthOfSpread;
