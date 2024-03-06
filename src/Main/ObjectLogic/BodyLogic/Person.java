@@ -197,7 +197,7 @@ public class Person extends Thing
     @Override
     public void doAction()
     {
-        int movementCost = Math.round(getMyTotalSpeed()/100*333);
+        int movementCost = Math.round(100/getMyTotalSpeed()*333);
         if (getActionPoints() < movementCost) {return;}
         changeActionPoints(-movementCost);
         myThoughts.thinkAboutMovement();

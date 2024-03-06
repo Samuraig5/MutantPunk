@@ -165,7 +165,7 @@ public class ConsolePainter extends JPanel
         printString(10, 70, Color.LIGHT_GRAY, "a: Open map view");
         printString(10, Math.round(70+(1*Settings.fontHeight)), Color.LIGHT_GRAY, "b: List all local characters");
         printString(10, Math.round(70+(2*Settings.fontHeight)), Color.LIGHT_GRAY, "c: Spawn a Human");
-
+        printString(10, Math.round(70+(3*Settings.fontHeight)), Color.LIGHT_GRAY, "d: Spawn a Slime");
     }
 
     private void drawLocalMapView()

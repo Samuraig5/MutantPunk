@@ -32,7 +32,10 @@ public class LocalMapMenu implements KeyListener
                 c.cb.spawnPerson("0","0", "Resources/BodyPlans/Human", c.wc.getActiveWorld().getActiveLocalMap());
                 c.setGameState(GameState.ALL_CHARACTERS_IN_LOCAL_MAP);
                 break;
-            case KeyEvent.VK_ESCAPE:
+            case KeyEvent.VK_D:
+                c.cb.spawnPerson("0","0", "Resources/BodyPlans/Slime", c.wc.getActiveWorld().getActiveLocalMap());
+                c.setGameState(GameState.ALL_CHARACTERS_IN_LOCAL_MAP);
+                break;            case KeyEvent.VK_ESCAPE:
                 c.setGameState(GameState.WORLD_MENU);
                 break;
         }

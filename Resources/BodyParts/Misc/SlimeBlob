@@ -1,0 +1,21 @@
+name...........§Slime Blob
+type...........§1
+bodyPartClass..§misc
+bloodCapacity.............§50#1#0#0#0
+bloodGeneration...........§50#1#0#0#0
+neededBlood...............§40#1#0#0#0
+energyCapacity............§0#1#0#0#0
+energyGeneration..........§0#1#0#0#0
+neededEnergy..............§0#1#0#0#0
+maxHealth.................§100#1#0#0#0
+regenRate.................§10#1#0#0#0
+regenLimit................§100#1#0#0#0
+armour....................§10#1#0#0#0
+size......................§100#1#0#0#0
+organCapacity.............§100#1#0#0#0
+speedModifier.............§50#1#0#0#0
+consciousness.............§25#1#0#0#0
+grabbingSlots.............§1#1#0#0#0
+sightModifier.............§10#1#0#0#0
+§END§
+..........................§Gross Stat#Modifier#Gross bonus to parent bodyPart#Modifier bonus to parent bodyPart#Modifier bonus to person

@@ -1,13 +1,11 @@
 package Main.WorldLogic;
 
 import Main.Direction;
-import Main.MathHelper;
-import Main.ObjectLogic.Grass;
+import Main.ObjectLogic.Decorations.Grass;
 import Main.ObjectLogic.Walls.Wall;
 import Main.Settings;
 
 import java.util.ArrayList;
-import java.util.Random;
 
 public class MapGenerator
 {
