@@ -35,7 +35,7 @@ public class Wall extends Thing
     }
 
     @Override
-    public void updateTick() {
+    public void doAction() {
 
     }
 

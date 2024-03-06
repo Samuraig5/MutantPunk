@@ -92,6 +92,11 @@ public class Person extends Thing
         return myTotalStats;
     }
 
+    public float getMyTotalSpeed()
+    {
+        return GetMyTotalStats()[7][2];
+    }
+
     public void setGameWorld(GameWorld gw)
     {
         super.setGameWorld(gw);
@@ -190,7 +195,11 @@ public class Person extends Thing
     }
 
     @Override
-    public void updateTick() {
+    public void doAction()
+    {
+        int movementCost = Math.round(getMyTotalSpeed()/100*333);
+        if (getActionPoints() < movementCost) {return;}
+        changeActionPoints(-movementCost);
         myThoughts.thinkAboutMovement();
     }
 

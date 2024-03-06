@@ -85,13 +85,15 @@ public class Wind extends Thing
     }
 
     @Override
-    public void updateTick() {
+    public void doAction() {
+        int actionCost = 250;
+        if (getActionPoints() < actionCost) {return;}
         if (Math.random() < 0.05) {destroy(); return;}
 
+        changeActionPoints(-actionCost);
+
         Direction targetDirection = Direction.coneCastChance(directionOfTravel, 0.9f);
-
         Cell targetCell = Direction.getCellInDirection(getMyCell(), targetDirection);
-
         setMyCell(targetCell, targetDirection);
     }
 }

@@ -120,22 +120,30 @@ public class LocalMap
 
     public void updateTick()
     {
-        if (localWind == Direction.NONE) {return;}
+        float normalizeForTickSpeed = Settings.tickSpeed/100f;
+        float normalizeForMapSize = (Settings.mapSizeX+Settings.mapSizeY)/100f;
+        float chanceToSpawn = 0.1f * normalizeForTickSpeed * normalizeForMapSize;
 
+        if (MathHelper.randomDecider(chanceToSpawn))
+        {
+            spawnWind();
+        }
+    }
+
+    private void spawnWind()
+    {
+        if (localWind == Direction.NONE) {return;}
 
         int xMax = getMyWorld().getActiveLocalMap().getSize()[0];
         int yMax = getMyWorld().getActiveLocalMap().getSize()[1];
 
-        if (Math.random() < 0.1*(Settings.mapSizeX+Settings.mapSizeY))
-        {
-            int xRandOrigin = (int) (Math.random() * xMax);
-            int yRandOrigin = (int) (Math.random() * yMax);
+        int xRandOrigin = (int) (Math.random() * xMax);
+        int yRandOrigin = (int) (Math.random() * yMax);
 
 
-            int x = MathHelper.clamp(xRandOrigin,0,xMax-1);
-            int y = MathHelper.clamp(yRandOrigin,0,yMax-1);
+        int x = MathHelper.clamp(xRandOrigin,0,xMax-1);
+        int y = MathHelper.clamp(yRandOrigin,0,yMax-1);
 
-            new Wind(cells[x][y],localWind,2f);
-        }
+        new Wind(cells[x][y],localWind,2f);
     }
 }

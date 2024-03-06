@@ -1,6 +1,7 @@
 package Main.ObjectLogic;
 
 import Main.RenderLogic.MapIcon;
+import Main.Settings;
 import Main.WorldLogic.Cell;
 import Main.WorldLogic.GameWorld;
 import Main.WorldLogic.LocalMap;
@@ -18,6 +19,7 @@ abstract public class Thing
     public LocalMap getLocalMap() {
         return lm;
     }
+    private int actionPoints;
 
     /**
      * Priority with which this thing is rendered. Higher number indicates a higher priority.
@@ -98,7 +100,16 @@ abstract public class Thing
 
     public abstract void thingLeftCell(Thing t, Direction directionToNewCell);
 
-    public abstract void updateTick();
+    public int getActionPoints() {return actionPoints;}
+    public void setActionPoints(int newVal) {actionPoints = newVal;}
+    public void changeActionPoints(int change) {actionPoints += change;}
+
+    public void updateTick()
+    {
+        actionPoints += Settings.actionPointsPerTick;
+        doAction();
+    }
+    public abstract void doAction();
 
     public void destroy()
     {

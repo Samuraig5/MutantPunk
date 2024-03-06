@@ -58,7 +58,7 @@ public class Console
         frame.setVisible(true);
 
         java.util.Timer timer = new Timer();
-        timer.schedule(wc, 0, Settings.updateSpeed);
+        timer.schedule(wc, 0, Settings.tickSpeed);
     }
     /*public void TConsole()
     {

@@ -1,6 +1,5 @@
 package Main.WorldLogic;
 
-import Main.ObjectLogic.BodyLogic.Person;
 import Main.ObjectLogic.Thing;
 import Main.RenderLogic.Console;
 
@@ -30,12 +29,6 @@ public class WorldClock extends TimerTask
         for (int i = 0; i < things.size(); i++) {
             things.get(i).updateTick();
         }
-        updateScreen();
-    }
-
-    private void updateScreen()
-    {
-        //c.cm.RenderLocalMap(activeWorld.getActiveLocalMap());
     }
 
     public void startClock()
