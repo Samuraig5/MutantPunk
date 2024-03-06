@@ -96,11 +96,32 @@ public class ConsolePainter extends JPanel
         g.setColor(current);
     }
 
+    private void printString(int xPos, int yPos, Color c, String s, int fontSize)
+    {
+        Color currentColour = g.getColor();
+        g.setColor(c);
+
+        Font currentFont = g.getFont();
+        g.setFont(new Font("Courier New", Font.PLAIN, fontSize));
+        g.drawString(s, xPos, yPos);
+        g.setFont(currentFont);
+
+        g.setColor(currentColour);
+    }
+
     private void printString(int xPos, int yPos, Color c, String[] s)
     {
         for (int i = 0; i < s.length; i++)
         {
-            printString(xPos,yPos+Math.round((50+(i*Settings.fontSize*Settings.relativeFontHeight))), c,s[i]);
+            printString(xPos,yPos+Math.round(i*Settings.fontSize*Settings.relativeFontHeight), c,s[i]);
+        }
+    }
+
+    private void printString(int xPos, int yPos, Color c, List<String> s)
+    {
+        for (int i = 0; i < s.size(); i++)
+        {
+            printString(xPos,yPos+Math.round(i*Settings.fontSize*Settings.relativeFontHeight), c,s.get(i));
         }
     }
 
@@ -112,13 +133,23 @@ public class ConsolePainter extends JPanel
         printString(xPos,yPos,c,s);
     }
 
-    private void printCentredString(int yPos, Color c, String s[])
+    private void printCentredString(int yPos, Color c, String[] s)
     {
         for (int i = 0; i < s.length; i++) {
             float stringWidth = ((s[i].length()-1)* (Settings.fontSize)*Settings.relativeFontWidth);
             int xPos = Math.round((Settings.windowWidth-stringWidth)/2);
 
-            printString(xPos,yPos+Math.round((i*Settings.fontSize*Settings.relativeFontHeight)), c,s[i]);
+            printString(xPos,yPos+Math.round(i*Settings.fontSize*Settings.relativeFontHeight), c,s[i]);
+        }
+    }
+
+    private void printCentredString(int yPos, Color c, List<String> s)
+    {
+        for (int i = 0; i < s.size(); i++) {
+            float stringWidth = ((s.get(i).length()-1)* (Settings.fontSize)*Settings.relativeFontWidth);
+            int xPos = Math.round((Settings.windowWidth-stringWidth)/2);
+
+            printString(xPos,yPos+Math.round(i*Settings.fontSize*Settings.relativeFontHeight), c,s.get(i));
         }
     }
 
@@ -289,17 +320,25 @@ public class ConsolePainter extends JPanel
     private void drawPersonView()
     {
         if (focusedPerson == null) {throw new RuntimeException("The ConsolePainter is trying to draw a body but no person is focused");}
-        List<String> list = c.cb.openBodyView(focusedPerson);
-        for (int i = 0; i < list.size(); i++)
+
+        int nameFontSize = Settings.fontSize*2;
+        int nameOffset = 10 + Math.round(nameFontSize*Settings.relativeFontHeight);
+        printString(10, nameOffset, focusedPerson.getMapIcon().getIconColour(), focusedPerson.getName() + " (" + focusedPerson.getMapIcon().getSymbol() + ")" , nameFontSize);
+
+        List<String> stats = c.cb.openPersonView(focusedPerson);
+        printString(10, 50+nameOffset, Color.lightGray, stats);
+
+        List<String> body = c.cb.openBodyView(focusedPerson);
+        for (int i = 0; i < body.size(); i++)
         {
-            printString(10, 80+Math.round((i)*Settings.fontHeight), Color.LIGHT_GRAY,
-                    MathHelper.indexToLetter(i) + ": " + list.get(i));
+            printString(10, 250+nameOffset+Math.round((i)*Settings.fontHeight), Color.LIGHT_GRAY,
+                    MathHelper.indexToLetter(i) + ": " + body.get(i));
         }
     }
 
     private void drawBodyPartMenu()
     {
-        printString(10,80, Color.LIGHT_GRAY, c.cb.displayBodyPartStats(focusedBodyPart));
+        printString(10,130, Color.LIGHT_GRAY, c.cb.displayBodyPartStats(focusedBodyPart));
     }
 
     public void setCursorEnabled(boolean b) {cursorEnabled = b;}

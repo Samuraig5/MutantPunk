@@ -44,40 +44,27 @@ public class ConsoleBodyInterface
         }
         //c.clir.renderList(allCharacterNames, "Current Characters", new AllCharactersInWorldMenu(c, gw));
     }
-    public void listAllPersons(LocalMap lm)
-    {
-        List<String> allCharacterNames = new ArrayList<>();
-        for (Person p:lm.getLocalPeople())
-        {
-            allCharacterNames.add(p.getName());
-        }
-        //c.clir.renderList(allCharacterNames, "Current Characters", new AllCharactersInLocalMapsMenu(c, lm));
-    }
 
-    public void openPersonView(Person p)
+    public List<String> openPersonView(Person p)
     {
-        c.cc.clear();
-
         int grossPadding = 7;
         int modPadding = 10;
         int finalPadding = 7;
-        c.cc.println(" STATS             ¦ GROSS ¦ MODIFIER ¦ TOTAL ¦");
-        c.cc.println("Blood Capacity:    ¦" + generateStatLine(p.GetMyTotalStats()[0],grossPadding,modPadding,finalPadding));
-        c.cc.println("Blood Generation:  ¦" + generateStatLine(p.GetMyTotalStats()[1],grossPadding,modPadding,finalPadding));
-        c.cc.println("Blood Needed:      ¦" + generateStatLine(p.GetMyTotalStats()[2],grossPadding,modPadding,finalPadding));
-        c.cc.println("Energy Capacity:   ¦" + generateStatLine(p.GetMyTotalStats()[3],grossPadding,modPadding,finalPadding));
-        c.cc.println("Energy Generation: ¦" + generateStatLine(p.GetMyTotalStats()[4],grossPadding,modPadding,finalPadding));
-        c.cc.println("Energy Needed:     ¦" + generateStatLine(p.GetMyTotalStats()[5],grossPadding,modPadding,finalPadding));
-        c.cc.println("Size:              ¦" + generateStatLine(p.GetMyTotalStats()[6],grossPadding,modPadding,finalPadding));
-        c.cc.println("Speed:             ¦" + generateStatLine(p.GetMyTotalStats()[7],grossPadding,modPadding,finalPadding));
-        c.cc.println("Consciousness:     ¦" + generateStatLine(p.GetMyTotalStats()[8],grossPadding,modPadding,finalPadding));
-        c.cc.println("Sight:             ¦" + generateStatLine(p.GetMyTotalStats()[9],grossPadding,modPadding,finalPadding));
-        c.cc.println("");
 
+        List<String> s = new ArrayList<>();
 
-        List<String> list = new ArrayList<>();
-        list.add("View Body");
-        //c.clir.appendList(list, p.getName(), new PersonMenu(c,p));
+        s.add(" STATS             ¦ GROSS ¦ MODIFIER ¦ TOTAL ¦");
+        s.add("Blood Capacity:    ¦" + generateStatLine(p.GetMyTotalStats()[0],grossPadding,modPadding,finalPadding));
+        s.add("Blood Generation:  ¦" + generateStatLine(p.GetMyTotalStats()[1],grossPadding,modPadding,finalPadding));
+        s.add("Blood Needed:      ¦" + generateStatLine(p.GetMyTotalStats()[2],grossPadding,modPadding,finalPadding));
+        s.add("Energy Capacity:   ¦" + generateStatLine(p.GetMyTotalStats()[3],grossPadding,modPadding,finalPadding));
+        s.add("Energy Generation: ¦" + generateStatLine(p.GetMyTotalStats()[4],grossPadding,modPadding,finalPadding));
+        s.add("Energy Needed:     ¦" + generateStatLine(p.GetMyTotalStats()[5],grossPadding,modPadding,finalPadding));
+        s.add("Size:              ¦" + generateStatLine(p.GetMyTotalStats()[6],grossPadding,modPadding,finalPadding));
+        s.add("Speed:             ¦" + generateStatLine(p.GetMyTotalStats()[7],grossPadding,modPadding,finalPadding));
+        s.add("Consciousness:     ¦" + generateStatLine(p.GetMyTotalStats()[8],grossPadding,modPadding,finalPadding));
+        s.add("Sight:             ¦" + generateStatLine(p.GetMyTotalStats()[9],grossPadding,modPadding,finalPadding));
+        return s;
     }
     private String rightpad(int text, int length) {
         return String.format("%-" + length + "." + length + "s", text);
