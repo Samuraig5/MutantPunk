@@ -4,6 +4,7 @@ import Main.Direction;
 import Main.MathHelper;
 import Main.ObjectLogic.BodyLogic.BodyPart;
 import Main.ObjectLogic.BodyLogic.Person;
+import Main.ObjectLogic.ObjectTag;
 import Main.ObjectLogic.Thing;
 import Main.Settings;
 import Main.WorldLogic.LocalMap;
@@ -337,6 +338,16 @@ public class ConsolePainter extends JPanel
         if (focusedThing.getDescription() != null)
         {
             printString(10, nameOffset+20, Color.lightGray, focusedThing.getDescription());
+        }
+
+        int offset = 10;
+        for (int i = 0; i < focusedThing.getTags().length; i++)
+        {
+            String tag = "[" + focusedThing.getTags()[i].name() + "] ";
+            printString(offset, nameOffset+35, Color.lightGray, tag);
+
+            int stringLength = Math.round(Settings.fontWidth*tag.length());
+            offset += stringLength;
         }
 
         if (focusedThing instanceof Person)
