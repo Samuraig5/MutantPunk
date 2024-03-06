@@ -8,5 +8,15 @@ public enum ObjectTag
     LIVING,
     PLANT,
     FRUIT,
-    MEAT
+    MEAT;
+
+    public static ObjectTag[] translateStringToTag(String[] split)
+    {
+        ObjectTag[] tags = new ObjectTag[split.length];
+        for (int i = 0; i < split.length; i++)
+        {
+            tags[i] = valueOf(split[i]);
+        }
+        return tags;
+    }
 }

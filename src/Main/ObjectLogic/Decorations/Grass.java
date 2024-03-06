@@ -28,7 +28,7 @@ public class Grass extends Thing
         setRenderPriority(0);
 
         setName("Grass");
-        setDescription("This is a cluster of lush, high grass");
+        setDescription("This is a cluster of lush green grass");
         setTags(new ObjectTag[] {ObjectTag.SOLID, ObjectTag.LIVING, ObjectTag.PLANT});
     }
 

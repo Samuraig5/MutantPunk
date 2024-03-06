@@ -1,6 +1,7 @@
 package Main.ObjectLogic.BodyLogic;
 
 import Main.ErrorHandler;
+import Main.ObjectLogic.ObjectTag;
 import Main.RenderLogic.MapIcon;
 
 import java.awt.*;
@@ -85,6 +86,8 @@ public class BodyFileDecoder
             p.setName(personInfo[0]);
             String[] description = fileIn.nextLine().split("§");
             p.setDescription(description[1]);
+            ObjectTag[] tags = ObjectTag.translateStringToTag(fileIn.nextLine().split("§"));
+            p.setTags(tags);
             char[] c = personInfo[1].toCharArray();
             if (personInfo.length > 2)
             {
