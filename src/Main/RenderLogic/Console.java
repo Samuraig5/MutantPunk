@@ -15,7 +15,6 @@ public class Console
     public ConsoleBodyInterface cb = new ConsoleBodyInterface(this);
     public ConsoleListRenderer clir = new ConsoleListRenderer(this);
     public ConsoleKeyBinds ckb;
-    public ConsoleTopMenuRenderer ctmr = new ConsoleTopMenuRenderer(this);
     public ConsoleMapInterface cm = new ConsoleMapInterface(this);
     public ConsolePainter cp = new ConsolePainter(this);
     public WorldClock wc = new WorldClock(this);
@@ -44,11 +43,6 @@ public class Console
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); //Program stops when window is closed
         frame.setResizable(false);
         frame.setBounds(200, 80, Settings.windowWidth, Settings.windowHeight);
-
-        console = new JTextPane();
-        console.setEditable(false);
-        console.setFont(new Font("Courier New", Font.PLAIN, 12));
-        console.setOpaque(false);
 
         frame.add(cp);
         cp.requestFocusInWindow();

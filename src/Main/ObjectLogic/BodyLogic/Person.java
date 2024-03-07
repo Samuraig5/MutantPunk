@@ -224,7 +224,6 @@ public class Person extends Thing
     @Override
     public void doAction()
     {
-        int movementCost = Math.round(100/getMyTotalSpeed()*333);
         int eatingCost = 50;
         List<Thing> things = getMyCell().getThings();
         List<Thing> eatableThings = new ArrayList<>();
@@ -237,6 +236,8 @@ public class Person extends Thing
                 }
             }
         }
+
+        int movementCost = Math.round(100/getMyTotalSpeed()*333);
         if (getActionPoints() < movementCost) {return;}
         changeActionPoints(-movementCost);
         myThoughts.thinkAboutMovement();
