@@ -4,6 +4,7 @@ import Main.AILogic.ThinkingThing;
 import Main.Direction;
 import Main.ErrorHandler;
 import Main.MathHelper;
+import Main.ObjectLogic.ObjectTag;
 import Main.ObjectLogic.Thing;
 import Main.RenderLogic.MapIcon;
 import Main.WorldLogic.Cell;
@@ -11,6 +12,8 @@ import Main.WorldLogic.GameWorld;
 import Main.WorldLogic.LocalMap;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 public class Person extends Thing
@@ -198,6 +201,19 @@ public class Person extends Thing
     public void doAction()
     {
         int movementCost = Math.round(100/getMyTotalSpeed()*333);
+        int eatingCost = 50;
+        List<Thing> things = getMyCell().getThings();
+        List<Thing> eatableThings = new ArrayList<>();
+        if (getActionPoints() > eatingCost)
+        for (int i = 0; i < things.size(); i++)
+        {
+            if (Arrays.asList(things.get(i).getTags()).contains(ObjectTag.PLANT))
+            {
+                things.get(i).destroy();
+                changeActionPoints(-eatingCost);
+                return;
+            }
+        }
         if (getActionPoints() < movementCost) {return;}
         changeActionPoints(-movementCost);
         myThoughts.thinkAboutMovement();

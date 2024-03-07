@@ -51,6 +51,10 @@ abstract public class Thing
         if (!newCell.getThings().contains(this)) {
             newCell.thingEnters(this, Direction.invertDirection(directionOfTravel));
         }
+        if (getLocalMap() != newCell.getLocalMap())
+        {
+            setLocalMap(newCell.getLocalMap());
+        }
     }
 
     public MapIcon getMapIcon() {return mapIcon;}
