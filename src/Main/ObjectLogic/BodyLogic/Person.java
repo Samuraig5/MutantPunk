@@ -197,6 +197,30 @@ public class Person extends Thing
 
     }
 
+    public boolean canDigest(ObjectTag[] objectTag)
+    {
+        for (BodyPart bp:myBodyParts)
+        {
+            for (BodyPartAbility bpa:bp.getAbilities())
+            {
+                if (bpa.getAbilityTag() == AbilityTag.DIGESTION)
+                {
+                    for (ObjectTag ot:bpa.getRelatedObjectTags())
+                    {
+                        for (ObjectTag input:objectTag)
+                        {
+                            if (ot == input)
+                            {
+                                return true;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        return false;
+    }
+
     @Override
     public void doAction()
     {
@@ -204,14 +228,13 @@ public class Person extends Thing
         int eatingCost = 50;
         List<Thing> things = getMyCell().getThings();
         List<Thing> eatableThings = new ArrayList<>();
-        if (getActionPoints() > eatingCost)
-        for (int i = 0; i < things.size(); i++)
-        {
-            if (Arrays.asList(things.get(i).getTags()).contains(ObjectTag.PLANT))
-            {
-                things.get(i).destroy();
-                changeActionPoints(-eatingCost);
-                return;
+        if (getActionPoints() > eatingCost) {
+            for (int i = 0; i < things.size(); i++) {
+                if (canDigest(things.get(i).getTags())) {
+                    things.get(i).destroy();
+                    changeActionPoints(-eatingCost);
+                    return;
+                }
             }
         }
         if (getActionPoints() < movementCost) {return;}
