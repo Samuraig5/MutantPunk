@@ -29,7 +29,7 @@ public class BodyFileDecoder
             {
                 String s = fileIn.nextLine();
                 ErrorHandler.LogData(false,s);
-                if(s.equals("§END§"))
+                if(s.equals("§END§") || s.equals("§ABILITIES§"))
                 {
                     break;
                 }
@@ -46,6 +46,35 @@ public class BodyFileDecoder
         return data;
     }
 
+    static public List<String[]> getBodyPartAbility(String filePath)
+    {
+        List<String[]> abilities = new ArrayList<>();
+        try
+        {
+            Scanner fileIn = new Scanner(new File(filePath));
+            String s = fileIn.nextLine();
+            while(fileIn.hasNextLine() && !s.equals("§ABILITIES§")) {
+                s = fileIn.nextLine();
+            }
+            while(fileIn.hasNextLine())
+            {
+                s = fileIn.nextLine();
+                if(s.equals("§END§"))
+                {
+                    break;
+                }
+                String[] a = s.split("§");
+                abilities.add(a);
+            }
+        }
+        catch (Exception e)
+        {
+            ErrorHandler.PrintAndTraceError(e);
+        }
+        return abilities;
+    }
+
+
     /**
      * Generates a bodyPart based on the file addressed by filePath
      *
@@ -60,7 +89,8 @@ public class BodyFileDecoder
     {
         BodyPart bp = new BodyPart();
         List<String[]> data = getBodyPartData(filePath);
-        bp.generateBodyPart(data,bias,randomness);
+        List<String[]> abilities = getBodyPartAbility(filePath);
+        bp.generateBodyPart(data, abilities, bias,randomness);
         return bp;
     }
 
@@ -82,12 +112,19 @@ public class BodyFileDecoder
         try {
             Scanner fileIn = new Scanner(new File(filePath));
 
+            //Set Name
             String[] personInfo = fileIn.nextLine().split("§");
             p.setName(personInfo[0]);
+
+            //Set Description
             String[] description = fileIn.nextLine().split("§");
             p.setDescription(description[1]);
+
+            //Set Tags
             ObjectTag[] tags = ObjectTag.translateStringToTag(fileIn.nextLine().split("§"));
             p.setTags(tags);
+
+            //Set MapIcon
             char[] c = personInfo[1].toCharArray();
             if (personInfo.length > 2)
             {

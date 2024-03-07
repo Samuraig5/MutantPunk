@@ -29,21 +29,15 @@ public class LocalMap
 
     protected LocalMap(int[] xySize, GameWorld gameWorld, String name)
     {
+        size[0] = xySize[0];
+        size[1] = xySize[1];
+
         cells = new Cell[size[0]][size[1]];
 
         for (int x = 0; x < size[0]; x++) {
             for (int y = 0; y < size[1]; y++) {
                 int[] xy = {x,y};
-                cells[x][y] = new Cell(xy, new ArrayList<>());
-            }
-        }
-
-        size[0] = xySize[0];
-        size[1] = xySize[1];
-        for (int y = 0; y < cells[0].length; y++) {
-            for (int x = 0; x < cells.length; x++) {
-                cells[x][y].setLocalMap(this);
-                localThings.addAll(cells[x][y].getThings());
+                cells[x][y] = new Cell(xy, this, new ArrayList<>());
             }
         }
 

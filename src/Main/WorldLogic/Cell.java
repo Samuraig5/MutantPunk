@@ -14,10 +14,11 @@ public class Cell
 
     private LocalMap lm;
 
-    public Cell(int[] xy, List<Thing> thingsList)
+    public Cell(int[] xy, LocalMap lm, List<Thing> thingsList)
     {
         coordinates[0] = xy[0];
         coordinates[1] = xy[1];
+        setLocalMap(lm);
         things = thingsList;
     }
 

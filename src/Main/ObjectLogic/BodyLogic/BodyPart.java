@@ -1,6 +1,7 @@
 package Main.ObjectLogic.BodyLogic;
 
 import Main.ErrorHandler;
+import Main.ObjectLogic.ObjectTag;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -66,6 +67,8 @@ public class BodyPart
     final private List<float[]> currentOrganSizes = new ArrayList<>();
     private float currentOrganCapacity = 0;
 
+    private List<BodyPartAbility> abilities = new ArrayList<>();
+
     public BodyPart()
     {
         for (int i = 0; i < 16; i++) {
@@ -83,7 +86,7 @@ public class BodyPart
      * @param randomness changes the stats of the bodyPart by a random amount (both positive and negative).
      *                   The greater the value, the stronger the random drift.
      */
-    public void generateBodyPart(List<String[]> data, int bias, int randomness)
+    public void generateBodyPart(List<String[]> data, List<String[]> abilities, int bias, int randomness)
     {
         name = data.get(0)[0];
         type = Integer.parseInt(data.get(1)[0]);
@@ -100,6 +103,21 @@ public class BodyPart
 
         currentHealth = myTotalStats[6][2];
         currentOrganCapacity = myTotalStats[11][2];
+
+        for (int i = 0; i < abilities.size(); i++) {
+            AbilityTag abilityTag = AbilityTag.translateStringToTag(abilities.get(i)[0]);
+
+            String[] objTagStrings = new String[abilities.get(i).length-1];
+            for (int j = 1; j < abilities.get(i).length; j++) {
+                objTagStrings[j-1] = abilities.get(i)[j];
+            }
+
+            ObjectTag[] objectTags = ObjectTag.translateStringToTag(objTagStrings);
+
+
+            BodyPartAbility ability = new BodyPartAbility(abilityTag, objectTags);
+            addAbility(ability);
+        }
     }
     private float[] rearrangeArray(float[] f)
     {
@@ -352,4 +370,7 @@ public class BodyPart
         }
         ErrorHandler.LogData(false, "======");
     }
+
+    public List<BodyPartAbility> getAbilities() {return abilities;}
+    public void addAbility(BodyPartAbility ability) {abilities.add(ability);}
 }
