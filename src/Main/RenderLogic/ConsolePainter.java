@@ -3,6 +3,7 @@ package Main.RenderLogic;
 import Main.Direction;
 import Main.MathHelper;
 import Main.ObjectLogic.BodyLogic.BodyPart;
+import Main.ObjectLogic.BodyLogic.BodyPartAbility;
 import Main.ObjectLogic.BodyLogic.Person;
 import Main.ObjectLogic.ObjectTag;
 import Main.ObjectLogic.Thing;
@@ -114,12 +115,13 @@ public class ConsolePainter extends JPanel
         g.setColor(currentColour);
     }
 
-    private void printString(int xPos, int yPos, Color c, String[] s)
+    private int printString(int xPos, int yPos, Color c, String[] s)
     {
         for (int i = 0; i < s.length; i++)
         {
             printString(xPos,yPos+Math.round(i*Settings.fontSize*Settings.relativeFontHeight), c,s[i]);
         }
+        return yPos+Math.round((s.length-1)*Settings.fontSize*Settings.relativeFontHeight);
     }
 
     private void printString(int xPos, int yPos, Color c, List<String> s)
@@ -366,7 +368,27 @@ public class ConsolePainter extends JPanel
 
     private void drawBodyPartMenu()
     {
-        printString(10,130, Color.LIGHT_GRAY, c.cb.displayBodyPartStats(focusedBodyPart));
+        int endPos = printString(10,130, Color.LIGHT_GRAY, c.cb.displayBodyPartStats(focusedBodyPart));
+        endPos += 20;
+
+        for (int i = 0; i < focusedBodyPart.getAbilities().size(); i++)
+        {
+            BodyPartAbility bpa = focusedBodyPart.getAbilities().get(i);
+            ObjectTag[] obt = bpa.getRelatedObjectTags();
+
+            printString(10, endPos+20, Color.LIGHT_GRAY, "["+bpa.getAbilityTag()+"]:");
+
+            int xOffset = Math.round(10+((bpa.getAbilityTag().toString().length()+3)*Settings.fontWidth));
+
+            printString(xOffset, endPos+20, Color.LIGHT_GRAY, "<");
+            xOffset += Math.round(Settings.fontWidth);
+            for (int j = 0; j < obt.length; j++)
+            {
+                printString(xOffset, endPos+20, Color.LIGHT_GRAY, "["+obt[j]+"]");
+                xOffset = xOffset + Math.round((obt[j].toString().length()+2)*Settings.fontWidth);
+            }
+            printString(xOffset, endPos+20, Color.LIGHT_GRAY, ">");
+        }
     }
 
     public void setCursorEnabled(boolean b) {cursorEnabled = b;}
