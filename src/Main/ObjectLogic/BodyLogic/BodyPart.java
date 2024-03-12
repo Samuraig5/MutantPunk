@@ -3,6 +3,7 @@ package Main.ObjectLogic.BodyLogic;
 import Main.ErrorHandler;
 import Main.ObjectLogic.ObjectTag;
 
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -200,4 +201,21 @@ public class BodyPart
         return myStats.getNetStats();
     }
 
+    public Color getColourBasedOnHealth()
+    {
+        float curr = getCurrentHealth();
+        float max = getStats()[BodyPartStat.MAX_HEALTH];
+        if (curr > (max/2))
+        {
+            return Color.green;
+        }
+        else if (curr > (max/4))
+        {
+            return Color.yellow;
+        }
+        else
+        {
+            return Color.red;
+        }
+    }
 }

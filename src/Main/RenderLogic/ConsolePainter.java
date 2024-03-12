@@ -95,6 +95,29 @@ public class ConsolePainter extends JPanel
         }
     }
 
+    private int printColouredString(int xPos, int yPos, ColouredString[] content)
+    {
+        int x = xPos;
+        int y = yPos;
+        for (int i = 0; i < content.length; i++)
+        {
+            printString(x,y,content[i].getColor(), content[i].getString());
+            y += Settings.fontHeight;
+        }
+        return y;
+    }
+    private int printColouredStringHorizontal(int xPos, int yPos, ColouredString[] content)
+    {
+        int x = xPos;
+        int y = yPos;
+        for (int i = 0; i < content.length; i++)
+        {
+            printString(x,y,content[i].getColor(), content[i].getString());
+            x += Math.round(Settings.fontWidth*content[i].getString().length());
+        }
+        return x;
+    }
+
     private void printString(int xPos, int yPos, Color c, String s)
     {
         Color current = g.getColor();
@@ -370,11 +393,10 @@ public class ConsolePainter extends JPanel
                 paintY += Math.round(Settings.fontHeight);
             }
 
-            List<String> body = c.cb.openBodyView((Person) focusedThing);
-            for (int i = 0; i < body.size(); i++)
+            ColouredString[][] body = c.cb.getBodyView((Person) focusedThing);
+            for (int i = 0; i < body.length; i++)
             {
-                printString(10, paintY+nameOffset+Math.round((i)*Settings.fontHeight), Color.LIGHT_GRAY,
-                        MathHelper.indexToLetter(i) + ": " + body.get(i));
+                printColouredStringHorizontal(10,paintY+nameOffset+Math.round((i)*Settings.fontHeight), body[i]);
             }
         }
     }
@@ -386,9 +408,29 @@ public class ConsolePainter extends JPanel
         printString(10,y,Color.LIGHT_GRAY,focusedBodyPart.getName(),nameFontSize);
         y += Math.round((nameFontSize*Settings.relativeFontHeight)+Settings.fontHeight);
 
-        printString(10,y,Color.LIGHT_GRAY,"Health: " +
-                focusedBodyPart.getCurrentHealth() + " / " +
-                focusedBodyPart.getStats()[BodyPartStat.MAX_HEALTH]);
+        ColouredString[] cs = new ColouredString[4];
+        cs[0] = new ColouredString("Health", Color.LIGHT_GRAY);
+        float fCurr = focusedBodyPart.getCurrentHealth();
+        float fMax = focusedBodyPart.getStats()[BodyPartStat.MAX_HEALTH];
+        cs[1] = new ColouredString(fCurr+"", Color.lightGray);
+        cs[2] = new ColouredString(" / ", Color.lightGray);
+        cs[3] = new ColouredString(fMax+"", Color.lightGray);
+
+        if (fCurr > (fMax/2))
+        {
+            cs[1].setColor(Color.green);
+        }
+        else if (fCurr > (fMax/4))
+        {
+            cs[1].setColor(Color.yellow);
+        }
+        else
+        {
+            cs[1].setColor(Color.red);
+        }
+
+        printColouredStringHorizontal(10, y, cs);
+
         y += Math.round(Settings.fontHeight);
 
         printString(10,y,Color.LIGHT_GRAY,"Attachment Capacity Used: " +

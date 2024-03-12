@@ -1,5 +1,6 @@
 package Main.RenderLogic;
 
+import Main.MathHelper;
 import Main.ObjectLogic.BodyLogic.BodyFileDecoder;
 import Main.ObjectLogic.BodyLogic.BodyPart;
 import Main.ObjectLogic.BodyLogic.BodyPartStat;
@@ -78,62 +79,42 @@ public class ConsoleBodyInterface
         return result;
     }
 
-    private String rightpad(int text, int length) {
-        return String.format("%-" + length + "." + length + "s", text);
-    }
-    private String rightpad(String text, int length) {
-        return String.format("%-" + length + "." + length + "s", text);
-    }
-    private String expressInPercent(int f)
+    public ColouredString[][] getBodyView(Person p)
     {
-        return f*100 + "%";
-    }
-    private String generateStatLine(float[] stat, int grossPadding, int modPadding, int finalPadding)
-    {
-        return rightpad((int)stat[0],grossPadding) + "¦" + rightpad(expressInPercent((int)stat[1]),modPadding) + "¦" + rightpad((int)stat[2],finalPadding) + "¦";
-    }
-    private String generateStatLine(float[] stat, int grossPadding, int modPadding, int finalPadding, int parentGrossPadding, int parentModPadding, int personModPadding)
-    {
-        String s = rightpad((int)stat[0],grossPadding) + "¦";
-        s = s + rightpad(expressInPercent((int)stat[1]),modPadding) + "¦";
-        s = s + rightpad((int)stat[2],finalPadding) + "¦";
-        s = s + rightpad((int)stat[3],parentGrossPadding) + "¦";
-        s = s + rightpad(expressInPercent((int)stat[4]), parentModPadding) + "¦";
-        s = s + rightpad(expressInPercent((int)stat[5]), personModPadding) + "¦";
+        List<BodyPart> bodyParts = p.myBodyParts;
+        ColouredString[][] result = new ColouredString[bodyParts.size()][3];
 
-        return s;
+        List<ColouredString[]> children = addChildrenBodPartsToView(bodyParts.get(0), "");
+
+        for (int j = 0; j < children.size(); j++)
+        {
+            result[j][0] = new ColouredString(MathHelper.indexToLetter(j));
+            result[j][1] = children.get(j)[0];
+            result[j][2] = children.get(j)[1];
+        }
+        return result;
     }
-    public List<String> openBodyView(Person p)
+
+    private List<ColouredString[]> addChildrenBodPartsToView(BodyPart bp, String depth)
     {
-        List<String> list = new ArrayList<>();
-        addChildrenBodyPartsToList(p.myBodyParts.get(0), list, "");
-        return list;
-        //c.clir.renderList(list, p.getName()+"'s Body", new BodyMenu(c,p));
-    }
-    private void addChildrenBodyPartsToList(BodyPart bp, List<String> list, String depth)
-    {
-        ErrorHandler.LogData(false,"Number of attached BodyParts: " + bp.getAttachedBodyParts().size());
-        list.add(depth + "> " + bp.getName());
+        String depthSymbol = "> ";
+        if (depth.isEmpty())
+        {
+            depthSymbol = "@ ";
+        }
+
+        List<ColouredString[]> result = new ArrayList<>();
+        result.add(
+                new ColouredString[]{
+                        new ColouredString(depth + depthSymbol),
+                        new ColouredString(bp.getName(), bp.getColourBasedOnHealth())});
+
         for (BodyPart nextbp:bp.getAttachedBodyParts())
         {
-            addChildrenBodyPartsToList(nextbp, list, depth+"¦ ");
+            List<ColouredString[]> children = addChildrenBodPartsToView(nextbp, depth+"¦ ");
+            result.addAll(children);
         }
-    }
-
-    public void openBodyPartView(BodyPart bp)
-    {
-        c.cc.clear();
-
-        List<String> topBarMenuBlockList = new ArrayList<>();
-        topBarMenuBlockList.add("Deal one damage");
-        topBarMenuBlockList.add("Allow to regenerate");
-
-        //LEGACY_displayBodyPartStats(bp);
-
-        List<String> bodyPartList = new ArrayList<>();
-        assembleBodyPartRelations(bp, bodyPartList);
-        //c.clir.appendList(bodyPartList, bp.getMyPerson().getName()+"'s "+bp.getName(), new BodyPartMenu(c,bp), topBarMenuBlockList);
-
+        return result;
     }
 
     /**
