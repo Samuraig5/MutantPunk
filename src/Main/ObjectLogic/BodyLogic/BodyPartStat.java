@@ -63,7 +63,7 @@ public class BodyPartStat
         bodyPart = bp;
     }
 
-    public void setStats(float[][] stats)
+    protected void setStats(float[][] stats)
     {
         myStats = stats;
     }

@@ -88,7 +88,7 @@ public class ConsoleBodyInterface
 
         for (int j = 0; j < children.size(); j++)
         {
-            result[j][0] = new ColouredString(MathHelper.indexToLetter(j));
+            result[j][0] = new ColouredString(MathHelper.indexToLetter(j) + ": ");
             result[j][1] = children.get(j)[0];
             result[j][2] = children.get(j)[1];
         }

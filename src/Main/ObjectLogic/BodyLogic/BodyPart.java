@@ -73,6 +73,8 @@ public class BodyPart
 
         myStats.setStats(calculatedStats);
 
+        myStats.changeHealth(getStats()[BodyPartStat.MAX_HEALTH]);
+
         addAbility(abilities);
     }
     private void addAbility(List<String[]> abilities)
