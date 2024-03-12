@@ -148,22 +148,27 @@ public class BodyPartStat
     {
         float[] netStats = new float[STATS_NUM];
         float[] gross = getGrossStats();
+        float[] mod = getStatModifier();
         List<float[]> upGross = new ArrayList<>();
         List<float[]> upMod = new ArrayList<>();
 
         for (int i = 0; i < bodyPart.getAttachedBodyParts().size(); i++)
         {
-            upGross.add(bodyPart.getAttachedBodyParts().get(i).getUpstreamStatModifier());
+            upGross.add(bodyPart.getAttachedBodyParts().get(i).getUpstreamGrossStat());
             upMod.add(bodyPart.getAttachedBodyParts().get(i).getUpstreamStatModifier());
         }
 
         for (int i = 0; i < STATS_NUM; i++) {
 
             netStats[i] = gross[i];
+
             for (int j = 0; j < upGross.size(); j++)
             {
                 netStats[i] += upGross.get(j)[i];
             }
+
+            netStats[i] *= mod[i];
+
             for (int j = 0; j < upMod.size(); j++)
             {
                 netStats[i] *= upMod.get(j)[i];

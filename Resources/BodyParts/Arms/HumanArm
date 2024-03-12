@@ -1,21 +1,21 @@
 name...........§Human Arm
 type...........§1
 bodyPartClass..§arm
-bloodCapacity.............§10#1#0#0#0
-bloodGeneration...........§0#1#0#0#0
-neededBlood...............§10#1#0#0#0
-energyCapacity............§0#1#0#0#0
-energyGeneration..........§0#1#0#0#0
-neededEnergy..............§0#1#0#0#0
-maxHealth.................§40#1#0#0#0
-regenRate.................§1#1#0#0#0
-regenLimit................§30#1#0#0#0
-armour....................§10#1#0#0#0
-size......................§50#1#0#0#0
-organCapacity.............§5#1#0#0#0
-speedModifier.............§0#1#0#0#0
-consciousness.............§0#1#0#0#0
-grabbingSlots.............§0#1#0#0#0
-sightModifier.............§0#1#0#0#0
+bloodCapacity.............§10#1#0#1#1
+bloodGeneration...........§0#1#0#1#1
+neededBlood...............§10#1#0#1#1
+energyCapacity............§0#1#0#1#1
+energyGeneration..........§0#1#0#1#1
+neededEnergy..............§0#1#0#1#1
+maxHealth.................§40#1#0#1#1
+regenRate.................§1#1#0#1#1
+regenLimit................§30#1#0#1#1
+armour....................§10#1#0#1#1
+size......................§50#1#0#1#1
+organCapacity.............§5#1#0#1#1
+speedModifier.............§0#1#0#1#1
+consciousness.............§0#1#0#1#1
+grabbingSlots.............§0#1#0#1#1
+sightModifier.............§0#1#0#1#1
 §END§
 ..........................§Gross Stat#Modifier#Gross bonus to parent bodyPart#Modifier bonus to parent bodyPart#Modifier bonus to person

@@ -92,12 +92,50 @@ public class BodyPart
         }
     }
 
-    private float[] rearrangeArray(float[] f)
+    public List<BodyPartAbility> getAbilities() {return abilities;}
+    public void addAbility(BodyPartAbility ability) {abilities.add(ability);}
+
+    public boolean tryToAttach(BodyPart newChild)
     {
-        float[] g = new float[6];
-        g[3] = f[0];
-        g[4] = f[1];
-        return g;
+        if(getRemainingAttachmentCapacity() >= newChild.getStats()[BodyPartStat.SIZE])
+        {
+            newChild.setMyPerson(getMyPerson());
+            attachedBodyParts.add(newChild);
+            newChild.parentBodyPart = this;
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+    /**
+     * This function removes this bodyPart from the person. All bodyParts attached to this bodyPart stay attached
+     * to this bodyPart and are removed from the person.
+     * The bodyPart is replaced with a grievous wound.
+     */
+    public void removeBodyPart()
+    {
+        removeBodyPartRecursively();
+        BodyPart resultingWound = BodyFileDecoder.loadBodyPartFromFile("Resources/BodyParts/Misc/GrievousWound",0,20);
+        parentBodyPart.tryToAttach(resultingWound);
+        parentBodyPart.attachedBodyParts.remove(this);
+        parentBodyPart = null;
+    }
+
+    /**
+     * This function travels recursively through all the attached bodyParts and removes them from the old Person.
+     */
+    private void removeBodyPartRecursively()
+    {
+        //TODO: The stats of Children of a removed bodyParts seem not to be removed from the person
+        for (BodyPart attachedBodyPart : this.attachedBodyParts)
+        {
+            attachedBodyPart.removeBodyPartRecursively();
+        }
+        this.myPerson.myBodyParts.remove(this);
+        this.myPerson = null;
     }
 
     /**
@@ -122,69 +160,6 @@ public class BodyPart
         myStats.regenerateHealth();
     }
 
-    /**
-     * This function attaches this bodyPart to the given bodyPart and updates the new parents attachedBodyPart list.
-     * THIS FUNCTION DOES NOT UPDATE THE PERSON. THE BodyFileDecoder DOES THAT WHEN LOADING A bodyPart!
-     *
-     * @param bodyPartToAttachTo the bodyPart this bodyPart should be attached to.
-     * @return weather or not attaching the bodyPart was successful.
-     */
-    public boolean TryToAttachTo(BodyPart bodyPartToAttachTo)
-    {
-        if(bodyPartToAttachTo.getRemainingAttachmentCapacity() >= getStats()[BodyPartStat.SIZE])
-        {
-            return attach(bodyPartToAttachTo);
-        }
-        else
-        {
-            ErrorHandler.LogData(true,"Failed to attach bodyPart because it's too big!");
-            return false;
-        }
-    }
-    private boolean attach(BodyPart bodyPartToAttachTo)
-    {
-        parentBodyPart = bodyPartToAttachTo;
-        parentBodyPart.attachedBodyParts.add(this);
-
-        if(this.parentBodyPart.myPerson != null)
-        {
-            myPerson = this.parentBodyPart.myPerson;
-            myPerson.myBodyParts.add(this);
-        }
-
-        ErrorHandler.LogData(false,"Successfully added " + this.name + " to " + parentBodyPart.name +
-                ". The parent now has: " + parentBodyPart.attachedBodyParts.size() + " attached bodyParts and the " +
-                "child is attached to: " + bodyPartToAttachTo.name);
-        return true;
-    }
-
-    /**
-     * This function removes this bodyPart from the person. All bodyParts attached to this bodyPart stay attached
-     * to this bodyPart and are removed from the person.
-     * The bodyPart is replaced with a grievous wound.
-     */
-    public void removeBodyPart()
-    {
-        removeBodyPartRecursively();
-        BodyPart resultingWound = BodyFileDecoder.loadBodyPartFromFile("Resources/BodyParts/Misc/GrievousWound",0,20);
-        resultingWound.TryToAttachTo(parentBodyPart);
-        parentBodyPart.attachedBodyParts.remove(this);
-        parentBodyPart = null;
-    }
-
-    /**
-     * This function travels recursively through all the attached bodyParts and removes them from the old Person.
-     */
-    private void removeBodyPartRecursively()
-    {
-        //TODO: The stats of Children of a removed bodyParts seem not to be removed from the person
-        for (BodyPart attachedBodyPart : this.attachedBodyParts)
-        {
-            attachedBodyPart.removeBodyPartRecursively();
-        }
-        this.myPerson.myBodyParts.remove(this);
-        this.myPerson = null;
-    }
     public void changeName(String newName)
     {
         name = newName;
@@ -196,7 +171,14 @@ public class BodyPart
     public List<BodyPart> getAttachedBodyParts(){return attachedBodyParts;}
     public BodyPart getParentBodyPart(){return parentBodyPart;}
     public Person getMyPerson(){return myPerson;}
-    public void setMyPerson(Person newPerson){myPerson = newPerson;}
+    public void setMyPerson(Person newPerson)
+    {
+        myPerson = newPerson;
+        if (!newPerson.myBodyParts.contains(this))
+        {
+            newPerson.myBodyParts.add(this);
+        }
+    }
     public float getCurrentHealth() {return myStats.getCurrentHealth();}
     public float getRemainingAttachmentCapacity(){return myStats.getRemainingAttachmentCapacity();}
 
@@ -217,6 +199,5 @@ public class BodyPart
     {
         return myStats.getNetStats();
     }
-    public List<BodyPartAbility> getAbilities() {return abilities;}
-    public void addAbility(BodyPartAbility ability) {abilities.add(ability);}
+
 }

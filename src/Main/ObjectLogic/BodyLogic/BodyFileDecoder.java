@@ -149,22 +149,22 @@ public class BodyFileDecoder
                 depth = fileIn.nextLine().length();
                 bodyPartName = fileIn.nextLine().split("§")[1];
                 bodyPartPath = fileIn.nextLine().split("§")[1];
-                BodyPart bp = loadBodyPartFromFile(bodyPartPath, bias, randomness);
-                bp.changeName(bodyPartName);
+                BodyPart newBodyPart = loadBodyPartFromFile(bodyPartPath, bias, randomness);
+                newBodyPart.changeName(bodyPartName);
                 if(depth > currentTargetsToAttach.size()-1)
                 {
-                    currentTargetsToAttach.add(bp);
+                    currentTargetsToAttach.add(newBodyPart);
                 }
                 else if(depth == currentTargetsToAttach.size()-1)
                 {
-                    currentTargetsToAttach.set(depth, bp);
+                    currentTargetsToAttach.set(depth, newBodyPart);
                 }
                 else if(depth < currentTargetsToAttach.size()-1)
                 {
                     currentTargetsToAttach.remove(depth+1);
-                    currentTargetsToAttach.set(depth, bp);
+                    currentTargetsToAttach.set(depth, newBodyPart);
                 }
-                bp.TryToAttachTo(currentTargetsToAttach.get(depth-1));
+                currentTargetsToAttach.get(depth-1).tryToAttach(newBodyPart);
             }
         }
         catch (Exception e)
