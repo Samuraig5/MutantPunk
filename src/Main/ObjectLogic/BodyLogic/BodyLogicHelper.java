@@ -1,5 +1,7 @@
 package Main.ObjectLogic.BodyLogic;
 
+import java.util.List;
+
 public class BodyLogicHelper
 {
     /**
@@ -54,5 +56,16 @@ public class BodyLogicHelper
     static public float randomRange()
     {
         return (float) Math.random()*2-1;
+    }
+
+    static public float getBloodCapacity(Person p)
+    {
+        List<BodyPart> bodyParts = p.myBodyParts;
+        float bloodCapacity = 0;
+        for (int i = 0; i < bodyParts.size(); i++)
+        {
+
+        }
+        return bloodCapacity;
     }
 }

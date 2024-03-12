@@ -4,6 +4,7 @@ import Main.Direction;
 import Main.MathHelper;
 import Main.ObjectLogic.BodyLogic.BodyPart;
 import Main.ObjectLogic.BodyLogic.BodyPartAbility;
+import Main.ObjectLogic.BodyLogic.BodyPartStat;
 import Main.ObjectLogic.BodyLogic.Person;
 import Main.ObjectLogic.ObjectTag;
 import Main.ObjectLogic.Thing;
@@ -368,26 +369,72 @@ public class ConsolePainter extends JPanel
 
     private void drawBodyPartMenu()
     {
-        int endPos = printString(10,130, Color.LIGHT_GRAY, c.cb.displayBodyPartStats(focusedBodyPart));
-        endPos += 20;
+        int nameFontSize = Settings.fontSize*2;
+        int y = 10 + Math.round(nameFontSize*Settings.relativeFontHeight);
+        printString(10,y,Color.LIGHT_GRAY,focusedBodyPart.getName(),nameFontSize);
+        y += Math.round((nameFontSize*Settings.relativeFontHeight)+Settings.fontHeight);
 
+        printString(10,y,Color.LIGHT_GRAY,"Health: " +
+                focusedBodyPart.getCurrentHealth() + " / " +
+                focusedBodyPart.getStats()[BodyPartStat.MAX_HEALTH]);
+        y += Math.round(Settings.fontHeight);
+
+        printString(10,y,Color.LIGHT_GRAY,"Attachment Capacity: " +
+                focusedBodyPart.getRemainingAttachmentCapacity() + " / " +
+                focusedBodyPart.getStats()[BodyPartStat.ATTACHMENT_CAPACITY]);
+        y += Math.round(Settings.fontHeight)*2;
+
+        y = drawBodyPartStats(y);
+        drawBodyPartAbilities(y);
+    }
+
+    private int drawBodyPartStats(int startPos)
+    {
+        int paintX = 10;
+        int paintY = startPos;
+        int cellWidth = 10;
+
+        String[][] stats = c.cb.displayBodyPartStats(focusedBodyPart);
+        String[][] statDesc = {{"","Final", "Gross", "Modifier", "Upstream", "Upstream", "Person"}, {"","", "", "", "Gross", "Modifier", "Modifier"}};
+        for (int j = 0; j < stats[0].length; j++)
+        {
+            int x = paintX + Math.round(Settings.fontWidth*j*cellWidth)+Math.round(Settings.fontWidth*cellWidth);
+            printString(x,paintY, Color.LIGHT_GRAY, statDesc[0][j]);
+            printString(x,paintY+Math.round(Settings.fontHeight), Color.LIGHT_GRAY, statDesc[1][j]);
+        }
+        paintY += Math.round(Settings.fontHeight*2.5f);
+
+        for (int i = 0; i < stats.length; i++) {
+            printString(paintX,paintY, Color.LIGHT_GRAY, stats[i][0]);
+            for (int j = 1; j < stats[i].length; j++) {
+                int x = paintX + Math.round(Settings.fontWidth*j*cellWidth)+Math.round(Settings.fontWidth*cellWidth);
+                printString(x,paintY, Color.LIGHT_GRAY, stats[i][j]);
+            }
+            paintY += Math.round(Settings.fontHeight);
+        }
+
+        return paintY + Math.round(Settings.fontHeight*stats[0].length);
+    }
+
+    private void drawBodyPartAbilities(int startPos)
+    {
         for (int i = 0; i < focusedBodyPart.getAbilities().size(); i++)
         {
             BodyPartAbility bpa = focusedBodyPart.getAbilities().get(i);
             ObjectTag[] obt = bpa.getRelatedObjectTags();
 
-            printString(10, endPos+20, Color.LIGHT_GRAY, "["+bpa.getAbilityTag()+"]:");
+            printString(10, startPos, Color.LIGHT_GRAY, "["+bpa.getAbilityTag()+"]:");
 
             int xOffset = Math.round(10+((bpa.getAbilityTag().toString().length()+3)*Settings.fontWidth));
 
-            printString(xOffset, endPos+20, Color.LIGHT_GRAY, "<");
+            printString(xOffset, startPos, Color.LIGHT_GRAY, "<");
             xOffset += Math.round(Settings.fontWidth);
             for (int j = 0; j < obt.length; j++)
             {
-                printString(xOffset, endPos+20, Color.LIGHT_GRAY, "["+obt[j]+"]");
+                printString(xOffset, startPos, Color.LIGHT_GRAY, "["+obt[j]+"]");
                 xOffset = xOffset + Math.round((obt[j].toString().length()+2)*Settings.fontWidth);
             }
-            printString(xOffset, endPos+20, Color.LIGHT_GRAY, ">");
+            printString(xOffset, startPos, Color.LIGHT_GRAY, ">");
         }
     }
 

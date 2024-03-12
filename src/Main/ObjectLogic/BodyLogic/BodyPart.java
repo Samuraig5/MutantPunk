@@ -40,41 +40,12 @@ public class BodyPart
      * This is keeping track of the class of the bodyPart like 'arm', 'heart', 'skin', 'implant' and so on.
      */
     private String bodyPartClass;
-
-    /**
-     *  Gross, Modifier, Total, Upstream BodyPart Gross, Upstream BodyPart Modifier, Upstream Person Modifier
-     * [0] - Blood Capacity
-     * [1] - Blood Generation
-     * [2] - Blood Needed
-     * [3] - Energy Capacity
-     * [4] - Energy Generation
-     * [5] - Energy Needed
-     * [6] - Max Health
-     * [7] - Regen Rate
-     * [8] - Regen Limit
-     * [9] - Armour
-     * [10] - Size
-     * [11] - Organ Capacity
-     * [12] - Speed
-     * [13] - Consciousness
-     * [14] - Grabbing Slots
-     * [15] - Sight
-     */
-    final private List<List<float[]>> myStats = new ArrayList<>();
-    final private float[][] myTotalStats = new float[16][6];
-    final private List<float[]> personStats = new ArrayList<>();
-    private float currentHealth = 0;
-    final private List<float[]> currentOrganSizes = new ArrayList<>();
-    private float currentOrganCapacity = 0;
-
+    final private BodyPartStat myStats;
     private List<BodyPartAbility> abilities = new ArrayList<>();
 
     public BodyPart()
     {
-        for (int i = 0; i < 16; i++) {
-            myStats.add(new ArrayList<>());
-            myTotalStats[i] = new float[]{0, 0, 0, 0, 0, 0};
-        }
+        myStats = new BodyPartStat(this);
     }
 
     /**
@@ -92,18 +63,19 @@ public class BodyPart
         type = Integer.parseInt(data.get(1)[0]);
         bodyPartClass = data.get(2)[0];
 
-        float[][] calculatedStats = new float[16][6];
+        float[][] calculatedStats = new float[myStats.STATS_NUM][myStats.MODS_NUM];
 
-        for (int i = 0; i < 16; i++)
+        for (int i = 0; i < myStats.STATS_NUM; i++)
         {
-            calculatedStats[i] = rearrangeArray(BodyLogicHelper.calculateBodyPartStat(data.get(i+3),bias,randomness));
+            calculatedStats[i] = BodyLogicHelper.calculateBodyPartStat(data.get(i+3),bias,randomness);
         }
 
-        AddToStat(calculatedStats);
+        myStats.setStats(calculatedStats);
 
-        currentHealth = myTotalStats[6][2];
-        currentOrganCapacity = myTotalStats[11][2];
-
+        addAbility(abilities);
+    }
+    private void addAbility(List<String[]> abilities)
+    {
         for (int i = 0; i < abilities.size(); i++) {
             AbilityTag abilityTag = AbilityTag.translateStringToTag(abilities.get(i)[0]);
 
@@ -119,6 +91,7 @@ public class BodyPart
             addAbility(ability);
         }
     }
+
     private float[] rearrangeArray(float[] f)
     {
         float[] g = new float[6];
@@ -132,10 +105,10 @@ public class BodyPart
      *
      * @param damage the amount of damage to be dealt to the bodyPart
      */
-    public void doDamage(float damage)
+    public void doDamage(int damage)
     {
-        this.currentHealth = this.currentHealth - damage;
-        if (this.currentHealth <= 0)
+        myStats.changeHealth(-damage);
+        if (myStats.getCurrentHealth() <= 0)
         {
             removeBodyPart();
         }
@@ -146,17 +119,7 @@ public class BodyPart
      */
     public void regenerateDamage()
     {
-        if (currentHealth < myTotalStats[6][2] && currentHealth > myTotalStats[8][2])
-        {
-            if((myTotalStats[6][2]-currentHealth)<myTotalStats[7][2])
-            {
-                currentHealth = myTotalStats[6][2];
-            }
-            else
-            {
-                currentHealth += myTotalStats[7][2];
-            }
-        }
+        myStats.regenerateHealth();
     }
 
     /**
@@ -168,23 +131,14 @@ public class BodyPart
      */
     public boolean TryToAttachTo(BodyPart bodyPartToAttachTo)
     {
-        if(this.bodyPartClass.equalsIgnoreCase("internal"))
+        if(bodyPartToAttachTo.getRemainingAttachmentCapacity() >= getStats()[BodyPartStat.SIZE])
         {
-            bodyPartToAttachTo.calculateCurrentOrganCapacity();
-            if(bodyPartToAttachTo.getCurrentOrganCapacity() >= myTotalStats[10][2])
-            {
-                bodyPartToAttachTo.calculateCurrentOrganCapacity(myTotalStats[10]);
-                return attach(bodyPartToAttachTo);
-            }
-            else
-            {
-                ErrorHandler.LogData(true,"Failed to attach internal bodyPart because it's too big!");
-                return false;
-            }
+            return attach(bodyPartToAttachTo);
         }
         else
         {
-            return attach(bodyPartToAttachTo);
+            ErrorHandler.LogData(true,"Failed to attach bodyPart because it's too big!");
+            return false;
         }
     }
     private boolean attach(BodyPart bodyPartToAttachTo)
@@ -201,7 +155,6 @@ public class BodyPart
         ErrorHandler.LogData(false,"Successfully added " + this.name + " to " + parentBodyPart.name +
                 ". The parent now has: " + parentBodyPart.attachedBodyParts.size() + " attached bodyParts and the " +
                 "child is attached to: " + bodyPartToAttachTo.name);
-        updateParentAndPerson();
         return true;
     }
 
@@ -212,10 +165,6 @@ public class BodyPart
      */
     public void removeBodyPart()
     {
-        if(this.bodyPartClass.equalsIgnoreCase("internal"))
-        {
-            this.parentBodyPart.removeOrgansSize(myTotalStats[10]);
-        }
         removeBodyPartRecursively();
         BodyPart resultingWound = BodyFileDecoder.loadBodyPartFromFile("Resources/BodyParts/Misc/GrievousWound",0,20);
         resultingWound.TryToAttachTo(parentBodyPart);
@@ -234,54 +183,8 @@ public class BodyPart
             attachedBodyPart.removeBodyPartRecursively();
         }
         this.myPerson.myBodyParts.remove(this);
-        updateParentAndPerson();
         this.myPerson = null;
     }
-
-    /**
-     * This function makes sure all the stats and modifiers of the person the parent bodyPart are updated when needed.
-     */
-    List<float[]> pre = personStats;
-    public void updateParentAndPerson()
-    {
-        updateStats();
-        if(parentBodyPart != null)
-        {
-            ErrorHandler.LogData(false,"Updating parent bodyPart " + parentBodyPart.name + " according to the upstream stats");
-            parentBodyPart.AddToStat(myTotalStats);
-            ErrorHandler.LogData(false," Done Updating parent bodyPart " + parentBodyPart.name);
-            parentBodyPart.updateParentAndPerson();
-        }
-        else
-        {
-            ErrorHandler.LogData(false,name + " has no parent bodyPart: " + parentBodyPart);
-        }
-        if(myPerson != null)
-        {
-            myPerson.RemoveFromStat(personStats);
-            ErrorHandler.LogData(false,name + " is Updating person: " + myPerson.getName());
-            personStats.removeAll(personStats);
-            if(currentHealth > 0)
-            {
-                personStats.add(myTotalStats[0]); //Blood Capacity
-                personStats.add(myTotalStats[1]); //Blood Generation
-                personStats.add(myTotalStats[2]); //Blood Needed
-                personStats.add(myTotalStats[3]); //Energy Capacity
-                personStats.add(myTotalStats[4]); //Energy Generation
-                personStats.add(myTotalStats[5]); //Energy Needed
-                personStats.add(myTotalStats[10]); //Size
-                personStats.add(myTotalStats[12]); //Speed
-                personStats.add(myTotalStats[13]); //Consciousness
-                personStats.add(myTotalStats[15]); //Sight
-            }
-            myPerson.AddToStat(personStats);
-        }
-        else
-        {
-            ErrorHandler.LogData(false,name + " has no person: " + myPerson);
-        }
-    }
-
     public void changeName(String newName)
     {
         name = newName;
@@ -292,85 +195,28 @@ public class BodyPart
     }
     public List<BodyPart> getAttachedBodyParts(){return attachedBodyParts;}
     public BodyPart getParentBodyPart(){return parentBodyPart;}
-    public List<float[]> getStatsToPerson(){return personStats;}
     public Person getMyPerson(){return myPerson;}
     public void setMyPerson(Person newPerson){myPerson = newPerson;}
-    public float getCurrentHealth() {return currentHealth;}
-    public float getCurrentOrganCapacity(){return currentOrganCapacity;}
-    public void removeOrgansSize(float[] size)
+    public float getCurrentHealth() {return myStats.getCurrentHealth();}
+    public float getRemainingAttachmentCapacity(){return myStats.getRemainingAttachmentCapacity();}
+
+    public float[] getUpstreamGrossStat()
     {
-        if(currentOrganSizes.contains(size))
-        {
-            currentOrganSizes.remove(size);
-        }
-        calculateCurrentOrganCapacity();
+        return myStats.getUpstreamGrossStat();
     }
-    public void calculateCurrentOrganCapacity(float[] size)
+    public float[] getUpstreamStatModifier()
     {
-        if(!currentOrganSizes.contains(size))
-        {
-            currentOrganSizes.add(size);
-        }
-        calculateCurrentOrganCapacity();
-    }
-    public void calculateCurrentOrganCapacity()
-    {
-        currentOrganCapacity = myTotalStats[11][2];
-        for (float[] f: currentOrganSizes)
-        {
-            currentOrganCapacity -= f[2];
-        }
+        return myStats.getUpstreamStatModifier();
     }
 
-    public void AddToStat(float[][] statList)
+    public float[][] getRawStats()
     {
-        for (int i = 0; i < 16; i++) {
-            if(!myStats.get(i).contains(statList[i]))
-            {
-                ErrorHandler.LogData(false,"Added the " + i + "th array to myStats!");
-                myStats.get(i).add(statList[i]);
-            }
-            myTotalStats[i] = new float[]{0, 0, 0, 0, 0, 0};
-            for (float[] f: myStats.get(i))
-            {
-                ErrorHandler.LogData(false,"gross value of the " + i + "th stat before changing: " + myTotalStats[i][0]);
-                myTotalStats[i][0] += f[3];
-                ErrorHandler.LogData(false,"gross value of the " + i + "th stat: " + myTotalStats[i][0] + ". The change was: " + f[3]);
-                myTotalStats[i][1] += f[4];
-                myTotalStats[i][2] = myTotalStats[i][0]*myTotalStats[i][1];
-            }
-        }
+        return myStats.getRawStats();
     }
-
-    public void updateStats()
+    public float[] getStats()
     {
-        for (int i = 0; i < 16; i++)
-        {
-            myTotalStats[i] = new float[]{0, 0, 0, 0, 0, 0};
-            for (float[] f: myStats.get(i))
-            {
-                myTotalStats[i][0] += f[3];
-                myTotalStats[i][1] += f[4];
-                myTotalStats[i][2] = myTotalStats[i][0]*myTotalStats[i][1];
-            }
-        }
+        return myStats.getNetStats();
     }
-
-    public float[][] GetMyTotalStats()
-    {
-        return myTotalStats;
-    }
-
-    public void PrintBodyPart()
-    {
-        ErrorHandler.LogData(false, "===" + name + "===");
-        for (int i = 0; i < 16; i++)
-        {
-            ErrorHandler.LogData(false,i + "th stat: " + myTotalStats[i][0] + " ¦ " + myTotalStats[i][1] + "¦" + myTotalStats[i][2]);
-        }
-        ErrorHandler.LogData(false, "======");
-    }
-
     public List<BodyPartAbility> getAbilities() {return abilities;}
     public void addAbility(BodyPartAbility ability) {abilities.add(ability);}
 }

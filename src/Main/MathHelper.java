@@ -39,6 +39,10 @@ public class MathHelper
         return Math.max(min, Math.min(max, value));
     }
 
+    static public float clamp(float value, float min, float max) {
+        return Math.max(min, Math.min(max, value));
+    }
+
     public static String indexToLetter(int n)
     {
         String letter;
