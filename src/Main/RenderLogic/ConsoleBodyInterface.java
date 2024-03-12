@@ -46,27 +46,38 @@ public class ConsoleBodyInterface
         //c.clir.renderList(allCharacterNames, "Current Characters", new AllCharactersInWorldMenu(c, gw));
     }
 
-    public List<String> openPersonView(Person p)
+    public String[][] openPersonView(Person p)
     {
-        int grossPadding = 7;
-        int modPadding = 10;
-        int finalPadding = 7;
+        float[] stats = p.getMyTotalStats();
+        String[][] result = new String[BodyPartStat.STATS_NUM][2];
 
-        List<String> s = new ArrayList<>();
+        //Description Value
+        result[0][0] = "Blood Capacity";
+        result[1][0] = "Blood Generation";
+        result[2][0] = "Blood Needed";
+        result[3][0] = "Energy Capacity";
+        result[4][0] = "Energy Generation";
+        result[5][0] = "Energy Needed";
+        result[6][0] = "Max Health";
+        result[7][0] = "Regen Rate";
+        result[8][0] = "Regen Limit";
+        result[9][0] = "Armour";
+        result[10][0] = "Size";
+        result[11][0] = "Attachment Capacity";
+        result[12][0] = "Speed";
+        result[13][0] = "Consciousness";
+        result[14][0] = "Grabbing Slots";
+        result[15][0] = "Sight";
 
-        s.add(" STATS             ¦ GROSS ¦ MODIFIER ¦ TOTAL ¦");
-        s.add("Blood Capacity:    ¦" + generateStatLine(p.GetMyTotalStats()[0],grossPadding,modPadding,finalPadding));
-        s.add("Blood Generation:  ¦" + generateStatLine(p.GetMyTotalStats()[1],grossPadding,modPadding,finalPadding));
-        s.add("Blood Needed:      ¦" + generateStatLine(p.GetMyTotalStats()[2],grossPadding,modPadding,finalPadding));
-        s.add("Energy Capacity:   ¦" + generateStatLine(p.GetMyTotalStats()[3],grossPadding,modPadding,finalPadding));
-        s.add("Energy Generation: ¦" + generateStatLine(p.GetMyTotalStats()[4],grossPadding,modPadding,finalPadding));
-        s.add("Energy Needed:     ¦" + generateStatLine(p.GetMyTotalStats()[5],grossPadding,modPadding,finalPadding));
-        s.add("Size:              ¦" + generateStatLine(p.GetMyTotalStats()[6],grossPadding,modPadding,finalPadding));
-        s.add("Speed:             ¦" + generateStatLine(p.GetMyTotalStats()[7],grossPadding,modPadding,finalPadding));
-        s.add("Consciousness:     ¦" + generateStatLine(p.GetMyTotalStats()[8],grossPadding,modPadding,finalPadding));
-        s.add("Sight:             ¦" + generateStatLine(p.GetMyTotalStats()[9],grossPadding,modPadding,finalPadding));
-        return s;
+
+        for (int i = 0; i < stats.length; i++)
+        {
+            result[i][1] = stats[i] + "";
+        }
+
+        return result;
     }
+
     private String rightpad(int text, int length) {
         return String.format("%-" + length + "." + length + "s", text);
     }

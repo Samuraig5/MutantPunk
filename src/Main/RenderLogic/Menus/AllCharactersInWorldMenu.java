@@ -19,7 +19,7 @@ public class AllCharactersInWorldMenu implements MenuLogic
     {
         int currentPage = c.clir.getCurrentPage();
         Person p = gw.getAllCharacters().get((26*currentPage-26)+i);
-        c.cb.openPersonView(p);
+        //c.cb.LEGACY_openPersonView(p);
     }
 
     @Override

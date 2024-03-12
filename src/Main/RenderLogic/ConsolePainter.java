@@ -355,13 +355,25 @@ public class ConsolePainter extends JPanel
 
         if (focusedThing instanceof Person)
         {
-            List<String> stats = c.cb.openPersonView((Person) focusedThing);
-            printString(10, 70+nameOffset, Color.lightGray, stats);
+            int paintX = 10;
+            int paintY = 70+nameOffset;
+            int cellWidth = 10;
+
+            String[][] stats = c.cb.openPersonView((Person) focusedThing);
+
+            for (int i = 0; i < stats.length; i++) {
+                printString(paintX,paintY, Color.LIGHT_GRAY, stats[i][0]);
+                for (int j = 1; j < stats[i].length; j++) {
+                    int x = paintX + Math.round(Settings.fontWidth*j*cellWidth)+Math.round(Settings.fontWidth*cellWidth);
+                    printString(x,paintY, Color.LIGHT_GRAY, stats[i][j]);
+                }
+                paintY += Math.round(Settings.fontHeight);
+            }
 
             List<String> body = c.cb.openBodyView((Person) focusedThing);
             for (int i = 0; i < body.size(); i++)
             {
-                printString(10, 270+nameOffset+Math.round((i)*Settings.fontHeight), Color.LIGHT_GRAY,
+                printString(10, paintY+nameOffset+Math.round((i)*Settings.fontHeight), Color.LIGHT_GRAY,
                         MathHelper.indexToLetter(i) + ": " + body.get(i));
             }
         }
