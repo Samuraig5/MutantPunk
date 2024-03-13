@@ -17,6 +17,7 @@ import java.awt.*;
 import java.awt.event.KeyListener;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 public class ConsolePainter extends JPanel
 {
@@ -211,10 +212,28 @@ public class ConsolePainter extends JPanel
             }
         }
         g.setFont(currentFont);
+
+
+        String s1 = "Strange creatures in a strange land";
+        String s2 = "a: Generate a new World";
+
+        int width = Math.round(s1.length() * Settings.fontWidth);
+        int height = Math.round(3.5f * Settings.fontHeight);
+        int centered = Math.round((Settings.windowWidth-width) / 2f) - Math.round(Settings.fontWidth*1.5f);
+
+        g.setColor(backgroundColour);
+        g.fillRoundRect(centered,
+                Math.round(Settings.fontHeight*(24)),
+                width, height, 5, 5);
+        g.setColor(Color.LIGHT_GRAY);
+        g.drawRoundRect(centered,
+                Math.round(Settings.fontHeight*(24)),
+                width, height, 5, 5);
+
         g.setColor(current);
 
-        //printCentredString(Math.round(Settings.fontHeight*(logo.length+1))+50, Color.green, "Strange creatures in a strange land");
-        //printCentredString(Math.round(Settings.fontHeight*(logo.length+3))+50, Color.lightGray, "a: Generate a new World");
+        printCentredString(Math.round(Settings.fontHeight*(25)), Color.green, s1);
+        printCentredString(Math.round(Settings.fontHeight*(27)), Color.lightGray, s2);
     }
 
     private void drawWorldMenu()
