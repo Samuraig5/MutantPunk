@@ -68,6 +68,18 @@ public class LogoCell
         }
     }
 
+    public boolean isFull()
+    {
+        if (fillLevel == MAX_FILL_LEVEL)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
     public char getSymbol()
     {
         if (sourceBlock != '\u0000') {return sourceBlock;}
@@ -130,10 +142,25 @@ public class LogoCell
             if (fillLevel == 3 && MathHelper.randomDecider(0.1f)) {return;}
         }
 
-        if(LOWER == this){return;}
+        LogoCell target;
+        if (LOWER.isFull() || LOWER == this)
+        {
+            if (MathHelper.randomDecider(0.5f))
+            {
+                target = LEFT;
+            }
+            else
+            {
+                target = RIGHT;
+            }
+        }
+        else
+        {
+            target = LOWER;
+        }
 
-        int flowDown = 1;
-        int overflow = LOWER.changeFillLevel(flowDown);
-        changeFillLevel(-(flowDown-overflow));
+        int flowOver = 1;
+        int overflow = target.changeFillLevel(flowOver);
+        changeFillLevel(-(flowOver-overflow));
     }
 }
