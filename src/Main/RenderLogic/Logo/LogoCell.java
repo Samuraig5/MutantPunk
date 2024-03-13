@@ -39,11 +39,25 @@ public class LogoCell
                 [MathHelper.clamp(xy[1], 0, ls.screen[0].length-1)];
     }
 
-    public int changeFillLevel(int i)
-    {
-        int overFlow = i - (MAX_FILL_LEVEL-fillLevel);
-        fillLevel = MathHelper.clamp(fillLevel+i, 0, MAX_FILL_LEVEL);
-        return overFlow;
+    public int changeFillLevel(int i) {
+        int incoming = i;
+        if (incoming > 0)
+        {
+            while (fillLevel < MAX_FILL_LEVEL && incoming > 0)
+            {
+                fillLevel++;
+                incoming--;
+            }
+        }
+        else
+        {
+            while (fillLevel > 0 && incoming < 0)
+            {
+                fillLevel--;
+                incoming++;
+            }
+        }
+        return incoming;
     }
 
     public int getFillLevel()
@@ -58,26 +72,12 @@ public class LogoCell
 
     public boolean isEmpty()
     {
-        if (fillLevel == 0)
-        {
-            return true;
-        }
-        else
-        {
-            return false;
-        }
+        return fillLevel == 0;
     }
 
     public boolean isFull()
     {
-        if (fillLevel == MAX_FILL_LEVEL)
-        {
-            return true;
-        }
-        else
-        {
-            return false;
-        }
+        return fillLevel == MAX_FILL_LEVEL;
     }
 
     public char getSymbol()
@@ -104,7 +104,7 @@ public class LogoCell
 
         if (sourceBlock != '\u0000') //SOURCE BLOCK
         {
-            if (MathHelper.randomDecider(0.1f))
+            if (MathHelper.randomDecider(0.025f))
             {
                 int direction = MathHelper.randomRangeInt(2,4); //2 to 4 because 1 is spawning up which we don't want
                 LogoCell target;
@@ -135,7 +135,7 @@ public class LogoCell
             if (fillLevel == 3 && MathHelper.randomDecider(0.7f)) {return;}
             if (fillLevel == 4 && MathHelper.randomDecider(0.6f)) {return;}
         }
-        if (!LEFT.isEmpty() || LEFT.isSource() || !RIGHT.isEmpty() || RIGHT.isSource())
+        if (LEFT.isSource() || RIGHT.isSource())
         {
             if (fillLevel == 1 && MathHelper.randomDecider(0.3f)) {return;}
             if (fillLevel == 2 && MathHelper.randomDecider(0.2f)) {return;}
@@ -160,7 +160,7 @@ public class LogoCell
         }
 
         int flowOver = 1;
-        int overflow = target.changeFillLevel(flowOver);
-        changeFillLevel(-(flowOver-overflow));
+        changeFillLevel(-flowOver);
+        changeFillLevel(target.changeFillLevel(flowOver));
     }
 }

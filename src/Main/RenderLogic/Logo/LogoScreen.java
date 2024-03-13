@@ -9,7 +9,7 @@ public class LogoScreen
     int xSize = Math.round(Settings.windowWidth/Settings.fontWidth);
     int ySize = Math.round(Settings.windowHeight/Settings.fontHeight)-10;
     LogoCell[][] screen;
-    int TICKS_PER_UPDATE = 10;
+    int TICKS_PER_UPDATE = 2;
 
     public LogoScreen(Console c)
     {
