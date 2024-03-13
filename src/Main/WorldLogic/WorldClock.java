@@ -22,6 +22,8 @@ public class WorldClock extends TimerTask
         if (!isClockRunning) {return;}
         if (activeWorld == null) {return;}
 
+        c.ls.updateLogoScreen();
+
         activeWorld.getActiveLocalMap().updateTick();
 
         List<Thing> things = activeWorld.getActiveLocalMap().getLocalThings();

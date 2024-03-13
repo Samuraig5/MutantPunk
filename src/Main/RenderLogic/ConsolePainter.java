@@ -8,6 +8,7 @@ import Main.ObjectLogic.BodyLogic.BodyPartStat;
 import Main.ObjectLogic.BodyLogic.Person;
 import Main.ObjectLogic.ObjectTag;
 import Main.ObjectLogic.Thing;
+import Main.RenderLogic.Logo.LogoCell;
 import Main.Settings;
 import Main.WorldLogic.LocalMap;
 
@@ -194,11 +195,26 @@ public class ConsolePainter extends JPanel
 
     private void drawMainMenu()
     {
-        String[] logo =c.cc.generateLogo();
-        printCentredString(50,Color.green,logo);
+        //String[] logo = c.ls.getStaticLogo();
+        //printCentredString(50, Color.green, logo);
 
-        printCentredString(Math.round(Settings.fontHeight*(logo.length+1))+50, Color.green, "Strange creatures in a strange land");
-        printCentredString(Math.round(Settings.fontHeight*(logo.length+3))+50, Color.lightGray, "a: Generate a new World");
+        char[][] mat = c.ls.getLogoScreen();
+
+        Font currentFont = g.getFont();
+        Color current = g.getColor();
+        g.setColor(Color.green);
+        g.setFont(new Font("Courier New", Font.PLAIN, Settings.fontSize+1));
+        for (int x = 0; x < mat.length; x++) {
+            for (int y = 0; y < mat[x].length; y++) {
+                g.drawString(mat[x][y]+"", Math.round(x*Settings.fontWidth), Math.round(y*Settings.fontHeight));
+
+            }
+        }
+        g.setFont(currentFont);
+        g.setColor(current);
+
+        //printCentredString(Math.round(Settings.fontHeight*(logo.length+1))+50, Color.green, "Strange creatures in a strange land");
+        //printCentredString(Math.round(Settings.fontHeight*(logo.length+3))+50, Color.lightGray, "a: Generate a new World");
     }
 
     private void drawWorldMenu()
