@@ -1,5 +1,6 @@
 package Main.RenderLogic.Logo;
 
+import Main.Direction;
 import Main.MathHelper;
 
 public class LogoCell
@@ -137,30 +138,86 @@ public class LogoCell
         }
         if (LEFT.isSource() || RIGHT.isSource())
         {
-            if (fillLevel == 1 && MathHelper.randomDecider(0.3f)) {return;}
-            if (fillLevel == 2 && MathHelper.randomDecider(0.2f)) {return;}
-            if (fillLevel == 3 && MathHelper.randomDecider(0.1f)) {return;}
+            if (fillLevel == 1 && MathHelper.randomDecider(0.8f)) {return;}
+            if (fillLevel == 2 && MathHelper.randomDecider(0.6f)) {return;}
+            if (fillLevel == 3 && MathHelper.randomDecider(0.4f)) {return;}
         }
+        flow();
+        evaporate();
+    }
+    private void flow()
+    {
+        int flowOver = (fillLevel+1)/2;
 
-        LogoCell target;
+        LogoCell target = this;
         if (LOWER.isFull() || LOWER == this)
         {
             if (MathHelper.randomDecider(0.5f))
             {
-                target = LEFT;
+                if (!LEFT.isFull())
+                {
+                    target = LEFT;
+                }
+                else
+                {
+                    target = getNextNoneFullCell(LEFT, true);
+                }
             }
             else
             {
-                target = RIGHT;
+                if (!RIGHT.isFull())
+                {
+                    target = RIGHT;
+                }
+                else
+                {
+                    target = getNextNoneFullCell(RIGHT, false);
+                }
             }
         }
         else
         {
             target = LOWER;
         }
-
-        int flowOver = 1;
         changeFillLevel(-flowOver);
         changeFillLevel(target.changeFillLevel(flowOver));
+    }
+    private LogoCell getNextNoneFullCell(LogoCell cell, boolean goLeft)
+    {
+        if (goLeft)
+        {
+            if (cell == cell.LEFT) {return cell;}
+            if (!cell.LEFT.isFull())
+            {
+                return cell.LEFT;
+            }
+            else
+            {
+                return getNextNoneFullCell(cell.LEFT, goLeft);
+            }
+        }
+        else
+        {
+            if (cell == cell.RIGHT) {return cell;}
+            if (!cell.RIGHT.isFull())
+            {
+                return cell.RIGHT;
+            }
+            else
+            {
+                return getNextNoneFullCell(cell.RIGHT, goLeft);
+            }
+        }
+    }
+
+    private void evaporate()
+    {
+        if (LOWER == this || LOWER.isFull())
+        {
+            if (MathHelper.randomDecider(0.02f))
+            {
+                changeFillLevel(-1);
+            }
+        }
     }
 }
