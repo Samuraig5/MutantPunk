@@ -143,7 +143,7 @@ public class LogoCell
             if (fillLevel == 3 && MathHelper.randomDecider(0.4f)) {return;}
         }
         flow();
-        evaporate();
+        //evaporate();
     }
     private void flow()
     {

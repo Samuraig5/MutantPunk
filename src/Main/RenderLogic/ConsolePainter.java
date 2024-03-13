@@ -214,6 +214,8 @@ public class ConsolePainter extends JPanel
         g.setFont(currentFont);
 
 
+        //TODO: Add some easter eggs in light gray so they are only visible when the slime fills up
+
         String s1 = "Strange creatures in a strange land";
         String s2 = "a: Generate a new World";
 
