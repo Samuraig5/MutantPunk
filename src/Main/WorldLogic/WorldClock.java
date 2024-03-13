@@ -2,6 +2,7 @@ package Main.WorldLogic;
 
 import Main.ObjectLogic.Thing;
 import Main.RenderLogic.Console;
+import Main.RenderLogic.GameState;
 
 import java.util.List;
 import java.util.TimerTask;
@@ -20,16 +21,22 @@ public class WorldClock extends TimerTask
     public void run()
     {
         if (!isClockRunning) {return;}
-        if (activeWorld == null) {return;}
 
-        c.ls.updateLogoScreen();
+        if (c.getGameState() == GameState.MAIN_MENU)
+        {
+            c.ls.updateLogoScreen();
+        }
+        else
+        {
+            if (activeWorld == null) {return;}
+            if (activeWorld.getActiveLocalMap() == null) {return;}
+            activeWorld.getActiveLocalMap().updateTick();
 
-        activeWorld.getActiveLocalMap().updateTick();
-
-        List<Thing> things = activeWorld.getActiveLocalMap().getLocalThings();
-        if (things == null) {return;}
-        for (int i = 0; i < things.size(); i++) {
-            things.get(i).updateTick();
+            List<Thing> things = activeWorld.getActiveLocalMap().getLocalThings();
+            if (things == null) {return;}
+            for (int i = 0; i < things.size(); i++) {
+                things.get(i).updateTick();
+            }
         }
     }
 

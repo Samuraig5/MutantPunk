@@ -23,7 +23,7 @@ public class LogoScreen
 
         for (int x = 0; x < xSize; x++) {
             for (int y = 0; y < ySize; y++) {
-                screen[x][y] = new LogoCell(' ');
+                screen[x][y] = new LogoCell(this,'\u0000',x,y);
             }
         }
 
@@ -31,7 +31,8 @@ public class LogoScreen
         int yOff = 10;
         for (int y = 0; y < mat.length; y++) {
             for (int x = 0; x < mat[y].length; x++) {
-                screen[x+xOff][y+yOff] = new LogoCell(mat[y][x]);
+                if (mat[y][x] == ' ') {mat[y][x] = '\u0000';}
+                screen[x+xOff][y+yOff] = new LogoCell(this, mat[y][x],x+xOff,y+yOff);
             }
         }
     }
@@ -52,7 +53,11 @@ public class LogoScreen
 
     public void updateLogoScreen()
     {
-
+        for (int x = 0; x < screen.length; x++) {
+            for (int y = 0; y < screen[x].length; y++) {
+                screen[x][y].update();
+            }
+        }
     }
 
     public String[] getStaticLogo()

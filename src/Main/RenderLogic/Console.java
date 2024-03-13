@@ -54,6 +54,7 @@ public class Console
 
         java.util.Timer timer = new Timer();
         timer.schedule(wc, 0, Settings.tickSpeed);
+        wc.startClock();
     }
 
     /**
@@ -76,8 +77,6 @@ public class Console
         {
             previousGameState = gameState;
         }
-
-        if (gameState == GameState.LOCAL_MAP_VIEW) {wc.stopClock();}
         switch (gs)
         {
             case MAIN_MENU:
@@ -92,7 +91,6 @@ public class Console
                 break;
             case LOCAL_MAP_VIEW:
                 cp.newListener(new LocalMapView(this));
-                wc.startClock();
                 break;
             case ALL_CHARACTERS_IN_LOCAL_MAP:
                 cp.newListener(new AllCharactersInLocalMapMenu(this));

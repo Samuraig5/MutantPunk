@@ -2,10 +2,13 @@ package Main;
 
 public class MathHelper
 {
-    static public float randomRange()
+    static public float randomRange(float min, float max)
     {
-        float ran = (float) (Math.random()*2-1);
-        return roundToTwoDecimals(ran);
+        return min + (int)(Math.random() * ((max - min) + 1));
+    }
+    static public int randomRangeInt(float min, float max)
+    {
+        return Math.round(randomRange(min, max));
     }
 
     static public float roundToTwoDecimals(float input)
