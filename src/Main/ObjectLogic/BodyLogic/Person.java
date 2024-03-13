@@ -44,7 +44,7 @@ public class Person extends Thing
                 stats[i] += myBodyPart.getStats()[i]; // Collect net stat from all body parts
             }
             for (BodyPart myBodyPart : myBodyParts) {
-                stats[i] += myBodyPart.getRawStats()[i][BodyPartStat.PERSON_MOD]; // Collect person mod from all body parts
+                stats[i] *= myBodyPart.getRawStats()[i][BodyPartStat.PERSON_MOD]; // Collect person mod from all body parts
             }
         }
 

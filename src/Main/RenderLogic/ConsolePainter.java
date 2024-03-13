@@ -470,7 +470,7 @@ public class ConsolePainter extends JPanel
 
         y += Math.round(Settings.fontHeight);
 
-        printString(10,y,Color.LIGHT_GRAY,"Attachment Capacity Used: " +
+        printString(10,y,Color.LIGHT_GRAY,"Attachment Capacity: " +
                 focusedBodyPart.getRemainingAttachmentCapacity() + " / " +
                 focusedBodyPart.getStats()[BodyPartStat.ATTACHMENT_CAPACITY]);
         y += Math.round(Settings.fontHeight)*2;
