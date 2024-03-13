@@ -5,6 +5,13 @@ import Main.MathHelper;
 public class LogoCell
 {
     LogoScreen ls;
+    LogoCell UPPER;
+    LogoCell LOWER;
+    LogoCell LEFT;
+    LogoCell RIGHT;
+
+    static final int MAX_FILL_LEVEL = 4;
+
     char sourceBlock;
     private int fillLevel = 0;
     int[] xy;
@@ -16,9 +23,49 @@ public class LogoCell
         xy = new int[]{x, y};
     }
 
-    public void changeFillLevel(int i)
+    public void findNeighbours()
     {
-        fillLevel = MathHelper.clamp(fillLevel+i, 0, 4);
+        UPPER = ls.screen
+                [MathHelper.clamp(xy[0], 0, ls.screen.length-1)]
+                [MathHelper.clamp(xy[1]-1, 0, ls.screen[0].length-1)];
+        LOWER = ls.screen
+                [MathHelper.clamp(xy[0], 0, ls.screen.length-1)]
+                [MathHelper.clamp(xy[1]+1, 0, ls.screen[0].length-1)];
+        LEFT = ls.screen
+                [MathHelper.clamp(xy[0]-1, 0, ls.screen.length-1)]
+                [MathHelper.clamp(xy[1], 0, ls.screen[0].length-1)];
+        RIGHT = ls.screen
+                [MathHelper.clamp(xy[0]+1, 0, ls.screen.length-1)]
+                [MathHelper.clamp(xy[1], 0, ls.screen[0].length-1)];
+    }
+
+    public int changeFillLevel(int i)
+    {
+        int overFlow = i - (MAX_FILL_LEVEL-fillLevel);
+        fillLevel = MathHelper.clamp(fillLevel+i, 0, MAX_FILL_LEVEL);
+        return overFlow;
+    }
+
+    public int getFillLevel()
+    {
+        return fillLevel;
+    }
+
+    public boolean isSource()
+    {
+        return sourceBlock != '\u0000';
+    }
+
+    public boolean isEmpty()
+    {
+        if (fillLevel == 0)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
     }
 
     public char getSymbol()
@@ -42,43 +89,51 @@ public class LogoCell
 
     public void update()
     {
-        if (sourceBlock != '\u0000')
-        {
-            int direction = MathHelper.randomRangeInt(1,4);
-            LogoCell target;
-            if (MathHelper.randomDecider(0.99f)) {return;}
 
-            switch (direction)
+        if (sourceBlock != '\u0000') //SOURCE BLOCK
+        {
+            if (MathHelper.randomDecider(0.1f))
             {
-                case 1:
-                    target = ls.screen
-                            [MathHelper.clamp(xy[0], 0, ls.screen.length-1)]
-                            [MathHelper.clamp(xy[1]-1, 0, ls.screen[0].length-1)];
-                    target.changeFillLevel(+1);
-                    break;
-                case 2:
-                    target = ls.screen
-                            [MathHelper.clamp(xy[0]+1, 0, ls.screen.length-1)]
-                            [MathHelper.clamp(xy[1], 0, ls.screen[0].length-1)];
-                    target.changeFillLevel(+1);
-                    break;
-                case 3:
-                    target = ls.screen
-                            [MathHelper.clamp(xy[0], 0, ls.screen.length-1)]
-                            [MathHelper.clamp(xy[1]+1, 0, ls.screen[0].length-1)];
-                    target.changeFillLevel(+1);
-                    break;
-                case 4:
-                    target = ls.screen
-                            [MathHelper.clamp(xy[0]-1, 0, ls.screen.length-1)]
-                            [MathHelper.clamp(xy[1]-1, 0, ls.screen[0].length-1)];
-                    target.changeFillLevel(+1);
-                    break;
+                int direction = MathHelper.randomRangeInt(2,4); //2 to 4 because 1 is spawning up which we don't want
+                LogoCell target;
+
+                switch (direction)
+                {
+                    case 1:
+                        UPPER.changeFillLevel(+1);
+                        break;
+                    case 2:
+                        RIGHT.changeFillLevel(+1);
+                        break;
+                    case 3:
+                        LOWER.changeFillLevel(+1);
+                        break;
+                    case 4:
+                        LEFT.changeFillLevel(+1);
+                        break;
+                }
             }
         }
-        else
-        {
 
+        if (isEmpty()) {return;}
+        if (!UPPER.isEmpty() || UPPER.isSource())
+        {
+            if (fillLevel == 1 && MathHelper.randomDecider(0.9f)) {return;}
+            if (fillLevel == 2 && MathHelper.randomDecider(0.8f)) {return;}
+            if (fillLevel == 3 && MathHelper.randomDecider(0.7f)) {return;}
+            if (fillLevel == 4 && MathHelper.randomDecider(0.6f)) {return;}
         }
+        if (!LEFT.isEmpty() || LEFT.isSource() || !RIGHT.isEmpty() || RIGHT.isSource())
+        {
+            if (fillLevel == 1 && MathHelper.randomDecider(0.3f)) {return;}
+            if (fillLevel == 2 && MathHelper.randomDecider(0.2f)) {return;}
+            if (fillLevel == 3 && MathHelper.randomDecider(0.1f)) {return;}
+        }
+
+        if(LOWER == this){return;}
+
+        int flowDown = 1;
+        int overflow = LOWER.changeFillLevel(flowDown);
+        changeFillLevel(-(flowDown-overflow));
     }
 }

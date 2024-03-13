@@ -7,8 +7,9 @@ public class LogoScreen
 {
     Console c;
     int xSize = Math.round(Settings.windowWidth/Settings.fontWidth);
-    int ySize = Math.round(Settings.windowHeight/Settings.fontHeight);
+    int ySize = Math.round(Settings.windowHeight/Settings.fontHeight)-10;
     LogoCell[][] screen;
+    int TICKS_PER_UPDATE = 10;
 
     public LogoScreen(Console c)
     {
@@ -35,6 +36,12 @@ public class LogoScreen
                 screen[x+xOff][y+yOff] = new LogoCell(this, mat[y][x],x+xOff,y+yOff);
             }
         }
+
+        for (int x = 0; x < xSize; x++) {
+            for (int y = 0; y < ySize; y++) {
+                screen[x][y].findNeighbours();
+            }
+        }
     }
 
     public char[][] getLogoScreen()
@@ -51,12 +58,21 @@ public class LogoScreen
         return c;
     }
 
+    int counter = 0;
     public void updateLogoScreen()
     {
-        for (int x = 0; x < screen.length; x++) {
-            for (int y = 0; y < screen[x].length; y++) {
-                screen[x][y].update();
+        if (counter < TICKS_PER_UPDATE)
+        {
+            counter++;
+        }
+        else
+        {
+            for (int x = screen.length-1; x >= 0; x--) {
+                for (int y = screen[x].length-1; y >= 0; y--) {
+                    screen[x][y].update();
+                }
             }
+            counter = 0;
         }
     }
 

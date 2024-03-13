@@ -30,9 +30,14 @@ public class MathHelper
         return randomDecider(0.5f);
     }
 
-    static public boolean randomDecider(float percentageToHit)
+    /**
+     * A higher number is more likely. 0.0f never happens. 1.0f always happens
+     * @param likelyhodoPercentage
+     * @return
+     */
+    static public boolean randomDecider(float likelyhodoPercentage)
     {
-        if (Math.random() < percentageToHit) {
+        if (Math.random() < likelyhodoPercentage) {
             return true;
         }
         return false;
