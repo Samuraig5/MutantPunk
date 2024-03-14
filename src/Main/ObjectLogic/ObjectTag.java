@@ -5,7 +5,8 @@ public enum ObjectTag
     SOLID,
     LIQUID,
     GASEOUS,
-    LIVING,
+    ORGANIC,
+    CYBERNETIC,
     PLANT,
     FRUIT,
     MEAT;

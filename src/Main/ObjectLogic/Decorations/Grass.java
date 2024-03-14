@@ -1,6 +1,5 @@
 package Main.ObjectLogic.Decorations;
 
-import Main.MathHelper;
 import Main.ObjectLogic.BodyLogic.Person;
 import Main.ObjectLogic.ObjectTag;
 import Main.ObjectLogic.Thing;
@@ -10,7 +9,6 @@ import Main.Direction;
 
 
 import java.awt.*;
-import java.util.Random;
 
 public class Grass extends Thing
 {
@@ -29,7 +27,7 @@ public class Grass extends Thing
 
         setName("Grass");
         setDescription("This is a cluster of lush green grass");
-        setTags(new ObjectTag[] {ObjectTag.SOLID, ObjectTag.LIVING, ObjectTag.PLANT});
+        setTags(new ObjectTag[] {ObjectTag.SOLID, ObjectTag.ORGANIC, ObjectTag.PLANT});
     }
 
     @Override
