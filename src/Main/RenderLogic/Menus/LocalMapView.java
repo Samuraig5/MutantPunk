@@ -7,8 +7,10 @@ import Main.RenderLogic.GameState;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 
-public class LocalMapView implements KeyListener
+public class LocalMapView implements KeyListener, MouseListener
 {
     Console c;
     public LocalMapView(Console console)
@@ -93,6 +95,32 @@ public class LocalMapView implements KeyListener
 
     @Override
     public void keyReleased(KeyEvent e) {
+
+    }
+
+    @Override
+    public void mouseClicked(MouseEvent e)
+    {
+
+    }
+
+    @Override
+    public void mousePressed(MouseEvent e) {
+        System.out.println("Yay");
+    }
+
+    @Override
+    public void mouseReleased(MouseEvent e) {
+
+    }
+
+    @Override
+    public void mouseEntered(MouseEvent e) {
+
+    }
+
+    @Override
+    public void mouseExited(MouseEvent e) {
 
     }
 }

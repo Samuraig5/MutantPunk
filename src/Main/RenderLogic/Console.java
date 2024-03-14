@@ -90,7 +90,8 @@ public class Console
                 cp.newListener(new LocalMapMenu(this));
                 break;
             case LOCAL_MAP_VIEW:
-                cp.newListener(new LocalMapView(this));
+                LocalMapView lmv = new LocalMapView(this);
+                cp.newListener(lmv,lmv);
                 break;
             case ALL_CHARACTERS_IN_LOCAL_MAP:
                 cp.newListener(new AllCharactersInLocalMapMenu(this));

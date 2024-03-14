@@ -14,6 +14,7 @@ import Main.WorldLogic.LocalMap;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyListener;
+import java.awt.event.MouseListener;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,6 +26,7 @@ public class ConsolePainter extends JPanel
     private Graphics g;
     private Color backgroundColour = new Color(50,50,50);
     private KeyListener activeKeyListener;
+    private MouseListener activeMouseListener;
     private Thing inspectedThing;
     private BodyPart inspectedBodyPart;
     private Thing focusedThing;
@@ -38,6 +40,11 @@ public class ConsolePainter extends JPanel
         this.c = c;
     }
 
+    public void newListener(KeyListener keyListener, MouseListener mouseListener)
+    {
+        newListener(keyListener);
+        newListener(mouseListener);
+    }
     public void newListener(KeyListener keyListener)
     {
         if (activeKeyListener != null)
@@ -47,6 +54,16 @@ public class ConsolePainter extends JPanel
         addKeyListener(keyListener);
         this.setFocusable(true);
         activeKeyListener = keyListener;
+    }
+    public void newListener(MouseListener mouseListener)
+    {
+        if (activeMouseListener != null)
+        {
+            removeMouseListener(activeMouseListener);
+        }
+        addMouseListener(mouseListener);
+        this.setFocusable(true);
+        activeMouseListener = mouseListener;
     }
 
     public void setInspectedThing(Thing newThing) {
@@ -302,7 +319,7 @@ public class ConsolePainter extends JPanel
                 int xPos = xBase-xCursorOffset+xScreenCenter;
                 int yPos = yBase-yCursorOffset+yScreenCenter;
 
-                if (cursorEnabled && focusedThing != null && cursorPosition[0] == x && cursorPosition[1] == y)
+                if (cursorEnabled && focusedThing == null && cursorPosition[0] == x && cursorPosition[1] == y)
                 {
                     printString(xPos, yPos, Color.yellow,"X");
                 }
