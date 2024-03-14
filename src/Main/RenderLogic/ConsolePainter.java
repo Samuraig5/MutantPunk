@@ -338,7 +338,7 @@ public class ConsolePainter extends JPanel
     }
     private void drawCursorUI()
     {
-        if (focusedThing != null)
+        if (focusedThing != null && focusedThing.getMyCell() != null)
         {
             cursorPosition = focusedThing.getMyCell().getCoordinates();
         }
