@@ -29,6 +29,7 @@ public class ConsolePainter extends JPanel
     private BodyPart inspectedBodyPart;
     private Thing focusedThing;
     private int[] cursorPosition = {0,0};
+    private Point mouseCursorPosition = new Point();
     private boolean cursorEnabled = false;
     private int listSelector = 0;
 
@@ -100,7 +101,10 @@ public class ConsolePainter extends JPanel
 
         Point p = getPointerInfo().getLocation();
         Point pa = c.frame.getLocationOnScreen();
-        printString(p.x-pa.x-10,p.y-pa.y-25, Color.yellow, "O");
+        mouseCursorPosition.x = p.x-pa.x-10;
+        mouseCursorPosition.y = p.y-pa.y-25;
+
+        printString(mouseCursorPosition.x, mouseCursorPosition.y, Color.yellow, "O");
     }
 
     private int printColouredString(int xPos, int yPos, ColouredString[] content)
