@@ -11,6 +11,7 @@ public enum ObjectTag
     FRUIT,
     MEAT;
 
+
     public static ObjectTag[] translateStringToTag(String[] split)
     {
         ObjectTag[] tags = new ObjectTag[split.length];
