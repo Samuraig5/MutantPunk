@@ -118,10 +118,10 @@ public class ConsolePainter extends JPanel
 
         Point p = getPointerInfo().getLocation();
         Point pa = c.frame.getLocationOnScreen();
-        mouseCursorPosition.x = p.x-pa.x-10;
+        mouseCursorPosition.x = p.x-pa.x-8;
         mouseCursorPosition.y = p.y-pa.y-25;
 
-        printString(mouseCursorPosition.x, mouseCursorPosition.y, Color.yellow, "O");
+        //printString(mouseCursorPosition.x, mouseCursorPosition.y, Color.yellow, "O");
     }
 
     private int printColouredString(int xPos, int yPos, ColouredString[] content)
@@ -596,5 +596,29 @@ public class ConsolePainter extends JPanel
         xy[1] = MathHelper.clamp(xy[1],0, xyMax[1]-1);
 
         setCursorPosition(xy);
+    }
+
+    public int[] getMouseCellCoordsOnLocalMap()
+    {
+        int[] xy = getMouseCellCoords();
+
+        float xScreenCenter = ((float) Settings.windowWidth/Settings.fontHeight/2);
+        float yScreenCenter = ((float) Settings.windowHeight/Settings.fontHeight/2) + 1;
+
+        System.out.println(((float) Settings.windowWidth/Settings.fontHeight/2) + 0.75f);
+
+        xy[0] = Math.round(xy[0] + cursorPosition[0] - xScreenCenter);
+        xy[1] = Math.round(xy[1] + cursorPosition[1] - yScreenCenter);
+
+        return xy;
+    }
+
+    public int[] getMouseCellCoords()
+    {
+        //TODO: Actually Implement this logic
+        int x = Math.round((float) mouseCursorPosition.x / Settings.fontHeight);
+        int y = Math.round((float) mouseCursorPosition.y / Settings.fontHeight);
+
+        return new int[] {x,y};
     }
 }

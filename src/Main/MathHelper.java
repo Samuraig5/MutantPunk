@@ -1,5 +1,7 @@
 package Main;
 
+import java.awt.*;
+
 public class MathHelper
 {
     static public float randomRange(float min, float max)

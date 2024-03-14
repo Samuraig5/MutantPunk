@@ -1,6 +1,7 @@
 package Main.RenderLogic.Menus;
 
 import Main.Direction;
+import Main.MathHelper;
 import Main.ObjectLogic.Thing;
 import Main.RenderLogic.Console;
 import Main.RenderLogic.GameState;
@@ -105,8 +106,10 @@ public class LocalMapView implements KeyListener, MouseListener
     }
 
     @Override
-    public void mousePressed(MouseEvent e) {
-        System.out.println("Yay");
+    public void mousePressed(MouseEvent e)
+    {
+        //int[] xy = c.cp.getMouseCellCoordsOnLocalMap();
+        c.cp.setCursorPosition(c.cp.getMouseCellCoordsOnLocalMap());
     }
 
     @Override
