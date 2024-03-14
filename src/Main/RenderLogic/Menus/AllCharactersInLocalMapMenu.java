@@ -27,7 +27,7 @@ public class AllCharactersInLocalMapMenu implements KeyListener
 
         Person p = lm.getLocalPeople().get(i);
 
-        c.cp.setFocusedThing(p);
+        c.cp.setInspectedThing(p);
         c.setGameState(GameState.THING_INSPECTOR);
     }
 

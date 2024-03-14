@@ -8,7 +8,6 @@ import Main.ObjectLogic.BodyLogic.BodyPartStat;
 import Main.ObjectLogic.BodyLogic.Person;
 import Main.ObjectLogic.ObjectTag;
 import Main.ObjectLogic.Thing;
-import Main.RenderLogic.Logo.LogoCell;
 import Main.Settings;
 import Main.WorldLogic.LocalMap;
 
@@ -17,7 +16,6 @@ import java.awt.*;
 import java.awt.event.KeyListener;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 public class ConsolePainter extends JPanel
 {
@@ -25,8 +23,9 @@ public class ConsolePainter extends JPanel
     private Graphics g;
     private Color backgroundColour = new Color(50,50,50);
     private KeyListener activeKeyListener;
+    private Thing inspectedThing;
+    private BodyPart inspectedBodyPart;
     private Thing focusedThing;
-    private BodyPart focusedBodyPart;
     private int[] cursorPosition = {0,0};
     private boolean cursorEnabled = false;
     private int listSelector = 0;
@@ -47,11 +46,12 @@ public class ConsolePainter extends JPanel
         activeKeyListener = keyListener;
     }
 
-    public void setFocusedThing(Thing newThing) {
-        focusedThing = newThing;}
-    public Thing getFocusedThing() {return focusedThing;}
-    public void setFocusedBodyPart(BodyPart newBodyPart) {focusedBodyPart = newBodyPart;}
-    public BodyPart getFocusedBodyPart() {return focusedBodyPart;}
+    public void setInspectedThing(Thing newThing) {
+        inspectedThing = newThing;}
+    public Thing getInspectedThing() {return inspectedThing;}
+    public void setInspectedBodyPart(BodyPart newBodyPart) {
+        inspectedBodyPart = newBodyPart;}
+    public BodyPart getInspectedBodyPart() {return inspectedBodyPart;}
 
     public int getListSelector() {return listSelector;}
     public void setListSelector(int i) {listSelector = i;}
@@ -292,7 +292,7 @@ public class ConsolePainter extends JPanel
                 int xPos = xBase-xCursorOffset+xScreenCenter;
                 int yPos = yBase-yCursorOffset+yScreenCenter;
 
-                if (cursorEnabled && cursorPosition[0] == x && cursorPosition[1] == y)
+                if (cursorEnabled && focusedThing != null && cursorPosition[0] == x && cursorPosition[1] == y)
                 {
                     printString(xPos, yPos, Color.yellow,"X");
                 }
@@ -311,6 +311,11 @@ public class ConsolePainter extends JPanel
     }
     private void drawCursorUI()
     {
+        if (focusedThing != null)
+        {
+            cursorPosition = focusedThing.getMyCell().getCoordinates();
+        }
+
         if (cursorEnabled)
         {
             int width = 250;
@@ -394,34 +399,34 @@ public class ConsolePainter extends JPanel
 
     private void drawThingInspector()
     {
-        if (focusedThing == null) {throw new RuntimeException("The ConsolePainter is trying to draw a body but no person is focused");}
+        if (inspectedThing == null) {throw new RuntimeException("The ConsolePainter is trying to draw a body but no person is focused");}
 
         int nameFontSize = Settings.fontSize*2;
         int nameOffset = 10 + Math.round(nameFontSize*Settings.relativeFontHeight);
-        printString(10, nameOffset, focusedThing.getMapIcon().getIconColour(), focusedThing.getName() + " (" + focusedThing.getMapIcon().getSymbol() + ")" , nameFontSize);
+        printString(10, nameOffset, inspectedThing.getMapIcon().getIconColour(), inspectedThing.getName() + " (" + inspectedThing.getMapIcon().getSymbol() + ")" , nameFontSize);
 
-        if (focusedThing.getDescription() != null)
+        if (inspectedThing.getDescription() != null)
         {
-            printString(10, nameOffset+20, Color.lightGray, focusedThing.getDescription());
+            printString(10, nameOffset+20, Color.lightGray, inspectedThing.getDescription());
         }
 
         int offset = 10;
-        for (int i = 0; i < focusedThing.getTags().length; i++)
+        for (int i = 0; i < inspectedThing.getTags().length; i++)
         {
-            String tag = "[" + focusedThing.getTags()[i].name() + "] ";
+            String tag = "[" + inspectedThing.getTags()[i].name() + "] ";
             printString(offset, nameOffset+35, Color.lightGray, tag);
 
             int stringLength = Math.round(Settings.fontWidth*tag.length());
             offset += stringLength;
         }
 
-        if (focusedThing instanceof Person)
+        if (inspectedThing instanceof Person)
         {
             int paintX = 10;
             int paintY = 70+nameOffset;
             int cellWidth = 10;
 
-            String[][] stats = c.cb.openPersonView((Person) focusedThing);
+            String[][] stats = c.cb.openPersonView((Person) inspectedThing);
 
             for (int i = 0; i < stats.length; i++) {
                 printString(paintX,paintY, Color.LIGHT_GRAY, stats[i][0]);
@@ -432,7 +437,7 @@ public class ConsolePainter extends JPanel
                 paintY += Math.round(Settings.fontHeight);
             }
 
-            ColouredString[][] body = c.cb.getBodyView((Person) focusedThing);
+            ColouredString[][] body = c.cb.getBodyView((Person) inspectedThing);
             for (int i = 0; i < body.length; i++)
             {
                 printColouredStringHorizontal(10,paintY+nameOffset+Math.round((i)*Settings.fontHeight), body[i]);
@@ -444,13 +449,13 @@ public class ConsolePainter extends JPanel
     {
         int nameFontSize = Settings.fontSize*2;
         int y = 10 + Math.round(nameFontSize*Settings.relativeFontHeight);
-        printString(10,y,Color.LIGHT_GRAY,focusedBodyPart.getName(),nameFontSize);
+        printString(10,y,Color.LIGHT_GRAY, inspectedBodyPart.getName(),nameFontSize);
         y += Math.round((nameFontSize*Settings.relativeFontHeight)+Settings.fontHeight);
 
         ColouredString[] cs = new ColouredString[4];
         cs[0] = new ColouredString("Health", Color.LIGHT_GRAY);
-        float fCurr = focusedBodyPart.getCurrentHealth();
-        float fMax = focusedBodyPart.getStats()[BodyPartStat.MAX_HEALTH];
+        float fCurr = inspectedBodyPart.getCurrentHealth();
+        float fMax = inspectedBodyPart.getStats()[BodyPartStat.MAX_HEALTH];
         cs[1] = new ColouredString(fCurr+"", Color.lightGray);
         cs[2] = new ColouredString(" / ", Color.lightGray);
         cs[3] = new ColouredString(fMax+"", Color.lightGray);
@@ -473,8 +478,8 @@ public class ConsolePainter extends JPanel
         y += Math.round(Settings.fontHeight);
 
         printString(10,y,Color.LIGHT_GRAY,"Attachment Capacity: " +
-                focusedBodyPart.getRemainingAttachmentCapacity() + " / " +
-                focusedBodyPart.getStats()[BodyPartStat.ATTACHMENT_CAPACITY]);
+                inspectedBodyPart.getRemainingAttachmentCapacity() + " / " +
+                inspectedBodyPart.getStats()[BodyPartStat.ATTACHMENT_CAPACITY]);
         y += Math.round(Settings.fontHeight)*2;
 
         y = drawBodyPartStats(y);
@@ -487,7 +492,7 @@ public class ConsolePainter extends JPanel
         int paintY = startPos;
         int cellWidth = 10;
 
-        String[][] stats = c.cb.displayBodyPartStats(focusedBodyPart);
+        String[][] stats = c.cb.displayBodyPartStats(inspectedBodyPart);
         String[][] statDesc = {{"","Final", "Gross", "Modifier", "Upstream", "Upstream", "Person"}, {"","", "", "", "Gross", "Modifier", "Modifier"}};
         for (int j = 0; j < stats[0].length; j++)
         {
@@ -511,9 +516,9 @@ public class ConsolePainter extends JPanel
 
     private void drawBodyPartAbilities(int startPos)
     {
-        for (int i = 0; i < focusedBodyPart.getAbilities().size(); i++)
+        for (int i = 0; i < inspectedBodyPart.getAbilities().size(); i++)
         {
-            BodyPartAbility bpa = focusedBodyPart.getAbilities().get(i);
+            BodyPartAbility bpa = inspectedBodyPart.getAbilities().get(i);
             ObjectTag[] obt = bpa.getRelatedObjectTags();
 
             printString(10, startPos, Color.LIGHT_GRAY, "["+bpa.getAbilityTag()+"]:");
@@ -536,6 +541,7 @@ public class ConsolePainter extends JPanel
 
     public int[] getCursorPosition() {return cursorPosition;}
     public void setCursorPosition(int[] i) {cursorPosition = i;}
+    public void setFocusedThing(Thing t){focusedThing = t;}
 
     public void moveCursor(Direction direction, int amount)
     {

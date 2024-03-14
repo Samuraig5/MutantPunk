@@ -21,9 +21,9 @@ public class ThingInspector implements KeyListener
 
     private void openBodyPartView(int i)
     {
-        Person p = (Person) c.cp.getFocusedThing();
+        Person p = (Person) c.cp.getInspectedThing();
         BodyPart bp = p.myBodyParts.get(i);
-        c.cp.setFocusedBodyPart(bp);
+        c.cp.setInspectedBodyPart(bp);
         c.setGameState(GameState.BODY_PART_MENU);
     }
 
