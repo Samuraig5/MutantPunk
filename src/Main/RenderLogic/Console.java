@@ -22,7 +22,7 @@ public class Console
     private GameState previousGameState;
     public final Color errorColour = new Color(255,155,155);
 
-    private final JFrame frame;
+    protected final JFrame frame;
     public static JTextPane console;
     public static StyledDocument styledDocument;
 

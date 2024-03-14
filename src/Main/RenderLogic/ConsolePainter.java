@@ -17,6 +17,8 @@ import java.awt.event.KeyListener;
 import java.util.ArrayList;
 import java.util.List;
 
+import static java.awt.MouseInfo.getPointerInfo;
+
 public class ConsolePainter extends JPanel
 {
     public Console c;
@@ -95,6 +97,10 @@ public class ConsolePainter extends JPanel
             default:
                 printCentredString(50,c.errorColour,"THIS GAME STATE DOESN'T EXIST");
         }
+
+        Point p = getPointerInfo().getLocation();
+        Point pa = c.frame.getLocationOnScreen();
+        printString(p.x-pa.x-10,p.y-pa.y-25, Color.yellow, "O");
     }
 
     private int printColouredString(int xPos, int yPos, ColouredString[] content)
