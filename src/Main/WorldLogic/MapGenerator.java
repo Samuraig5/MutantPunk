@@ -1,6 +1,7 @@
 package Main.WorldLogic;
 
 import Main.Direction;
+import Main.ObjectLogic.Decorations.DirtFloor;
 import Main.ObjectLogic.Decorations.Grass;
 import Main.ObjectLogic.Walls.Wall;
 import Main.Settings;
@@ -19,6 +20,7 @@ public class MapGenerator
         {
             for (int y = 0; y < size[1]; y++)
             {
+                cells[x][y].thingEnters(new DirtFloor(), Direction.NONE);
                 if (Settings.spawnWalls && Math.random() < wallCover)
                 {
                     Wall wall = new Wall();

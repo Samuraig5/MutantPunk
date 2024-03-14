@@ -19,11 +19,11 @@ public class Grass extends Thing
         setCollision(false);
 
         MapIcon mi = new MapIcon();
-        mi.setSymbol('.');
+        mi.setSymbol('·');
         mi.setIconColour(Color.green);
         setMapIcon(mi);
 
-        setRenderPriority(0);
+        setRenderPriority(1);
 
         setName("Grass");
         setDescription("This is a cluster of lush green grass");
