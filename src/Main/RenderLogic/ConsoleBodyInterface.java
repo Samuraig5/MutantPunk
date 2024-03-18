@@ -37,16 +37,6 @@ public class ConsoleBodyInterface
         }
     }
 
-    public void listAllPersons(GameWorld gw)
-    {
-        List<String> allCharacterNames = new ArrayList<>();
-        for (Person p:gw.getAllCharacters())
-        {
-            allCharacterNames.add(p.getName());
-        }
-        //c.clir.renderList(allCharacterNames, "Current Characters", new AllCharactersInWorldMenu(c, gw));
-    }
-
     public String[][] openPersonView(Person p)
     {
         float[] stats = p.getMyTotalStats();

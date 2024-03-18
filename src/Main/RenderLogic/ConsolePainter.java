@@ -15,6 +15,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseListener;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -292,8 +293,13 @@ public class ConsolePainter extends JPanel
 
         printString(10, 70, Color.LIGHT_GRAY, "a: Open map view");
         printString(10, Math.round(70+(1*Settings.fontHeight)), Color.LIGHT_GRAY, "b: List all local characters");
-        printString(10, Math.round(70+(2*Settings.fontHeight)), Color.LIGHT_GRAY, "c: Spawn a Human");
-        printString(10, Math.round(70+(3*Settings.fontHeight)), Color.LIGHT_GRAY, "d: Spawn a Slime");
+        List<File> bodyPlans = c.getSortedBodyPlans();
+
+        for (int i = 0; i < bodyPlans.size(); i++)
+        {
+            String name = MathHelper.indexToLetter(i+2) + ": " + bodyPlans.get(i).getName();
+            printString(10, Math.round(70+((i+2)*Settings.fontHeight)), Color.LIGHT_GRAY, name);
+        }
     }
 
     private void drawLocalMapView()
