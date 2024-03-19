@@ -554,9 +554,12 @@ public class ConsolePainter extends JPanel
             BodyPartAbility bpa = inspectedBodyPart.getAbilities().get(i);
             ObjectTag[] obt = bpa.getRelatedObjectTags();
 
-            printString(10, startPos, Color.LIGHT_GRAY, "["+bpa.getAbilityTag()+"]:");
+            printString(10, startPos, Color.LIGHT_GRAY, "["+bpa.getAbilityName()+"]");
+            int xOffset = Math.round(10+((bpa.getAbilityName().length()+2)*Settings.fontWidth));
 
-            int xOffset = Math.round(10+((bpa.getAbilityTag().toString().length()+3)*Settings.fontWidth));
+            printString(xOffset, startPos, Color.LIGHT_GRAY, "("+bpa.getAbilityTag()+"):");
+
+            xOffset = Math.round(xOffset+((bpa.getAbilityTag().toString().length()+3)*Settings.fontWidth));
 
             printString(xOffset, startPos, Color.LIGHT_GRAY, "<");
             xOffset += Math.round(Settings.fontWidth);

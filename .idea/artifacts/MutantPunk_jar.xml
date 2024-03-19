@@ -1,0 +1,10 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="MutantPunk:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/MutantPunk_jar</output-path>
+    <root id="archive" name="MutantPunk.jar">
+      <element id="module-output" name="MutantPunk" />
+      <element id="library" level="module" name="JUnit5.8.1" module-name="MutantPunk" />
+      <element id="library" level="module" name="JUnit4" module-name="MutantPunk" />
+    </root>
+  </artifact>
+</component>

@@ -146,28 +146,4 @@ public class ConsoleBodyInterface
 
         return result;
     }
-
-    private void assembleBodyPartRelations(BodyPart bp, List<String> list)
-    {
-        if (bp.getMyPerson() != null)
-        {
-            list.add(bp.getMyPerson().getName()  + "\n" + "" + "\n" + "My parent body parts:");
-        }
-        else
-        {
-            list.add("N/A"  + "\n" + "" + "\n" + "My parent body part:");
-        }
-        if (bp.getParentBodyPart() != null)
-        {
-            list.add(bp.getParentBodyPart().getName()  + "\n" + "" + "\n" + "Attached body parts: ");
-        }
-        else
-        {
-            list.add("N/A"  + "\n" + "" + "\n" + "Attached body parts: ");
-        }
-        for (BodyPart nextbp:bp.getAttachedBodyParts())
-        {
-            list.add(nextbp.getName());
-        }
-    }
 }

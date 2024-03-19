@@ -5,6 +5,7 @@ import Main.ObjectLogic.ObjectTag;
 
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class BodyPart
@@ -80,17 +81,17 @@ public class BodyPart
     private void addAbility(List<String[]> abilities)
     {
         for (int i = 0; i < abilities.size(); i++) {
-            AbilityTag abilityTag = AbilityTag.translateStringToTag(abilities.get(i)[0]);
+            System.out.println(Arrays.toString(abilities.get(i)));
+            String abilityName = abilities.get(i)[0];
+            AbilityTag abilityTag = AbilityTag.translateStringToTag(abilities.get(i)[1]);
 
-            String[] objTagStrings = new String[abilities.get(i).length-1];
-            for (int j = 1; j < abilities.get(i).length; j++) {
-                objTagStrings[j-1] = abilities.get(i)[j];
+            String[] objTagStrings = new String[abilities.get(i).length-2];
+            for (int j = 0; j < abilities.get(i).length-2; j++) {
+                objTagStrings[j] = abilities.get(i)[j+2];
             }
 
             ObjectTag[] objectTags = ObjectTag.translateStringToTag(objTagStrings);
-
-
-            BodyPartAbility ability = new BodyPartAbility(abilityTag, objectTags);
+            BodyPartAbility ability = new BodyPartAbility(abilityName, abilityTag, objectTags);
             addAbility(ability);
         }
     }
