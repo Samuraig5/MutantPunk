@@ -148,12 +148,13 @@ public class ConsolePainter extends JPanel
         return x;
     }
 
-    private void printString(int xPos, int yPos, Color c, String s)
+    private int printString(int xPos, int yPos, Color c, String s)
     {
         Color current = g.getColor();
         g.setColor(c);
         g.drawString(s, xPos, yPos);
         g.setColor(current);
+        return xPos + Math.round(s.length()*Settings.fontWidth);
     }
 
     private void printString(int xPos, int yPos, Color c, String s, int fontSize)
@@ -554,21 +555,38 @@ public class ConsolePainter extends JPanel
             BodyPartAbility bpa = inspectedBodyPart.getAbilities().get(i);
             ObjectTag[] obt = bpa.getRelatedObjectTags();
 
-            printString(10, startPos, Color.LIGHT_GRAY, "["+bpa.getAbilityName()+"]");
-            int xOffset = Math.round(10+((bpa.getAbilityName().length()+2)*Settings.fontWidth));
+            int xOffset = 10;
 
-            printString(xOffset, startPos, Color.LIGHT_GRAY, "("+bpa.getAbilityTag()+"):");
+            xOffset = printString(xOffset, startPos, Color.LIGHT_GRAY, "["+bpa.getAbilityName()+"]");
 
-            xOffset = Math.round(xOffset+((bpa.getAbilityTag().toString().length()+3)*Settings.fontWidth));
+            xOffset = printString(xOffset, startPos, Color.LIGHT_GRAY, "("+bpa.getAbilityTag()+"):");
 
-            printString(xOffset, startPos, Color.LIGHT_GRAY, "<");
-            xOffset += Math.round(Settings.fontWidth);
+
+            xOffset = printString(xOffset, startPos, Color.LIGHT_GRAY, "<");
             for (int j = 0; j < obt.length; j++)
             {
-                printString(xOffset, startPos, Color.LIGHT_GRAY, "["+obt[j]+"]");
-                xOffset = xOffset + Math.round((obt[j].toString().length()+2)*Settings.fontWidth);
+                xOffset = printString(xOffset, startPos, Color.LIGHT_GRAY, "["+obt[j]+"]");
             }
-            printString(xOffset, startPos, Color.LIGHT_GRAY, ">");
+            xOffset = printString(xOffset, startPos, Color.LIGHT_GRAY, ">, ");
+
+            if (bpa.getCapacity() != 0)
+            {
+                xOffset = printString(xOffset, startPos, Color.LIGHT_GRAY, "Capacity:");
+                xOffset = printString(xOffset, startPos, Color.LIGHT_GRAY, "(");
+                xOffset = printString(xOffset, startPos, Color.LIGHT_GRAY, String.valueOf(bpa.getCurrentFillLevel()));
+                xOffset = printString(xOffset, startPos, Color.LIGHT_GRAY, "/");
+                xOffset = printString(xOffset, startPos, Color.LIGHT_GRAY, String.valueOf(bpa.getCapacity()));
+                xOffset = printString(xOffset, startPos, Color.LIGHT_GRAY, ")");
+                if (bpa.getEfficiency() != 0)
+                {
+                    xOffset = printString(xOffset, startPos, Color.LIGHT_GRAY, ", ");
+                }
+            }
+            if (bpa.getEfficiency() != 0)
+            {
+                xOffset = printString(xOffset, startPos, Color.LIGHT_GRAY, "Efficiency:");
+                xOffset = printString(xOffset, startPos, Color.LIGHT_GRAY, String.valueOf(bpa.getEfficiency()));
+            }
         }
     }
 

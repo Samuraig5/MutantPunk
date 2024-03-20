@@ -7,6 +7,7 @@ import java.awt.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 
 public class BodyPart
 {
@@ -81,17 +82,37 @@ public class BodyPart
     private void addAbility(List<String[]> abilities)
     {
         for (int i = 0; i < abilities.size(); i++) {
-            System.out.println(Arrays.toString(abilities.get(i)));
+            int capacity = 0;
+            int efficiency = 0;
             String abilityName = abilities.get(i)[0];
             AbilityTag abilityTag = AbilityTag.translateStringToTag(abilities.get(i)[1]);
 
             String[] objTagStrings = new String[abilities.get(i).length-2];
-            for (int j = 0; j < abilities.get(i).length-2; j++) {
-                objTagStrings[j] = abilities.get(i)[j+2];
+            for (int j = 0; j < abilities.get(i).length-2; j++)
+            {
+                String[] s = abilities.get(i)[j+2].split("#");
+                if (s.length == 1)
+                {
+                    objTagStrings[j] = s[0];
+                }
+                else
+                {
+                    if (Objects.equals(s[0], "CAPACITY"))
+                    {
+                        capacity = Integer.parseInt(s[1]);
+                    }
+                    else if (Objects.equals(s[0], "EFFICIENCY"))
+                    {
+                        efficiency = Integer.parseInt(s[1]);
+                    }
+                }
             }
 
             ObjectTag[] objectTags = ObjectTag.translateStringToTag(objTagStrings);
+
             BodyPartAbility ability = new BodyPartAbility(abilityName, abilityTag, objectTags);
+            if (capacity != 0) {ability.setCapacity(capacity);}
+            if (efficiency != 0) {ability.setEfficiency(efficiency);}
             addAbility(ability);
         }
     }

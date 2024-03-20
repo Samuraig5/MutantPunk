@@ -177,26 +177,14 @@ public class Person extends Thing
         return false;
     }
 
+    public int getEatingCost()
+    {
+        return 50;
+    }
+
     @Override
     public void doAction()
     {
-        int eatingCost = 50;
-        List<Thing> things = getMyCell().getThings();
-        List<Thing> eatableThings = new ArrayList<>();
-        if (getActionPoints() > eatingCost) {
-            for (int i = 0; i < things.size(); i++) {
-                if (canDigest(things.get(i).getTags())) {
-                    things.get(i).destroy();
-                    changeActionPoints(-eatingCost);
-                    return;
-                }
-            }
-        }
-
-        int movementCost = Math.round(100/getMyTotalSpeed()*333);
-        if (getActionPoints() < movementCost) {return;}
-        changeActionPoints(-movementCost);
-        myThoughts.thinkAboutMovement();
+        myThoughts.think();
     }
-
 }
