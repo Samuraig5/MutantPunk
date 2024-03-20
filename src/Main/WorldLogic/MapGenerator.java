@@ -2,8 +2,6 @@ package Main.WorldLogic;
 
 import Main.Direction;
 import Main.ObjectLogic.Decorations.Decoration;
-import Main.ObjectLogic.Decorations.DirtFloor;
-import Main.ObjectLogic.Walls.Wall;
 import Main.Settings;
 
 public class MapGenerator
@@ -13,22 +11,22 @@ public class MapGenerator
         LocalMap newMap = new LocalMap(size, gameWorld, name);
         Cell[][] cells = newMap.getCells();
 
-        Decoration grass = new Decoration("Resources/Grass");
+        Decoration grass = new Decoration("Resources/Decorations/Grass");
+        Decoration dirtFloor = new Decoration("Resources/Decorations/DirtFloor");
+        Decoration stoneWall = new Decoration("Resources/Decorations/StoneWall");
 
         for (int x = 0; x < size[0]; x++)
         {
             for (int y = 0; y < size[1]; y++)
             {
-                cells[x][y].thingEnters(new DirtFloor(), Direction.NONE);
+                cells[x][y].thingEnters(dirtFloor.copy(), Direction.NONE);
                 if (Settings.spawnWalls && Math.random() < wallCover)
                 {
-                    Wall wall = new Wall();
-                    cells[x][y].thingEnters(wall, Direction.NONE);
+                    cells[x][y].thingEnters(stoneWall.copy(), Direction.NONE);
                 }
                 else if (Settings.spawnGrass)
                 {
-                    Decoration newGrass = grass.copy();
-                    cells[x][y].thingEnters(newGrass, Direction.NONE);
+                    cells[x][y].thingEnters(grass.copy(), Direction.NONE);
                 }
             }
         }

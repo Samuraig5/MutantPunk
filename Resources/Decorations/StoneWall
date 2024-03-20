@@ -1,0 +1,10 @@
+Name§Stone Wall
+Description§This is a solid wall carved out of stone.
+HasCollision§true
+Tags§SOLID
+RenderPriority§10
+Icon§■
+Colour§192:192:192
+ThingEnterNeighbourIcon§
+ThingLeaveIcon§
+ActionCostReturnNormalIcon§0

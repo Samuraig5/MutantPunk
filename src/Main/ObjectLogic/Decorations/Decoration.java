@@ -81,9 +81,9 @@ public class Decoration extends Thing
                     c[i] = s[i].toCharArray()[0];
                 }
                 thingLeaves = Arrays.copyOf(c, c.length);
-                //Set Action Cost To Return To Normal Icon
-                returnToNormalCost = Integer.parseInt(fileIn.nextLine().split("§")[1]);
             }
+            //Set Action Cost To Return To Normal Icon
+            returnToNormalCost = Integer.parseInt(fileIn.nextLine().split("§")[1]);
 
             MapIcon mi = new MapIcon();
             mi.setSymbol(defaultIcon);
