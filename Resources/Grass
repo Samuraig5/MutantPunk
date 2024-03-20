@@ -1,0 +1,10 @@
+Name§Grass
+Description§This is a cluster of lush green grass
+HasCollision§false
+Tags§SOLID:ORGANIC:PLANT
+RenderPriority§1
+Icon§.
+Colour§0:255:0
+ThingEnterNeighbourIcon§
+ThingLeaveIcon§|:/:-:\:|:/:-:\
+ActionCostReturnNormalIcon§333

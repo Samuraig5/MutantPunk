@@ -1,20 +1,19 @@
 package Main.WorldLogic;
 
 import Main.Direction;
+import Main.ObjectLogic.Decorations.Decoration;
 import Main.ObjectLogic.Decorations.DirtFloor;
-import Main.ObjectLogic.Decorations.Grass;
 import Main.ObjectLogic.Walls.Wall;
 import Main.Settings;
-
-import java.util.ArrayList;
 
 public class MapGenerator
 {
     static public LocalMap generateLocalMapWithWalls(int[] size, GameWorld gameWorld, String name, float wallCover)
     {
         LocalMap newMap = new LocalMap(size, gameWorld, name);
-
         Cell[][] cells = newMap.getCells();
+
+        Decoration grass = new Decoration("Resources/Grass");
 
         for (int x = 0; x < size[0]; x++)
         {
@@ -28,8 +27,8 @@ public class MapGenerator
                 }
                 else if (Settings.spawnGrass)
                 {
-                    Grass grass = new Grass();
-                    cells[x][y].thingEnters(grass, Direction.NONE);
+                    Decoration newGrass = grass.copy();
+                    cells[x][y].thingEnters(newGrass, Direction.NONE);
                 }
             }
         }
