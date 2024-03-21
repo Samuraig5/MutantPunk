@@ -644,10 +644,17 @@ public class ConsolePainter extends JPanel
             default:
                 throw new RuntimeException("The cursor can't move in that direction");
         }
-        int[] xyMax = c.wc.getActiveWorld().getActiveLocalMap().getSize();
+        if (c.getGameState() == GameState.WORLD_MENU)
+        {
+            xy[0] = MathHelper.clamp(xy[0],0, Settings.worldMapSizeX-1);
+            xy[1] = MathHelper.clamp(xy[1],0, Settings.worldMapSizeY-1);
+        }
+        else if (c.getGameState() == GameState.LOCAL_MAP_VIEW)
+        {
+            xy[0] = MathHelper.clamp(xy[0],0, Settings.localMapSizeX-1);
+            xy[1] = MathHelper.clamp(xy[1],0, Settings.localMapSizeY-1);
+        }
 
-        xy[0] = MathHelper.clamp(xy[0],0, xyMax[0]-1);
-        xy[1] = MathHelper.clamp(xy[1],0, xyMax[1]-1);
 
         setCursorPosition(xy);
     }
