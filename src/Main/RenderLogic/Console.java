@@ -79,6 +79,7 @@ public class Console
             throw new RuntimeException("BodyPlan file list is empty");
         }
     }
+
     public void setGameState(GameState gs)
     {
         if (gameState == GameState.LOCAL_MAP_VIEW || gameState == GameState.LOCAL_MAP_MENU)

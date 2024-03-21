@@ -5,7 +5,6 @@ import Main.WorldLogic.GameWorld;
 import Main.WorldLogic.LocalMap;
 import Main.WorldLogic.MapGenerator;
 
-import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,11 +14,6 @@ public class ConsoleMapInterface
     public ConsoleMapInterface(Console console)
     {
         c = console;
-    }
-
-    public LocalMap GenerateLocalMapWithWalls(int[] size, GameWorld gameWorld, String name, float wallCover)
-    {
-        return MapGenerator.generateLocalMapWithWalls(size,gameWorld,name,wallCover);
     }
 
     public MapIcon[][] TranslateCellsToSymbols(Cell[][] cells, int[] size)
@@ -44,19 +38,6 @@ public class ConsoleMapInterface
             }
         }
         return mapIcons;
-    }
-
-    public void openWorldMenu(GameWorld gw)
-    {
-        List<String> mainMenuOptions = new ArrayList<>();
-        mainMenuOptions.add("Generate a 10x10 local map \n\nCurrent Local Maps");
-
-        List<LocalMap> localMaps = gw.getLocalMaps();
-        for (int i = 0; i < localMaps.size(); i++)
-        {
-            mainMenuOptions.add("Local Map " + i);
-        }
-        //c.clir.renderList(mainMenuOptions, gw.getWorldName(), new LEGACY_WorldMenu(c, gw));
     }
 
     public void openLocalMapMenu(LocalMap lm)

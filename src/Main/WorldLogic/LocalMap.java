@@ -6,6 +6,7 @@ import Main.MathHelper;
 import Main.ObjectLogic.BodyLogic.Person;
 import Main.ObjectLogic.Thing;
 import Main.ObjectLogic.Wind;
+import Main.RenderLogic.MapIcon;
 import Main.Settings;
 
 import java.util.ArrayList;
@@ -20,14 +21,13 @@ public class LocalMap
      */
     private final int[] size = new int[2];
     private final Cell[][] cells;
-
     private GameWorld myWorld;
     private String mapName;
+    private MapIcon mapIcon;
     private List<Thing> localThings = new ArrayList<>();
-
     private Direction localWind = Direction.EAST;
 
-    protected LocalMap(int[] xySize, GameWorld gameWorld, String name)
+    protected LocalMap(int[] xySize, GameWorld gameWorld, MapIcon mapIcon, String name)
     {
         size[0] = xySize[0];
         size[1] = xySize[1];
@@ -43,7 +43,8 @@ public class LocalMap
 
         myWorld = gameWorld;
         mapName = name;
-        //this.localWind = Direction.getRandomDirection(false);
+        this.mapIcon = mapIcon;
+        this.localWind = Direction.getRandomDirection(false);
     }
 
     public int[] getSize()
@@ -100,6 +101,8 @@ public class LocalMap
         return people;
     }
 
+    public MapIcon getMapIcon() {return mapIcon;}
+
     public void addThingToLocalMap(Thing t)
     {
         localThings.add(t);
@@ -123,7 +126,7 @@ public class LocalMap
     public void updateTick()
     {
         float normalizeForTickSpeed = Settings.tickSpeed/100f;
-        float normalizeForMapSize = (Settings.mapSizeX+Settings.mapSizeY)/100f;
+        float normalizeForMapSize = (Settings.localMapSizeX +Settings.localMapSizeY)/100f;
         float chanceToSpawn = 0.1f * normalizeForTickSpeed * normalizeForMapSize;
 
         if (MathHelper.randomDecider(chanceToSpawn))

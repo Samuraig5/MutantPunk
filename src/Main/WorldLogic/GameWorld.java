@@ -1,6 +1,7 @@
 package Main.WorldLogic;
 
 import Main.ObjectLogic.BodyLogic.Person;
+import Main.Settings;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -8,8 +9,7 @@ import java.util.List;
 public class GameWorld
 {
     private String worldName;
-    private List<LocalMap> localMaps = new ArrayList<>();
-
+    private LocalMap[][] localMaps = new LocalMap[Settings.worldMapSizeX][Settings.worldMapSizeY];
     private LocalMap activeLocalMap;
     private List<Person> allCharacters = new ArrayList<>();
 
@@ -24,20 +24,10 @@ public class GameWorld
         this.worldName = worldName;
     }
 
-    public void addLocalMap(LocalMap localMap)
-    {
-        localMaps.add(localMap);
-    }
-
     public void addCharacter(Person person)
     {
         allCharacters.add(person);
         person.setGameWorld(this);
-    }
-
-    public void removeLocalMap(LocalMap localMap)
-    {
-        localMaps.remove(localMap);
     }
 
     public void removeCharacter(Person person)
@@ -50,7 +40,7 @@ public class GameWorld
         return worldName;
     }
 
-    public List<LocalMap> getLocalMaps() {
+    public LocalMap[][] getLocalMaps() {
         return localMaps;
     }
 

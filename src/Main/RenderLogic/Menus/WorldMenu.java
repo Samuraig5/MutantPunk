@@ -5,7 +5,6 @@ import Main.RenderLogic.GameState;
 import Main.Settings;
 import Main.WorldLogic.GameWorld;
 import Main.WorldLogic.LocalMap;
-import Main.WorldLogic.MapGenerator;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
@@ -21,9 +20,9 @@ public class WorldMenu implements KeyListener
         c = console;
     }
 
-    private void openLocalMapView(int i)
+    private void openLocalMapView(int x, int y)
     {
-        LocalMap lm = c.wc.getActiveWorld().getLocalMaps().get(i);
+        LocalMap lm = c.wc.getActiveWorld().getLocalMaps()[x][y];
         c.wc.getActiveWorld().setActiveLocalMap(lm);
         c.setGameState(GameState.LOCAL_MAP_MENU);
     }
@@ -31,6 +30,7 @@ public class WorldMenu implements KeyListener
     @Override
     public void keyPressed(KeyEvent e)
     {
+        /*
         switch (e.getKeyCode())
         {
             case KeyEvent.VK_A:
@@ -39,11 +39,11 @@ public class WorldMenu implements KeyListener
                     openLocalMapView(0);
                     break;
                 }
-                int[] size = {Settings.mapSizeX, Settings.mapSizeY};
+                int[] size = {Settings.localMapSizeX, Settings.localMapSizeY};
                 GameWorld gw = c.wc.getActiveWorld();
 
-                LocalMap lm = c.cm.GenerateLocalMapWithWalls(size, gw, "LocalMap: " + gw.getLocalMaps().size(), Settings.wallCover);
-                c.wc.getActiveWorld().setActiveLocalMap(lm);
+                //LocalMap lm = c.cm.GenerateLocalMap(size, gw, "LocalMap: " + gw.getLocalMaps().size(), Settings.wallCover);
+                //c.wc.getActiveWorld().setActiveLocalMap(lm);
 
                 c.setGameState(GameState.LOCAL_MAP_MENU);
                 break;
@@ -126,6 +126,7 @@ public class WorldMenu implements KeyListener
                 c.setGameState(GameState.MAIN_MENU);
                 break;
         }
+         */
 
     }
 

@@ -11,12 +11,16 @@ public class Settings
     public static int tickSpeed = 10;
     public static int actionPointsPerTick = tickSpeed;
 
-    // == MAP GENERATION ==
+    // == WORLD MAP GENERATION ==
+    public static int worldMapSizeX = 5;
+    public static int worldMapSizeY = 5;
+
+    // == LOCAL MAP GENERATION ==
     public static boolean spawnGrass = true;
     public static boolean spawnWalls = true;
     public static float wallCover = 0.01f;
-    public static int mapSizeX = 250;
-    public static int mapSizeY = 250;
+    public static int localMapSizeX = 250;
+    public static int localMapSizeY = 250;
 
     // == STATIC - DO NOT CHANGE ==
     public static final float relativeFontHeight = 1.2f;

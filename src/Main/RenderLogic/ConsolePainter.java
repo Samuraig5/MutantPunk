@@ -9,6 +9,7 @@ import Main.ObjectLogic.BodyLogic.Person;
 import Main.ObjectLogic.ObjectTag;
 import Main.ObjectLogic.Thing;
 import Main.Settings;
+import Main.WorldLogic.GameWorld;
 import Main.WorldLogic.LocalMap;
 
 import javax.swing.*;
@@ -271,20 +272,46 @@ public class ConsolePainter extends JPanel
 
     private void drawWorldMenu()
     {
-        printCentredString(10, Color.lightGray, "Welcome to a new world");
+        GameWorld gw = c.wc.getActiveWorld();
 
-        printString(10, 70, Color.LIGHT_GRAY, "a: Generate a new Local Map");
-        List<LocalMap> localMaps = c.wc.getActiveWorld().getLocalMaps();
-        List<String> localMapsNames = new ArrayList<>();
+        MapIcon[][] mapIcons = new MapIcon[Settings.worldMapSizeX][Settings.worldMapSizeY];
+        for (int x = 0; x < Settings.worldMapSizeX; x++)
+        {
+            for (int y = 0; y < Settings.worldMapSizeY; y++)
+            {
+                mapIcons[x][y] = gw.getLocalMaps()[x][y].getMapIcon();
+            }
+        }
 
-        Color current = g.getColor();
-        g.setColor(Color.lightGray);
-        g.fillRect(10, 75, 200, 1);
-        g.setColor(current);
+        for (int y = 0; y < Settings.worldMapSizeY; y++)
+        {
+            for (int x = 0; x < Settings.worldMapSizeX; x++)
+            {
+                int xBase = Math.round(x*Settings.fontHeight);
+                int yBase = Math.round((y+1)*Settings.fontHeight);
 
-        for (int i = 0; i < localMaps.size(); i++) {
-            printString(10, 80+Math.round((i+1)*Settings.fontHeight), Color.LIGHT_GRAY,
-                    MathHelper.indexToLetter(i+1) + ": " + localMaps.get(i).getMapName());
+                int xCursorOffset = Math.round(cursorPosition[0]*Settings.fontHeight);
+                int yCursorOffset = Math.round(cursorPosition[1]*Settings.fontHeight);
+
+                int xScreenCenter = Math.round((float) Settings.windowWidth /2);
+                int yScreenCenter = Math.round((float) Settings.windowHeight /2);
+
+                int xPos = xBase-xCursorOffset+xScreenCenter;
+                int yPos = yBase-yCursorOffset+yScreenCenter;
+
+                if (cursorEnabled && focusedThing == null && cursorPosition[0] == x && cursorPosition[1] == y)
+                {
+                    printString(xPos, yPos, Color.yellow,"X");
+                }
+                else
+                {
+                    MapIcon mi = mapIcons[x][y];
+                    String s = String.valueOf(mi.getSymbol());
+                    Color c =  mi.getIconColour();
+
+                    printString(xPos, yPos, mi.getIconColour(),mi.getSymbol()+"");
+                }
+            }
         }
     }
 

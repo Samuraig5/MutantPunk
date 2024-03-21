@@ -25,10 +25,18 @@ public enum Direction
         Direction[] values = Direction.values();
         int length = values.length;
         Direction res;
-        do {
+        if (!allowNone)
+        {
+            do {
+                int randIndex = new Random().nextInt(length);
+                res = values[randIndex];
+            } while (res == Direction.NONE);
+        }
+        else
+        {
             int randIndex = new Random().nextInt(length);
             res = values[randIndex];
-        } while (res == Direction.NONE);
+        }
 
         return res;
     }

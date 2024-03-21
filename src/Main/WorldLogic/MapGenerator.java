@@ -2,25 +2,32 @@ package Main.WorldLogic;
 
 import Main.Direction;
 import Main.ObjectLogic.Decorations.Decoration;
+import Main.RenderLogic.MapIcon;
 import Main.Settings;
+
+import java.awt.*;
+import java.io.File;
+import java.util.Random;
+import java.util.Set;
 
 public class MapGenerator
 {
-    static public LocalMap generateLocalMapWithWalls(int[] size, GameWorld gameWorld, String name, float wallCover)
+    static public LocalMap generateLocalMap(GameWorld gameWorld, String name, File biome)
     {
-        LocalMap newMap = new LocalMap(size, gameWorld, name);
+        LocalMap newMap = new LocalMap(new int[] {Settings.localMapSizeX, Settings.localMapSizeY},
+                gameWorld, new MapIcon('#', Color.green), name);
         Cell[][] cells = newMap.getCells();
 
         Decoration grass = new Decoration("Resources/Decorations/Grass");
         Decoration dirtFloor = new Decoration("Resources/Decorations/DirtFloor");
         Decoration stoneWall = new Decoration("Resources/Decorations/StoneWall");
 
-        for (int x = 0; x < size[0]; x++)
+        for (int x = 0; x < Settings.localMapSizeX; x++)
         {
-            for (int y = 0; y < size[1]; y++)
+            for (int y = 0; y < Settings.localMapSizeY; y++)
             {
                 cells[x][y].thingEnters(dirtFloor.copy(), Direction.NONE);
-                if (Settings.spawnWalls && Math.random() < wallCover)
+                if (Settings.spawnWalls)
                 {
                     cells[x][y].thingEnters(stoneWall.copy(), Direction.NONE);
                 }
@@ -30,12 +37,27 @@ public class MapGenerator
                 }
             }
         }
-        newMap.getMyWorld().getLocalMaps().add(newMap);
+        //newMap.getMyWorld().getLocalMaps().add(newMap);
         return newMap;
     }
 
     static public GameWorld generateNewGameWorld(String worldName)
     {
-        return new GameWorld(worldName);
+        GameWorld gw = new GameWorld(worldName);
+
+        File directory = new File("Resources/Biomes");
+        File[] biomes = directory.listFiles();
+
+        for (int x = 0; x < Settings.worldMapSizeX; x++)
+        {
+            for (int y = 0; y < Settings.worldMapSizeY; y++)
+            {
+                int rnd = new Random().nextInt(biomes.length);
+                File targetBiome = biomes[rnd];
+                gw.getLocalMaps()[x][y] = generateLocalMap(gw, "Local Map: " + x + " / " + y, targetBiome);
+            }
+        }
+
+        return gw;
     }
 }
