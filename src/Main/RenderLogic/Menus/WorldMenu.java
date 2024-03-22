@@ -14,8 +14,6 @@ public class WorldMenu implements KeyListener
 {
     Console c;
 
-    int currentPage = 0;
-
     public WorldMenu(Console console)
     {
         c = console;
@@ -52,6 +50,10 @@ public class WorldMenu implements KeyListener
                 c.cp.setCursorEnabled(true);
                 c.cp.moveCursor(Direction.EAST, 1);
                 c.cp.setFocusedThing(null);
+                break;
+            case KeyEvent.VK_ENTER:
+                c.wc.getActiveWorld().setActiveLocalMap(c.wc.getActiveWorld().getLocalMaps()[c.cp.getCursorPosition()[0]][c.cp.getCursorPosition()[1]]);
+                c.setGameState(GameState.LOCAL_MAP_MENU);
                 break;
         }
         /*
