@@ -27,7 +27,7 @@ public class LocalMap
     private List<Thing> localThings = new ArrayList<>();
     private Direction localWind = Direction.EAST;
 
-    protected LocalMap(int[] xySize, GameWorld gameWorld, MapIcon mapIcon, String name)
+    protected LocalMap(int[] xySize, GameWorld gameWorld, MapIcon mapIcon, String name, boolean spawnWind)
     {
         size[0] = xySize[0];
         size[1] = xySize[1];
@@ -44,7 +44,14 @@ public class LocalMap
         myWorld = gameWorld;
         mapName = name;
         this.mapIcon = mapIcon;
-        this.localWind = Direction.getRandomDirection(false);
+        if (spawnWind)
+        {
+            this.localWind = Direction.getRandomDirection(false);
+        }
+        else
+        {
+            this.localWind = Direction.NONE;
+        }
     }
 
     public int[] getSize()
