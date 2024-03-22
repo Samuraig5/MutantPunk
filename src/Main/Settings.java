@@ -16,9 +16,6 @@ public class Settings
     public static int worldMapSizeY = 5;
 
     // == LOCAL MAP GENERATION ==
-    public static boolean spawnGrass = true;
-    public static boolean spawnWalls = true;
-    public static float wallCover = 0.01f;
     public static int localMapSizeX = 250;
     public static int localMapSizeY = 250;
 

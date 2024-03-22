@@ -32,6 +32,7 @@ public class LocalMapMenu implements KeyListener
                 return;
             case KeyEvent.VK_ESCAPE:
                 c.setGameState(GameState.WORLD_MENU);
+                c.cp.setCursorPosition(new int[] {0,0});
                 return;
         }
 

@@ -54,6 +54,7 @@ public class WorldMenu implements KeyListener
             case KeyEvent.VK_ENTER:
                 c.wc.getActiveWorld().setActiveLocalMap(c.wc.getActiveWorld().getLocalMaps()[c.cp.getCursorPosition()[0]][c.cp.getCursorPosition()[1]]);
                 c.setGameState(GameState.LOCAL_MAP_MENU);
+                c.cp.setCursorPosition(new int[] {0,0});
                 break;
         }
         /*
