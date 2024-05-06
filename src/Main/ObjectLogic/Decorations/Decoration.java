@@ -7,20 +7,23 @@ import Main.ObjectLogic.Thing;
 import Main.ObjectLogic.Wind;
 import Main.RenderLogic.MapIcon;
 
+import javax.imageio.ImageIO;
 import java.awt.*;
 import java.io.File;
+import java.io.IOException;
 import java.util.*;
 
 public class Decoration extends Thing
 {
     private int pushedDownValue;
     private int returnToNormalCost;
+    private Image defaultSprite;
     private char defaultIcon;
     private Color defaultColour;
     private char[] thingEntersNeightbour;
     private char[] thingLeaves;
 
-    public Decoration(String name, String desc, boolean collision, ObjectTag[] tags, int renderPriority, char defaultIcon,
+    public Decoration(String name, String desc, boolean collision, ObjectTag[] tags, int renderPriority, Image defaultSprite, char defaultIcon,
                       Color defaultColour, char[] thingEntersNeighbour, char[] thingLeaves, int returnToNormalCost)
     {
         setName(name);
@@ -28,6 +31,7 @@ public class Decoration extends Thing
         setCollision(collision);
         setTags(tags);
         setRenderPriority(renderPriority);
+        this.defaultSprite = defaultSprite;
         this.defaultIcon = defaultIcon;
         this.defaultColour = defaultColour;
         this.thingEntersNeightbour = thingEntersNeighbour;
@@ -35,6 +39,7 @@ public class Decoration extends Thing
         this.returnToNormalCost = returnToNormalCost;
 
         MapIcon mi = new MapIcon();
+        mi.setSprite(defaultSprite);
         mi.setSymbol(defaultIcon);
         mi.setIconColour(defaultColour);
         setMapIcon(mi);
@@ -43,6 +48,8 @@ public class Decoration extends Thing
     {
         try
         {
+            MapIcon mi = new MapIcon();
+
             Scanner fileIn = new Scanner(new File(filePath));
             //Set Name
             setName(fileIn.nextLine().split("§")[1]);
@@ -54,11 +61,20 @@ public class Decoration extends Thing
             setTags(ObjectTag.translateStringToTag(fileIn.nextLine().split("§")[1].split(":")));
             //Set Render Priority
             setRenderPriority(Integer.parseInt(fileIn.nextLine().split("§")[1]));
+            String[] spriteIcon = fileIn.nextLine().split("§")[1].split(":");
             //Set Default Icon
-            defaultIcon = fileIn.nextLine().split("§")[1].toCharArray()[0];
+            defaultIcon = spriteIcon[0].toCharArray()[0];
+            mi.setSymbol(defaultIcon);
+            //Set Sprite
+            if (spriteIcon.length>1)
+            {
+                defaultSprite = ImageIO.read(new File(spriteIcon[1]));
+                mi.setSprite(defaultSprite);
+            }
             //Set Default Colour
             String[] s = fileIn.nextLine().split("§")[1].split(":");
             defaultColour = new Color(Integer.parseInt(s[0]), Integer.parseInt(s[1]), Integer.parseInt(s[2]));
+            mi.setIconColour(defaultColour);
 
             //Set Thing Enters Icons
             s = fileIn.nextLine().split("§");
@@ -85,9 +101,6 @@ public class Decoration extends Thing
             //Set Action Cost To Return To Normal Icon
             returnToNormalCost = Integer.parseInt(fileIn.nextLine().split("§")[1]);
 
-            MapIcon mi = new MapIcon();
-            mi.setSymbol(defaultIcon);
-            mi.setIconColour(defaultColour);
             setMapIcon(mi);
         }
         catch (Exception e)
@@ -225,6 +238,6 @@ public class Decoration extends Thing
     public Decoration copy()
     {
         return new Decoration(getName(),getDescription(),hasCollision(),getTags(),getRenderPriority(),
-                defaultIcon,defaultColour,thingEntersNeightbour,thingLeaves,returnToNormalCost);
+                defaultSprite, defaultIcon,defaultColour,thingEntersNeightbour,thingLeaves,returnToNormalCost);
     }
 }

@@ -12,19 +12,6 @@ public class MapIcon
     private char symbol;
     private Color iconColour;
 
-    public MapIcon(String sprite)
-    {
-        this.sprite = null;
-        try {
-            this.sprite = ImageIO.read(new File(sprite));
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
-    public MapIcon(Image sprite)
-    {
-        this.sprite = sprite;
-    }
     public MapIcon(char symbol, Color iconColour)
     {
         this.symbol = symbol;
@@ -46,6 +33,7 @@ public class MapIcon
         if (sprite == null) { return false;}
         else { return true; }
     }
+    public void setSprite(Image sprite) {this.sprite = sprite;}
     public Image getSprite() {return sprite;}
     public char getSymbol(){return symbol;}
     public void setSymbol(char newSymbol){symbol = newSymbol;}

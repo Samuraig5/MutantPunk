@@ -137,13 +137,13 @@ public class ConsolePainter extends JPanel implements ImageObserver
         }
         else
         {
-            return printString(xPos, yPos, mi.getIconColour(),mi.getSymbol()+"");
+            return printString(Math.round(xPos+Settings.fontWidth*(0.1f)), Math.round(yPos+Settings.fontHeight*0.6f), mi.getIconColour(),mi.getSymbol()+"");
         }
     }
 
     private int printSprite(int xPos, int yPos, Image image)
     {
-        g.drawImage(image, xPos, yPos, this);
+        g.drawImage(image, xPos, yPos, Settings.fontSize, Settings.fontSize, this);
         return yPos + image.getWidth(this);
     }
 
@@ -376,7 +376,8 @@ public class ConsolePainter extends JPanel implements ImageObserver
 
                 if (cursorEnabled && focusedThing == null && cursorPosition[0] == x && cursorPosition[1] == y)
                 {
-                    printString(xPos, yPos, Color.yellow,"X");
+                    MapIcon mi = new MapIcon('X', Color.yellow);
+                    printThing(xPos, yPos, mi);
                 }
                 else
                 {

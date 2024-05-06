@@ -6,8 +6,10 @@ import Main.Settings;
 public class LogoScreen
 {
     Console c;
-    int xSize = Math.round(Settings.windowWidth/Settings.fontWidth);
-    int ySize = Math.round(Settings.windowHeight/Settings.fontHeight)-10;
+    //int xSize = Math.round(Settings.windowWidth/Settings.fontWidth);
+    int xSize = Math.round(Settings.windowWidth/(12*2/3f));
+    //int ySize = Math.round(Settings.windowHeight/Settings.fontHeight)-10;
+    int ySize = Math.round(Settings.windowHeight/(12*1.2f))-10;
     LogoCell[][] screen;
     int TICKS_PER_UPDATE = 2;
 
@@ -28,7 +30,8 @@ public class LogoScreen
             }
         }
 
-        int xOff = Math.round(Settings.windowWidth/Settings.fontWidth/2)-Math.round(mat[0].length/2f);
+        //int xOff = Math.round(Settings.windowWidth/Settings.fontWidth/2)-Math.round(mat[0].length/2f);
+        int xOff = Math.round(Settings.windowWidth/(12*(2/3f))/2)-Math.round(mat[0].length/2f);
         int yOff = 10;
         for (int y = 0; y < mat.length; y++) {
             for (int x = 0; x < mat[y].length; x++) {

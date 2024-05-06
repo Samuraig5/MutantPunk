@@ -5,8 +5,10 @@ public class Settings
     // == RENDERING ==
     public static final int windowWidth = 1600;
     public static final int windowHeight = 800;
+    public static final int gridScale = 48;
+    public static final int menuFontSize = 12;
+    //TODO: Replace this with gridScale & menuFontSize to separate map & menu scaling
     public static final int fontSize = 12;
-
     // == GAME RULES ==
     public static int tickSpeed = 10;
     public static int actionPointsPerTick = tickSpeed;
@@ -23,5 +25,5 @@ public class Settings
     public static final float relativeFontHeight = 1.2f;
     public static final float fontHeight = fontSize * relativeFontHeight;
     public static final float relativeFontWidth = 1.2f; //2/3f for ASCII rendering
-     public static final float fontWidth = fontSize * relativeFontWidth;
+    public static final float fontWidth = fontSize * relativeFontWidth;
 }
