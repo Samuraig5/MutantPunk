@@ -90,7 +90,7 @@ public class ConsolePainter extends JPanel implements ImageObserver
         this.g = g;
 
         g.setColor(Color.LIGHT_GRAY);
-        g.setFont(new Font("Courier New", Font.PLAIN, Settings.fontSize));
+        g.setFont(new Font("Courier New", Font.PLAIN, Settings.gridScale));
 
         drawBackground(backgroundColour);
 
@@ -137,13 +137,13 @@ public class ConsolePainter extends JPanel implements ImageObserver
         }
         else
         {
-            return printString(Math.round(xPos+Settings.fontWidth*(0.1f)), Math.round(yPos+Settings.fontHeight*0.6f), mi.getIconColour(),mi.getSymbol()+"");
+            return printString(Math.round(xPos+Settings.gridScale*(0.1f)), Math.round(yPos+Settings.gridScale*0.6f), mi.getIconColour(),mi.getSymbol()+"");
         }
     }
 
     private int printSprite(int xPos, int yPos, Image image)
     {
-        g.drawImage(image, xPos, yPos, Settings.fontSize, Settings.fontSize, this);
+        g.drawImage(image, xPos, yPos, Settings.gridScale, Settings.gridScale, this);
         return yPos + image.getWidth(this);
     }
 
@@ -154,7 +154,7 @@ public class ConsolePainter extends JPanel implements ImageObserver
         for (int i = 0; i < content.length; i++)
         {
             printString(x,y,content[i].getColor(), content[i].getString());
-            y += Settings.fontHeight;
+            y += Settings.gridScale;
         }
         return y;
     }
@@ -165,7 +165,7 @@ public class ConsolePainter extends JPanel implements ImageObserver
         for (int i = 0; i < content.length; i++)
         {
             printString(x,y,content[i].getColor(), content[i].getString());
-            x += Math.round(Settings.fontWidth*content[i].getString().length());
+            x += Math.round(Settings.gridScale*content[i].getString().length());
         }
         return x;
     }
@@ -176,7 +176,7 @@ public class ConsolePainter extends JPanel implements ImageObserver
         g.setColor(c);
         g.drawString(s, xPos, yPos);
         g.setColor(current);
-        return xPos + Math.round(s.length()*Settings.fontWidth);
+        return xPos + Math.round(s.length()*Settings.gridScale);
     }
 
     private void printString(int xPos, int yPos, Color c, String s, int fontSize)
@@ -192,49 +192,12 @@ public class ConsolePainter extends JPanel implements ImageObserver
         g.setColor(currentColour);
     }
 
-    private int printString(int xPos, int yPos, Color c, String[] s)
-    {
-        for (int i = 0; i < s.length; i++)
-        {
-            printString(xPos,yPos+Math.round(i*Settings.fontSize*Settings.relativeFontHeight), c,s[i]);
-        }
-        return yPos+Math.round((s.length-1)*Settings.fontSize*Settings.relativeFontHeight);
-    }
-
-    private void printString(int xPos, int yPos, Color c, List<String> s)
-    {
-        for (int i = 0; i < s.size(); i++)
-        {
-            printString(xPos,yPos+Math.round(i*Settings.fontSize*Settings.relativeFontHeight), c,s.get(i));
-        }
-    }
-
     private void printCentredString(int yPos, Color c, String s)
     {
-        float stringWidth = ((s.length()-1)* (Settings.fontSize)*Settings.relativeFontWidth);
+        float stringWidth = ((s.length()-1)*Settings.gridScale);
         int xPos = Math.round((Settings.windowWidth-stringWidth)/2);
 
         printString(xPos,yPos,c,s);
-    }
-
-    private void printCentredString(int yPos, Color c, String[] s)
-    {
-        for (int i = 0; i < s.length; i++) {
-            float stringWidth = ((s[i].length()-1)* (Settings.fontSize)*Settings.relativeFontWidth);
-            int xPos = Math.round((Settings.windowWidth-stringWidth)/2);
-
-            printString(xPos,yPos+Math.round(i*Settings.fontSize*Settings.relativeFontHeight), c,s[i]);
-        }
-    }
-
-    private void printCentredString(int yPos, Color c, List<String> s)
-    {
-        for (int i = 0; i < s.size(); i++) {
-            float stringWidth = ((s.get(i).length()-1)* (Settings.fontSize)*Settings.relativeFontWidth);
-            int xPos = Math.round((Settings.windowWidth-stringWidth)/2);
-
-            printString(xPos,yPos+Math.round(i*Settings.fontSize*Settings.relativeFontHeight), c,s.get(i));
-        }
     }
 
     private void drawBackground(Color backColor)
@@ -255,10 +218,10 @@ public class ConsolePainter extends JPanel implements ImageObserver
         Font currentFont = g.getFont();
         Color current = g.getColor();
         g.setColor(Color.green);
-        g.setFont(new Font("Courier New", Font.PLAIN, Settings.fontSize+1));
+        g.setFont(new Font("Courier New", Font.PLAIN, Settings.menuFontSize+1));
         for (int x = 0; x < mat.length; x++) {
             for (int y = 0; y < mat[x].length; y++) {
-                g.drawString(mat[x][y]+"", Math.round(x*Settings.fontWidth), Math.round(y*Settings.fontHeight));
+                g.drawString(mat[x][y]+"", Math.round(x*Settings.menuFontWidth), Math.round(y*Settings.menuFontHeight));
 
             }
         }
@@ -267,28 +230,28 @@ public class ConsolePainter extends JPanel implements ImageObserver
 
         //TODO: Add some easter eggs in light gray so they are only visible when the slime fills up
 
-        printString(Math.round(Settings.fontWidth*4) ,Math.round(Settings.fontHeight*24), backgroundColour, "Thank Memk!");
+        printString(Math.round(Settings.menuFontWidth*4) ,Math.round(Settings.menuFontHeight*24), backgroundColour, "Thank Memk!");
 
         String s1 = "Strange creatures in a strange land";
         String s2 = "a: Generate a new World";
 
-        int width = Math.round(s1.length() * Settings.fontWidth);
-        int height = Math.round(3.5f * Settings.fontHeight);
-        int centered = Math.round((Settings.windowWidth-width) / 2f) - Math.round(Settings.fontWidth*1.5f);
+        int width = Math.round(s1.length() * Settings.menuFontWidth);
+        int height = Math.round(3.5f * Settings.menuFontHeight);
+        int centered = Math.round((Settings.windowWidth-width) / 2f) - Math.round(Settings.menuFontWidth*1.5f);
 
         g.setColor(backgroundColour);
         g.fillRoundRect(centered,
-                Math.round(Settings.fontHeight*(24)),
+                Math.round(Settings.menuFontWidth*(24)),
                 width, height, 5, 5);
         g.setColor(Color.LIGHT_GRAY);
         g.drawRoundRect(centered,
-                Math.round(Settings.fontHeight*(24)),
+                Math.round(Settings.menuFontHeight*(24)),
                 width, height, 5, 5);
 
         g.setColor(current);
 
-        printCentredString(Math.round(Settings.fontHeight*(25)), Color.green, s1);
-        printCentredString(Math.round(Settings.fontHeight*(27)), Color.lightGray, s2);
+        printCentredString(Math.round(Settings.menuFontHeight*(25)), Color.green, s1);
+        printCentredString(Math.round(Settings.menuFontHeight*(27)), Color.lightGray, s2);
     }
 
     private void drawWorldMenu()
@@ -308,11 +271,11 @@ public class ConsolePainter extends JPanel implements ImageObserver
         {
             for (int x = 0; x < Settings.worldMapSizeX; x++)
             {
-                int xBase = Math.round(x*Settings.fontHeight);
-                int yBase = Math.round((y+1)*Settings.fontHeight);
+                int xBase = Math.round(x*Settings.gridScale);
+                int yBase = Math.round((y+1)*Settings.gridScale);
 
-                int xCursorOffset = Math.round(cursorPosition[0]*Settings.fontHeight);
-                int yCursorOffset = Math.round(cursorPosition[1]*Settings.fontHeight);
+                int xCursorOffset = Math.round(cursorPosition[0]*Settings.gridScale);
+                int yCursorOffset = Math.round(cursorPosition[1]*Settings.gridScale);
 
                 int xScreenCenter = Math.round((float) Settings.windowWidth /2);
                 int yScreenCenter = Math.round((float) Settings.windowHeight /2);
@@ -341,13 +304,13 @@ public class ConsolePainter extends JPanel implements ImageObserver
         printCentredString(10, Color.lightGray, c.wc.getActiveWorld().getActiveLocalMap().getMapName());
 
         printString(10, 70, Color.LIGHT_GRAY, "a: Open map view");
-        printString(10, Math.round(70+(1*Settings.fontHeight)), Color.LIGHT_GRAY, "b: List all local characters");
+        printString(10, Math.round(70+(1*Settings.menuFontHeight)), Color.LIGHT_GRAY, "b: List all local characters");
         List<File> bodyPlans = c.getSortedBodyPlans();
 
         for (int i = 0; i < bodyPlans.size(); i++)
         {
             String name = MathHelper.indexToLetter(i+2) + ": " + bodyPlans.get(i).getName();
-            printString(10, Math.round(70+((i+2)*Settings.fontHeight)), Color.LIGHT_GRAY, name);
+            printString(10, Math.round(70+((i+2)*Settings.menuFontHeight)), Color.LIGHT_GRAY, name);
         }
     }
 
@@ -362,11 +325,11 @@ public class ConsolePainter extends JPanel implements ImageObserver
         {
             for (int x = 0; x < xy[0]; x++)
             {
-                int xBase = Math.round(x*Settings.fontHeight);
-                int yBase = Math.round((y+1)*Settings.fontHeight);
+                int xBase = Math.round(x*Settings.gridScale);
+                int yBase = Math.round((y+1)*Settings.gridScale);
 
-                int xCursorOffset = Math.round(cursorPosition[0]*Settings.fontHeight);
-                int yCursorOffset = Math.round(cursorPosition[1]*Settings.fontHeight);
+                int xCursorOffset = Math.round(cursorPosition[0]*Settings.gridScale);
+                int yCursorOffset = Math.round(cursorPosition[1]*Settings.gridScale);
 
                 int xScreenCenter = Math.round((float) Settings.windowWidth /2);
                 int yScreenCenter = Math.round((float) Settings.windowHeight /2);
@@ -418,10 +381,10 @@ public class ConsolePainter extends JPanel implements ImageObserver
             {
                 if (listSelector == i)
                 {
-                    printString(startPointX-10, 20+Math.round((i+1)*Settings.fontHeight),
+                    printString(startPointX-10, 20+Math.round((i+1)*Settings.menuFontHeight),
                             Color.yellow, ">");
                 }
-                printString(startPointX, 20+Math.round((i+1)*Settings.fontHeight),
+                printString(startPointX, 20+Math.round((i+1)*Settings.menuFontHeight),
                         things.get(i).getMapIcon().getIconColour(), things.get(i).getName());
             }
         }
@@ -438,14 +401,14 @@ public class ConsolePainter extends JPanel implements ImageObserver
             if (cursorEnabled)
             {
                 width = 100;
-                height =  Math.round(Settings.fontHeight*2);
+                height =  Math.round(Settings.menuFontHeight*2);
                 startPointX = Settings.windowWidth-270-width-2;
                 startPointY = 5;
             }
             else
             {
                 width = 100;
-                height =  Math.round(Settings.fontHeight*2);
+                height =  Math.round(Settings.menuFontHeight*2);
                 startPointX = Settings.windowWidth-width-20;
                 startPointY = 5;
             }
@@ -458,8 +421,8 @@ public class ConsolePainter extends JPanel implements ImageObserver
             g.setColor(current);
 
             String s = "PAUSED";
-            int stringLength = Math.round(Settings.fontWidth*s.length());
-            int stringHeight = Math.round(Settings.fontHeight);
+            int stringLength = Math.round(Settings.menuFontWidth*s.length());
+            int stringHeight = Math.round(Settings.menuFontHeight);
             printString(startPointX+(width/2)-(stringLength/2),
                     startPointY+(height/2)+(stringHeight/3),
                     c.errorColour,s);
@@ -472,7 +435,7 @@ public class ConsolePainter extends JPanel implements ImageObserver
 
         for (int i = 0; i < people.size(); i++)
         {
-            printString(10, 80+Math.round((i)*Settings.fontHeight), Color.LIGHT_GRAY,
+            printString(10, 80+Math.round((i)*Settings.menuFontHeight), Color.LIGHT_GRAY,
                     MathHelper.indexToLetter(i) + ": " + people.get(i).getName());
         }
     }
@@ -481,8 +444,8 @@ public class ConsolePainter extends JPanel implements ImageObserver
     {
         if (inspectedThing == null) {throw new RuntimeException("The ConsolePainter is trying to draw a body but no person is focused");}
 
-        int nameFontSize = Settings.fontSize*2;
-        int nameOffset = 10 + Math.round(nameFontSize*Settings.relativeFontHeight);
+        int nameFontSize = Settings.menuFontSize*2;
+        int nameOffset = 10 + Math.round(Settings.menuFontHeight);
         printString(10, nameOffset, inspectedThing.getMapIcon().getIconColour(), inspectedThing.getName() + " (" + inspectedThing.getMapIcon().getSymbol() + ")" , nameFontSize);
 
         if (inspectedThing.getDescription() != null)
@@ -496,7 +459,7 @@ public class ConsolePainter extends JPanel implements ImageObserver
             String tag = "[" + inspectedThing.getTags()[i].name() + "] ";
             printString(offset, nameOffset+35, Color.lightGray, tag);
 
-            int stringLength = Math.round(Settings.fontWidth*tag.length());
+            int stringLength = Math.round(Settings.menuFontWidth*tag.length());
             offset += stringLength;
         }
 
@@ -511,26 +474,26 @@ public class ConsolePainter extends JPanel implements ImageObserver
             for (int i = 0; i < stats.length; i++) {
                 printString(paintX,paintY, Color.LIGHT_GRAY, stats[i][0]);
                 for (int j = 1; j < stats[i].length; j++) {
-                    int x = paintX + Math.round(Settings.fontWidth*j*cellWidth)+Math.round(Settings.fontWidth*cellWidth);
+                    int x = paintX + Math.round(Settings.menuFontWidth*j*cellWidth)+Math.round(Settings.menuFontWidth*cellWidth);
                     printString(x,paintY, Color.LIGHT_GRAY, stats[i][j]);
                 }
-                paintY += Math.round(Settings.fontHeight);
+                paintY += Math.round(Settings.menuFontWidth);
             }
 
             ColouredString[][] body = c.cb.getBodyView((Person) inspectedThing);
             for (int i = 0; i < body.length; i++)
             {
-                printColouredStringHorizontal(10,paintY+nameOffset+Math.round((i)*Settings.fontHeight), body[i]);
+                printColouredStringHorizontal(10,paintY+nameOffset+Math.round((i)*Settings.menuFontHeight), body[i]);
             }
         }
     }
 
     private void drawBodyPartMenu()
     {
-        int nameFontSize = Settings.fontSize*2;
-        int y = 10 + Math.round(nameFontSize*Settings.relativeFontHeight);
+        int nameFontSize = Settings.menuFontSize*2;
+        int y = 10 + Math.round(Settings.menuFontHeight);
         printString(10,y,Color.LIGHT_GRAY, inspectedBodyPart.getName(),nameFontSize);
-        y += Math.round((nameFontSize*Settings.relativeFontHeight)+Settings.fontHeight);
+        y += Settings.menuFontHeight;
 
         ColouredString[] cs = new ColouredString[4];
         cs[0] = new ColouredString("Health", Color.LIGHT_GRAY);
@@ -555,12 +518,12 @@ public class ConsolePainter extends JPanel implements ImageObserver
 
         printColouredStringHorizontal(10, y, cs);
 
-        y += Math.round(Settings.fontHeight);
+        y += Math.round(Settings.menuFontHeight);
 
         printString(10,y,Color.LIGHT_GRAY,"Attachment Capacity: " +
                 inspectedBodyPart.getRemainingAttachmentCapacity() + " / " +
                 inspectedBodyPart.getStats()[BodyPartStat.ATTACHMENT_CAPACITY]);
-        y += Math.round(Settings.fontHeight)*2;
+        y += Math.round(Settings.menuFontHeight)*2;
 
         y = drawBodyPartStats(y);
         drawBodyPartAbilities(y);
@@ -576,22 +539,22 @@ public class ConsolePainter extends JPanel implements ImageObserver
         String[][] statDesc = {{"","Final", "Gross", "Modifier", "Upstream", "Upstream", "Person"}, {"","", "", "", "Gross", "Modifier", "Modifier"}};
         for (int j = 0; j < stats[0].length; j++)
         {
-            int x = paintX + Math.round(Settings.fontWidth*j*cellWidth)+Math.round(Settings.fontWidth*cellWidth);
+            int x = paintX + Math.round(Settings.menuFontWidth*j*cellWidth)+Math.round(Settings.menuFontWidth*cellWidth);
             printString(x,paintY, Color.LIGHT_GRAY, statDesc[0][j]);
-            printString(x,paintY+Math.round(Settings.fontHeight), Color.LIGHT_GRAY, statDesc[1][j]);
+            printString(x,paintY+Math.round(Settings.menuFontHeight), Color.LIGHT_GRAY, statDesc[1][j]);
         }
-        paintY += Math.round(Settings.fontHeight*2.5f);
+        paintY += Math.round(Settings.menuFontHeight*2.5f);
 
         for (int i = 0; i < stats.length; i++) {
             printString(paintX,paintY, Color.LIGHT_GRAY, stats[i][0]);
             for (int j = 1; j < stats[i].length; j++) {
-                int x = paintX + Math.round(Settings.fontWidth*j*cellWidth)+Math.round(Settings.fontWidth*cellWidth);
+                int x = paintX + Math.round(Settings.menuFontWidth*j*cellWidth)+Math.round(Settings.menuFontWidth*cellWidth);
                 printString(x,paintY, Color.LIGHT_GRAY, stats[i][j]);
             }
-            paintY += Math.round(Settings.fontHeight);
+            paintY += Math.round(Settings.menuFontHeight);
         }
 
-        return paintY + Math.round(Settings.fontHeight*stats[0].length);
+        return paintY + Math.round(Settings.menuFontHeight*stats[0].length);
     }
 
     private void drawBodyPartAbilities(int startPos)
@@ -682,10 +645,10 @@ public class ConsolePainter extends JPanel implements ImageObserver
     {
         int[] xy = getMouseCellCoords();
 
-        float xScreenCenter = ((float) Settings.windowWidth/Settings.fontHeight/2);
-        float yScreenCenter = ((float) Settings.windowHeight/Settings.fontHeight/2) + 1;
+        float xScreenCenter = ((float) Settings.windowWidth/Settings.gridScale/2);
+        float yScreenCenter = ((float) Settings.windowHeight/Settings.gridScale/2) + 1;
 
-        System.out.println(((float) Settings.windowWidth/Settings.fontHeight/2) + 0.75f);
+        System.out.println(((float) Settings.windowWidth/Settings.gridScale/2) + 0.75f);
 
         xy[0] = Math.round(xy[0] + cursorPosition[0] - xScreenCenter);
         xy[1] = Math.round(xy[1] + cursorPosition[1] - yScreenCenter);
@@ -696,8 +659,8 @@ public class ConsolePainter extends JPanel implements ImageObserver
     public int[] getMouseCellCoords()
     {
         //TODO: Actually Implement this logic
-        int x = Math.round((float) mouseCursorPosition.x / Settings.fontHeight);
-        int y = Math.round((float) mouseCursorPosition.y / Settings.fontHeight);
+        int x = Math.round((float) mouseCursorPosition.x / Settings.gridScale);
+        int y = Math.round((float) mouseCursorPosition.y / Settings.gridScale);
 
         return new int[] {x,y};
     }
