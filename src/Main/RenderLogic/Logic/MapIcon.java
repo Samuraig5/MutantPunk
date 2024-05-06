@@ -1,4 +1,4 @@
-package Main.RenderLogic;
+package Main.RenderLogic.Logic;
 
 import javax.imageio.ImageIO;
 import java.awt.*;

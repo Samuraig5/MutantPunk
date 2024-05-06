@@ -2,7 +2,7 @@ package Main.RenderLogic.Menus;
 
 import Main.ObjectLogic.BodyLogic.Person;
 import Main.RenderLogic.Console;
-import Main.RenderLogic.GameState;
+import Main.RenderLogic.Logic.GameState;
 import Main.WorldLogic.LocalMap;
 
 import java.awt.event.KeyEvent;

@@ -3,7 +3,7 @@ package Main.WorldLogic;
 import Main.Direction;
 import Main.MathHelper;
 import Main.ObjectLogic.Decorations.Decoration;
-import Main.RenderLogic.MapIcon;
+import Main.RenderLogic.Logic.MapIcon;
 import Main.Settings;
 
 import java.awt.*;
@@ -11,7 +11,6 @@ import java.io.File;
 import java.util.Objects;
 import java.util.Random;
 import java.util.Scanner;
-import java.util.Set;
 
 public class MapGenerator
 {

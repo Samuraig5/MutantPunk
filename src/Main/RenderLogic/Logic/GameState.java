@@ -1,4 +1,4 @@
-package Main.RenderLogic;
+package Main.RenderLogic.Logic;
 
 public enum GameState
 {

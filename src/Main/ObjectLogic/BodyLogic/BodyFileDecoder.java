@@ -2,7 +2,7 @@ package Main.ObjectLogic.BodyLogic;
 
 import Main.ErrorHandler;
 import Main.ObjectLogic.ObjectTag;
-import Main.RenderLogic.MapIcon;
+import Main.RenderLogic.Logic.MapIcon;
 
 import java.awt.*;
 import java.io.File;

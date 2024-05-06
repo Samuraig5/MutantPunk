@@ -1,12 +1,11 @@
-package Main.RenderLogic;
+package Main.RenderLogic.Logic;
 
 import Main.MathHelper;
 import Main.ObjectLogic.BodyLogic.BodyFileDecoder;
 import Main.ObjectLogic.BodyLogic.BodyPart;
 import Main.ObjectLogic.BodyLogic.BodyPartStat;
 import Main.ObjectLogic.BodyLogic.Person;
-import Main.ErrorHandler;
-import Main.WorldLogic.GameWorld;
+import Main.RenderLogic.Console;
 import Main.WorldLogic.LocalMap;
 
 import java.util.ArrayList;

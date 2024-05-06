@@ -1,6 +1,6 @@
 package Main.ObjectLogic;
 
-import Main.RenderLogic.MapIcon;
+import Main.RenderLogic.Logic.MapIcon;
 import Main.Settings;
 import Main.WorldLogic.Cell;
 import Main.WorldLogic.GameWorld;

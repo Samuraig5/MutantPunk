@@ -5,12 +5,11 @@ import Main.ObjectLogic.BodyLogic.Person;
 import Main.ObjectLogic.ObjectTag;
 import Main.ObjectLogic.Thing;
 import Main.ObjectLogic.Wind;
-import Main.RenderLogic.MapIcon;
+import Main.RenderLogic.Logic.MapIcon;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.io.File;
-import java.io.IOException;
 import java.util.*;
 
 public class Decoration extends Thing

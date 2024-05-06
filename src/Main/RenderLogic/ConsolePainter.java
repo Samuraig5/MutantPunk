@@ -8,19 +8,19 @@ import Main.ObjectLogic.BodyLogic.BodyPartStat;
 import Main.ObjectLogic.BodyLogic.Person;
 import Main.ObjectLogic.ObjectTag;
 import Main.ObjectLogic.Thing;
+import Main.RenderLogic.Logic.ColouredString;
+import Main.RenderLogic.Logic.GameState;
+import Main.RenderLogic.Logic.MapIcon;
 import Main.Settings;
 import Main.WorldLogic.GameWorld;
 import Main.WorldLogic.LocalMap;
 
-import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseListener;
 import java.awt.image.ImageObserver;
 import java.io.File;
-import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 import static java.awt.MouseInfo.getPointerInfo;

@@ -1,4 +1,4 @@
-package Main.RenderLogic.Logo;
+package Main.RenderLogic.UI_Painter.Logo;
 
 import Main.RenderLogic.Console;
 import Main.Settings;

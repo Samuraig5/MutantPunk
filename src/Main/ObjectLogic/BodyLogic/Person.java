@@ -2,18 +2,13 @@ package Main.ObjectLogic.BodyLogic;
 
 import Main.AILogic.ThinkingThing;
 import Main.Direction;
-import Main.ErrorHandler;
 import Main.MathHelper;
 import Main.ObjectLogic.ObjectTag;
 import Main.ObjectLogic.Thing;
-import Main.RenderLogic.MapIcon;
 import Main.WorldLogic.Cell;
 import Main.WorldLogic.GameWorld;
-import Main.WorldLogic.LocalMap;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
 public class Person extends Thing

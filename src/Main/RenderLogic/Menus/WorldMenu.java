@@ -2,9 +2,7 @@ package Main.RenderLogic.Menus;
 
 import Main.Direction;
 import Main.RenderLogic.Console;
-import Main.RenderLogic.GameState;
-import Main.Settings;
-import Main.WorldLogic.GameWorld;
+import Main.RenderLogic.Logic.GameState;
 import Main.WorldLogic.LocalMap;
 
 import java.awt.event.KeyEvent;

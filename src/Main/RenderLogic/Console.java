@@ -1,6 +1,9 @@
 package Main.RenderLogic;
 
-import Main.RenderLogic.Logo.LogoScreen;
+import Main.RenderLogic.Logic.ConsoleBodyInterface;
+import Main.RenderLogic.Logic.ConsoleMapInterface;
+import Main.RenderLogic.Logic.GameState;
+import Main.RenderLogic.UI_Painter.Logo.LogoScreen;
 import Main.RenderLogic.Menus.*;
 import Main.Settings;
 import Main.WorldLogic.WorldClock;
@@ -16,7 +19,6 @@ import java.util.Timer;
 public class Console
 {
     public ConsoleBodyInterface cb = new ConsoleBodyInterface(this);
-    public ConsoleListRenderer clir = new ConsoleListRenderer(this);
     public ConsoleMapInterface cm = new ConsoleMapInterface(this);
     public ConsolePainter cp = new ConsolePainter(this);
     public WorldClock wc = new WorldClock(this);

@@ -1,12 +1,7 @@
-package Main.RenderLogic;
+package Main.RenderLogic.Logic;
 
+import Main.RenderLogic.Console;
 import Main.WorldLogic.Cell;
-import Main.WorldLogic.GameWorld;
-import Main.WorldLogic.LocalMap;
-import Main.WorldLogic.MapGenerator;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class ConsoleMapInterface
 {
@@ -38,19 +33,5 @@ public class ConsoleMapInterface
             }
         }
         return mapIcons;
-    }
-
-    public void openLocalMapMenu(LocalMap lm)
-    {
-        List<String> mainMenuOptions = new ArrayList<>();
-        mainMenuOptions.add("Open Map View");
-        mainMenuOptions.add("List all local character\n\nSpawn character");
-        mainMenuOptions.add("Spawn a Human");
-        mainMenuOptions.add("Spawn 10 Humans");
-        mainMenuOptions.add("Spawn 100 Humans");
-        mainMenuOptions.add("Spawn a Minor Mutant");
-        mainMenuOptions.add("Spawn a Human Spider");
-        mainMenuOptions.add("Spawn a Slime");
-        //c.clir.renderList(mainMenuOptions, lm.getMapName(), new LocalMapMenu(c, lm));
     }
 }

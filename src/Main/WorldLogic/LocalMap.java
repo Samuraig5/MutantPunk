@@ -6,7 +6,7 @@ import Main.MathHelper;
 import Main.ObjectLogic.BodyLogic.Person;
 import Main.ObjectLogic.Thing;
 import Main.ObjectLogic.Wind;
-import Main.RenderLogic.MapIcon;
+import Main.RenderLogic.Logic.MapIcon;
 import Main.Settings;
 
 import java.util.ArrayList;

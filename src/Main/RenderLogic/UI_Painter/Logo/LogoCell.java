@@ -1,6 +1,5 @@
-package Main.RenderLogic.Logo;
+package Main.RenderLogic.UI_Painter.Logo;
 
-import Main.Direction;
 import Main.MathHelper;
 
 public class LogoCell

@@ -2,7 +2,7 @@ package Main.WorldLogic;
 
 import Main.ObjectLogic.Thing;
 import Main.RenderLogic.Console;
-import Main.RenderLogic.GameState;
+import Main.RenderLogic.Logic.GameState;
 
 import java.util.List;
 import java.util.TimerTask;
