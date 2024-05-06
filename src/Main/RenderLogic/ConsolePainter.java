@@ -12,17 +12,20 @@ import Main.Settings;
 import Main.WorldLogic.GameWorld;
 import Main.WorldLogic.LocalMap;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseListener;
+import java.awt.image.ImageObserver;
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 import static java.awt.MouseInfo.getPointerInfo;
 
-public class ConsolePainter extends JPanel
+public class ConsolePainter extends JPanel implements ImageObserver
 {
     public Console c;
     private Graphics g;
@@ -124,6 +127,24 @@ public class ConsolePainter extends JPanel
         mouseCursorPosition.y = p.y-pa.y-25;
 
         //printString(mouseCursorPosition.x, mouseCursorPosition.y, Color.yellow, "O");
+    }
+
+    private int printThing(int xPos, int yPos, MapIcon mi)
+    {
+        if (mi.hasSprite())
+        {
+            return printSprite(xPos, yPos, mi.getSprite());
+        }
+        else
+        {
+            return printString(xPos, yPos, mi.getIconColour(),mi.getSymbol()+"");
+        }
+    }
+
+    private int printSprite(int xPos, int yPos, Image image)
+    {
+        g.drawImage(image, xPos, yPos, this);
+        return yPos + image.getWidth(this);
     }
 
     private int printColouredString(int xPos, int yPos, ColouredString[] content)
@@ -360,10 +381,7 @@ public class ConsolePainter extends JPanel
                 else
                 {
                     MapIcon mi = mapIcons[x][y];
-                    String s = String.valueOf(mi.getSymbol());
-                    Color c =  mi.getIconColour();
-
-                    printString(xPos, yPos, mi.getIconColour(),mi.getSymbol()+"");
+                    printThing(xPos, yPos, mi);
                 }
             }
         }

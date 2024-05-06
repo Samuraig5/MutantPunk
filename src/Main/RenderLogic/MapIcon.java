@@ -1,12 +1,30 @@
 package Main.RenderLogic;
 
+import javax.imageio.ImageIO;
 import java.awt.*;
+import java.io.File;
+import java.io.IOException;
+import java.util.Map;
 
 public class MapIcon
 {
+    private Image sprite;
     private char symbol;
     private Color iconColour;
 
+    public MapIcon(String sprite)
+    {
+        this.sprite = null;
+        try {
+            this.sprite = ImageIO.read(new File(sprite));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+    public MapIcon(Image sprite)
+    {
+        this.sprite = sprite;
+    }
     public MapIcon(char symbol, Color iconColour)
     {
         this.symbol = symbol;
@@ -23,6 +41,12 @@ public class MapIcon
         this.iconColour = Color.lightGray;
     }
 
+    public boolean hasSprite()
+    {
+        if (sprite == null) { return false;}
+        else { return true; }
+    }
+    public Image getSprite() {return sprite;}
     public char getSymbol(){return symbol;}
     public void setSymbol(char newSymbol){symbol = newSymbol;}
 

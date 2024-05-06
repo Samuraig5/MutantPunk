@@ -16,12 +16,12 @@ public class Settings
     public static int worldMapSizeY = 5;
 
     // == LOCAL MAP GENERATION ==
-    public static int localMapSizeX = 250;
-    public static int localMapSizeY = 250;
+    public static int localMapSizeX = 50;
+    public static int localMapSizeY = 50;
 
     // == STATIC - DO NOT CHANGE ==
     public static final float relativeFontHeight = 1.2f;
     public static final float fontHeight = fontSize * relativeFontHeight;
-    public static final float relativeFontWidth = 2/3f;
-    public static final float fontWidth = fontSize * relativeFontWidth;
+    public static final float relativeFontWidth = 1.2f; //2/3f for ASCII rendering
+     public static final float fontWidth = fontSize * relativeFontWidth;
 }
