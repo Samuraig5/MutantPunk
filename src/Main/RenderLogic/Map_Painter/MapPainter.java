@@ -16,7 +16,7 @@ public class MapPainter
 {
     public static int printThing(ConsolePainter cp, int xPos, int yPos, MapIcon mi)
     {
-        if (mi.hasSprite())
+        if (mi.hasSprite() && Settings.renderSprites)
         {
             return printSprite(cp, xPos, yPos, mi.getSprite());
         }

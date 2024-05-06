@@ -3,12 +3,12 @@ package Main;
 public class Settings
 {
     // == RENDERING ==
+    public static final boolean renderSprites = true;
     public static final int windowWidth = 1600;
     public static final int windowHeight = 800;
     public static final int gridScale = 48;
     public static final int menuFontSize = 12;
-    //TODO: Replace this with gridScale & menuFontSize to separate map & menu scaling
-    //public static final int fontSize = 12;
+
     // == GAME RULES ==
     public static int tickSpeed = 10;
     public static int actionPointsPerTick = tickSpeed;
