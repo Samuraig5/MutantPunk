@@ -3,6 +3,7 @@ package Main.RenderLogic.Map_Painter;
 import Main.MathHelper;
 import Main.ObjectLogic.Thing;
 import Main.RenderLogic.ConsolePainter;
+import Main.RenderLogic.Logic.GameState;
 import Main.RenderLogic.Logic.MapIcon;
 import Main.RenderLogic.UI_Painter.Logo.UIPainter;
 import Main.Settings;

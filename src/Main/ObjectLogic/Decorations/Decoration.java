@@ -19,11 +19,14 @@ public class Decoration extends Thing
     private Image defaultSprite;
     private char defaultIcon;
     private Color defaultColour;
-    private char[] thingEntersNeightbour;
-    private char[] thingLeaves;
+    private Image[] thingEntersNeighbourSprites;
+    private char[] thingEntersNeighbourIcons;
+    private Image[] thingLeavesSprites;
+    private char[] thingLeavesIcons;
 
-    public Decoration(String name, String desc, boolean collision, ObjectTag[] tags, int renderPriority, Image defaultSprite, char defaultIcon,
-                      Color defaultColour, char[] thingEntersNeighbour, char[] thingLeaves, int returnToNormalCost)
+    public Decoration(String name, String desc, boolean collision, ObjectTag[] tags, int renderPriority,
+                      Image defaultSprite, char defaultIcon, Color defaultColour, Image[] thingEntersNeighbourSprites,
+                      char[] thingEntersNeighbour, Image[] thingLeavesSprites, char[] thingLeaves, int returnToNormalCost)
     {
         setName(name);
         setDescription(desc);
@@ -33,8 +36,10 @@ public class Decoration extends Thing
         this.defaultSprite = defaultSprite;
         this.defaultIcon = defaultIcon;
         this.defaultColour = defaultColour;
-        this.thingEntersNeightbour = thingEntersNeighbour;
-        this.thingLeaves = thingLeaves;
+        this.thingEntersNeighbourSprites = thingEntersNeighbourSprites;
+        this.thingEntersNeighbourIcons = thingEntersNeighbour;
+        this.thingLeavesSprites = thingLeavesSprites;
+        this.thingLeavesIcons = thingLeaves;
         this.returnToNormalCost = returnToNormalCost;
 
         MapIcon mi = new MapIcon();
@@ -77,25 +82,63 @@ public class Decoration extends Thing
 
             //Set Thing Enters Icons
             s = fileIn.nextLine().split("§");
+
             if (s.length > 1)
             {
-                s = s[1].split(":");
-                char[] c = new char[s.length];
+                String[] icons = s[1].split(":");
+                char[] c = new char[8];
                 for (int i = 0; i < c.length; i++) {
-                    c[i] = s[i].toCharArray()[0];
+                    c[i] = icons[i].toCharArray()[0];
                 }
-                thingEntersNeightbour = Arrays.copyOf(c, c.length);
+                thingEntersNeighbourIcons = Arrays.copyOf(c, c.length);
+
+            }
+            if (s.length>2)
+            {
+                String[] sprites = s[2].split(":");
+                Image[] img = new Image[8];
+                if (sprites.length == 1) //One Sprite for all directions
+                {
+                    Image singeSprite = ImageIO.read(new File(sprites[0]));
+                    for (int i = 0; i < sprites.length; i++) {
+                        img[i] = singeSprite;
+                    }
+                }
+                else // One Sprite for each direction
+                {
+                    for (int i = 0; i < img.length; i++) {
+                        img[i] = ImageIO.read(new File(sprites[i]));
+                    }
+                }
+                thingEntersNeighbourSprites = Arrays.copyOf(img, img.length);
             }
             //Set Thing Leaves Icons
             s = fileIn.nextLine().split("§");
             if (s.length > 1)
             {
-                s = s[1].split(":");
-                char[] c = new char[s.length];
+                String[] icons = s[1].split(":");
+                char[] c = new char[8];
                 for (int i = 0; i < c.length; i++) {
-                    c[i] = s[i].toCharArray()[0];
+                    c[i] = icons[i].toCharArray()[0];
                 }
-                thingLeaves = Arrays.copyOf(c, c.length);
+                thingLeavesIcons = Arrays.copyOf(c, c.length);
+            }
+            if (s.length>2)
+            {
+                String[] sprites = s[2].split(":");
+                Image[] img = new Image[8];
+                if (sprites.length == 1) //One Sprite for all directions
+                {
+                    Image singeSprite = ImageIO.read(new File(sprites[0]));
+                    Arrays.fill(img, singeSprite);
+                }
+                else // One Sprite for each direction
+                {
+                    for (int i = 0; i < sprites.length; i++) {
+                        img[i] = ImageIO.read(new File(sprites[i]));
+                    }
+                }
+                thingLeavesSprites = Arrays.copyOf(img, img.length);
             }
             //Set Action Cost To Return To Normal Icon
             returnToNormalCost = Integer.parseInt(fileIn.nextLine().split("§")[1]);
@@ -111,7 +154,7 @@ public class Decoration extends Thing
     @Override
     public void newNeightbour(Thing t, Direction d)
     {
-        if (thingEntersNeightbour == null) {return;}
+        if (thingEntersNeighbourIcons == null) {return;}
 
         boolean changeDirection = false;
         if (t instanceof Person)
@@ -135,28 +178,36 @@ public class Decoration extends Thing
             switch (d)
             {
                 case NORTH:
-                    getMapIcon().setSymbol(thingEntersNeightbour[0]);
+                    getMapIcon().setSprite(thingEntersNeighbourSprites[0]);
+                    getMapIcon().setSymbol(thingEntersNeighbourIcons[0]);
                     break;
                 case NORTH_EAST:
-                    getMapIcon().setSymbol(thingEntersNeightbour[1]);
+                    getMapIcon().setSprite(thingEntersNeighbourSprites[1]);
+                    getMapIcon().setSymbol(thingEntersNeighbourIcons[1]);
                     break;
                 case EAST:
-                    getMapIcon().setSymbol(thingEntersNeightbour[2]);
+                    getMapIcon().setSprite(thingEntersNeighbourSprites[2]);
+                    getMapIcon().setSymbol(thingEntersNeighbourIcons[2]);
                     break;
                 case SOUTH_EAST:
-                    getMapIcon().setSymbol(thingEntersNeightbour[3]);
+                    getMapIcon().setSprite(thingEntersNeighbourSprites[3]);
+                    getMapIcon().setSymbol(thingEntersNeighbourIcons[3]);
                     break;
                 case SOUTH:
-                    getMapIcon().setSymbol(thingEntersNeightbour[4]);
+                    getMapIcon().setSprite(thingEntersNeighbourSprites[4]);
+                    getMapIcon().setSymbol(thingEntersNeighbourIcons[4]);
                     break;
                 case SOUTH_WEST:
-                    getMapIcon().setSymbol(thingEntersNeightbour[5]);
+                    getMapIcon().setSprite(thingEntersNeighbourSprites[5]);
+                    getMapIcon().setSymbol(thingEntersNeighbourIcons[5]);
                     break;
                 case WEST:
-                    getMapIcon().setSymbol(thingEntersNeightbour[6]);
+                    getMapIcon().setSprite(thingEntersNeighbourSprites[6]);
+                    getMapIcon().setSymbol(thingEntersNeighbourIcons[6]);
                     break;
                 case NORTH_WEST:
-                    getMapIcon().setSymbol(thingEntersNeightbour[7]);
+                    getMapIcon().setSprite(thingEntersNeighbourSprites[7]);
+                    getMapIcon().setSymbol(thingEntersNeighbourIcons[7]);
                     break;
             }
         }
@@ -164,7 +215,7 @@ public class Decoration extends Thing
 
     @Override
     public void thingLeftCell(Thing t, Direction d) {
-        if (thingLeaves == null) {return;}
+        if (thingLeavesIcons == null) {return;}
         boolean changeDirection = false;
         if (t instanceof Person)
         {
@@ -187,28 +238,36 @@ public class Decoration extends Thing
             switch (d)
             {
                 case NORTH:
-                    getMapIcon().setSymbol(thingLeaves[0]);
+                    getMapIcon().setSprite(thingLeavesSprites[0]);
+                    getMapIcon().setSymbol(thingLeavesIcons[0]);
                     break;
                 case NORTH_EAST:
-                    getMapIcon().setSymbol(thingLeaves[1]);
+                    getMapIcon().setSprite(thingLeavesSprites[1]);
+                    getMapIcon().setSymbol(thingLeavesIcons[1]);
                     break;
                 case EAST:
-                    getMapIcon().setSymbol(thingLeaves[2]);
+                    getMapIcon().setSprite(thingLeavesSprites[2]);
+                    getMapIcon().setSymbol(thingLeavesIcons[2]);
                     break;
                 case SOUTH_EAST:
-                    getMapIcon().setSymbol(thingLeaves[3]);
+                    getMapIcon().setSprite(thingLeavesSprites[3]);
+                    getMapIcon().setSymbol(thingLeavesIcons[3]);
                     break;
                 case SOUTH:
-                    getMapIcon().setSymbol(thingLeaves[4]);
+                    getMapIcon().setSprite(thingLeavesSprites[4]);
+                    getMapIcon().setSymbol(thingLeavesIcons[4]);
                     break;
                 case SOUTH_WEST:
-                    getMapIcon().setSymbol(thingLeaves[5]);
+                    getMapIcon().setSprite(thingLeavesSprites[5]);
+                    getMapIcon().setSymbol(thingLeavesIcons[5]);
                     break;
                 case WEST:
-                    getMapIcon().setSymbol(thingLeaves[6]);
+                    getMapIcon().setSprite(thingLeavesSprites[6]);
+                    getMapIcon().setSymbol(thingLeavesIcons[6]);
                     break;
                 case NORTH_WEST:
-                    getMapIcon().setSymbol(thingLeaves[7]);
+                    getMapIcon().setSprite(thingLeavesSprites[7]);
+                    getMapIcon().setSymbol(thingLeavesIcons[7]);
                     break;
             }
         }
@@ -218,6 +277,7 @@ public class Decoration extends Thing
     public void doAction() {
         if (pushedDownValue == 0)
         {
+            getMapIcon().setSprite(defaultSprite);
             getMapIcon().setSymbol(defaultIcon);
             setActionPoints(0);
             return;
@@ -237,6 +297,6 @@ public class Decoration extends Thing
     public Decoration copy()
     {
         return new Decoration(getName(),getDescription(),hasCollision(),getTags(),getRenderPriority(),
-                defaultSprite, defaultIcon,defaultColour,thingEntersNeightbour,thingLeaves,returnToNormalCost);
+                defaultSprite, defaultIcon,defaultColour, thingEntersNeighbourSprites, thingEntersNeighbourIcons, thingLeavesSprites, thingLeavesIcons,returnToNormalCost);
     }
 }
