@@ -148,7 +148,12 @@ public class Person extends Thing
 
     }
 
-    public boolean canDigest(ObjectTag[] objectTag)
+    /**
+     *
+     * @param objectTag Object Tag of the item that is to be eaten
+     * @return returns the body part that can digest the object tag. Null if none are available.
+     */
+    public BodyPartAbility getStomach(ObjectTag[] objectTag)
     {
         for (BodyPart bp:myBodyParts)
         {
@@ -160,16 +165,16 @@ public class Person extends Thing
                     {
                         for (ObjectTag input:objectTag)
                         {
-                            if (ot == input)
+                            if (ot == input && !bpa.isFull())
                             {
-                                return true;
+                                return bpa;
                             }
                         }
                     }
                 }
             }
         }
-        return false;
+        return null;
     }
 
     public int getEatingCost()

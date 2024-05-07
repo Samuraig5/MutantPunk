@@ -44,8 +44,25 @@ public class BodyPartAbility
     public int getCurrentFillLevel() {
         return currentFillLevel;
     }
+    public boolean isFull()
+    {
+        if (currentFillLevel >= capacity)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
 
-    public void setCurrentFillLevel(int currentFillLevel) {
+    public void addToCurrentFillLevel(int change)
+    {
+        setCurrentFillLevel(this.currentFillLevel + change);
+    }
+
+    public void setCurrentFillLevel(int currentFillLevel)
+    {
         this.currentFillLevel = MathHelper.clamp(currentFillLevel,0,getCapacity());
     }
 }
