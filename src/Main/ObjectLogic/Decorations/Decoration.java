@@ -60,14 +60,14 @@ public class Decoration extends Thing
             setTags(ObjectTag.translateStringToTag(fileIn.nextLine().split("§")[1].split(":")));
             //Set Render Priority
             setRenderPriority(Integer.parseInt(fileIn.nextLine().split("§")[1]));
-            String[] spriteIcon = fileIn.nextLine().split("§")[1].split(":");
+            String[] spriteIcon = fileIn.nextLine().split("§");
             //Set Default Icon
-            defaultIcon = spriteIcon[0].toCharArray()[0];
+            defaultIcon = spriteIcon[1].toCharArray()[0];
             mi.setSymbol(defaultIcon);
             //Set Sprite
-            if (spriteIcon.length>1)
+            if (spriteIcon.length>2)
             {
-                defaultSprite = ImageIO.read(new File(spriteIcon[1]));
+                defaultSprite = ImageIO.read(new File(spriteIcon[2]));
                 mi.setSprite(defaultSprite);
             }
             //Set Default Colour

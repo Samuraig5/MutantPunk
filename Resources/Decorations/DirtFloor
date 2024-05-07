@@ -3,7 +3,7 @@ Description§This is healthy dirt floor, full of nutrients and mutant bugs.
 HasCollision§false
 Tags§SOLID
 RenderPriority§0
-Icon§_:Resources/Sprites/Dirt.png
+Icon§_§Resources/Sprites/Dirt.png
 Colour§117:72:27
 ThingEnterNeighbourIcon§
 ThingLeaveIcon§
