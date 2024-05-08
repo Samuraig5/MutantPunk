@@ -78,7 +78,8 @@ public class BodyPartAbility
             if (getAbilityTag() == AbilityTag.DIGESTION)
             {
                 actionPoints -= digestCost;
-                int digestRate = Math.min(currentFillLevel, 2);
+                float digestRate = bodyPart.getStats()[BodyPartStat.BLOOD_GENERATION];
+                digestRate = MathHelper.clamp(digestRate, 0, currentFillLevel-digestRate);
                 currentFillLevel -= digestRate;
                 bodyPart.changeBloodLevels(digestRate*efficiency);
             }

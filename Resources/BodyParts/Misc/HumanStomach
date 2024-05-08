@@ -1,0 +1,23 @@
+name...........§Human Stomach
+type...........§1
+bodyPartClass..§misc
+bloodCapacity.............§40#1#0#1#1
+bloodGeneration...........§4#1#0#1#1
+neededBlood...............§1#1#0#1#1
+energyCapacity............§0#1#0#1#1
+energyGeneration..........§0#1#0#1#1
+neededEnergy..............§0#1#0#1#1
+maxHealth.................§25#1#0#1#1
+regenRate.................§10#1#0#1#1
+regenLimit................§20#1#0#1#1
+armour....................§0#1#0#1#1
+size......................§20#1#0#1#1
+organCapacity.............§10#1#0#1#1
+speedModifier.............§0#1#0#1#1
+consciousness.............§0#1#0#1#1
+grabbingSlots.............§0#1#0#1#1
+sightModifier.............§0#1#0#1#1
+§ABILITIES§
+Absorb§DIGESTION§FRUIT§CAPACITY#100§EFFICIENCY#50
+§END§
+..........................§Gross Stat#Modifier#Gross bonus to parent bodyPart#Modifier bonus to parent bodyPart#Modifier bonus to person

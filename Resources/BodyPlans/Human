@@ -6,6 +6,9 @@ SOLID§ORGANIC§MEAT
 name§Human Torso
 pathToBodyPartFile§Resources/BodyParts/Containers/HumanTorso
 >
+>name§Human Stomach
+>pathToBodyPartFile§Resources/BodyParts/Misc/HumanStomach
+>
 >name§Human head
 >pathToBodyPartFile§Resources/BodyParts/Containers/HumanHead
 >
