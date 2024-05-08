@@ -2,6 +2,7 @@ package Main.ObjectLogic.BodyLogic;
 
 import Main.ErrorHandler;
 import Main.ObjectLogic.ObjectTag;
+import Main.Settings;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -46,6 +47,8 @@ public class BodyPart
     final private BodyPartStat myStats;
     private List<BodyPartAbility> abilities = new ArrayList<>();
 
+    private int bloodConsumeCooldown = 0;
+
     public BodyPart()
     {
         myStats = new BodyPartStat(this);
@@ -76,6 +79,7 @@ public class BodyPart
         myStats.setStats(calculatedStats);
 
         myStats.changeHealth(getStats()[BodyPartStat.MAX_HEALTH]);
+        myStats.changeBloodLevel(getStats()[BodyPartStat.BLOOD_CAPACITY]);
 
         addAbility(abilities);
     }
@@ -110,7 +114,7 @@ public class BodyPart
 
             ObjectTag[] objectTags = ObjectTag.translateStringToTag(objTagStrings);
 
-            BodyPartAbility ability = new BodyPartAbility(abilityName, abilityTag, objectTags);
+            BodyPartAbility ability = new BodyPartAbility(this, abilityName, abilityTag, objectTags);
             if (capacity != 0) {ability.setCapacity(capacity);}
             if (efficiency != 0) {ability.setEfficiency(efficiency);}
             addAbility(ability);
@@ -173,7 +177,7 @@ public class BodyPart
         myStats.changeHealth(-damage);
         if (myStats.getCurrentHealth() <= 0)
         {
-            removeBodyPart();
+            //removeBodyPart();
         }
     }
 
@@ -183,6 +187,12 @@ public class BodyPart
     public void regenerateDamage()
     {
         myStats.regenerateHealth();
+    }
+
+    public float getBloodLevel() {return myStats.getBloodLevel();}
+    public void changeBloodLevels(float change)
+    {
+        myStats.changeBloodLevel(change);
     }
 
     public void changeName(String newName)
@@ -237,9 +247,32 @@ public class BodyPart
         {
             return Color.yellow;
         }
-        else
+        else if (curr > 0)
         {
             return Color.red;
+        }
+        else
+        {
+            return Color.darkGray;
+        }
+    }
+
+    public void update()
+    {
+        bloodConsumeCooldown += Settings.actionPointsPerTick;
+        int consumeCost = 1000;
+        if (bloodConsumeCooldown > consumeCost)
+        {
+            bloodConsumeCooldown -= consumeCost;
+            myStats.consumeBlood();
+            if (myStats.getBloodLevel() < getStats()[BodyPartStat.BLOOD_NEED])
+            {
+                float difference = myStats.getBloodLevel() - getStats()[BodyPartStat.BLOOD_NEED];
+                doDamage(Math.round(-difference));
+            }
+        }
+        for (BodyPartAbility bpa:abilities) {
+            bpa.update();
         }
     }
 }

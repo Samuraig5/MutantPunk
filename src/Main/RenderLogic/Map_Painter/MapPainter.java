@@ -1,17 +1,13 @@
 package Main.RenderLogic.Map_Painter;
 
-import Main.MathHelper;
-import Main.ObjectLogic.Thing;
 import Main.RenderLogic.ConsolePainter;
-import Main.RenderLogic.Logic.GameState;
 import Main.RenderLogic.Logic.MapIcon;
-import Main.RenderLogic.UI_Painter.Logo.UIPainter;
+import Main.RenderLogic.UI_Painter.UIPainter;
 import Main.Settings;
 import Main.WorldLogic.GameWorld;
 import Main.WorldLogic.LocalMap;
 
 import java.awt.*;
-import java.util.List;
 
 public class MapPainter
 {

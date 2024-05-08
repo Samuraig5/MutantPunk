@@ -186,5 +186,8 @@ public class Person extends Thing
     public void doAction()
     {
         myThoughts.think();
+        for (BodyPart bp:myBodyParts) {
+            bp.update();
+        }
     }
 }

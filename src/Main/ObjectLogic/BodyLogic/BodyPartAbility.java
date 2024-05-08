@@ -2,20 +2,24 @@ package Main.ObjectLogic.BodyLogic;
 
 import Main.MathHelper;
 import Main.ObjectLogic.ObjectTag;
+import Main.Settings;
 
 import java.util.List;
 
 public class BodyPartAbility
 {
+    private BodyPart bodyPart;
     private String abilityName;
     private AbilityTag abilityTag;
     private ObjectTag[] relatedObjectTags;
     private int capacity;
     private int currentFillLevel;
     private int efficiency;
+    private int actionPoints = 0;
 
-    public BodyPartAbility(String abilityName, AbilityTag abilityTag, ObjectTag[] relatedObjectTags)
+    public BodyPartAbility(BodyPart bodyPart, String abilityName, AbilityTag abilityTag, ObjectTag[] relatedObjectTags)
     {
+        this.bodyPart = bodyPart;
         this.abilityName = abilityName;
         this.abilityTag = abilityTag;
         this.relatedObjectTags = relatedObjectTags;
@@ -64,5 +68,20 @@ public class BodyPartAbility
     public void setCurrentFillLevel(int currentFillLevel)
     {
         this.currentFillLevel = MathHelper.clamp(currentFillLevel,0,getCapacity());
+    }
+
+    public void update() {
+        actionPoints += Settings.actionPointsPerTick;
+        int digestCost = 1000;
+        if (currentFillLevel > 0 && actionPoints > digestCost)
+        {
+            if (getAbilityTag() == AbilityTag.DIGESTION)
+            {
+                actionPoints -= digestCost;
+                int digestRate = Math.min(currentFillLevel, 2);
+                currentFillLevel -= digestRate;
+                bodyPart.changeBloodLevels(digestRate*efficiency);
+            }
+        }
     }
 }

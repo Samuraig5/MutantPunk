@@ -1,4 +1,4 @@
-package Main.RenderLogic.UI_Painter.Logo;
+package Main.RenderLogic.UI_Painter;
 
 import Main.MathHelper;
 import Main.ObjectLogic.BodyLogic.BodyPart;
@@ -196,29 +196,33 @@ public class UIPainter
         printString(g,10,y,Color.LIGHT_GRAY, inspectedBodyPart.getName(),nameFontSize);
         y += Settings.menuFontHeight;
 
-        ColouredString[] cs = new ColouredString[4];
-        cs[0] = new ColouredString("Health", Color.LIGHT_GRAY);
+        ColouredString[] health = new ColouredString[4];
+        health[0] = new ColouredString("Health", Color.LIGHT_GRAY);
         float fCurr = inspectedBodyPart.getCurrentHealth();
         float fMax = inspectedBodyPart.getStats()[BodyPartStat.MAX_HEALTH];
-        cs[1] = new ColouredString(fCurr+"", Color.lightGray);
-        cs[2] = new ColouredString(" / ", Color.lightGray);
-        cs[3] = new ColouredString(fMax+"", Color.lightGray);
+        health[1] = new ColouredString(fCurr+"", Color.lightGray);
+        health[2] = new ColouredString(" / ", Color.lightGray);
+        health[3] = new ColouredString(fMax+"", Color.lightGray);
 
         if (fCurr > (fMax/2))
         {
-            cs[1].setColor(Color.green);
+            health[1].setColor(Color.green);
         }
         else if (fCurr > (fMax/4))
         {
-            cs[1].setColor(Color.yellow);
+            health[1].setColor(Color.yellow);
         }
         else
         {
-            cs[1].setColor(Color.red);
+            health[1].setColor(Color.red);
         }
 
-        printColouredStringHorizontal(g,10, y, cs);
+        printColouredStringHorizontal(g,10, y, health);
+        y += Math.round(Settings.menuFontHeight);
 
+        printString(g, 10,y, Color.LIGHT_GRAY, "Blood Levels: " +
+                inspectedBodyPart.getBloodLevel() + " / " +
+                inspectedBodyPart.getStats()[BodyPartStat.BLOOD_CAPACITY]);
         y += Math.round(Settings.menuFontHeight);
 
         printString(g,10,y,Color.LIGHT_GRAY,"Attachment Capacity: " +

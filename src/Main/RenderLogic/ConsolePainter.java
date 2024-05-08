@@ -3,27 +3,17 @@ package Main.RenderLogic;
 import Main.Direction;
 import Main.MathHelper;
 import Main.ObjectLogic.BodyLogic.BodyPart;
-import Main.ObjectLogic.BodyLogic.BodyPartAbility;
-import Main.ObjectLogic.BodyLogic.BodyPartStat;
-import Main.ObjectLogic.BodyLogic.Person;
-import Main.ObjectLogic.ObjectTag;
 import Main.ObjectLogic.Thing;
-import Main.RenderLogic.Logic.ColouredString;
 import Main.RenderLogic.Logic.GameState;
-import Main.RenderLogic.Logic.MapIcon;
 import Main.RenderLogic.Map_Painter.MapPainter;
-import Main.RenderLogic.UI_Painter.Logo.UIPainter;
+import Main.RenderLogic.UI_Painter.UIPainter;
 import Main.Settings;
-import Main.WorldLogic.GameWorld;
-import Main.WorldLogic.LocalMap;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseListener;
 import java.awt.image.ImageObserver;
-import java.io.File;
-import java.util.List;
 
 import static java.awt.MouseInfo.getPointerInfo;
 
