@@ -76,7 +76,6 @@ public class UIPainter
         for (int x = 0; x < mat.length; x++) {
             for (int y = 0; y < mat[x].length; y++) {
                 cp.g.drawString(mat[x][y]+"", Math.round(x*Settings.menuFontWidth), Math.round(y*Settings.menuFontHeight));
-
             }
         }
         g.setFont(currentFont);
@@ -95,7 +94,7 @@ public class UIPainter
 
         g.setColor(cp.backgroundColour);
         g.fillRoundRect(centered,
-                Math.round(Settings.menuFontWidth*(24)),
+                Math.round(Settings.menuFontHeight*(24)),
                 width, height, 5, 5);
         g.setColor(Color.LIGHT_GRAY);
         g.drawRoundRect(centered,
