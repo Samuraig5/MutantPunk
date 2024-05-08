@@ -169,13 +169,27 @@ public class UIPainter
 
             String[][] stats = cp.c.cb.openPersonView((Person) inspectedThing);
 
+            float bloodLevel = 0;
+            float bloodCapacity = 0;
+
+            for (BodyPart bp:((Person) inspectedThing).myBodyParts)
+            {
+                bloodLevel += bp.getBloodLevel();
+                bloodCapacity += bp.getStats()[BodyPartStat.BLOOD_CAPACITY];
+            }
+
+            printString(g, 10,paintY, Color.LIGHT_GRAY, "Blood Levels: (" +
+                    bloodLevel + " / " + bloodCapacity + ")");
+
+            paintY += Math.round(Settings.menuFontHeight)*3;
+
             for (int i = 0; i < stats.length; i++) {
                 printString(g, paintX,paintY, Color.LIGHT_GRAY, stats[i][0]);
                 for (int j = 1; j < stats[i].length; j++) {
                     int x = paintX + Math.round(Settings.menuFontWidth*j*cellWidth)+Math.round(Settings.menuFontWidth*cellWidth);
                     printString(g, x,paintY, Color.LIGHT_GRAY, stats[i][j]);
                 }
-                paintY += Math.round(Settings.menuFontWidth);
+                paintY += Math.round(Settings.menuFontHeight);
             }
 
             ColouredString[][] body = cp.c.cb.getBodyView((Person) inspectedThing);
