@@ -17,6 +17,7 @@ import Main.WorldLogic.GameWorld;
 import java.awt.*;
 import java.io.File;
 import java.util.List;
+import java.util.Objects;
 
 public class UIPainter
 {
@@ -235,13 +236,13 @@ public class UIPainter
 
     private static int drawBodyPartStats(ConsolePainter cp, Graphics g, BodyPart inspectedBodyPart, int startPos)
     {
-
         int paintX = 10;
         int paintY = startPos;
         int cellWidth = 10;
 
         String[][] stats = cp.c.cb.displayBodyPartStats(inspectedBodyPart);
         String[][] statDesc = {{"","Final", "Gross", "Modifier", "Upstream", "Upstream", "Person"}, {"","", "", "", "Gross", "Modifier", "Modifier"}};
+        //Add descriptors
         for (int j = 0; j < stats[0].length; j++)
         {
             int x = paintX + Math.round(Settings.menuFontWidth*j*cellWidth)+Math.round(Settings.menuFontWidth*cellWidth);
@@ -250,7 +251,18 @@ public class UIPainter
         }
         paintY += Math.round(Settings.menuFontHeight*2.5f);
 
+        //Add Stat Lines
         for (int i = 0; i < stats.length; i++) {
+            //Don't display stat if it adds nothing
+            if (Objects.equals(stats[i][1], "0.0") &&
+                    Objects.equals(stats[i][2], "0.0") &&
+                    Objects.equals(stats[i][3], "1.0") &&
+                    Objects.equals(stats[i][4], "0.0") &&
+                    Objects.equals(stats[i][5], "1.0") &&
+                    Objects.equals(stats[i][6], "1.0"))
+            {
+                continue;
+            }
             printString(g,paintX,paintY, Color.LIGHT_GRAY, stats[i][0]);
             for (int j = 1; j < stats[i].length; j++) {
                 int x = paintX + Math.round(Settings.menuFontWidth*j*cellWidth)+Math.round(Settings.menuFontWidth*cellWidth);
