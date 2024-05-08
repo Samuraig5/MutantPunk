@@ -34,6 +34,17 @@ public class MapIcon
         else { return true; }
     }
     public void setSprite(Image sprite) {this.sprite = sprite;}
+    public void setSprite(String sprite)
+    {
+        try
+        {
+            this.sprite = ImageIO.read(new File(sprite));
+        }
+        catch (IOException e)
+        {
+            System.err.println("Unable to load '" + sprite + "' from files!");
+        }
+    }
     public Image getSprite() {return sprite;}
     public char getSymbol(){return symbol;}
     public void setSymbol(char newSymbol){symbol = newSymbol;}
