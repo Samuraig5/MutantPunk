@@ -1,14 +1,13 @@
 package Main.ObjectLogic.BodyLogic;
 
 import Main.ErrorHandler;
+import Main.MathHelper;
 import Main.ObjectLogic.ObjectTag;
 import Main.Settings;
 
 import java.awt.*;
-import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.*;
 import java.util.List;
-import java.util.Objects;
 
 public class BodyPart
 {
@@ -172,7 +171,7 @@ public class BodyPart
      *
      * @param damage the amount of damage to be dealt to the bodyPart
      */
-    public void doDamage(int damage)
+    public void doDamage(float damage)
     {
         myStats.changeHealth(-damage);
         if (myStats.getCurrentHealth() <= 0)
@@ -215,6 +214,7 @@ public class BodyPart
         }
     }
     public float getCurrentHealth() {return myStats.getCurrentHealth();}
+    public boolean isAlive() {if (getCurrentHealth() > 0) {return true;} else {return false;}}
     public float getRemainingAttachmentCapacity(){return myStats.getRemainingAttachmentCapacity();}
 
     public float[] getUpstreamGrossStat()
@@ -257,6 +257,34 @@ public class BodyPart
         }
     }
 
+    private void spreadBlood() {
+        List<BodyPart> neighbours = new ArrayList<>();
+        neighbours.add(parentBodyPart);
+        for (BodyPart child : attachedBodyParts) {
+            neighbours.add(child);
+        }
+        Collections.shuffle(neighbours);
+        for (BodyPart neighbour : neighbours)
+        {
+            if (neighbour == null) {continue;}
+            if (!neighbour.isAlive()) {continue;}
+            if (neighbour.getBloodLevel() >= neighbour.getStats()[BodyPartStat.BLOOD_CAPACITY]){continue;}
+            if (getBloodLevel() > getStats()[BodyPartStat.BLOOD_NEED] && //Only transfer if bp has enough blood & neighbour's fill level is lower
+                    (getBloodLevel()/getStats()[BodyPartStat.BLOOD_CAPACITY]) >
+                            neighbour.getBloodLevel()/neighbour.getStats()[BodyPartStat.BLOOD_CAPACITY])
+            {
+                float change = getBloodLevel() - neighbour.getBloodLevel();
+                float retainment = change - getStats()[BodyPartStat.BLOOD_NEED];
+                float maxTransfer = neighbour.getStats()[BodyPartStat.BLOOD_CAPACITY] - neighbour.getBloodLevel();
+                change = MathHelper.clamp(change,0, retainment);
+                change = MathHelper.clamp(change,0, maxTransfer);
+                change = change * 0.1f;
+                changeBloodLevels(-change);
+                neighbour.changeBloodLevels(change);
+            }
+        }
+    }
+
     public void update()
     {
         bloodConsumeCooldown += Settings.actionPointsPerTick;
@@ -268,11 +296,12 @@ public class BodyPart
             if (myStats.getBloodLevel() < getStats()[BodyPartStat.BLOOD_NEED])
             {
                 float difference = myStats.getBloodLevel() - getStats()[BodyPartStat.BLOOD_NEED];
-                doDamage(Math.round(-difference));
+                doDamage(-difference);
             }
         }
         for (BodyPartAbility bpa:abilities) {
             bpa.update();
         }
+        spreadBlood();
     }
 }
