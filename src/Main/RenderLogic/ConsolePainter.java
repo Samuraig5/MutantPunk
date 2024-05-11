@@ -30,7 +30,7 @@ public class ConsolePainter extends JPanel implements ImageObserver
     private int[] cursorPosition = {0,0};
     private Point mouseCursorPosition = new Point();
     private boolean cursorEnabled = false;
-    public int listSelector = 0;
+    private int listSelector = 0;
 
     public ConsolePainter(Console c)
     {

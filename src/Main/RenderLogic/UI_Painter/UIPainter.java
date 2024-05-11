@@ -358,16 +358,25 @@ public class UIPainter
             g.setColor(current);
 
             List<Thing> things = cp.c.wc.getActiveWorld().getActiveLocalMap().getCell(cursorPosition[0], cursorPosition[1]).getThings();
-            cp.listSelector = MathHelper.clamp(cp.listSelector, 0, things.size()-1);
-            for (int i = 0; i < things.size(); i++)
+            cp.setListSelector(MathHelper.clamp(cp.getListSelector(), 0, things.size()-1));
+
+            int i;
+            if (cp.getFocusedThing() != null)
             {
-                if (cp.listSelector == i)
-                {
-                    printString(g, startPointX-10, 20+Math.round((i+1)*Settings.menuFontHeight),
-                            Color.yellow, ">");
-                }
-                printString(g, startPointX, 20+Math.round((i+1)*Settings.menuFontHeight),
-                        things.get(i).getMapIcon().getIconColour(), things.get(i).getName());
+                i = things.size() - things.indexOf(cp.getFocusedThing()) - 1;;
+            }
+            else
+            {
+                i = things.size() - cp.getListSelector() - 1;
+            }
+            printString(g, startPointX-10, 20+Math.round((i+1)*Settings.menuFontHeight),
+                    Color.yellow, ">");
+
+            for (int j = 0; j < things.size(); j++)
+            {
+                Thing thing = things.get(things.size()-(j+1));
+                printString(g, startPointX, 20+Math.round((j+1)*Settings.menuFontHeight),
+                        thing.getMapIcon().getIconColour(), thing.getName());
             }
         }
     }

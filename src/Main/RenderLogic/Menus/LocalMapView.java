@@ -53,19 +53,26 @@ public class LocalMapView implements KeyListener, MouseListener
                 }
                 break;
             case KeyEvent.VK_UP:
-                c.cp.setListSelector(c.cp.getListSelector()-1);
+                c.cp.setListSelector(c.cp.getListSelector()+1);
                 break;
             case KeyEvent.VK_DOWN:
-                c.cp.setListSelector(c.cp.getListSelector()+1);
+                c.cp.setListSelector(c.cp.getListSelector()-1);
                 break;
             case KeyEvent.VK_ENTER:
                 if (c.cp.isCursorEnabled())
                 {
                     int[] xy = c.cp.getCursorPosition();
-                    c.cp.setInspectedThing(
-                            c.wc.getActiveWorld().getActiveLocalMap().
-                                    getCell(xy[0],xy[1]).getThings().
-                                    get(c.cp.getListSelector()));
+                    if (c.cp.getFocusedThing() != null)
+                    {
+                        c.cp.setInspectedThing(c.cp.getFocusedThing());
+                    }
+                    else
+                    {
+                        c.cp.setInspectedThing(
+                                c.wc.getActiveWorld().getActiveLocalMap().
+                                        getCell(xy[0],xy[1]).getThings().
+                                        get(c.cp.getListSelector()));
+                    }
                     c.setGameState(GameState.THING_INSPECTOR);
                 }
                 break;
