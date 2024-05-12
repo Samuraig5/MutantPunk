@@ -1,7 +1,7 @@
 package Main.RenderLogic.Menus;
 
 import Main.RenderLogic.Console;
-import Main.RenderLogic.GameState;
+import Main.RenderLogic.Logic.GameState;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;

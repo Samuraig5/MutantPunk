@@ -1,11 +1,9 @@
 package Main.RenderLogic.Menus;
 
+import Main.Direction;
 import Main.RenderLogic.Console;
-import Main.RenderLogic.GameState;
-import Main.Settings;
-import Main.WorldLogic.GameWorld;
+import Main.RenderLogic.Logic.GameState;
 import Main.WorldLogic.LocalMap;
-import Main.WorldLogic.MapGenerator;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
@@ -14,16 +12,14 @@ public class WorldMenu implements KeyListener
 {
     Console c;
 
-    int currentPage = 0;
-
     public WorldMenu(Console console)
     {
         c = console;
     }
 
-    private void openLocalMapView(int i)
+    private void openLocalMapView(int x, int y)
     {
-        LocalMap lm = c.wc.getActiveWorld().getLocalMaps().get(i);
+        LocalMap lm = c.wc.getActiveWorld().getLocalMaps()[x][y];
         c.wc.getActiveWorld().setActiveLocalMap(lm);
         c.setGameState(GameState.LOCAL_MAP_MENU);
     }
@@ -33,17 +29,46 @@ public class WorldMenu implements KeyListener
     {
         switch (e.getKeyCode())
         {
+            case KeyEvent.VK_W:
+                c.cp.setCursorEnabled(true);
+                c.cp.moveCursor(Direction.NORTH, 1);
+                c.cp.setFocusedThing(null);
+                break;
+            case KeyEvent.VK_A:
+                c.cp.setCursorEnabled(true);
+                c.cp.moveCursor(Direction.WEST, 1);
+                c.cp.setFocusedThing(null);
+                break;
+            case KeyEvent.VK_S:
+                c.cp.setCursorEnabled(true);
+                c.cp.moveCursor(Direction.SOUTH, 1);
+                c.cp.setFocusedThing(null);
+                break;
+            case KeyEvent.VK_D:
+                c.cp.setCursorEnabled(true);
+                c.cp.moveCursor(Direction.EAST, 1);
+                c.cp.setFocusedThing(null);
+                break;
+            case KeyEvent.VK_ENTER:
+                c.wc.getActiveWorld().setActiveLocalMap(c.wc.getActiveWorld().getLocalMaps()[c.cp.getCursorPosition()[0]][c.cp.getCursorPosition()[1]]);
+                c.setGameState(GameState.LOCAL_MAP_MENU);
+                c.cp.setCursorPosition(new int[] {0,0});
+                break;
+        }
+        /*
+        switch (e.getKeyCode())
+        {
             case KeyEvent.VK_A:
                 if (currentPage != 0)
                 {
                     openLocalMapView(0);
                     break;
                 }
-                int[] size = {Settings.mapSizeX, Settings.mapSizeY};
+                int[] size = {Settings.localMapSizeX, Settings.localMapSizeY};
                 GameWorld gw = c.wc.getActiveWorld();
 
-                LocalMap lm = c.cm.GenerateLocalMapWithWalls(size, gw, "LocalMap: " + gw.getLocalMaps().size(), Settings.wallCover);
-                c.wc.getActiveWorld().setActiveLocalMap(lm);
+                //LocalMap lm = c.cm.GenerateLocalMap(size, gw, "LocalMap: " + gw.getLocalMaps().size(), Settings.wallCover);
+                //c.wc.getActiveWorld().setActiveLocalMap(lm);
 
                 c.setGameState(GameState.LOCAL_MAP_MENU);
                 break;
@@ -126,6 +151,7 @@ public class WorldMenu implements KeyListener
                 c.setGameState(GameState.MAIN_MENU);
                 break;
         }
+         */
 
     }
 

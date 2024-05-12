@@ -2,8 +2,8 @@ name...........§Slime Blob
 type...........§1
 bodyPartClass..§misc
 bloodCapacity.............§50#1#0#1#1
-bloodGeneration...........§50#1#0#1#1
-neededBlood...............§40#1#0#1#1
+bloodGeneration...........§2#1#0#1#1
+neededBlood...............§5#1#0#1#1
 energyCapacity............§0#1#0#1#1
 energyGeneration..........§0#1#0#1#1
 neededEnergy..............§0#1#0#1#1
@@ -18,6 +18,6 @@ consciousness.............§25#1#0#1#1
 grabbingSlots.............§1#1#0#1#1
 sightModifier.............§10#1#0#1#1
 §ABILITIES§
-DIGESTION§PLANT§MEAT§FRUIT
+Absorb§DIGESTION§PLANT§MEAT§FRUIT§CAPACITY#100§EFFICIENCY#100
 §END§
 ..........................§Gross Stat#Modifier#Gross bonus to parent bodyPart#Modifier bonus to parent bodyPart#Modifier bonus to person

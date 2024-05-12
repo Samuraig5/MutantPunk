@@ -3,6 +3,7 @@ package Main.WorldLogic;
 import Main.MathHelper;
 import Main.ObjectLogic.Thing;
 import Main.Direction;
+import Main.RenderLogic.Logic.MapIcon;
 
 
 import java.util.List;
@@ -52,6 +53,20 @@ public class Cell
             }
         }
         return target;
+    }
+    public MapIcon[] getSortedMapIcons()
+    {
+        if (things.isEmpty())
+        {
+            throw new RuntimeException("Trying to get map icons of things in an empty cell");
+        }
+
+        MapIcon[] icons = new MapIcon[things.size()];
+        for (int i = 0; i < things.size(); i++)
+        {
+            icons[things.size()-i-1] = things.get(i).getMapIcon();
+        }
+        return icons;
     }
 
     public boolean isThereAThingWithCollision()

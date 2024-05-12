@@ -1,14 +1,10 @@
 package Main.ObjectLogic;
 
 import Main.Direction;
-import Main.MathHelper;
-import Main.RenderLogic.MapIcon;
+import Main.RenderLogic.Logic.MapIcon;
 import Main.WorldLogic.Cell;
 
 import java.awt.*;
-import java.time.Duration;
-import java.util.ArrayList;
-import java.util.List;
 
 public class Wind extends Thing
 {
@@ -45,7 +41,7 @@ public class Wind extends Thing
         setCollision(false);
 
         MapIcon mi = new MapIcon();
-        mi.setSymbol('~');
+        mi.setSymbol(' ');
         mi.setIconColour(Color.white);
         setMapIcon(mi);
 

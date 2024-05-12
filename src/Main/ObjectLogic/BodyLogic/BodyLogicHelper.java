@@ -43,10 +43,6 @@ public class BodyLogicHelper
     {
         return calculateBodyPartStat(incomingStandardStat,bias,randomness,100);
     }
-    static public float[] calculateBodyPartStat(String[] incomingStandardStat)
-    {
-        return calculateBodyPartStat(incomingStandardStat,0,0,0);
-    }
 
     /**
      * Generates a number between '-1' and '1'
@@ -56,16 +52,5 @@ public class BodyLogicHelper
     static public float randomRange()
     {
         return (float) Math.random()*2-1;
-    }
-
-    static public float getBloodCapacity(Person p)
-    {
-        List<BodyPart> bodyParts = p.myBodyParts;
-        float bloodCapacity = 0;
-        for (int i = 0; i < bodyParts.size(); i++)
-        {
-
-        }
-        return bloodCapacity;
     }
 }

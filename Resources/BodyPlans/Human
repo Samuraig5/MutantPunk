@@ -1,8 +1,13 @@
 Human§H
+sprite§Resources/Sprites/Human.png§false
+colour§
 description§A medium sized creature prone to great ambition
-SOLID§LIVING§MEAT
+SOLID§ORGANIC§MEAT
 name§Human Torso
 pathToBodyPartFile§Resources/BodyParts/Containers/HumanTorso
+>
+>name§Human Stomach
+>pathToBodyPartFile§Resources/BodyParts/Misc/HumanStomach
 >
 >name§Human head
 >pathToBodyPartFile§Resources/BodyParts/Containers/HumanHead

@@ -1,12 +1,11 @@
-package Main.RenderLogic;
+package Main.RenderLogic.Logic;
 
 import Main.MathHelper;
 import Main.ObjectLogic.BodyLogic.BodyFileDecoder;
 import Main.ObjectLogic.BodyLogic.BodyPart;
 import Main.ObjectLogic.BodyLogic.BodyPartStat;
 import Main.ObjectLogic.BodyLogic.Person;
-import Main.ErrorHandler;
-import Main.WorldLogic.GameWorld;
+import Main.RenderLogic.Console;
 import Main.WorldLogic.LocalMap;
 
 import java.util.ArrayList;
@@ -35,16 +34,6 @@ public class ConsoleBodyInterface
         {
             throw new RuntimeException("WARNING: The second and third parameters of spawnPerson must be integer numbers");
         }
-    }
-
-    public void listAllPersons(GameWorld gw)
-    {
-        List<String> allCharacterNames = new ArrayList<>();
-        for (Person p:gw.getAllCharacters())
-        {
-            allCharacterNames.add(p.getName());
-        }
-        //c.clir.renderList(allCharacterNames, "Current Characters", new AllCharactersInWorldMenu(c, gw));
     }
 
     public String[][] openPersonView(Person p)
@@ -155,29 +144,5 @@ public class ConsoleBodyInterface
         }
 
         return result;
-    }
-
-    private void assembleBodyPartRelations(BodyPart bp, List<String> list)
-    {
-        if (bp.getMyPerson() != null)
-        {
-            list.add(bp.getMyPerson().getName()  + "\n" + "" + "\n" + "My parent body parts:");
-        }
-        else
-        {
-            list.add("N/A"  + "\n" + "" + "\n" + "My parent body part:");
-        }
-        if (bp.getParentBodyPart() != null)
-        {
-            list.add(bp.getParentBodyPart().getName()  + "\n" + "" + "\n" + "Attached body parts: ");
-        }
-        else
-        {
-            list.add("N/A"  + "\n" + "" + "\n" + "Attached body parts: ");
-        }
-        for (BodyPart nextbp:bp.getAttachedBodyParts())
-        {
-            list.add(nextbp.getName());
-        }
     }
 }

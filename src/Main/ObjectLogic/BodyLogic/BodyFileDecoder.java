@@ -2,12 +2,13 @@ package Main.ObjectLogic.BodyLogic;
 
 import Main.ErrorHandler;
 import Main.ObjectLogic.ObjectTag;
-import Main.RenderLogic.MapIcon;
+import Main.RenderLogic.Logic.MapIcon;
 
 import java.awt.*;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Scanner;
 
 public class BodyFileDecoder
@@ -111,10 +112,37 @@ public class BodyFileDecoder
         String bodyPartPath;
         try {
             Scanner fileIn = new Scanner(new File(filePath));
+            p.setMapIcon(new MapIcon());
 
-            //Set Name
+            //Get Name && Icon
             String[] personInfo = fileIn.nextLine().split("§");
             p.setName(personInfo[0]);
+            char[] c = personInfo[1].toCharArray();
+            p.getMapIcon().setSymbol(c[0]);
+
+            //Get Sprite
+            String[] sprites = fileIn.nextLine().split("§");
+            if (sprites.length > 1)
+            {
+                p.getMapIcon().setSprite(sprites[1], true); //Default is to assume that an image is a full cover
+
+                if (sprites.length > 2)
+                {
+                    if (Objects.equals(sprites[2], "false"))
+                    {
+                        p.getMapIcon().setSprite(sprites[1], false); //Only change it if its marked as false
+                    }
+                }
+            }
+
+            //Get Icon Colour
+            String[] iconColour = fileIn.nextLine().split("§");
+            if (iconColour.length > 1)
+            {
+                String[] RGBValues =  iconColour[1].split(":");
+                Color newColor = new Color(Integer.parseInt(RGBValues[0]), Integer.parseInt(RGBValues[1]), Integer.parseInt(RGBValues[2]));
+                p.getMapIcon().setIconColour(newColor);
+            }
 
             //Set Description
             String[] description = fileIn.nextLine().split("§");
@@ -123,19 +151,6 @@ public class BodyFileDecoder
             //Set Tags
             ObjectTag[] tags = ObjectTag.translateStringToTag(fileIn.nextLine().split("§"));
             p.setTags(tags);
-
-            //Set MapIcon
-            char[] c = personInfo[1].toCharArray();
-            if (personInfo.length > 2)
-            {
-                String[] RGBValues =  personInfo[2].split(":");
-                Color newColor = new Color(Integer.parseInt(RGBValues[0]), Integer.parseInt(RGBValues[1]), Integer.parseInt(RGBValues[2]));
-                p.setMapIcon(new MapIcon(c[0], newColor));
-            }
-            else
-            {
-                p.setMapIcon(new MapIcon(c[0]));
-            }
 
             bodyPartName = fileIn.nextLine().split("§")[1];
             bodyPartPath = fileIn.nextLine().split("§")[1];

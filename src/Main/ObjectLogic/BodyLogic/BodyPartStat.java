@@ -56,7 +56,8 @@ public class BodyPartStat
      */
     private float[][] myStats;
 
-    private float currentHealth;
+    private float currentHealth = 1; //Has to be anything greater than zero so initialization works right
+    private float currentBloodLevel;
 
     public BodyPartStat(BodyPart bp)
     {
@@ -75,7 +76,34 @@ public class BodyPartStat
 
     public void changeHealth(float change)
     {
-        currentHealth += MathHelper.clamp(currentHealth+change,0, getNetStats()[MAX_HEALTH]);
+        currentHealth = MathHelper.clamp(currentHealth+change,0, getNetStats()[MAX_HEALTH]);
+    }
+
+    public float getBloodLevel() {return currentBloodLevel;}
+
+    /**
+     * Changes the current blood level of a body part.
+     * If the change is greater than the current blood level, the function will return the remainder as a negative number
+     * or 0 otherwise.
+     * @param change
+     * @return
+     */
+    public float changeBloodLevel(float change)
+    {
+        currentBloodLevel = MathHelper.clamp(currentBloodLevel+change, 0, getNetStats()[BLOOD_CAPACITY]);
+        if (currentBloodLevel-change < 0)
+        {
+            return currentBloodLevel-change;
+        }
+        else
+        {
+            return 0;
+        }
+    }
+
+    public float consumeBlood()
+    {
+        return changeBloodLevel(-(getNetStats()[BLOOD_NEED]/10f));
     }
 
     public void regenerateHealth()
@@ -159,22 +187,27 @@ public class BodyPartStat
         }
 
         for (int i = 0; i < STATS_NUM; i++) {
-
-            netStats[i] = gross[i];
-
-            for (int j = 0; j < upGross.size(); j++)
+            if (getCurrentHealth() > 0)
             {
-                netStats[i] += upGross.get(j)[i];
+                netStats[i] = gross[i];
+
+                for (int j = 0; j < upGross.size(); j++)
+                {
+                    netStats[i] += upGross.get(j)[i];
+                }
+
+                netStats[i] *= mod[i];
+
+                for (int j = 0; j < upMod.size(); j++)
+                {
+                    netStats[i] *= upMod.get(j)[i];
+                }
             }
-
-            netStats[i] *= mod[i];
-
-            for (int j = 0; j < upMod.size(); j++)
+            else
             {
-                netStats[i] *= upMod.get(j)[i];
+                netStats[i] = 0;
             }
         }
-
 
         return netStats;
     }

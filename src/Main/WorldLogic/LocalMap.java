@@ -6,11 +6,13 @@ import Main.MathHelper;
 import Main.ObjectLogic.BodyLogic.Person;
 import Main.ObjectLogic.Thing;
 import Main.ObjectLogic.Wind;
+import Main.RenderLogic.Logic.MapIcon;
 import Main.Settings;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import java.util.Set;
 
 public class LocalMap
 {
@@ -20,14 +22,13 @@ public class LocalMap
      */
     private final int[] size = new int[2];
     private final Cell[][] cells;
-
     private GameWorld myWorld;
     private String mapName;
+    private MapIcon mapIcon;
     private List<Thing> localThings = new ArrayList<>();
-
     private Direction localWind = Direction.EAST;
 
-    protected LocalMap(int[] xySize, GameWorld gameWorld, String name)
+    protected LocalMap(int[] xySize, GameWorld gameWorld, MapIcon mapIcon, String name, boolean spawnWind)
     {
         size[0] = xySize[0];
         size[1] = xySize[1];
@@ -43,7 +44,15 @@ public class LocalMap
 
         myWorld = gameWorld;
         mapName = name;
-        //this.localWind = Direction.getRandomDirection(false);
+        this.mapIcon = mapIcon;
+        if (spawnWind)
+        {
+            this.localWind = Direction.getRandomDirection(false);
+        }
+        else
+        {
+            this.localWind = Direction.NONE;
+        }
     }
 
     public int[] getSize()
@@ -100,6 +109,16 @@ public class LocalMap
         return people;
     }
 
+    public MapIcon getMapIcon()
+    {
+        if (mapIcon == null)
+        {
+            System.err.println("Tried to get MapIcon of local map but mapIcon is null");
+            return new MapIcon('?');
+        }
+        return mapIcon;
+    }
+
     public void addThingToLocalMap(Thing t)
     {
         localThings.add(t);
@@ -123,7 +142,7 @@ public class LocalMap
     public void updateTick()
     {
         float normalizeForTickSpeed = Settings.tickSpeed/100f;
-        float normalizeForMapSize = (Settings.mapSizeX+Settings.mapSizeY)/100f;
+        float normalizeForMapSize = (Settings.localMapSizeX +Settings.localMapSizeY)/100f;
         float chanceToSpawn = 0.1f * normalizeForTickSpeed * normalizeForMapSize;
 
         if (MathHelper.randomDecider(chanceToSpawn))

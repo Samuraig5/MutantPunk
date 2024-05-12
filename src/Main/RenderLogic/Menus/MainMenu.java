@@ -1,7 +1,7 @@
 package Main.RenderLogic.Menus;
 
 import Main.RenderLogic.Console;
-import Main.RenderLogic.GameState;
+import Main.RenderLogic.Logic.GameState;
 import Main.WorldLogic.GameWorld;
 import Main.WorldLogic.MapGenerator;
 
@@ -22,9 +22,9 @@ public class MainMenu implements KeyListener
         switch (e.getKeyCode())
         {
             case KeyEvent.VK_A:
-                c.setGameState(GameState.WORLD_MENU);
                 GameWorld gw = MapGenerator.generateNewGameWorld("New World");
                 c.wc.setActiveWorld(gw);
+                c.setGameState(GameState.WORLD_MENU);
         }
 
     }

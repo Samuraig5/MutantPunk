@@ -2,18 +2,13 @@ package Main.ObjectLogic.BodyLogic;
 
 import Main.AILogic.ThinkingThing;
 import Main.Direction;
-import Main.ErrorHandler;
 import Main.MathHelper;
 import Main.ObjectLogic.ObjectTag;
 import Main.ObjectLogic.Thing;
-import Main.RenderLogic.MapIcon;
 import Main.WorldLogic.Cell;
 import Main.WorldLogic.GameWorld;
-import Main.WorldLogic.LocalMap;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
 public class Person extends Thing
@@ -153,7 +148,12 @@ public class Person extends Thing
 
     }
 
-    public boolean canDigest(ObjectTag[] objectTag)
+    /**
+     *
+     * @param objectTag Object Tag of the item that is to be eaten
+     * @return returns the body part that can digest the object tag. Null if none are available.
+     */
+    public BodyPartAbility getStomach(ObjectTag[] objectTag)
     {
         for (BodyPart bp:myBodyParts)
         {
@@ -165,38 +165,29 @@ public class Person extends Thing
                     {
                         for (ObjectTag input:objectTag)
                         {
-                            if (ot == input)
+                            if (ot == input && !bpa.isFull())
                             {
-                                return true;
+                                return bpa;
                             }
                         }
                     }
                 }
             }
         }
-        return false;
+        return null;
+    }
+
+    public int getEatingCost()
+    {
+        return 50;
     }
 
     @Override
     public void doAction()
     {
-        int eatingCost = 50;
-        List<Thing> things = getMyCell().getThings();
-        List<Thing> eatableThings = new ArrayList<>();
-        if (getActionPoints() > eatingCost) {
-            for (int i = 0; i < things.size(); i++) {
-                if (canDigest(things.get(i).getTags())) {
-                    things.get(i).destroy();
-                    changeActionPoints(-eatingCost);
-                    return;
-                }
-            }
+        myThoughts.think();
+        for (BodyPart bp:myBodyParts) {
+            bp.update();
         }
-
-        int movementCost = Math.round(100/getMyTotalSpeed()*333);
-        if (getActionPoints() < movementCost) {return;}
-        changeActionPoints(-movementCost);
-        myThoughts.thinkAboutMovement();
     }
-
 }

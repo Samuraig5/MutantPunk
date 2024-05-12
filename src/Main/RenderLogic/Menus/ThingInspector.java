@@ -3,7 +3,7 @@ package Main.RenderLogic.Menus;
 import Main.ObjectLogic.BodyLogic.BodyPart;
 import Main.ObjectLogic.BodyLogic.Person;
 import Main.RenderLogic.Console;
-import Main.RenderLogic.GameState;
+import Main.RenderLogic.Logic.GameState;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
@@ -21,9 +21,9 @@ public class ThingInspector implements KeyListener
 
     private void openBodyPartView(int i)
     {
-        Person p = (Person) c.cp.getFocusedThing();
+        Person p = (Person) c.cp.getInspectedThing();
         BodyPart bp = p.myBodyParts.get(i);
-        c.cp.setFocusedBodyPart(bp);
+        c.cp.setInspectedBodyPart(bp);
         c.setGameState(GameState.BODY_PART_MENU);
     }
 

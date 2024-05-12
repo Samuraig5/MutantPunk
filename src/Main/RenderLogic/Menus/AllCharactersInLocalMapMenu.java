@@ -2,7 +2,7 @@ package Main.RenderLogic.Menus;
 
 import Main.ObjectLogic.BodyLogic.Person;
 import Main.RenderLogic.Console;
-import Main.RenderLogic.GameState;
+import Main.RenderLogic.Logic.GameState;
 import Main.WorldLogic.LocalMap;
 
 import java.awt.event.KeyEvent;
@@ -27,7 +27,7 @@ public class AllCharactersInLocalMapMenu implements KeyListener
 
         Person p = lm.getLocalPeople().get(i);
 
-        c.cp.setFocusedThing(p);
+        c.cp.setInspectedThing(p);
         c.setGameState(GameState.THING_INSPECTOR);
     }
 
