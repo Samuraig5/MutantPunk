@@ -41,7 +41,7 @@ public class Wind extends Thing
         setCollision(false);
 
         MapIcon mi = new MapIcon();
-        mi.setSymbol('~');
+        mi.setSymbol(' ');
         mi.setIconColour(Color.white);
         setMapIcon(mi);
 

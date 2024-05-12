@@ -8,6 +8,9 @@ import Main.WorldLogic.GameWorld;
 import Main.WorldLogic.LocalMap;
 
 import java.awt.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 public class MapPainter
 {
@@ -91,7 +94,7 @@ public class MapPainter
         LocalMap lm = cp.c.wc.getActiveWorld().getActiveLocalMap();
 
         int[] xy = lm.getSize();
-        MapIcon[][] mapIcons = cp.c.cm.TranslateCellsToSymbols(lm.getCells(),xy);
+        MapIcon[][][] mapIcons = cp.c.cm.TranslateCellsToSymbols(lm.getCells(),xy);
 
         for (int y = 0; y < xy[1]; y++)
         {
@@ -116,8 +119,21 @@ public class MapPainter
                 }
                 else
                 {
-                    MapIcon mi = mapIcons[x][y];
-                    printThing(cp, xPos, yPos, mi);
+                    MapIcon[] mi = mapIcons[x][y];
+                    List<MapIcon> prints = new ArrayList<>();
+                    int i = -1;
+                    do
+                    {
+                        i++;
+                        prints.add(mi[i]);
+                    }
+                    while (!mi[i].getSprite().isFullCover());
+
+                    for (int j = prints.size()-1; j >= 0; j--)
+                    {
+                        printThing(cp, xPos, yPos, mi[j]);
+
+                    }
                 }
             }
         }

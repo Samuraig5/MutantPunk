@@ -11,24 +11,24 @@ public class ConsoleMapInterface
         c = console;
     }
 
-    public MapIcon[][] TranslateCellsToSymbols(Cell[][] cells, int[] size)
+    public MapIcon[][][] TranslateCellsToSymbols(Cell[][] cells, int[] size)
     {
-        MapIcon[][] mapIcons = new MapIcon[size[0]][size[1]];
+        MapIcon[][][] mapIcons = new MapIcon[size[0]][size[1]][];
         for (int x = 0; x < size[0]; x++)
         {
             for (int y = 0; y < size[1]; y++)
             {
                 if (cells[x][y].isEmpty()) //Empty Cell
                 {
-                    mapIcons[x][y] = new MapIcon(' ');
+                    mapIcons[x][y][0] = new MapIcon(' ');
                 }
                 else if (!cells[x][y].getThings().isEmpty())
                 {
-                    mapIcons[x][y] = cells[x][y].getThingWithHighestRenderPriority().getMapIcon();
+                    mapIcons[x][y] = cells[x][y].getSortedMapIcons();
                 }
                 else
                 {
-                    mapIcons[y][y] = new MapIcon();
+                    mapIcons[y][y][0] = new MapIcon();
                 }
             }
         }

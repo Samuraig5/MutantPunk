@@ -3,7 +3,7 @@ Description§A perfectly ripe apple
 HasCollision§false
 Tags§SOLID:ORGANIC:PLANT:FRUIT
 RenderPriority§1
-Icon§A§Resources/Sprites/Apple.png
+Icon§A§Resources/Sprites/Apple.png§false
 Colour§255:0:0
 ThingEnterNeighbourIcon§
 ThingLeaveIcon§
