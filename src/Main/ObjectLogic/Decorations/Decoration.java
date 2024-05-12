@@ -6,6 +6,7 @@ import Main.ObjectLogic.ObjectTag;
 import Main.ObjectLogic.Thing;
 import Main.ObjectLogic.Wind;
 import Main.RenderLogic.Logic.MapIcon;
+import Main.RenderLogic.Logic.Sprite;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
@@ -16,17 +17,17 @@ public class Decoration extends Thing
 {
     private int pushedDownValue;
     private int returnToNormalCost;
-    private Image defaultSprite;
+    private Sprite defaultSprite = new Sprite();
     private char defaultIcon;
     private Color defaultColour;
-    private Image[] thingEntersNeighbourSprites;
+    private Sprite[] thingEntersNeighbourSprites;
     private char[] thingEntersNeighbourIcons;
-    private Image[] thingLeavesSprites;
+    private Sprite[] thingLeavesSprites;
     private char[] thingLeavesIcons;
 
     public Decoration(String name, String desc, boolean collision, ObjectTag[] tags, int renderPriority,
-                      Image defaultSprite, char defaultIcon, Color defaultColour, Image[] thingEntersNeighbourSprites,
-                      char[] thingEntersNeighbour, Image[] thingLeavesSprites, char[] thingLeaves, int returnToNormalCost)
+                      Sprite defaultSprite, char defaultIcon, Color defaultColour, Sprite[] thingEntersNeighbourSprites,
+                      char[] thingEntersNeighbour, Sprite[] thingLeavesSprites, char[] thingLeaves, int returnToNormalCost)
     {
         setName(name);
         setDescription(desc);
@@ -69,77 +70,111 @@ public class Decoration extends Thing
             //Set Default Icon
             defaultIcon = spriteIcon[1].toCharArray()[0];
             mi.setSymbol(defaultIcon);
-            //Set Sprite
-            if (spriteIcon.length>2)
+            try
             {
-                defaultSprite = ImageIO.read(new File(spriteIcon[2]));
-                mi.setSprite(defaultSprite);
+                //Set Sprite
+                if (spriteIcon.length>2)
+                {
+                    defaultSprite.setImage(spriteIcon[2]);
+                    defaultSprite.setFullCover(true); //Default is to assume that an image is a full cover
+                    if (spriteIcon.length > 3)
+                    {
+                        if (Objects.equals(spriteIcon[3], "false"))
+                        {
+                            defaultSprite.setFullCover(false);
+                        }
+                    }
+                    mi.setSprite(defaultSprite);
+                }
             }
+            catch (Exception e)
+            {
+                throw new RuntimeException("Error when setting sprite of a decoration object");
+            }
+
             //Set Default Colour
             String[] s = fileIn.nextLine().split("§")[1].split(":");
             defaultColour = new Color(Integer.parseInt(s[0]), Integer.parseInt(s[1]), Integer.parseInt(s[2]));
             mi.setIconColour(defaultColour);
 
-            //Set Thing Enters Icons
-            s = fileIn.nextLine().split("§");
+            try
+            {
+                //Set Thing Enters Icons
+                s = fileIn.nextLine().split("§");
 
-            if (s.length > 1)
-            {
-                String[] icons = s[1].split(":");
-                char[] c = new char[8];
-                for (int i = 0; i < c.length; i++) {
-                    c[i] = icons[i].toCharArray()[0];
-                }
-                thingEntersNeighbourIcons = Arrays.copyOf(c, c.length);
+                if (s.length > 1)
+                {
+                    String[] icons = s[1].split(":");
+                    char[] c = new char[8];
+                    for (int i = 0; i < c.length; i++) {
+                        c[i] = icons[i].toCharArray()[0];
+                    }
+                    thingEntersNeighbourIcons = Arrays.copyOf(c, c.length);
 
-            }
-            if (s.length>2)
-            {
-                String[] sprites = s[2].split(":");
-                Image[] img = new Image[8];
-                if (sprites.length == 1) //One Sprite for all directions
+                }
+                if (s.length>2)
                 {
-                    Image singeSprite = ImageIO.read(new File(sprites[0]));
-                    for (int i = 0; i < sprites.length; i++) {
-                        img[i] = singeSprite;
+                    String[] addrs = s[2].split(":");
+                    Sprite[] sprites = new Sprite[8];
+                    if (addrs.length == 1) //One Sprite for all directions
+                    {
+                        Sprite singleSprite = new Sprite(addrs[0], true);
+                        for (int i = 0; i < sprites.length; i++) {
+                            sprites[i] = new Sprite(singleSprite);
+                        }
                     }
-                }
-                else // One Sprite for each direction
-                {
-                    for (int i = 0; i < img.length; i++) {
-                        img[i] = ImageIO.read(new File(sprites[i]));
+                    else // One Sprite for each direction
+                    {
+                        for (int i = 0; i < sprites.length; i++) {
+                            sprites[i] = new Sprite(addrs[i], true);
+                        }
                     }
+                    thingEntersNeighbourSprites = Arrays.copyOf(sprites, sprites.length);
                 }
-                thingEntersNeighbourSprites = Arrays.copyOf(img, img.length);
             }
-            //Set Thing Leaves Icons
-            s = fileIn.nextLine().split("§");
-            if (s.length > 1)
+            catch (Exception e)
             {
-                String[] icons = s[1].split(":");
-                char[] c = new char[8];
-                for (int i = 0; i < c.length; i++) {
-                    c[i] = icons[i].toCharArray()[0];
-                }
-                thingLeavesIcons = Arrays.copyOf(c, c.length);
+                throw new RuntimeException("Error when setting 'thingEntersNeighbourSprites' sprites of a decoration object");
             }
-            if (s.length>2)
+
+            try
             {
-                String[] sprites = s[2].split(":");
-                Image[] img = new Image[8];
-                if (sprites.length == 1) //One Sprite for all directions
+                //Set Thing Leaves Icons
+                s = fileIn.nextLine().split("§");
+                if (s.length > 1)
                 {
-                    Image singeSprite = ImageIO.read(new File(sprites[0]));
-                    Arrays.fill(img, singeSprite);
-                }
-                else // One Sprite for each direction
-                {
-                    for (int i = 0; i < sprites.length; i++) {
-                        img[i] = ImageIO.read(new File(sprites[i]));
+                    String[] icons = s[1].split(":");
+                    char[] c = new char[8];
+                    for (int i = 0; i < c.length; i++) {
+                        c[i] = icons[i].toCharArray()[0];
                     }
+                    thingLeavesIcons = Arrays.copyOf(c, c.length);
                 }
-                thingLeavesSprites = Arrays.copyOf(img, img.length);
+                if (s.length>2)
+                {
+                    String[] addrs = s[2].split(":");
+                    Sprite[] sprites = new Sprite[8];
+                    if (addrs.length == 1) //One Sprite for all directions
+                    {
+                        Sprite singleSprite = new Sprite(addrs[0], true);
+                        for (int i = 0; i < sprites.length; i++) {
+                            sprites[i] = new Sprite(singleSprite);
+                        }
+                    }
+                    else // One Sprite for each direction
+                    {
+                        for (int i = 0; i < sprites.length; i++) {
+                            sprites[i] = new Sprite(addrs[i], true);
+                        }
+                    }
+                    thingLeavesSprites = Arrays.copyOf(sprites, sprites.length);
+                }
             }
+            catch (Exception e)
+            {
+                throw new RuntimeException("Error when setting 'thingLeavesSprites' sprites of a decoration object");
+            }
+
             //Set Action Cost To Return To Normal Icon
             returnToNormalCost = Integer.parseInt(fileIn.nextLine().split("§")[1]);
 

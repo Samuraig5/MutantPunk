@@ -8,7 +8,7 @@ import java.util.Map;
 
 public class MapIcon
 {
-    private Image sprite;
+    private Sprite sprite = new Sprite();
     private char symbol;
     private Color iconColour;
 
@@ -30,25 +30,28 @@ public class MapIcon
 
     public boolean hasSprite()
     {
-        if (sprite == null) { return false;}
-        else { return true; }
+        if (sprite == null) {return false;}
+        if (sprite.getImage() == null) {return false;}
+        else {return true;}
     }
-    public void setSprite(Image sprite) {this.sprite = sprite;}
-    public void setSprite(String sprite)
+    public void setSprite(Image image, boolean fullCover)
     {
-        try
-        {
-            this.sprite = ImageIO.read(new File(sprite));
-        }
-        catch (IOException e)
-        {
-            System.err.println("Unable to load '" + sprite + "' from files!");
-        }
+        sprite.setImage(image);
+        sprite.setFullCover(fullCover);
     }
-    public Image getSprite() {return sprite;}
-    public char getSymbol(){return symbol;}
-    public void setSymbol(char newSymbol){symbol = newSymbol;}
+    public void setSprite(String addr, boolean fullCover)
+    {
+        sprite.setImage(addr);
+        sprite.setFullCover(fullCover);
+    }
+    public void setSprite(Sprite sprite)
+    {
+        this.sprite = sprite;
+    }
+    public Sprite getSprite() {return sprite;}
+    public char getSymbol() {return symbol;}
+    public void setSymbol(char newSymbol) {symbol = newSymbol;}
 
-    public Color getIconColour(){return iconColour;}
-    public void setIconColour(Color newColour){iconColour = newColour;}
+    public Color getIconColour() {return iconColour;}
+    public void setIconColour(Color newColour) {iconColour = newColour;}
 }

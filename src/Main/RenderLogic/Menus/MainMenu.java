@@ -22,9 +22,9 @@ public class MainMenu implements KeyListener
         switch (e.getKeyCode())
         {
             case KeyEvent.VK_A:
-                c.setGameState(GameState.WORLD_MENU);
                 GameWorld gw = MapGenerator.generateNewGameWorld("New World");
                 c.wc.setActiveWorld(gw);
+                c.setGameState(GameState.WORLD_MENU);
         }
 
     }

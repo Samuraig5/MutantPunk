@@ -15,7 +15,7 @@ public class MapPainter
     {
         if (mi.hasSprite() && Settings.renderSprites)
         {
-            return printSprite(cp, xPos, yPos, mi.getSprite());
+            return printSprite(cp, xPos, yPos, mi.getSprite().getImage());
         }
         else
         {
@@ -41,6 +41,11 @@ public class MapPainter
     public static void drawWorldView(ConsolePainter cp)
     {
         GameWorld gw = cp.c.wc.getActiveWorld();
+        if (gw == null)
+        {
+            System.err.println("Tried to draw WorldView but no active world is set");
+            return;
+        }
 
         MapIcon[][] mapIcons = new MapIcon[Settings.worldMapSizeX][Settings.worldMapSizeY];
         for (int x = 0; x < Settings.worldMapSizeX; x++)

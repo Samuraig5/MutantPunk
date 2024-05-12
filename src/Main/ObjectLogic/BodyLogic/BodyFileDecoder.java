@@ -8,6 +8,7 @@ import java.awt.*;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Scanner;
 
 public class BodyFileDecoder
@@ -123,7 +124,15 @@ public class BodyFileDecoder
             String[] sprites = fileIn.nextLine().split("§");
             if (sprites.length > 1)
             {
-                p.getMapIcon().setSprite(sprites[1]);
+                p.getMapIcon().setSprite(sprites[1], true); //Default is to assume that an image is a full cover
+
+                if (sprites.length > 2)
+                {
+                    if (Objects.equals(sprites[2], "false"))
+                    {
+                        p.getMapIcon().setSprite(sprites[1], false); //Only change it if its marked as false
+                    }
+                }
             }
 
             //Get Icon Colour

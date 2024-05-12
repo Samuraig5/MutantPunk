@@ -12,6 +12,7 @@ import Main.Settings;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import java.util.Set;
 
 public class LocalMap
 {
@@ -108,7 +109,15 @@ public class LocalMap
         return people;
     }
 
-    public MapIcon getMapIcon() {return mapIcon;}
+    public MapIcon getMapIcon()
+    {
+        if (mapIcon == null)
+        {
+            System.err.println("Tried to get MapIcon of local map but mapIcon is null");
+            return new MapIcon('?');
+        }
+        return mapIcon;
+    }
 
     public void addThingToLocalMap(Thing t)
     {
