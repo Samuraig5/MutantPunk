@@ -3,14 +3,14 @@ package Main.WorldLogic;
 import Main.Direction;
 import Main.MathHelper;
 import Main.ObjectLogic.Decorations.Decoration;
+import Main.ObjectLogic.Thing;
 import Main.RenderLogic.Logic.MapIcon;
 import Main.Settings;
 
 import java.awt.*;
 import java.io.File;
-import java.util.Objects;
-import java.util.Random;
-import java.util.Scanner;
+import java.util.*;
+import java.util.List;
 
 public class MapGenerator
 {
@@ -20,8 +20,7 @@ public class MapGenerator
         char icon;
         Color c;
         boolean wind;
-        String[] floorSource;
-        String[] decorSource;
+        List<ObjectSource> objectSources = new ArrayList<>();
         try
         {
             Scanner fileIn = new Scanner(biome);
@@ -30,8 +29,19 @@ public class MapGenerator
             String[] colour = fileIn.nextLine().split("§")[1].split(":");
             c = new Color(Integer.parseInt(colour[0]), Integer.parseInt(colour[1]), Integer.parseInt(colour[2]));
             wind = !Objects.equals(fileIn.nextLine().split("§")[1], "false");
-            floorSource = fileIn.nextLine().split("§");
-            decorSource = fileIn.nextLine().split("§");
+
+            if (Objects.equals(fileIn.nextLine(), "§OBJECTS§"))
+            {
+                List<String> sources = new ArrayList<>();
+                String s = fileIn.nextLine();
+                while (!Objects.equals(s, "§END§"))
+                {
+
+                    sources.add(s);
+                    s = fileIn.nextLine();
+                }
+                objectSources = manageSources(sources);
+            }
         }
         catch(Exception e)
         {
@@ -41,51 +51,69 @@ public class MapGenerator
                 gameWorld, new MapIcon(icon, c), name, wind);
         Cell[][] cells = newMap.getCells();
 
-        Decoration[] floors = new Decoration[floorSource.length-1];
-        float[] floorSpawnChance = new float[floorSource.length-1];
-        for (int i = 1; i < floorSource.length; i++)
-        {
-            String[] sub = floorSource[i].split(":");
-            floors[i-1] = new Decoration(sub[0]);
-            floorSpawnChance[i-1] = Float.parseFloat(sub[1]);
-        }
-
-        Decoration[] decorations = new Decoration[decorSource.length-1];
-        float[] decorationSpawnChance = new float[decorSource.length-1];
-        for (int i = 1; i < decorSource.length; i++)
-        {
-            String[] sub = decorSource[i].split(":");
-            decorations[i-1] = new Decoration(sub[0]);
-            decorationSpawnChance[i-1] = Float.parseFloat(sub[1]);
-        }
-
         for (int x = 0; x < Settings.localMapSizeX; x++)
         {
             for (int y = 0; y < Settings.localMapSizeY; y++)
             {
-                Decoration spawnedFloor = null;
-                while (spawnedFloor == null)
+                for (ObjectSource src:objectSources)
                 {
-                    int rnd = new Random().nextInt(floors.length);
-                    if (MathHelper.randomDecider(floorSpawnChance[rnd]))
+                    List<Decoration> decorations = src.spawnDecorations();
+                    for (Decoration decor:decorations)
                     {
-                        spawnedFloor = floors[rnd];
-                    }
-                }
-                cells[x][y].thingEnters(spawnedFloor.copy(), Direction.NONE);
-
-                for (int i = 0; i < decorations.length; i++)
-                {
-                    if (MathHelper.randomDecider(decorationSpawnChance[i]))
-                    {
-                        cells[x][y].thingEnters(decorations[i].copy(), Direction.NONE);
-                        break;
+                        cells[x][y].thingEnters(decor.copy(), Direction.NONE);
                     }
                 }
             }
         }
         //newMap.getMyWorld().getLocalMaps().add(newMap);
         return newMap;
+    }
+
+    static private List<ObjectSource> manageSources(List<String> sources)
+    {
+        List<ObjectSource> rootObjects = new ArrayList<>();
+        int depth = 0;
+        ObjectSource parent = null;
+        ObjectSource curr;
+        for (String s:sources)
+        {
+            String[] line = s.split("§");
+
+            if (line[0].length() == 0)
+            {
+                curr = new ObjectSource(line);
+                rootObjects.add(curr);
+                parent = curr;
+                depth = 0;
+                continue;
+            }
+            if (line[0].length() == depth+1)
+            {
+                curr = new ObjectSource(parent, line);
+                parent.addChild(curr);
+                parent = curr;
+                depth++;
+            }
+            else if (line[0].length() == depth)
+            {
+                parent = parent.getParent();
+                curr = new ObjectSource(parent, line);
+                parent.addChild(curr);
+                parent = curr;
+            }
+            else if (depth > line[0].length())
+            {
+                while (depth > line[0].length())
+                {
+                    parent = parent.getParent();
+                    depth--;
+                }
+                curr = new ObjectSource(parent, line);
+                parent.addChild(curr);
+                parent = curr;
+            }
+        }
+        return rootObjects;
     }
 
     static public GameWorld generateNewGameWorld(String worldName)

@@ -2,5 +2,7 @@ Name§Wasteland
 Icon§=
 Colour§161:134:100
 Wind§true
-Floor§Resources/Decorations/DirtFloor:1
-Decor§Resources/Decorations/StoneWall:0.01
+§OBJECTS§
+§Resources/Decorations/DirtFloor§1
+§Resources/Decorations/StoneWall§0.01
+§END§

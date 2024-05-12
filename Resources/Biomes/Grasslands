@@ -2,5 +2,9 @@ Name§Grassland
 Icon§#
 Colour§0:255:0
 Wind§true
-Floor§Resources/Decorations/DirtFloor:1
-Decor§Resources/Decorations/StoneWall:0.01§Resources/Decorations/Apple:0.1§Resources/Decorations/Grass:1
+§OBJECTS§
+§Resources/Decorations/DirtFloor§1
+§Resources/Decorations/StoneWall§0.01
+>§Resources/Decorations/Grass§1
+>§Resources/Decorations/Apple§0.1
+§END§
