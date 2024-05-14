@@ -55,6 +55,7 @@ public class AStar {
                 Math.abs(a.getCoordinates()[1] - b.getCoordinates()[1]);
     }
 
+
     private static List<Cell> getNeighbors(Cell[][] grid, Cell cell) {
         List<Cell> neighbors = new ArrayList<>();
         int x = cell.getCoordinates()[0];
@@ -62,17 +63,15 @@ public class AStar {
         int maxX = grid.length;
         int maxY = grid[0].length;
 
-        if (x > 0) {
-            neighbors.add(grid[x - 1][y]);
-        }
-        if (x < maxX - 1) {
-            neighbors.add(grid[x + 1][y]);
-        }
-        if (y > 0) {
-            neighbors.add(grid[x][y - 1]);
-        }
-        if (y < maxY - 1) {
-            neighbors.add(grid[x][y + 1]);
+        for (int dx = -1; dx <= 1; dx++) {
+            for (int dy = -1; dy <= 1; dy++) {
+                if (dx == 0 && dy == 0) continue; // Skip the current cell
+                int newX = x + dx;
+                int newY = y + dy;
+                if (newX >= 0 && newX < maxX && newY >= 0 && newY < maxY) {
+                    neighbors.add(grid[newX][newY]);
+                }
+            }
         }
 
         return neighbors;
