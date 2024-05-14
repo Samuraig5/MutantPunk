@@ -9,29 +9,32 @@ pathToBodyPartFile§Resources/BodyParts/Containers/HumanTorso
 >name§Human Stomach
 >pathToBodyPartFile§Resources/BodyParts/Misc/HumanStomach
 >
->name§Human head
+>name§Human Head
 >pathToBodyPartFile§Resources/BodyParts/Containers/HumanHead
 >
->name§Human left leg
+>>name§Human Brain
+>>pathToBodyPartFile§Resources/BodyParts/Misc/HumanBrain
+>
+>name§Human left Leg
 >pathToBodyPartFile§Resources/BodyParts/Legs/HumanLeg
 >>
->>name§Human left foot
+>>name§Human left Foot
 >>pathToBodyPartFile§Resources/BodyParts/Feet/HumanFoot
 >
->name§Human right leg
+>name§Human right Leg
 >pathToBodyPartFile§Resources/BodyParts/Legs/HumanLeg
 >>
->>name§Human right foot
+>>name§Human right Foot
 >>pathToBodyPartFile§Resources/BodyParts/Feet/HumanFoot
 >
->name§Human left arm
+>name§Human left Arm
 >pathToBodyPartFile§Resources/BodyParts/Arms/HumanArm
 >>
->>name§Human left hand
+>>name§Human left Hand
 >>pathToBodyPartFile§Resources/BodyParts/Hands/HumanHand
 >
->name§Human right arm
+>name§Human right Arm
 >pathToBodyPartFile§Resources/BodyParts/Arms/HumanArm
 >>
->>name§Human right hand
+>>name§Human right Hand
 >>pathToBodyPartFile§Resources/BodyParts/Hands/HumanHand

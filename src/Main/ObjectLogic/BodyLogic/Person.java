@@ -9,6 +9,7 @@ import Main.WorldLogic.Cell;
 import Main.WorldLogic.GameWorld;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class Person extends Thing
@@ -175,6 +176,22 @@ public class Person extends Thing
             }
         }
         return null;
+    }
+
+    public ObjectTag[] getDigestables()
+    {
+        List<ObjectTag> digestibles = new ArrayList<>();
+        for (BodyPart bp:myBodyParts)
+        {
+            for (BodyPartAbility bpa:bp.getAbilities())
+            {
+                if (bpa.getAbilityTag() == AbilityTag.DIGESTION)
+                {
+                    digestibles.addAll(Arrays.asList(bpa.getRelatedObjectTags()));
+                }
+            }
+        }
+        return digestibles.toArray(new ObjectTag[0]);
     }
 
     public int getEatingCost()
