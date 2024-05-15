@@ -194,10 +194,20 @@ public class UIPainter
                 paintY += Math.round(Settings.menuFontHeight);
             }
 
-            ColouredString[][] body = cp.c.cb.getBodyView((Person) inspectedThing);
+            ColouredString[][] body = cp.c.cb.getBodyView((Person)inspectedThing);
             for (int i = 0; i < body.length; i++)
             {
-                printColouredStringHorizontal(g,10,paintY+nameOffset+Math.round((i)*Settings.menuFontHeight), body[i]);
+                int yLevel = paintY+nameOffset+Math.round((i)*Settings.menuFontHeight);
+
+                int xLevel = printColouredStringHorizontal(g,10, yLevel, body[i]);
+
+                BodyPart bp = ((Person) inspectedThing).myBodyParts.get(i);
+
+                UIHelper.drawBarWithMarkers(g, xLevel, yLevel-(Settings.menuFontHeight/2),
+                        20*Settings.menuFontWidth, Settings.menuFontHeight/2f, bp.getBloodLevel(), 0,
+                        bp.getStats()[BodyPartStat.BLOOD_CAPACITY],
+                        Color.red, Color.lightGray, null,
+                        new float[]{bp.getStats()[BodyPartStat.BLOOD_NEED]}, new Color[]{Color.black});
             }
         }
     }

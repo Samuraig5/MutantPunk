@@ -49,6 +49,7 @@ public class UIHelper
         Color oldColour = g.getColor();
 
         drawBar(g, xPos, yPos, width, height, currVal, minVal, maxVal, fillColour, backColour, rimColour);
+        int rxPos = Math.round(xPos);
         int ryPos = Math.round(yPos);
         int rheight = Math.round(height);
 
@@ -62,7 +63,7 @@ public class UIHelper
             {
                 g.setColor(markerColours[i]);
             }
-            g.fillRoundRect(markerPos-1, ryPos, 2, rheight, 0, 0);
+            g.fillRoundRect(markerPos-1+rxPos, ryPos, 2, rheight, 0, 0);
         }
 
         g.setColor(oldColour);
