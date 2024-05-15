@@ -10,6 +10,12 @@ public class UIHelper
                                float currVal, float minVal, float maxVal,
                                Color fillColour, Color backColour)
     {
+        drawBar(g, xPos, yPos, width, height, currVal, minVal, maxVal, fillColour, backColour, null);
+    }
+    public static void drawBar(Graphics g, float xPos, float yPos, float width, float height,
+                               float currVal, float minVal, float maxVal,
+                               Color fillColour, Color backColour, Color rimColour)
+    {
         int rxPos = Math.round(xPos);
         int ryPos = Math.round(yPos);
         int rwidth = Math.round(width);
@@ -26,6 +32,35 @@ public class UIHelper
 
         g.setColor(fillColour);
         g.fillRoundRect(rxPos,ryPos,fillWidth, rheight,5,5);
+
+        if (rimColour != null)
+        {
+            g.setColor(rimColour);
+            g.drawRoundRect(rxPos, ryPos, rwidth, rheight, 5, 5);
+        }
+
+        g.setColor(oldColour);
+    }
+    public static void drawBarWithMarkers(Graphics g, float xPos, float yPos, float width, float height,
+                                          float currVal, float minVal, float maxVal,
+                                          Color fillColour, Color backColour, Color rimColour,
+                                          float[] markerVals, Color[] markerColours)
+    {
+        Color oldColour = g.getColor();
+
+        drawBar(g, xPos, yPos, width, height, currVal, minVal, maxVal, fillColour, backColour, rimColour);
+        int ryPos = Math.round(yPos);
+        int rheight = Math.round(height);
+
+        for (int i = 0; i < markerVals.length; i++)
+        {
+            int markerPos = Math.round(width*((markerVals[i]-minVal)/(maxVal-minVal)));
+            if (markerColours[i] != null)
+            {
+                g.setColor(markerColours[i]);
+            }
+            g.fillRoundRect(markerPos-1, ryPos, 2, rheight, 0, 0);
+        }
 
         g.setColor(oldColour);
     }

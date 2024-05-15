@@ -217,6 +217,7 @@ public class UIPainter
         health[0] = new ColouredString("Health", Color.LIGHT_GRAY);
         float fCurr = inspectedBodyPart.getCurrentHealth();
         float fMax = inspectedBodyPart.getStats()[BodyPartStat.MAX_HEALTH];
+        float fNeed = inspectedBodyPart.getStats()[BodyPartStat.REGEN_LIMIT];
         health[1] = new ColouredString(fCurr+"", Color.lightGray);
         health[2] = new ColouredString(" / ", Color.lightGray);
         health[3] = new ColouredString(fMax+"", Color.lightGray);
@@ -234,17 +235,21 @@ public class UIPainter
             health[1].setColor(Color.red);
         }
 
-        UIHelper.drawBar(g,10,y,50*Settings.menuFontWidth, Settings.menuFontHeight,
-                fCurr, 0, fMax, Color.GREEN, Color.lightGray);
+        UIHelper.drawBarWithMarkers(g,10,y,50*Settings.menuFontWidth, Settings.menuFontHeight,
+                fCurr, 0, fMax, Color.GREEN, Color.lightGray, null,
+                new float[]{fNeed}, new Color[]{Color.black});
         //printColouredStringHorizontal(g,10, y, health);
         y += 1.5f*Math.round(Settings.menuFontHeight);
 
         //printString(g, 10,y, Color.LIGHT_GRAY, "Blood Levels: " +
         //        inspectedBodyPart.getBloodLevel() + " / " +
         //        inspectedBodyPart.getStats()[BodyPartStat.BLOOD_CAPACITY]);
-        UIHelper.drawBar(g,10,y,50*Settings.menuFontWidth, Settings.menuFontHeight,
+
+        UIHelper.drawBarWithMarkers(g,10,y,50*Settings.menuFontWidth, Settings.menuFontHeight,
                 inspectedBodyPart.getBloodLevel(), 0, inspectedBodyPart.getStats()[BodyPartStat.BLOOD_CAPACITY],
-                Color.RED, Color.lightGray);
+                Color.RED, Color.lightGray, null,
+                new float[]{inspectedBodyPart.getStats()[BodyPartStat.BLOOD_NEED]}, new Color[]{Color.black});
+
         y += 2f*Math.round(Settings.menuFontHeight);
 
         printString(g,10,y,Color.LIGHT_GRAY,"Attachment Capacity: " +
