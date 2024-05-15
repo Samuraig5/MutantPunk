@@ -54,7 +54,10 @@ public class UIHelper
 
         for (int i = 0; i < markerVals.length; i++)
         {
-            int markerPos = Math.round(width*((markerVals[i]-minVal)/(maxVal-minVal)));
+            float percentage = (markerVals[i]-minVal)/(maxVal-minVal);
+            percentage = MathHelper.clamp(percentage, 0, maxVal);
+            int markerPos = Math.round(width*percentage);
+
             if (markerColours[i] != null)
             {
                 g.setColor(markerColours[i]);

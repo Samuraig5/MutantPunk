@@ -35,7 +35,7 @@ public class BodyLogicHelper
 
             float calculatedBias = ((b/100)*a)*(s/100);
             float calculatedRandomness = (randomRange()*(r/100)*a)*(s/100);
-            sol[i] = Math.round(a + calculatedBias + calculatedRandomness);
+            sol[i] = a + calculatedBias + calculatedRandomness;
         }
         return sol;
     }
