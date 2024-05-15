@@ -164,7 +164,7 @@ public class UIPainter
         if (inspectedThing instanceof Person)
         {
             int paintX = 10;
-            int paintY = 70+nameOffset;
+            int paintY = 50+nameOffset;
             int cellWidth = 10;
 
             String[][] stats = cp.c.cb.openPersonView((Person) inspectedThing);
@@ -178,10 +178,12 @@ public class UIPainter
                 bloodCapacity += bp.getStats()[BodyPartStat.BLOOD_CAPACITY];
             }
 
-            printString(g, 10,paintY, Color.LIGHT_GRAY, "Blood Levels: (" +
-                    bloodLevel + " / " + bloodCapacity + ")");
+            //printString(g, 10,paintY, Color.LIGHT_GRAY, "Blood Levels: (" +
+            //        bloodLevel + " / " + bloodCapacity + ")");
+            UIHelper.drawBar(g,10,paintY,50*Settings.menuFontWidth,Settings.menuFontHeight,
+                    bloodLevel, 0, bloodCapacity, Color.red, Color.lightGray);
 
-            paintY += Math.round(Settings.menuFontHeight)*3;
+            paintY += 2*Math.round(Settings.menuFontHeight)*3;
 
             for (int i = 0; i < stats.length; i++) {
                 printString(g, paintX,paintY, Color.LIGHT_GRAY, stats[i][0]);
@@ -210,6 +212,7 @@ public class UIPainter
         printString(g,10,y,Color.LIGHT_GRAY, inspectedBodyPart.getName(),nameFontSize);
         y += Settings.menuFontHeight;
 
+
         ColouredString[] health = new ColouredString[4];
         health[0] = new ColouredString("Health", Color.LIGHT_GRAY);
         float fCurr = inspectedBodyPart.getCurrentHealth();
@@ -231,13 +234,18 @@ public class UIPainter
             health[1].setColor(Color.red);
         }
 
-        printColouredStringHorizontal(g,10, y, health);
-        y += Math.round(Settings.menuFontHeight);
+        UIHelper.drawBar(g,10,y,50*Settings.menuFontWidth, Settings.menuFontHeight,
+                fCurr, 0, fMax, Color.GREEN, Color.lightGray);
+        //printColouredStringHorizontal(g,10, y, health);
+        y += 1.5f*Math.round(Settings.menuFontHeight);
 
-        printString(g, 10,y, Color.LIGHT_GRAY, "Blood Levels: " +
-                inspectedBodyPart.getBloodLevel() + " / " +
-                inspectedBodyPart.getStats()[BodyPartStat.BLOOD_CAPACITY]);
-        y += Math.round(Settings.menuFontHeight);
+        //printString(g, 10,y, Color.LIGHT_GRAY, "Blood Levels: " +
+        //        inspectedBodyPart.getBloodLevel() + " / " +
+        //        inspectedBodyPart.getStats()[BodyPartStat.BLOOD_CAPACITY]);
+        UIHelper.drawBar(g,10,y,50*Settings.menuFontWidth, Settings.menuFontHeight,
+                inspectedBodyPart.getBloodLevel(), 0, inspectedBodyPart.getStats()[BodyPartStat.BLOOD_CAPACITY],
+                Color.RED, Color.lightGray);
+        y += 2f*Math.round(Settings.menuFontHeight);
 
         printString(g,10,y,Color.LIGHT_GRAY,"Attachment Capacity: " +
                 inspectedBodyPart.getRemainingAttachmentCapacity() + " / " +
