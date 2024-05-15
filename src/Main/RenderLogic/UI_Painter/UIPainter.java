@@ -144,7 +144,8 @@ public class UIPainter
 
         int nameFontSize = Settings.menuFontSize*2;
         int nameOffset = 10 + Math.round(Settings.menuFontHeight);
-        printString(g, 10, nameOffset, inspectedThing.getMapIcon().getIconColour(), inspectedThing.getName() + " (" + inspectedThing.getMapIcon().getSymbol() + ")" , nameFontSize);
+        String title = inspectedThing.getName() + " (" + inspectedThing.getMapIcon().getSymbol() + ")";
+        printString(g, 10, nameOffset, inspectedThing.getMapIcon().getIconColour(), title , nameFontSize);
 
         if (inspectedThing.getDescription() != null)
         {
@@ -163,6 +164,13 @@ public class UIPainter
 
         if (inspectedThing instanceof Person)
         {
+            Person p = (Person) inspectedThing;
+            if (p.isPlayer())
+            {
+                int xTitleOffset = Math.round(title.length()*nameFontSize*Settings.relativeMenuFontWidth);
+                printString(g, 10+xTitleOffset, nameOffset, inspectedThing.getMapIcon().getIconColour(), "- PLAYER -" , nameFontSize);
+            }
+
             int paintX = 10;
             int paintY = 50+nameOffset;
             int cellWidth = 10;

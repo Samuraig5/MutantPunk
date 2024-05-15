@@ -120,6 +120,12 @@ public class ThingInspector implements KeyListener
                     c.setGameState(GameState.LOCAL_MAP_VIEW);
                 }
                 break;
+            case KeyEvent.VK_ENTER:
+                if (c.cp.getInspectedThing() instanceof  Person)
+                {
+                    c.cp.setPlayerCharacter((Person)c.cp.getInspectedThing());
+                }
+                break;
         }
     }
 

@@ -15,8 +15,8 @@ import java.util.List;
 public class Person extends Thing
 {
     public List<BodyPart> myBodyParts = new ArrayList<>();
-
     private ThinkingThing myThoughts;
+    private boolean isPlayer;
 
     protected Person(boolean addThoughts)
     {
@@ -27,6 +27,15 @@ public class Person extends Thing
         }
         setRenderPriority(9);
     }
+
+    public boolean isPlayer() {return isPlayer;}
+
+    /**
+     * Used to designate a person as being controlled by a player.
+     * ONLY CALL THIS FROM CONSOLE PAINTER!
+     * @param val
+     */
+    public void isPlayer(boolean val) {isPlayer = val;}
 
     public float[] getMyTotalStats()
     {
@@ -202,7 +211,10 @@ public class Person extends Thing
     @Override
     public void doAction()
     {
-        myThoughts.think();
+        if (!isPlayer())
+        {
+            myThoughts.think();
+        }
         for (BodyPart bp:myBodyParts) {
             bp.update();
         }

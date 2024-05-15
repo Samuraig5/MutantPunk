@@ -3,6 +3,7 @@ package Main.RenderLogic;
 import Main.Direction;
 import Main.MathHelper;
 import Main.ObjectLogic.BodyLogic.BodyPart;
+import Main.ObjectLogic.BodyLogic.Person;
 import Main.ObjectLogic.Thing;
 import Main.RenderLogic.Logic.GameState;
 import Main.RenderLogic.Map_Painter.MapPainter;
@@ -24,6 +25,7 @@ public class ConsolePainter extends JPanel implements ImageObserver
     public Color backgroundColour = new Color(50,50,50);
     private KeyListener activeKeyListener;
     private MouseListener activeMouseListener;
+    private Person playerCharacter;
     private Thing inspectedThing;
     private BodyPart inspectedBodyPart;
     private Thing focusedThing;
@@ -211,5 +213,19 @@ public class ConsolePainter extends JPanel implements ImageObserver
         int y = Math.round((float) mouseCursorPosition.y / Settings.gridScale);
 
         return new int[] {x,y};
+    }
+
+    public void setPlayerCharacter(Person p)
+    {
+        if (playerCharacter != null)
+        {
+            playerCharacter.isPlayer(false);
+        }
+        playerCharacter = p;
+        playerCharacter.isPlayer(true);
+    }
+    public Person getPlayerCharacter()
+    {
+        return playerCharacter;
     }
 }
