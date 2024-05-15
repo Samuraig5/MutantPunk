@@ -30,10 +30,10 @@ public class ThinkingThing
             }
         }
 
-        int movementCost = Math.round(100/myPerson.getMyTotalSpeed()*333);
-        if (myPerson.getActionPoints() < movementCost) {return;}
-        myPerson.changeActionPoints(-movementCost);
-        move();
+        if (myPerson.canMove())
+        {
+            move();
+        }
     }
 
     public void eat(BodyPartAbility stomach, Thing target)
@@ -61,6 +61,6 @@ public class ThinkingThing
         }
 
         if (myPerson.getMyCell() == null) {return;}
-        myPerson.move(d);
+        myPerson.tryToMove(d);
     }
 }

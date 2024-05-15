@@ -67,7 +67,46 @@ public class Person extends Thing
         super.getGameWord().getAllCharacters().add(this);
     }
 
-    public void move(Direction d)
+    public boolean isAlive()
+    {
+        if (getMyTotalStats()[BodyPartStat.CONSCIOUSNESS] > 0)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+    private int getMovementCost()
+    {
+        return Math.round(100 / getMyTotalSpeed() * 333);
+
+    }
+
+    public boolean canMove() {
+        if (!isAlive()) {
+            return false;
+        }
+
+        if (getActionPoints() > getMovementCost())
+        {
+            return true;
+        } else
+        {
+            return false;
+        }
+    }
+    public void tryToMove(Direction d)
+    {
+        if (canMove())
+        {
+            changeActionPoints(-getMovementCost());
+            doMove(d);
+        }
+    }
+    private void doMove(Direction d)
     {
         Cell c = getMyCell();
         if (c == null) {return;}

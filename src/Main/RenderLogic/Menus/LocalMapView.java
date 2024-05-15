@@ -1,6 +1,7 @@
 package Main.RenderLogic.Menus;
 
 import Main.Direction;
+import Main.ObjectLogic.BodyLogic.Person;
 import Main.RenderLogic.Console;
 import Main.RenderLogic.Logic.GameState;
 
@@ -20,24 +21,45 @@ public class LocalMapView implements KeyListener, MouseListener
     @Override
     public void keyPressed(KeyEvent e)
     {
+        Person player = c.cp.getPlayerCharacter();
         switch (e.getKeyCode())
         {
             case KeyEvent.VK_W:
+                if (player != null)
+                {
+                    player.tryToMove(Direction.NORTH);
+                    break;
+                }
                 c.cp.setCursorEnabled(true);
                 c.cp.moveCursor(Direction.NORTH, 1);
                 c.cp.setFocusedThing(null);
                 break;
             case KeyEvent.VK_A:
+                if (player != null)
+                {
+                    player.tryToMove(Direction.WEST);
+                    break;
+                }
                 c.cp.setCursorEnabled(true);
                 c.cp.moveCursor(Direction.WEST, 1);
                 c.cp.setFocusedThing(null);
                 break;
             case KeyEvent.VK_S:
+                if (player != null)
+                {
+                    player.tryToMove(Direction.SOUTH);
+                    break;
+                }
                 c.cp.setCursorEnabled(true);
                 c.cp.moveCursor(Direction.SOUTH, 1);
                 c.cp.setFocusedThing(null);
                 break;
             case KeyEvent.VK_D:
+                if (player != null)
+                {
+                    player.tryToMove(Direction.EAST);
+                    break;
+                }
                 c.cp.setCursorEnabled(true);
                 c.cp.moveCursor(Direction.EAST, 1);
                 c.cp.setFocusedThing(null);

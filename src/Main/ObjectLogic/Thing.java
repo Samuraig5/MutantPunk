@@ -1,5 +1,6 @@
 package Main.ObjectLogic;
 
+import Main.MathHelper;
 import Main.RenderLogic.Logic.MapIcon;
 import Main.Settings;
 import Main.WorldLogic.Cell;
@@ -22,6 +23,7 @@ abstract public class Thing
         return lm;
     }
     private int actionPoints;
+    private int maxActionPoints = 1000;
 
     /**
      * Priority with which this thing is rendered. Higher number indicates a higher priority.
@@ -98,7 +100,11 @@ abstract public class Thing
     public abstract void newNeightbour(Thing t, Direction directionToSource);
     public abstract void thingLeftCell(Thing t, Direction directionToNewCell);
     public int getActionPoints() {return actionPoints;}
-    public void setActionPoints(int newVal) {actionPoints = newVal;}
+    public void setActionPoints(int newVal)
+    {
+        actionPoints = newVal;
+        actionPoints = MathHelper.clamp(actionPoints, 0, maxActionPoints);
+    }
     public void changeActionPoints(int change) {actionPoints += change;}
     public ObjectTag[] getTags() {return tags;}
     public void setTags(ObjectTag[] newTags) {tags = newTags;}
