@@ -191,22 +191,31 @@ public class ConsolePainter extends JPanel implements ImageObserver
         setCursorPosition(xy);
     }
 
+    /**
+     * Returns the coordinates of the cell the mouse cursor is hovering over right now.
+     * @return Coordinates of target cell.
+     */
     public int[] getMouseCellCoordsOnLocalMap()
     {
-        int[] xy = getMouseCellCoords();
+        int[] xy = getMouseCellScaleCoords();
 
         float xScreenCenter = ((float) Settings.windowWidth/Settings.gridScale/2);
-        float yScreenCenter = ((float) Settings.windowHeight/Settings.gridScale/2) + 1;
+        float yScreenCenter = ((float) Settings.windowHeight/Settings.gridScale/2);
 
-        System.out.println(((float) Settings.windowWidth/Settings.gridScale/2) + 0.75f);
+        //System.out.println(((float) Settings.windowWidth/Settings.gridScale/2) + 0.75f);
 
         xy[0] = Math.round(xy[0] + cursorPosition[0] - xScreenCenter);
-        xy[1] = Math.round(xy[1] + cursorPosition[1] - yScreenCenter);
+        xy[1] = Math.round(xy[1] + cursorPosition[1] - yScreenCenter) -2;
 
         return xy;
     }
 
-    public int[] getMouseCellCoords()
+    /**
+     * Transforms the mouse screen coordinates to the size of cell grid coordinates.
+     * Doesn't return the cell coordinates of the cell that was clicked on. Simply a different view of the mouse coords.
+     * @return Cell grid sized screen coordinates of the mouse
+     */
+    private int[] getMouseCellScaleCoords()
     {
         //TODO: Actually Implement this logic
         int x = Math.round((float) mouseCursorPosition.x / Settings.gridScale);

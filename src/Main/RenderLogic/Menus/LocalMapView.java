@@ -135,7 +135,6 @@ public class LocalMapView implements KeyListener, MouseListener
     @Override
     public void mousePressed(MouseEvent e)
     {
-        //int[] xy = c.cp.getMouseCellCoordsOnLocalMap();
         c.cp.setCursorPosition(c.cp.getMouseCellCoordsOnLocalMap());
     }
 

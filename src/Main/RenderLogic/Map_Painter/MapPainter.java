@@ -135,6 +135,11 @@ public class MapPainter
 
                     }
                 }
+                int[] mouseCoords = cp.getMouseCellCoordsOnLocalMap();
+                if (mouseCoords[0] == x && mouseCoords[1] == y)
+                {
+                    printThing(cp,xPos,yPos,new MapIcon('o', Color.yellow));
+                }
             }
         }
         UIPainter.drawCursorUI(cp);
