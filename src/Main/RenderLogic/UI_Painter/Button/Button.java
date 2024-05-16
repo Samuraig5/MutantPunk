@@ -15,13 +15,14 @@ import static com.sun.java.accessibility.util.AWTEventMonitor.addMouseListener;
 
 public class Button
 {
-    private final ColouredString label;
-    private final Rectangle bounds;
-    private final Color backgroundColour;
-    private final Color rimColour;
-    private final List<ActionListener> listeners = new ArrayList<>();
+    private ColouredString label;
+    private Rectangle bounds;
+    private Color backgroundColour;
+    private Color rimColour;
+    private List<ActionListener> listeners = new ArrayList<>();
 
-    public Button(ColouredString label, int x, int y, int width, int height, Color bgColor, Color rimColor, ActionListener[] listeners) {
+    private void Initialize(ColouredString label, int x, int y, int width, int height, Color bgColor, Color rimColor, ActionListener[] listeners)
+    {
         this.label = label;
         this.bounds = new Rectangle(x, y, width, height);
         this.backgroundColour = bgColor;
@@ -32,6 +33,18 @@ public class Button
             addActionListener(listener);
         }
     }
+
+    public Button(ColouredString label, int x, int y, int width, int height, Color bgColor, Color rimColor, ActionListener[] listeners)
+    {
+        Initialize(label, x, y, width, height, bgColor, rimColor, listeners);
+    }
+
+    public Button(String label, int x, int y, ActionListener[] listeners)
+    {
+        Initialize(new ColouredString(label, Color.lightGray), x, y, 150, 50, Color.darkGray, Color.lightGray, listeners);
+    }
+
+
 
     public void draw(Graphics g) {
         g.setColor(backgroundColour);

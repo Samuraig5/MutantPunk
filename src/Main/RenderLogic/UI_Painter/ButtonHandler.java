@@ -18,8 +18,7 @@ public class ButtonHandler
 
     public ButtonHandler(Console c)
     {
-        worldMapViewButtons.add(new Button(new ColouredString("Return to Menu", Color.BLACK),
-                10, 10, 500, 100, Color.lightGray, Color.BLACK,
+        worldMapViewButtons.add(new Button("Return to Menu", 10, 10,
                 new ActionListener[]{new GameStateChanger(c, GameState.MAIN_MENU)}));
     }
 

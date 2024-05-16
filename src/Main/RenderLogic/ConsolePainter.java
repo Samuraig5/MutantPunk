@@ -154,7 +154,18 @@ public class ConsolePainter extends JPanel implements ImageObserver
     public boolean isCursorEnabled() {return cursorEnabled;}
 
     public int[] getCursorPosition() {return cursorPosition;}
-    public void setCursorPosition(int[] i) {cursorPosition = i;}
+    public void setCursorPosition(int[] i)
+    {
+        if (i[0] < 0 || i[0] >= Settings.localMapSizeX)
+        {
+            return;
+        }
+        if (i[1] < 0 || i[1] >= Settings.localMapSizeY)
+        {
+            return;
+        }
+        cursorPosition = i;
+    }
     public void setFocusedThing(Thing t){focusedThing = t;}
 
     public void moveCursor(Direction direction, int amount)
