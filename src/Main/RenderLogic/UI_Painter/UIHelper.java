@@ -1,11 +1,30 @@
 package Main.RenderLogic.UI_Painter;
 
 import Main.MathHelper;
+import Main.RenderLogic.Logic.ColouredString;
+import Main.Settings;
 
 import java.awt.*;
 
 public class UIHelper
 {
+    public static Point printString(Graphics g, float xPos, float yPos, ColouredString s)
+    {
+        int x = Math.round(xPos);
+        int y = Math.round(yPos);
+
+        g.setFont(new Font("Courier New", Font.PLAIN, Settings.menuFontSize));
+        Color current = g.getColor();
+        g.setColor(s.getColor());
+        g.drawString(s.getString(), x, y);
+        g.setColor(current);
+
+        x = x + Math.round(s.getString().length()*Settings.menuFontWidth);
+        y = y + Math.round(1*Settings.menuFontHeight);
+
+        return new Point(x,y);
+    }
+
     public static void drawBar(Graphics g, float xPos, float yPos, float width, float height,
                                float currVal, float minVal, float maxVal,
                                Color fillColour, Color backColour)
