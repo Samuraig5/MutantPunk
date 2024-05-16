@@ -3,6 +3,7 @@ package Main.RenderLogic;
 import Main.RenderLogic.Logic.ConsoleBodyInterface;
 import Main.RenderLogic.Logic.ConsoleMapInterface;
 import Main.RenderLogic.Logic.GameState;
+import Main.RenderLogic.UI_Painter.ButtonHandler;
 import Main.RenderLogic.UI_Painter.Logo.LogoScreen;
 import Main.RenderLogic.Menus.*;
 import Main.Settings;
@@ -23,6 +24,7 @@ public class Console
     public ConsolePainter cp = new ConsolePainter(this);
     public WorldClock wc = new WorldClock(this);
     public LogoScreen ls = new LogoScreen(this);
+    public ButtonHandler bh = new ButtonHandler(this);
     private GameState gameState;
     private GameState previousGameState;
     public final Color errorColour = new Color(255,155,155);
@@ -92,13 +94,16 @@ public class Console
         {
             case MAIN_MENU:
                 ls.initializeScreen();
-                cp.newListener(new MainMenu(this));
+                MainMenu mm = new MainMenu(this);
+                cp.newListener(mm, mm);
                 break;
             case WORLD_MENU:
-                cp.newListener(new WorldMenu(this));
+                WorldMenu wm = new WorldMenu(this);
+                cp.newListener(wm, wm);
                 break;
             case LOCAL_MAP_MENU:
-                cp.newListener(new LocalMapMenu(this));
+                LocalMapMenu lmm = new LocalMapMenu(this);
+                cp.newListener(lmm, lmm);
                 File directory = new File("Resources/BodyPlans");
                 bodyPlans = directory.listFiles();
                 break;
@@ -107,13 +112,16 @@ public class Console
                 cp.newListener(lmv,lmv);
                 break;
             case ALL_CHARACTERS_IN_LOCAL_MAP:
-                cp.newListener(new AllCharactersInLocalMapMenu(this));
+                AllCharactersInLocalMapMenu acilmm = new AllCharactersInLocalMapMenu(this);
+                cp.newListener(acilmm,acilmm);
                 break;
             case THING_INSPECTOR:
-                cp.newListener(new ThingInspector(this));
+                ThingInspector ti = new ThingInspector(this);
+                cp.newListener(ti, ti);
                 break;
             case BODY_PART_MENU:
-                cp.newListener(new BodyPartMenu(this));
+                BodyPartMenu bpm = new BodyPartMenu(this);
+                cp.newListener(bpm, bpm);
                 break;
             default:
                 throw new RuntimeException("Console couldn't find a new KeyListener for game state: " + gs);

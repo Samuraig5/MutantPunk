@@ -10,7 +10,7 @@ import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
-public class LocalMapView implements KeyListener, MouseListener
+public class LocalMapView implements MenuLogic
 {
     Console c;
     public LocalMapView(Console console)
@@ -129,13 +129,12 @@ public class LocalMapView implements KeyListener, MouseListener
     @Override
     public void mouseClicked(MouseEvent e)
     {
-
+        c.cp.setCursorPosition(c.cp.getMouseCellCoordsOnLocalMap());
     }
 
     @Override
     public void mousePressed(MouseEvent e)
     {
-        c.cp.setCursorPosition(c.cp.getMouseCellCoordsOnLocalMap());
     }
 
     @Override

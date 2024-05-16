@@ -7,6 +7,7 @@ import Main.ObjectLogic.BodyLogic.Person;
 import Main.ObjectLogic.Thing;
 import Main.RenderLogic.Logic.GameState;
 import Main.RenderLogic.Map_Painter.MapPainter;
+import Main.RenderLogic.UI_Painter.ButtonHandler;
 import Main.RenderLogic.UI_Painter.UIPainter;
 import Main.Settings;
 

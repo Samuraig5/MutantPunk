@@ -6,9 +6,9 @@ import Main.RenderLogic.Logic.GameState;
 import Main.WorldLogic.LocalMap;
 
 import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
+import java.awt.event.MouseEvent;
 
-public class WorldMenu implements KeyListener
+public class WorldMenu implements MenuLogic
 {
     Console c;
 
@@ -163,6 +163,32 @@ public class WorldMenu implements KeyListener
 
     @Override
     public void keyReleased(KeyEvent e) {
+
+    }
+
+    @Override
+    public void mouseClicked(MouseEvent e)
+    {
+        c.bh.mouseClickInWorldMapView(c.cp.getMousePosition());
+    }
+
+    @Override
+    public void mousePressed(MouseEvent e) {
+
+    }
+
+    @Override
+    public void mouseReleased(MouseEvent e) {
+
+    }
+
+    @Override
+    public void mouseEntered(MouseEvent e) {
+
+    }
+
+    @Override
+    public void mouseExited(MouseEvent e) {
 
     }
 }

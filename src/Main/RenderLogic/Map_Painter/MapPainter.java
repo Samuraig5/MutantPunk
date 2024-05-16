@@ -10,7 +10,6 @@ import Main.WorldLogic.LocalMap;
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 public class MapPainter
 {
@@ -87,6 +86,7 @@ public class MapPainter
                 }
             }
         }
+        cp.c.bh.drawWorldMapView(cp.g);
     }
 
     public static void drawLocalMapView(ConsolePainter cp)

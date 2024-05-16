@@ -7,8 +7,9 @@ import Main.WorldLogic.MapGenerator;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.event.MouseEvent;
 
-public class MainMenu implements KeyListener
+public class MainMenu implements MenuLogic
 {
     Console c;
     public MainMenu(Console console)
@@ -37,6 +38,31 @@ public class MainMenu implements KeyListener
 
     @Override
     public void keyReleased(KeyEvent e) {
+
+    }
+
+    @Override
+    public void mouseClicked(MouseEvent e) {
+
+    }
+
+    @Override
+    public void mousePressed(MouseEvent e) {
+
+    }
+
+    @Override
+    public void mouseReleased(MouseEvent e) {
+
+    }
+
+    @Override
+    public void mouseEntered(MouseEvent e) {
+
+    }
+
+    @Override
+    public void mouseExited(MouseEvent e) {
 
     }
 }
