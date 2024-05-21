@@ -7,7 +7,7 @@ import Main.RenderLogic.UI_Painter.ButtonHandler;
 import Main.RenderLogic.UI_Painter.Logo.LogoScreen;
 import Main.RenderLogic.Menus.*;
 import Main.Settings;
-import Main.WorldLogic.WorldClock;
+import Main.TimeLogic.WorldClock;
 
 import javax.swing.*;
 import javax.swing.text.StyledDocument;

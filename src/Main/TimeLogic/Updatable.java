@@ -1,0 +1,22 @@
+package Main.TimeLogic;
+
+import Main.MathHelper;
+import Main.Settings;
+
+public abstract class Updatable
+{
+    private int maxActionPoints = 1000;
+    private int actionPoints;
+
+    public void setActionPoints(int newVal)
+    {
+        actionPoints = newVal;
+        actionPoints = MathHelper.clamp(actionPoints, 0, maxActionPoints);
+    }
+    public int getActionPoints() {return actionPoints;}
+    public void changeActionPoints(int change) {actionPoints += change;}
+    public void update()
+    {
+        actionPoints += Settings.actionPointsPerTick;
+    }
+}

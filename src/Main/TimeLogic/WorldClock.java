@@ -1,8 +1,9 @@
-package Main.WorldLogic;
+package Main.TimeLogic;
 
 import Main.ObjectLogic.Thing;
 import Main.RenderLogic.Console;
 import Main.RenderLogic.Logic.GameState;
+import Main.WorldLogic.GameWorld;
 
 import java.util.List;
 import java.util.TimerTask;
@@ -35,7 +36,7 @@ public class WorldClock extends TimerTask
             List<Thing> things = activeWorld.getActiveLocalMap().getLocalThings();
             if (things == null) {return;}
             for (int i = 0; i < things.size(); i++) {
-                things.get(i).updateTick();
+                things.get(i).update();
             }
         }
     }

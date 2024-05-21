@@ -84,6 +84,13 @@ public class Wind extends Thing
     }
 
     @Override
+    public void update()
+    {
+        super.update();
+        doAction();
+    }
+
+    @Override
     public void doAction() {
         int actionCost = 250;
         if (getActionPoints() < actionCost) {return;}

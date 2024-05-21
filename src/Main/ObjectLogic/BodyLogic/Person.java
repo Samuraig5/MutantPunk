@@ -248,6 +248,13 @@ public class Person extends Thing
     }
 
     @Override
+    public void update()
+    {
+        super.update();
+        doAction();
+    }
+
+    @Override
     public void doAction()
     {
         if (!isPlayer())

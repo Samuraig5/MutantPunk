@@ -3,11 +3,9 @@ package Main.ObjectLogic.BodyLogic;
 import Main.MathHelper;
 import Main.ObjectLogic.ObjectTag;
 import Main.Settings;
+import Main.TimeLogic.Updatable;
 
-import java.util.List;
-
-public class BodyPartAbility
-{
+public class BodyPartAbility extends Updatable {
     private BodyPart bodyPart;
     private String abilityName;
     private AbilityTag abilityTag;
@@ -15,7 +13,6 @@ public class BodyPartAbility
     private int capacity;
     private int currentFillLevel;
     private int efficiency;
-    private int actionPoints = 0;
 
     public BodyPartAbility(BodyPart bodyPart, String abilityName, AbilityTag abilityTag, ObjectTag[] relatedObjectTags)
     {
@@ -71,13 +68,13 @@ public class BodyPartAbility
     }
 
     public void update() {
-        actionPoints += Settings.actionPointsPerTick;
+        super.update();
         int digestCost = 1000;
-        if (currentFillLevel > 0 && actionPoints > digestCost)
+        if (currentFillLevel > 0 && getActionPoints() > digestCost)
         {
             if (getAbilityTag() == AbilityTag.DIGESTION)
             {
-                actionPoints -= digestCost;
+                changeActionPoints(-digestCost);
                 float digestRate = bodyPart.getStats()[BodyPartStat.BLOOD_GENERATION];
                 digestRate = MathHelper.clamp(digestRate, 0, currentFillLevel-digestRate);
                 currentFillLevel -= digestRate;
