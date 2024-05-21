@@ -1,18 +1,15 @@
 package Main.RenderLogic.UI_Painter;
 
+import Main.AbilityLogic.Ability;
 import Main.MathHelper;
 import Main.ObjectLogic.BodyLogic.BodyPart;
-import Main.ObjectLogic.BodyLogic.BodyPartAbility;
 import Main.ObjectLogic.BodyLogic.BodyPartStat;
 import Main.ObjectLogic.BodyLogic.Person;
 import Main.ObjectLogic.ObjectTag;
 import Main.ObjectLogic.Thing;
-import Main.RenderLogic.Console;
 import Main.RenderLogic.ConsolePainter;
 import Main.RenderLogic.Logic.ColouredString;
-import Main.RenderLogic.Logic.MapIcon;
 import Main.Settings;
-import Main.WorldLogic.GameWorld;
 
 import java.awt.*;
 import java.io.File;
@@ -323,14 +320,14 @@ public class UIPainter
     {
         for (int i = 0; i < inspectedBodyPart.getAbilities().size(); i++)
         {
-            BodyPartAbility bpa = inspectedBodyPart.getAbilities().get(i);
-            ObjectTag[] obt = bpa.getRelatedObjectTags();
+            Ability ability = inspectedBodyPart.getAbilities().get(i);
+            ObjectTag[] obt = ability.getRelatedObjectTags();
 
             int xOffset = 10;
 
-            xOffset = printString(g, xOffset, startPos, Color.LIGHT_GRAY, "["+bpa.getAbilityName()+"]");
+            xOffset = printString(g, xOffset, startPos, Color.LIGHT_GRAY, "["+ability.getAbilityName()+"]");
 
-            xOffset = printString(g, xOffset, startPos, Color.LIGHT_GRAY, "("+bpa.getAbilityTag()+"):");
+            xOffset = printString(g, xOffset, startPos, Color.LIGHT_GRAY, "("+ability.getAbilityTag()+"):");
 
 
             xOffset = printString(g, xOffset, startPos, Color.LIGHT_GRAY, "<");
@@ -340,23 +337,23 @@ public class UIPainter
             }
             xOffset = printString(g, xOffset, startPos, Color.LIGHT_GRAY, ">, ");
 
-            if (bpa.getCapacity() != 0)
+            if (ability.getCapacity() != 0)
             {
                 xOffset = printString(g, xOffset, startPos, Color.LIGHT_GRAY, "Capacity:");
                 xOffset = printString(g, xOffset, startPos, Color.LIGHT_GRAY, "(");
-                xOffset = printString(g, xOffset, startPos, Color.LIGHT_GRAY, String.valueOf(bpa.getCurrentFillLevel()));
+                xOffset = printString(g, xOffset, startPos, Color.LIGHT_GRAY, String.valueOf(ability.getCurrentFillLevel()));
                 xOffset = printString(g, xOffset, startPos, Color.LIGHT_GRAY, "/");
-                xOffset = printString(g, xOffset, startPos, Color.LIGHT_GRAY, String.valueOf(bpa.getCapacity()));
+                xOffset = printString(g, xOffset, startPos, Color.LIGHT_GRAY, String.valueOf(ability.getCapacity()));
                 xOffset = printString(g, xOffset, startPos, Color.LIGHT_GRAY, ")");
-                if (bpa.getEfficiency() != 0)
+                if (ability.getEfficiency() != 0)
                 {
                     xOffset = printString(g, xOffset, startPos, Color.LIGHT_GRAY, ", ");
                 }
             }
-            if (bpa.getEfficiency() != 0)
+            if (ability.getEfficiency() != 0)
             {
                 xOffset = printString(g, xOffset, startPos, Color.LIGHT_GRAY, "Efficiency:");
-                xOffset = printString(g, xOffset, startPos, Color.LIGHT_GRAY, String.valueOf(bpa.getEfficiency()));
+                xOffset = printString(g, xOffset, startPos, Color.LIGHT_GRAY, String.valueOf(ability.getEfficiency()));
             }
         }
     }

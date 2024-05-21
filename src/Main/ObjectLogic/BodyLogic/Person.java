@@ -1,6 +1,7 @@
 package Main.ObjectLogic.BodyLogic;
 
 import Main.AILogic.ThinkingThing;
+import Main.AbilityLogic.Ability;
 import Main.Direction;
 import Main.MathHelper;
 import Main.ObjectLogic.ObjectTag;
@@ -202,11 +203,11 @@ public class Person extends Thing
      * @param objectTag Object Tag of the item that is to be eaten
      * @return returns the body part that can digest the object tag. Null if none are available.
      */
-    public BodyPartAbility getStomach(ObjectTag[] objectTag)
+    public Ability getStomach(ObjectTag[] objectTag)
     {
         for (BodyPart bp:myBodyParts)
         {
-            for (BodyPartAbility bpa:bp.getAbilities())
+            for (Ability bpa:bp.getAbilities())
             {
                 if (bpa.getAbilityTag() == AbilityTag.DIGESTION)
                 {
@@ -231,7 +232,7 @@ public class Person extends Thing
         List<ObjectTag> digestibles = new ArrayList<>();
         for (BodyPart bp:myBodyParts)
         {
-            for (BodyPartAbility bpa:bp.getAbilities())
+            for (Ability bpa:bp.getAbilities())
             {
                 if (bpa.getAbilityTag() == AbilityTag.DIGESTION)
                 {

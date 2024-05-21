@@ -3,6 +3,7 @@ package Main.ObjectLogic.BodyLogic;
 import Main.ErrorHandler;
 import Main.ObjectLogic.ObjectTag;
 import Main.RenderLogic.Logic.MapIcon;
+import Main.WorldLogic.LocalMap;
 
 import java.awt.*;
 import java.io.File;
@@ -86,12 +87,12 @@ public class BodyFileDecoder
      *                   The greater the value, the stronger the random drift.
      * @return the finished BodyPart with generated stats.
      */
-    static public BodyPart loadBodyPartFromFile(String filePath,int bias, int randomness)
+    static public BodyPart loadBodyPartFromFile(String filePath,int bias, int randomness, Person p)
     {
         BodyPart bp = new BodyPart();
         List<String[]> data = getBodyPartData(filePath);
         List<String[]> abilities = getBodyPartAbility(filePath);
-        bp.generateBodyPart(data, abilities, bias,randomness);
+        bp.generateBodyPart(data, abilities, bias,randomness, p);
         return bp;
     }
 
@@ -103,9 +104,11 @@ public class BodyFileDecoder
      * @param randomness magnitude of the randomness applied to the stats of the bodypart.
      * @return
      */
-    static public Person SpawnNewPersonFromFile(String filePath, int bias, int randomness)
+    static public Person SpawnNewPersonFromFile(String filePath, int bias, int randomness, LocalMap lm)
     {
         Person p = new Person(true);
+        p.setLocalMap(lm);
+        p.setGameWorld(lm.getMyWorld());
         List<BodyPart> currentTargetsToAttach = new ArrayList<>();
         int depth;
         String bodyPartName;
@@ -154,7 +157,7 @@ public class BodyFileDecoder
 
             bodyPartName = fileIn.nextLine().split("§")[1];
             bodyPartPath = fileIn.nextLine().split("§")[1];
-            p.myBodyParts.add(loadBodyPartFromFile(bodyPartPath, bias, randomness));
+            p.myBodyParts.add(loadBodyPartFromFile(bodyPartPath, bias, randomness, p));
             p.myBodyParts.get(0).changeName(bodyPartName);
             p.myBodyParts.get(0).setMyPerson(p);
             currentTargetsToAttach.add(p.myBodyParts.get(0));
@@ -164,7 +167,7 @@ public class BodyFileDecoder
                 depth = fileIn.nextLine().length();
                 bodyPartName = fileIn.nextLine().split("§")[1];
                 bodyPartPath = fileIn.nextLine().split("§")[1];
-                BodyPart newBodyPart = loadBodyPartFromFile(bodyPartPath, bias, randomness);
+                BodyPart newBodyPart = loadBodyPartFromFile(bodyPartPath, bias, randomness, p);
                 newBodyPart.changeName(bodyPartName);
                 if(depth > currentTargetsToAttach.size()-1)
                 {

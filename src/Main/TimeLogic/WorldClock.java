@@ -1,6 +1,5 @@
 package Main.TimeLogic;
 
-import Main.ObjectLogic.Thing;
 import Main.RenderLogic.Console;
 import Main.RenderLogic.Logic.GameState;
 import Main.WorldLogic.GameWorld;
@@ -33,10 +32,10 @@ public class WorldClock extends TimerTask
 
             activeWorld.getActiveLocalMap().updateTick();
 
-            List<Thing> things = activeWorld.getActiveLocalMap().getLocalThings();
-            if (things == null) {return;}
-            for (int i = 0; i < things.size(); i++) {
-                things.get(i).update();
+            List<Updatable> updatables = activeWorld.getActiveLocalMap().getLocalUpdatables();
+            if (updatables == null) {return;}
+            for (int i = 0; i < updatables.size(); i++) {
+                updatables.get(i).update();
             }
         }
     }

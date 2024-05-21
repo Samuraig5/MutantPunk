@@ -1,7 +1,6 @@
 package Main.ObjectLogic;
 
 import Main.RenderLogic.Logic.MapIcon;
-import Main.Settings;
 import Main.TimeLogic.Updatable;
 import Main.WorldLogic.Cell;
 import Main.WorldLogic.GameWorld;
@@ -31,7 +30,7 @@ abstract public class Thing extends Updatable {
     {
         if (this.lm != null)
         {
-            this.lm.getLocalThings().remove(this);
+            this.lm.getLocalUpdatables().remove(this);
         }
         this.lm = lm;
         this.lm.addThingToLocalMap(this);

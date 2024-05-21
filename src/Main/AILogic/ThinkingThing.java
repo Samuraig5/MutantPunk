@@ -1,6 +1,6 @@
 package Main.AILogic;
 
-import Main.ObjectLogic.BodyLogic.BodyPartAbility;
+import Main.AbilityLogic.Ability;
 import Main.ObjectLogic.BodyLogic.BodyPartStat;
 import Main.ObjectLogic.BodyLogic.Person;
 import Main.Direction;
@@ -22,7 +22,7 @@ public class ThinkingThing
         List<Thing> things = myPerson.getMyCell().getThings();
         if (myPerson.getActionPoints() > myPerson.getEatingCost()) {
             for (int i = 0; i < things.size(); i++) {
-                BodyPartAbility stomach = myPerson.getStomach(things.get(i).getTags());
+                Ability stomach = myPerson.getStomach(things.get(i).getTags());
                 if (stomach != null) {
                     eat(stomach, things.get(i));
                     return;
@@ -36,10 +36,10 @@ public class ThinkingThing
         }
     }
 
-    public void eat(BodyPartAbility stomach, Thing target)
+    public void eat(Ability stomach, Thing target)
     {
         //TODO: Implement fill level to be tied to size of target (or something)
-        stomach.addToCurrentFillLevel(10);
+        stomach.changeCurrentFillLevel(10);
         target.destroy();
         myPerson.changeActionPoints(-myPerson.getEatingCost());
     }

@@ -15,6 +15,14 @@ public abstract class Updatable
     }
     public int getActionPoints() {return actionPoints;}
     public void changeActionPoints(int change) {actionPoints += change;}
+
+    /**
+     * Will return true if the current amount of action points is greater equal to the amount given.
+     */
+    public boolean canAffordAction(int amount)
+    {
+        return amount >= getActionPoints();
+    }
     public void update()
     {
         actionPoints += Settings.actionPointsPerTick;

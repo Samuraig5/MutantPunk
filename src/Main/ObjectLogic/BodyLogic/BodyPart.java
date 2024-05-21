@@ -1,9 +1,10 @@
 package Main.ObjectLogic.BodyLogic;
 
-import Main.ErrorHandler;
+import Main.AbilityLogic.Ability;
+import Main.AbilityLogic.AbilityCreator;
 import Main.MathHelper;
-import Main.ObjectLogic.ObjectTag;
 import Main.Settings;
+import Main.WorldLogic.LocalMap;
 
 import java.awt.*;
 import java.util.*;
@@ -44,7 +45,7 @@ public class BodyPart
      */
     private String bodyPartClass;
     final private BodyPartStat myStats;
-    private List<BodyPartAbility> abilities = new ArrayList<>();
+    private List<Ability> abilities = new ArrayList<>();
 
     private int bloodConsumeCooldown = 0;
 
@@ -62,7 +63,7 @@ public class BodyPart
      * @param randomness changes the stats of the bodyPart by a random amount (both positive and negative).
      *                   The greater the value, the stronger the random drift.
      */
-    public void generateBodyPart(List<String[]> data, List<String[]> abilities, int bias, int randomness)
+    public void generateBodyPart(List<String[]> data, List<String[]> lines, int bias, int randomness, Person p)
     {
         name = data.get(0)[0];
         type = Integer.parseInt(data.get(1)[0]);
@@ -80,48 +81,19 @@ public class BodyPart
         myStats.changeHealth(getStats()[BodyPartStat.MAX_HEALTH]);
         myStats.changeBloodLevel(getStats()[BodyPartStat.BLOOD_CAPACITY]);
 
+        List<Ability> abilities = AbilityCreator.createAbilities(lines, this, p.getLocalMap());
         addAbility(abilities);
     }
-    private void addAbility(List<String[]> abilities)
+
+    public List<Ability> getAbilities() {return abilities;}
+    public void addAbility(Ability ability) {abilities.add(ability);}
+    public void addAbility(List<Ability> abilities)
     {
-        for (int i = 0; i < abilities.size(); i++) {
-            int capacity = 0;
-            int efficiency = 0;
-            String abilityName = abilities.get(i)[0];
-            AbilityTag abilityTag = AbilityTag.translateStringToTag(abilities.get(i)[1]);
-
-            String[] objTagStrings = new String[abilities.get(i).length-2];
-            for (int j = 0; j < abilities.get(i).length-2; j++)
-            {
-                String[] s = abilities.get(i)[j+2].split("#");
-                if (s.length == 1)
-                {
-                    objTagStrings[j] = s[0];
-                }
-                else
-                {
-                    if (Objects.equals(s[0], "CAPACITY"))
-                    {
-                        capacity = Integer.parseInt(s[1]);
-                    }
-                    else if (Objects.equals(s[0], "EFFICIENCY"))
-                    {
-                        efficiency = Integer.parseInt(s[1]);
-                    }
-                }
-            }
-
-            ObjectTag[] objectTags = ObjectTag.translateStringToTag(objTagStrings);
-
-            BodyPartAbility ability = new BodyPartAbility(this, abilityName, abilityTag, objectTags);
-            if (capacity != 0) {ability.setCapacity(capacity);}
-            if (efficiency != 0) {ability.setEfficiency(efficiency);}
+        for (Ability ability:abilities)
+        {
             addAbility(ability);
         }
     }
-
-    public List<BodyPartAbility> getAbilities() {return abilities;}
-    public void addAbility(BodyPartAbility ability) {abilities.add(ability);}
 
     public boolean tryToAttach(BodyPart newChild)
     {
@@ -136,34 +108,6 @@ public class BodyPart
         {
             return false;
         }
-    }
-
-    /**
-     * This function removes this bodyPart from the person. All bodyParts attached to this bodyPart stay attached
-     * to this bodyPart and are removed from the person.
-     * The bodyPart is replaced with a grievous wound.
-     */
-    public void removeBodyPart()
-    {
-        removeBodyPartRecursively();
-        BodyPart resultingWound = BodyFileDecoder.loadBodyPartFromFile("Resources/BodyParts/Misc/GrievousWound",0,20);
-        parentBodyPart.tryToAttach(resultingWound);
-        parentBodyPart.attachedBodyParts.remove(this);
-        parentBodyPart = null;
-    }
-
-    /**
-     * This function travels recursively through all the attached bodyParts and removes them from the old Person.
-     */
-    private void removeBodyPartRecursively()
-    {
-        //TODO: The stats of Children of a removed bodyParts seem not to be removed from the person
-        for (BodyPart attachedBodyPart : this.attachedBodyParts)
-        {
-            attachedBodyPart.removeBodyPartRecursively();
-        }
-        this.myPerson.myBodyParts.remove(this);
-        this.myPerson = null;
     }
 
     /**
@@ -298,9 +242,6 @@ public class BodyPart
                 float difference = myStats.getBloodLevel() - getStats()[BodyPartStat.BLOOD_NEED];
                 doDamage(-difference);
             }
-        }
-        for (BodyPartAbility bpa:abilities) {
-            bpa.update();
         }
         spreadBlood();
     }

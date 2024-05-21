@@ -1,5 +1,6 @@
 package Main.WorldLogic;
 
+import Main.AbilityLogic.Ability;
 import Main.Direction;
 import Main.ErrorHandler;
 import Main.MathHelper;
@@ -8,11 +9,11 @@ import Main.ObjectLogic.Thing;
 import Main.ObjectLogic.Wind;
 import Main.RenderLogic.Logic.MapIcon;
 import Main.Settings;
+import Main.TimeLogic.Updatable;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
-import java.util.Set;
 
 public class LocalMap
 {
@@ -25,7 +26,7 @@ public class LocalMap
     private GameWorld myWorld;
     private String mapName;
     private MapIcon mapIcon;
-    private List<Thing> localThings = new ArrayList<>();
+    private List<Updatable> localUpdatables = new ArrayList<>();
     private Direction localWind = Direction.EAST;
 
     protected LocalMap(int[] xySize, GameWorld gameWorld, MapIcon mapIcon, String name, boolean spawnWind)
@@ -83,26 +84,29 @@ public class LocalMap
      * Returns the list of all persons currently on the local map. DO NOT use this to add persons to this list. Use addThingToLocalMap instead.
      * @return the list of all persons
      */
-    public List<Thing> getLocalThings() {
-        ErrorHandler.LogData(false, "The local map: " + mapName + " has " + localThings.size() + " persons.");
-        return localThings;
+    public List<Updatable> getLocalUpdatables() {
+        ErrorHandler.LogData(false, "The local map: " + mapName + " has " + localUpdatables.size() + " persons.");
+        return localUpdatables;
     }
 
-    public void addLocalThing(Thing t)
+    public void addLocalUpdatables(Updatable updatable)
     {
-        localThings.add(t);
+        localUpdatables.add(updatable);
     }
-
+    public void addLocalUpdatables(List<Ability> updatables)
+    {
+        localUpdatables.addAll(updatables);
+    }
     public List<Person> getLocalPeople()
     {
-        List<Thing> things = getLocalThings();
+        List<Updatable> updatables = getLocalUpdatables();
         List<Person> people = new ArrayList<>();
 
-        for (int i = 0; i < things.size(); i++)
+        for (int i = 0; i < updatables.size(); i++)
         {
-            if (things.get(i) instanceof Person)
+            if (updatables.get(i) instanceof Person)
             {
-                people.add((Person)things.get(i));
+                people.add((Person)updatables.get(i));
             }
         }
 
@@ -121,7 +125,7 @@ public class LocalMap
 
     public void addThingToLocalMap(Thing t)
     {
-        localThings.add(t);
+        localUpdatables.add(t);
         if (t.getMyCell() == null) {
             Random r = new Random();
             int xCoord = r.nextInt(size[0]);
@@ -135,7 +139,7 @@ public class LocalMap
         boolean removedThing = true;
         while (removedThing)
         {
-            removedThing = localThings.remove(t);;
+            removedThing = localUpdatables.remove(t);;
         }
     }
 

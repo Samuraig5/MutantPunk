@@ -25,10 +25,7 @@ public class ConsoleBodyInterface
         {
             int b = Integer.parseInt(bias);
             int r = Integer.parseInt(randomness);
-            Person newCharacter = BodyFileDecoder.SpawnNewPersonFromFile(filePath, b, r);
-            newCharacter.setGameWorld(lm.getMyWorld());
-            newCharacter.setLocalMap(lm);
-            return  newCharacter;
+            return BodyFileDecoder.SpawnNewPersonFromFile(filePath, b, r, lm);
         }
         catch (Exception e)
         {
