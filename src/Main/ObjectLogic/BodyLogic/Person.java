@@ -42,6 +42,7 @@ public class Person extends Thing
     {
         float[] stats = new float[BodyPartStat.STATS_NUM];
 
+        if (myBodyParts.size() == 0) {return stats;}
         for (int i = 0; i < BodyPartStat.STATS_NUM; i++)
         {
             stats[i] = 0;
@@ -53,7 +54,6 @@ public class Person extends Thing
                 stats[i] *= myBodyPart.getRawStats()[i][BodyPartStat.PERSON_MOD]; // Collect person mod from all body parts
             }
         }
-
         return stats;
     }
 
