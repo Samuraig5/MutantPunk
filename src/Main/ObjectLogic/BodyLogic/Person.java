@@ -203,8 +203,9 @@ public class Person extends Thing
      * @param objectTag Object Tag of the item that is to be eaten
      * @return returns the body part that can digest the object tag. Null if none are available.
      */
-    public Ability getStomach(ObjectTag[] objectTag)
+    public List<Ability> getStomach(ObjectTag[] objectTag)
     {
+        List<Ability> stomaches = new ArrayList<>();
         for (BodyPart bp:myBodyParts)
         {
             for (Ability bpa:bp.getAbilities())
@@ -217,13 +218,14 @@ public class Person extends Thing
                         {
                             if (ot == input && !bpa.isFull())
                             {
-                                return bpa;
+                                stomaches.add(bpa);
                             }
                         }
                     }
                 }
             }
         }
+        if (stomaches.size() > 0) {return stomaches;}
         return null;
     }
 
@@ -241,11 +243,6 @@ public class Person extends Thing
             }
         }
         return digestibles.toArray(new ObjectTag[0]);
-    }
-
-    public int getEatingCost()
-    {
-        return 50;
     }
 
     @Override

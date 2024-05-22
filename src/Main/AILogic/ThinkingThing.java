@@ -19,29 +19,24 @@ public class ThinkingThing
 
     public void think()
     {
-        List<Thing> things = myPerson.getMyCell().getThings();
-        if (myPerson.getActionPoints() > myPerson.getEatingCost()) {
-            for (int i = 0; i < things.size(); i++) {
-                Ability stomach = myPerson.getStomach(things.get(i).getTags());
-                if (stomach != null) {
-                    eat(stomach, things.get(i));
-                    return;
-                }
-            }
-        }
-
+        tryToEat();
         if (myPerson.canMove())
         {
             move();
         }
     }
 
-    public void eat(Ability stomach, Thing target)
+    private void tryToEat()
     {
-        //TODO: Implement fill level to be tied to size of target (or something)
-        stomach.changeCurrentFillLevel(10);
-        target.destroy();
-        myPerson.changeActionPoints(-myPerson.getEatingCost());
+        List<Thing> things = myPerson.getMyCell().getThings();
+
+        for (int i = 0; i < things.size(); i++) {
+            List<Ability> stomachs = myPerson.getStomach(things.get(i).getTags());
+            if (stomachs != null) {
+                Ability.getMinCost(stomachs).activeEffect(myPerson, things.get(i));
+                return;
+            }
+        }
     }
 
     private void move()

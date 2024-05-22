@@ -57,9 +57,7 @@ public class AbilityCreator
 
             if (abilityTag == AbilityTag.DIGESTION)
             {
-                Ability ability = new Digest(bodyPart, abilityName, abilityTag, objectTags);
-                if (capacity != 0) {ability.setCapacity(capacity);}
-                if (efficiency != 0) {ability.setEfficiency(efficiency);}
+                Ability ability = new Digest(bodyPart, abilityName, abilityTag, objectTags, 50,capacity, efficiency);
                 abilities.add(ability);
             }
         }

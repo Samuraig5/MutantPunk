@@ -9,18 +9,25 @@ import Main.ObjectLogic.Thing;
 
 public class Digest extends Ability
 {
-    public Digest(BodyPart bodyPart, String abilityName, AbilityTag abilityTag, ObjectTag[] relatedObjectTags)
+    public Digest(BodyPart bodyPart, String abilityName, AbilityTag abilityTag, ObjectTag[] relatedObjectTags,
+                  int actionCost, float capacity, float efficiency)
     {
         setBodyPart(bodyPart);
         setAbilityName(abilityName);
         setAbilityTag(abilityTag);
         setRelatedObjectTags(relatedObjectTags);
+        setActionCost(actionCost);
+        setCapacity(capacity);
+        setEfficiency(efficiency);
     }
 
     @Override
-    public void activeEffect(Thing target)
+    public void activeEffect(Thing origin, Thing target)
     {
-
+        if (!origin.canAffordAction(getActionCost())) {return;}
+        origin.changeActionPoints(-getActionCost());
+        changeCurrentFillLevel(10);
+        target.destroy();
     }
 
     public void update() {
