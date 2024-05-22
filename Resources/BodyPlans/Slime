@@ -1,7 +1,18 @@
-Slime§S
-sprites§Resources/Sprites/Slime.png§false
-colour§70:230:0
-description§A small blob-shaped creature made entirely of slime
-LIQUID§ORGANIC
+VERSION§1
+
+§END_OF_HEADER§
+
+NAME§Slime
+ICON§S
+
+SPRITE§Resources/Sprites/Slime.png§false
+
+COLOUR§70:230:0
+
+DESCRIPTION§A small blob-shaped creature made entirely of slime
+
+TAGS§LIQUID:ORGANIC
+
+§BODY§
 name§Slime Blob
 pathToBodyPartFile§Resources/BodyParts/Misc/SlimeBlob

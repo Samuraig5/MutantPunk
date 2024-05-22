@@ -1,8 +1,17 @@
-Human§H
-sprite§Resources/Sprites/Human.png§false
-colour§
-description§A medium sized creature prone to great ambition
-SOLID§ORGANIC§MEAT
+VERSION§1
+
+§END_OF_HEADER§
+
+NAME§Human
+ICON§H
+SPRITE§Resources/Sprites/Human.png§false
+
+
+DESCRIPTION§A medium sized creature prone to great ambition
+
+TAGS§SOLID:ORGANIC:MEAT
+
+§BODY§
 name§Human Torso
 pathToBodyPartFile§Resources/BodyParts/Containers/HumanTorso
 >

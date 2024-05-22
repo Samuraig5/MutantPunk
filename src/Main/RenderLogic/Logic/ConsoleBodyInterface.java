@@ -1,7 +1,8 @@
 package Main.RenderLogic.Logic;
 
+import Main.FileLogic.PersonDecoder;
 import Main.MathHelper;
-import Main.ObjectLogic.BodyLogic.BodyFileDecoder;
+import Main.FileLogic.BodyFileDecoder;
 import Main.ObjectLogic.BodyLogic.BodyPart;
 import Main.ObjectLogic.BodyLogic.BodyPartStat;
 import Main.ObjectLogic.BodyLogic.Person;
@@ -25,7 +26,7 @@ public class ConsoleBodyInterface
         {
             int b = Integer.parseInt(bias);
             int r = Integer.parseInt(randomness);
-            return BodyFileDecoder.SpawnNewPersonFromFile(filePath, b, r, lm);
+            return PersonDecoder.SpawnNewPersonFromFile(filePath, b, r, lm);
         }
         catch (Exception e)
         {

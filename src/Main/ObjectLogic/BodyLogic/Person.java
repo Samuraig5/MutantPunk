@@ -3,6 +3,7 @@ package Main.ObjectLogic.BodyLogic;
 import Main.AILogic.ThinkingThing;
 import Main.AbilityLogic.Ability;
 import Main.Direction;
+import Main.FileLogic.BodyFileDecoder;
 import Main.MathHelper;
 import Main.ObjectLogic.ObjectTag;
 import Main.ObjectLogic.Thing;
@@ -19,7 +20,7 @@ public class Person extends Thing
     private ThinkingThing myThoughts;
     private boolean isPlayer;
 
-    protected Person(boolean addThoughts)
+    public Person(boolean addThoughts)
     {
         super();
         if (addThoughts)
@@ -43,14 +44,15 @@ public class Person extends Thing
         float[] stats = new float[BodyPartStat.STATS_NUM];
 
         if (myBodyParts.size() == 0) {return stats;}
+        List<BodyPart> bodyParts = new ArrayList<>(myBodyParts); //Don't delete. Is needed to avoid a ConcurrentModificationException
         for (int i = 0; i < BodyPartStat.STATS_NUM; i++)
         {
             stats[i] = 0;
 
-            for (BodyPart myBodyPart : myBodyParts) {
+            for (BodyPart myBodyPart : bodyParts) {
                 stats[i] += myBodyPart.getStats()[i]; // Collect net stat from all body parts
             }
-            for (BodyPart myBodyPart : myBodyParts) {
+            for (BodyPart myBodyPart : bodyParts) {
                 stats[i] *= myBodyPart.getRawStats()[i][BodyPartStat.PERSON_MOD]; // Collect person mod from all body parts
             }
         }
