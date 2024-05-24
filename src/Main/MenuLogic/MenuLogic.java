@@ -1,4 +1,4 @@
-package Main.RenderLogic.Menus;
+package Main.MenuLogic;
 
 import java.awt.event.KeyListener;
 import java.awt.event.MouseListener;

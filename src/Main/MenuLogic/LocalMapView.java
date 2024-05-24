@@ -1,4 +1,4 @@
-package Main.RenderLogic.Menus;
+package Main.MenuLogic;
 
 import Main.Direction;
 import Main.ObjectLogic.BodyLogic.Person;
@@ -6,9 +6,7 @@ import Main.RenderLogic.Console;
 import Main.RenderLogic.Logic.GameState;
 
 import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 
 public class LocalMapView implements MenuLogic
 {

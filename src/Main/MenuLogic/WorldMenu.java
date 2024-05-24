@@ -1,4 +1,4 @@
-package Main.RenderLogic.Menus;
+package Main.MenuLogic;
 
 import Main.Direction;
 import Main.RenderLogic.Console;

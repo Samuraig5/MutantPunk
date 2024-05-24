@@ -1,35 +1,30 @@
-package Main.RenderLogic.Menus;
+package Main.MenuLogic;
 
+import Main.ObjectLogic.BodyLogic.BodyPart;
 import Main.ObjectLogic.BodyLogic.Person;
 import Main.RenderLogic.Console;
 import Main.RenderLogic.Logic.GameState;
-import Main.WorldLogic.LocalMap;
 
 import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 
-public class AllCharactersInLocalMapMenu implements MenuLogic
+public class ThingInspector implements MenuLogic
 {
     Console c;
 
     int currentPage = 0;
 
-    public AllCharactersInLocalMapMenu(Console console)
+    public ThingInspector(Console console)
     {
         c = console;
     }
 
-    private void openPersonView(int i)
+    private void openBodyPartView(int i)
     {
-        LocalMap lm = c.wc.getActiveWorld().getActiveLocalMap();
-
-        if (lm.getLocalPeople().size() <= i) {return;}
-
-        Person p = lm.getLocalPeople().get(i);
-
-        c.cp.setInspectedThing(p);
-        c.setGameState(GameState.THING_INSPECTOR);
+        Person p = (Person) c.cp.getInspectedThing();
+        BodyPart bp = p.myBodyParts.get(i);
+        c.cp.setInspectedBodyPart(bp);
+        c.setGameState(GameState.BODY_PART_MENU);
     }
 
     @Override
@@ -38,88 +33,100 @@ public class AllCharactersInLocalMapMenu implements MenuLogic
         switch (e.getKeyCode())
         {
             case KeyEvent.VK_A:
-                openPersonView(0);
+                openBodyPartView(0);
                 break;
             case KeyEvent.VK_B:
-                openPersonView(1);
+                openBodyPartView(1);
                 break;
             case KeyEvent.VK_C:
-                openPersonView(2);
+                openBodyPartView(2);
                 break;
             case KeyEvent.VK_D:
-                openPersonView(3);
+                openBodyPartView(3);
                 break;
             case KeyEvent.VK_E:
-                openPersonView(4);
+                openBodyPartView(4);
                 break;
             case KeyEvent.VK_F:
-                openPersonView(5);
+                openBodyPartView(5);
                 break;
             case KeyEvent.VK_G:
-                openPersonView(6);
+                openBodyPartView(6);
                 break;
             case KeyEvent.VK_H:
-                openPersonView(7);
+                openBodyPartView(7);
                 break;
             case KeyEvent.VK_I:
-                openPersonView(8);
+                openBodyPartView(8);
                 break;
             case KeyEvent.VK_J:
-                openPersonView(9);
+                openBodyPartView(9);
                 break;
             case KeyEvent.VK_K:
-                openPersonView(10);
+                openBodyPartView(10);
                 break;
             case KeyEvent.VK_L:
-                openPersonView(11);
+                openBodyPartView(11);
                 break;
             case KeyEvent.VK_M:
-                openPersonView(12);
+                openBodyPartView(12);
                 break;
             case KeyEvent.VK_N:
-                openPersonView(13);
+                openBodyPartView(13);
                 break;
             case KeyEvent.VK_O:
-                openPersonView(14);
+                openBodyPartView(14);
                 break;
             case KeyEvent.VK_P:
-                openPersonView(15);
+                openBodyPartView(15);
                 break;
             case KeyEvent.VK_Q:
-                openPersonView(16);
+                openBodyPartView(16);
                 break;
             case KeyEvent.VK_R:
-                openPersonView(17);
+                openBodyPartView(17);
                 break;
             case KeyEvent.VK_S:
-                openPersonView(18);
+                openBodyPartView(18);
                 break;
             case KeyEvent.VK_T:
-                openPersonView(19);
+                openBodyPartView(19);
                 break;
             case KeyEvent.VK_U:
-                openPersonView(20);
+                openBodyPartView(20);
                 break;
             case KeyEvent.VK_V:
-                openPersonView(21);
+                openBodyPartView(21);
                 break;
             case KeyEvent.VK_W:
-                openPersonView(22);
+                openBodyPartView(22);
                 break;
             case KeyEvent.VK_X:
-                openPersonView(23);
+                openBodyPartView(23);
                 break;
             case KeyEvent.VK_Y:
-                openPersonView(24);
+                openBodyPartView(24);
                 break;
             case KeyEvent.VK_Z:
-                openPersonView(25);
+                openBodyPartView(25);
                 break;
             case KeyEvent.VK_ESCAPE:
-                c.setGameState(GameState.LOCAL_MAP_MENU);
+                if (c.getPreviousGameState() == GameState.LOCAL_MAP_MENU)
+                {
+                    c.setGameState(GameState.LOCAL_MAP_MENU);
+                }
+                else if (c.getPreviousGameState() == GameState.LOCAL_MAP_VIEW)
+                {
+                    c.setGameState(GameState.LOCAL_MAP_VIEW);
+                }
+                break;
+            case KeyEvent.VK_ENTER:
+                if (c.cp.getInspectedThing() instanceof  Person)
+                {
+                    c.cp.setPlayerCharacter((Person)c.cp.getInspectedThing());
+                }
                 break;
         }
-
     }
 
     @Override

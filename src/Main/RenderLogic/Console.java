@@ -5,7 +5,7 @@ import Main.RenderLogic.Logic.ConsoleMapInterface;
 import Main.RenderLogic.Logic.GameState;
 import Main.RenderLogic.UI_Painter.ButtonHandler;
 import Main.RenderLogic.UI_Painter.Logo.LogoScreen;
-import Main.RenderLogic.Menus.*;
+import Main.MenuLogic.*;
 import Main.Settings;
 import Main.TimeLogic.WorldClock;
 

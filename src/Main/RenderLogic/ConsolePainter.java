@@ -69,7 +69,14 @@ public class ConsolePainter extends JPanel implements ImageObserver
     public void setInspectedThing(Thing newThing) {
         inspectedThing = newThing;}
     public Thing getInspectedThing() {return inspectedThing;}
-    public Thing getFocusedThing() {return focusedThing;}
+    public Thing getFocusedThing()
+    {
+        if (playerCharacter != null)
+        {
+            focusedThing = playerCharacter;
+        }
+        return focusedThing;
+    }
     public void setInspectedBodyPart(BodyPart newBodyPart) {
         inspectedBodyPart = newBodyPart;}
     public BodyPart getInspectedBodyPart() {return inspectedBodyPart;}

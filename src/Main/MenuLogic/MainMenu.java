@@ -1,16 +1,17 @@
-package Main.RenderLogic.Menus;
+package Main.MenuLogic;
 
 import Main.RenderLogic.Console;
 import Main.RenderLogic.Logic.GameState;
+import Main.WorldLogic.GameWorld;
+import Main.WorldLogic.MapGenerator;
 
 import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 
-public class BodyPartMenu implements MenuLogic
+public class MainMenu implements MenuLogic
 {
     Console c;
-    public BodyPartMenu(Console console)
+    public MainMenu(Console console)
     {
         c = console;
     }
@@ -20,8 +21,10 @@ public class BodyPartMenu implements MenuLogic
     {
         switch (e.getKeyCode())
         {
-            case KeyEvent.VK_ESCAPE:
-                c.setGameState(GameState.THING_INSPECTOR);
+            case KeyEvent.VK_A:
+                GameWorld gw = MapGenerator.generateNewGameWorld("New World");
+                c.wc.setActiveWorld(gw);
+                c.setGameState(GameState.WORLD_MENU);
         }
 
     }
