@@ -86,7 +86,6 @@ public class MapPainter
                 }
             }
         }
-        cp.c.bh.drawWorldMapView(cp.g);
     }
 
     public static void drawLocalMapView(ConsolePainter cp)
@@ -122,12 +121,19 @@ public class MapPainter
                     MapIcon[] mi = mapIcons[x][y];
                     List<MapIcon> prints = new ArrayList<>();
                     int i = -1;
+                    boolean continueNextLoop = true;
                     do
                     {
                         i++;
                         prints.add(mi[i]);
+
+                        if (mi[i] == null) {return;}
+                        if (mi[i].getSprite() != null)
+                        {
+                            continueNextLoop = !mi[i].getSprite().isFullCover();
+                        }
                     }
-                    while (!mi[i].getSprite().isFullCover());
+                    while (continueNextLoop);
 
                     for (int j = prints.size()-1; j >= 0; j--)
                     {

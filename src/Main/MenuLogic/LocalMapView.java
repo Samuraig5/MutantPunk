@@ -132,6 +132,7 @@ public class LocalMapView implements MenuLogic
     @Override
     public void mousePressed(MouseEvent e)
     {
+        if (c.bh.mouseClick(c.cp.getMousePosition())){return;}
         c.cp.setCursorPosition(c.cp.getMouseCellCoordsOnLocalMap());
     }
 

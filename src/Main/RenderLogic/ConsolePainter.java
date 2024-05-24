@@ -129,6 +129,8 @@ public class ConsolePainter extends JPanel implements ImageObserver
         mouseCursorPosition.x = p.x-pa.x-8;
         mouseCursorPosition.y = p.y-pa.y-25;
 
+        c.bh.drawButtons(g);
+
         //printString(mouseCursorPosition.x, mouseCursorPosition.y, Color.yellow, "O");
     }
 
@@ -247,7 +249,7 @@ public class ConsolePainter extends JPanel implements ImageObserver
     {
         if (playerCharacter != null)
         {
-            playerCharacter.isPlayer(false);
+            clearPlayerCharacter();
         }
         playerCharacter = p;
         playerCharacter.isPlayer(true);
@@ -255,5 +257,10 @@ public class ConsolePainter extends JPanel implements ImageObserver
     public Person getPlayerCharacter()
     {
         return playerCharacter;
+    }
+    public void clearPlayerCharacter()
+    {
+        playerCharacter.isPlayer(false);
+        playerCharacter = null;
     }
 }

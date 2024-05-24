@@ -208,7 +208,8 @@ public class Person extends Thing
     public List<Ability> getStomach(ObjectTag[] objectTag)
     {
         List<Ability> stomaches = new ArrayList<>();
-        for (BodyPart bp:myBodyParts)
+        List<BodyPart> bodyParts = new ArrayList<>(myBodyParts);
+        for (BodyPart bp:bodyParts)
         {
             for (Ability bpa:bp.getAbilities())
             {

@@ -141,8 +141,9 @@ public class ThingInspector implements MenuLogic
     }
 
     @Override
-    public void mouseClicked(MouseEvent e) {
-
+    public void mouseClicked(MouseEvent e)
+    {
+        c.bh.mouseClick(c.cp.getMousePosition());
     }
 
     @Override
